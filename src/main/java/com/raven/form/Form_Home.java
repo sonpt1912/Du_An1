@@ -209,6 +209,11 @@ public class Form_Home extends javax.swing.JPanel {
         jComboBox1.setBackground(new java.awt.Color(255, 255, 0));
         jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đồ Ăn", "Đồ Uống", "ComBo" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         tbMonAn.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1054,6 +1059,12 @@ public class Form_Home extends javax.swing.JPanel {
         lstHoaDonResponses = hoaDonResponseService.getByTrangThai(1);
         showDataHoaDon(lstHoaDonResponses);
     }//GEN-LAST:event_rdoDaThanhToanActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        //    k có gì
+
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
