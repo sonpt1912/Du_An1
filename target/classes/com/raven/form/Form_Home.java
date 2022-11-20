@@ -6,12 +6,14 @@ import com.mycompany.customModel.HoaDonChiTietResponse;
 import com.mycompany.customModel.HoaDonResponse;
 import com.mycompany.customModel.MonAnResponse;
 import com.mycompany.domainModel.Ban;
+import com.mycompany.domainModel.ChiTietBanHoaDon;
 import com.mycompany.domainModel.ComBo;
 import com.mycompany.domainModel.GiaoDich;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.HoaDonChiTiet;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.domainModel.NhanVien;
+import com.mycompany.service.IChiTietBanHoaDonService;
 import com.mycompany.service.impl.HoaDonChiTietResponseService;
 import com.mycompany.service.ICommonResponseService;
 import com.mycompany.service.ICommonService;
@@ -20,6 +22,7 @@ import com.mycompany.service.IHoaDonChiTietResponseService;
 import com.mycompany.service.IcommonHoaDonResponseService;
 import com.mycompany.service.impl.BanResponseService;
 import com.mycompany.service.impl.BanService;
+import com.mycompany.service.impl.ChiTietBanHoaDonService;
 import com.mycompany.service.impl.ComBoService;
 import com.mycompany.service.impl.ComboResponseService;
 import com.mycompany.service.impl.GiaoDichService;
@@ -48,6 +51,7 @@ public class Form_Home extends javax.swing.JPanel {
     private DefaultTableModel dtmDoUong = new DefaultTableModel();
     private List<MonAnResponse> lstMonAnResponses = new ArrayList<>();
     private List<BanResponse> lstBanResponses = new ArrayList<>();
+    private List<BanResponse> lstMaBan = new ArrayList<>();// list để lấy mã bàn
     private List<HoaDonResponse> lstHoaDonResponses = new ArrayList<>();
     private List<HoaDonChiTietResponse> lstHDCTResponses = new ArrayList<>();
     private List<ComboResponse> lstComboResponses = new ArrayList<>();
@@ -63,6 +67,7 @@ public class Form_Home extends javax.swing.JPanel {
     private ICommonService monAnService = new MonAnService();
     private ICommonService banService = new BanService();
     private IHoaDonChiTiet hdctService = new HoaDonChiTietService();
+    private IChiTietBanHoaDonService chiTietBanHoaDonService = new ChiTietBanHoaDonService();
     private GiaoDichService gds2 = new GiaoDichService();// khai báo như này mới có hàm fill tiên thừa
     private IHoaDonChiTietResponseService hdctResponseService = new HoaDonChiTietResponseService();
     // để khi hoá đơn có trạng thái đã thanh toán thì k thể thêm sản phẩm
@@ -742,7 +747,18 @@ public class Form_Home extends javax.swing.JPanel {
         HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
         // lấy ra những giao dịch có trong hoá đơn đã được chọn
         List<GiaoDich> giaoDichs = gds2.getTheoHoaDon(hd);
-//        lbSoBan.setText(hd.getBan().getMaBan().toString());
+        //list để fill mã bàn, không khai bảo toàn cục nhé
+        List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hd);
+        String maBan = lstChiTietBanHoaDons.get(0).getBan().getMaBan().toString();
+        for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
+            if (lstChiTietBanHoaDons.size() > 1) {
+                lbSoBan.setText(maBan + ", " + lstChiTietBanHoaDon.getBan().getMaBan());
+            } else {
+                lbSoBan.setText(lstChiTietBanHoaDon.getBan().getMaBan().toString());
+            }
+        }
+//        lbSoBan.setText("aaaaa");
+
         // nếu hoá đơn đang chọn có trạng thái là dang chờ thanh toán thì set check trangthaiHD = 0
         //, và check món ăn = 0 và fill mã HD lên label
         // ngược lại nếu hd đã thanh toán hoặc đã huỷ thì check TrangTHaiHD = 1 và fill rỗng lên ô tếch phiu mã HD
@@ -775,8 +791,24 @@ public class Form_Home extends javax.swing.JPanel {
         // TODO add your handling code here:
         // lấy ra bàn đang chọn và fill mã bàn lên label
         int index = tbBan.getSelectedRow();
+        String maBan = lbSoBan.getText();
         BanResponse banResponse = lstBanResponses.get(index);
-        lbSoBan.setText(banResponse.getMaBan().toString());
+        // check bàn được click đã có trong list chưa
+        for (BanResponse banResponse1 : lstMaBan) {
+            if (banResponse1.getMaBan() == banResponse.getMaBan()) {
+                JOptionPane.showMessageDialog(this, "Đã có bàn rồi");
+                return;
+            }
+        }
+        // add bàn click vào lstMaBan
+        lstMaBan.add(banResponse);
+        for (BanResponse banResponse1 : lstMaBan) {
+            if (lstMaBan.size() > 1) {
+                lbSoBan.setText(maBan + ", " + banResponse1.getMaBan());
+            } else {
+                lbSoBan.setText(banResponse1.getMaBan().toString());
+            }
+        }
     }//GEN-LAST:event_tbBanMouseClicked
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
@@ -924,35 +956,45 @@ public class Form_Home extends javax.swing.JPanel {
 
             // fixx cứng nv
             NhanVien nhanVien = (NhanVien) nvs.getOne("NV1");
-            // lấy bàn theo mã bàn lấy từ label mã bàn
-            Ban ban = (Ban) banService.getOne(lbSoBan.getText());
-            if (ban.getTrangThai() == 1) {
-                JOptionPane.showMessageDialog(this, "Bàn đang có khách");
-            } else {
-                // set bàn đang có khách
-                ban.setTrangThai(1);
-                HoaDon hd = new HoaDon(null, maHD, nhanVien, null, ngayTao, Date.valueOf(ngayThanhToan), null, null, 0);
-                //update lại trạng thái bàn
-                String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
-                // tạo hd
-                JOptionPane.showMessageDialog(this, hds.add(hd));
-                // check xem đang ở radio nào thì show dữ liệu của radio đấy
-                if (checkRdo == 0) {
-                    lstHoaDonResponses = hoaDonResponseService.getAll();
-                    showDataHoaDon(lstHoaDonResponses);
-                } else if (checkRdo == 1) {
-                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
-                    showDataHoaDon(lstHoaDonResponses);
-                } else if (checkRdo == 2) {
-                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(1);
-                    showDataHoaDon(lstHoaDonResponses);
+            HoaDon hd = new HoaDon(null, maHD, nhanVien, null, ngayTao, Date.valueOf(ngayThanhToan), null, null, 0);
+            // tạo hd
+            JOptionPane.showMessageDialog(this, hds.add(hd));
+            for (BanResponse banResponse : lstMaBan) {
+                // lấy bàn theo mã bàn lấy từ banResponse
+                Ban ban = (Ban) banService.getOne(banResponse.getMaBan().toString());
+                if (ban.getTrangThai() == 1) {
+                    JOptionPane.showMessageDialog(this, "Bàn đang có khách");
                 } else {
-                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(2);
-                    showDataHoaDon(lstHoaDonResponses);
+                    // set bàn đang có khách
+                    ban.setTrangThai(1);
+                    //update lại trạng thái bàn
+                    String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                    HoaDon hd2 = (HoaDon) hds.getOne(maHD);// lấy hoá đơn vừa được tạo và add vào chiTietHoaDon
+//                    ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon();
+//                    chiTietBanHoaDon.setHd(hd2);
+//                    chiTietBanHoaDon.setBan(ban);
+                    ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon(null, hd2, ban);
+//                    System.out.println(chiTietBanHoaDon.getHd().getId()+" "+chiTietBanHoaDon.getBan().getId());
+                    String addChiTietBanHoaDon = (String) chiTietBanHoaDonService.add(chiTietBanHoaDon);
                 }
-                lstBanResponses = banResponseService.getAll();
-                showDataBan(lstBanResponses);
             }
+
+            // check xem đang ở radio nào thì show dữ liệu của radio đấy
+            if (checkRdo == 0) {
+                lstHoaDonResponses = hoaDonResponseService.getAll();
+                showDataHoaDon(lstHoaDonResponses);
+            } else if (checkRdo == 1) {
+                lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
+                showDataHoaDon(lstHoaDonResponses);
+            } else if (checkRdo == 2) {
+                lstHoaDonResponses = hoaDonResponseService.getByTrangThai(1);
+                showDataHoaDon(lstHoaDonResponses);
+            } else {
+                lstHoaDonResponses = hoaDonResponseService.getByTrangThai(2);
+                showDataHoaDon(lstHoaDonResponses);
+            }
+            lstBanResponses = banResponseService.getAll();
+            showDataBan(lstBanResponses);
         }
     }//GEN-LAST:event_btnTaoHoaDonActionPerformed
 
