@@ -68,7 +68,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
     @Override
     public Boolean update(MonAn kh, String ma) {
         String hql = "UPDATE " + fromTable + "SET tenMonAn = :ten, hinhAnh = :hinhAnh, donGia = :donGia, donViTinh = :donViTinh,"
-                + "loai = :loaiMA  "
+                + "loai = :loaiMA, trangThai = :TrangThai  "
                 + "WHERE maMonAn =:ma";
         Transaction transaction = null;
         int check = 0;
@@ -81,6 +81,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
             query.setParameter("donGia", kh.getDonGia());
             query.setParameter("donViTinh", kh.getDonViTinh());
             query.setParameter("loaiMA", kh.getLoai());
+            query.setParameter("TrangThai", kh.getTrangThai());
             query.setParameter("ma", ma);
             check = query.executeUpdate();
             transaction.commit();
@@ -113,7 +114,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
     public List<MonAn> getMonAnByDanhMuc(DanhMuc danhMuc) {
         List<MonAn> listMA = new ArrayList<>();
         try ( Session session = HibernateUtil.getFactory().openSession()) {
-            Query query = session.createQuery("FROM MonAn WHERE loai.danhMuc = :danhMuc");
+            Query query = session.createQuery("FROM MonAn WHERE loai.danhMuc = :danhMuc AND trangThai = 0");
             query.setParameter("danhMuc", danhMuc);
             listMA = query.getResultList();
         } finally {
