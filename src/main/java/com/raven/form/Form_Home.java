@@ -484,6 +484,11 @@ public class Form_Home extends javax.swing.JPanel {
         jButton5.setBackground(new java.awt.Color(153, 255, 0));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton5.setText("TT & In");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setText("SĐT:");
@@ -882,13 +887,13 @@ public class Form_Home extends javax.swing.JPanel {
                 }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công");
                 // check xem đang chọn radio nào thì hiện thị đúng dữ liệu của radio đấy
-                if (checkRdo == 0) {
+                if (checkRdo == 3) {
                     lstHoaDonResponses = hoaDonResponseService.getAll();
                     showDataHoaDon(lstHoaDonResponses);
-                } else if (checkRdo == 1) {
+                } else if (checkRdo == 0) {
                     lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
                     showDataHoaDon(lstHoaDonResponses);
-                } else if (checkRdo == 2) {
+                } else if (checkRdo == 1) {
                     lstHoaDonResponses = hoaDonResponseService.getByTrangThai(1);
                     showDataHoaDon(lstHoaDonResponses);
                 } else {
@@ -1110,6 +1115,10 @@ public class Form_Home extends javax.swing.JPanel {
         JDialogTachHoaDon jDialogTachHoaDon = new JDialogTachHoaDon(null, true, hd);
         jDialogTachHoaDon.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
