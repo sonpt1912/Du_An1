@@ -4,18 +4,31 @@
  */
 package com.raven.form;
 
+import com.mycompany.customModel.HoaDonChiTietResponse;
+import com.mycompany.domainModel.HoaDon;
+import com.mycompany.service.IHoaDonChiTietResponseService;
+import com.mycompany.service.impl.HoaDonChiTietResponseService;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
  */
 public class JDialogTachHoaDon extends javax.swing.JDialog {
 
-    /**
-     * Creates new form JDialogTachHoaDon
-     */
-    public JDialogTachHoaDon(java.awt.Frame parent, boolean modal) {
+    private List<HoaDonChiTietResponse> lstDonChiTietResponses = new ArrayList<>();
+    private IHoaDonChiTietResponseService hdctrs = new HoaDonChiTietResponseService();
+    private DefaultTableModel dtm = new DefaultTableModel();
+
+    public JDialogTachHoaDon(java.awt.Frame parent, boolean modal, HoaDon hd) {
         super(parent, modal);
         initComponents();
+        String headerHoaDonCT[] = {"STT", "Mã món ăn", "Tên món ăn", "Giá món ăn", "Số lượng món ăn", "Mã combo", "Tên combo", "Giá combo", "Số lượng combo"};
+        tbHDCTCu.setModel(dtm);
+        tbHDCTMoi.setModel(dtm);
+        dtm.setColumnIdentifiers(headerHoaDonCT);
     }
 
     /**
@@ -28,31 +41,69 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbHDCTCu = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbHDCTMoi = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Exit");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        tbHDCTCu.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tbHDCTCu);
+
+        tbHDCTMoi.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tbHDCTMoi);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(141, 141, 141)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(512, Short.MAX_VALUE))
+                .addGap(61, 61, 61)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(61, 61, 61))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(239, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
                 .addComponent(jButton1)
-                .addGap(223, 223, 223))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -92,21 +143,25 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JDialogTachHoaDon dialog = new JDialogTachHoaDon(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                JDialogTachHoaDon dialog = new JDialogTachHoaDon(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tbHDCTCu;
+    private javax.swing.JTable tbHDCTMoi;
     // End of variables declaration//GEN-END:variables
 }

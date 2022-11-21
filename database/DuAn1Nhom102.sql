@@ -249,7 +249,7 @@ INSERT INTO Loai (IdDanhMuc, MaLoai, TenLoai, TrangThai) VALUES
 INSERT INTO Loai (IdDanhMuc, MaLoai, TenLoai, TrangThai) VALUES
 	('412BDFD9-DE19-43EA-8741-8318EEF3F895', 'L4', N'Đồ uống ko ga',0)
 --món ăn
-SELECT * FROM Loai
+SELECT * FROM Danh_Muc
 INSERT INTO Mon_An(IdLoai, MaMonAn, TenMonAn, DonGia, DonViTinh, TrangThai) VALUES
 	('E505CFAA-C0ED-4C61-A6A5-AC13F752EF22', 'MA1', N'Hàu nướng',200, N'Đĩa', 0)
 INSERT INTO Mon_An(IdLoai, MaMonAn, TenMonAn, DonGia, DonViTinh, TrangThai) VALUES
@@ -262,19 +262,19 @@ INSERT INTO Mon_An(IdLoai, MaMonAn, TenMonAn, DonGia, DonViTinh, TrangThai) VALU
 --combo
 select * from Nhan_Vien
 INSERT INTO Combo(IdNV, MaCB, TenCB, DonGia, TrangThai) VALUES
-	('465E87D3-9842-4666-9D65-5F9025F4A282','CB1', N'Combo 255k', 255, 0 )
+	('42701873-627B-441A-92FB-FDB80ED5C198','CB1', N'Combo 255k', 255, 0 )
 INSERT INTO Combo(IdNV, MaCB, TenCB, DonGia, TrangThai) VALUES
-	('465E87D3-9842-4666-9D65-5F9025F4A282','CB2', N'Combo 215k', 215, 0 )
-	select * from Combo
+	('42701873-627B-441A-92FB-FDB80ED5C198','CB2', N'Combo 215k', 215, 0 )
+	select * from Mon_An
 --chi tiết combo
 INSERT INTO Chi_Tiet_Combo (IdCombo,IdMonAn, SoLuongMonAn) VALUES
-	('AACBB9C5-3D96-4CCC-9EC9-70B70B25F97D','DC3BF662-6915-43C4-9F13-4629BCF10F7E', 1)
+	('7ECE7A08-DD12-4BCF-9546-0C60999B87DD','CBCCA1E8-2D9B-4E45-9D2C-2C18EC97D516', 1)
 INSERT INTO Chi_Tiet_Combo (IdCombo,IdMonAn, SoLuongMonAn) VALUES
-	('AACBB9C5-3D96-4CCC-9EC9-70B70B25F97D','DEFD2FE2-DDB3-4C6A-B45F-8A2637EB3121', 2)
+	('7ECE7A08-DD12-4BCF-9546-0C60999B87DD','F4266AE4-C365-4E79-87C6-34998E11D586', 2)
 INSERT INTO Chi_Tiet_Combo (IdCombo,IdMonAn, SoLuongMonAn) VALUES
-	('4C09C663-EEDE-46DE-A053-B09074074D66','78D3188F-F52B-4AC8-A05F-4D0D39E728A2', 1)
+	('66FA60B7-4CE4-4CEB-AF62-0E4082650A0A','F78B4A9E-EFBF-4788-9C0F-E3B5BBDB27D7', 1)
 INSERT INTO Chi_Tiet_Combo (IdCombo,IdMonAn, SoLuongMonAn) VALUES
-	('4C09C663-EEDE-46DE-A053-B09074074D66','56ABB956-3D4F-4788-AD17-3D010EABBEF5', 2)
+	('66FA60B7-4CE4-4CEB-AF62-0E4082650A0A','A4E555CF-C940-419E-97DA-CDB5AC92F4A3', 2)
 --Khach hàng
 
 INSERT INTO Khach_Hang (MaKH, Ho, TenDem, Ten, GioiTinh, NgaySinh, Sdt, DiaChi, ThanhPho,QuocGia, TrangThai) VALUES
@@ -301,4 +301,15 @@ select * from Danh_Muc
 select * from Mon_An inner join Loai  on Mon_An.IdLoai= Loai.IdLoai where Loai.IdDanhMuc in (select IdDanhMuc from 
 Danh_Muc where MaDanhMuc = 'DM1')
 
+select * from Loai
+select * from Combo
 select * from Danh_Muc
+select * from Hoa_Don_Chi_Tiet
+select * from Chi_Tiet_Ban_HoaDon
+select * from Hoa_Don
+
+update Ban set TrangThai = 0
+delete from Hoa_Don_Chi_Tiet
+delete from Chi_Tiet_Ban_HoaDon
+delete from Giao_Dich
+delete from Hoa_Don

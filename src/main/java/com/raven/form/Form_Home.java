@@ -19,6 +19,7 @@ import com.mycompany.service.ICommonResponseService;
 import com.mycompany.service.ICommonService;
 import com.mycompany.service.IHoaDonChiTiet;
 import com.mycompany.service.IHoaDonChiTietResponseService;
+import com.mycompany.service.IMonAnResponseService;
 import com.mycompany.service.IcommonHoaDonResponseService;
 import com.mycompany.service.impl.BanResponseService;
 import com.mycompany.service.impl.BanService;
@@ -55,7 +56,7 @@ public class Form_Home extends javax.swing.JPanel {
     private List<HoaDonResponse> lstHoaDonResponses = new ArrayList<>();
     private List<HoaDonChiTietResponse> lstHDCTResponses = new ArrayList<>();
     private List<ComboResponse> lstComboResponses = new ArrayList<>();
-    private ICommonResponseService monAnResponseService = new MonAnResponseService();
+    private IMonAnResponseService monAnResponseService = new MonAnResponseService();
     private ICommonResponseService banResponseService = new BanResponseService();
     private IcommonHoaDonResponseService hoaDonResponseService = new HoaDonResponseService();
     private ICommonResponseService comboResponseService = new ComboResponseService();
@@ -126,7 +127,7 @@ public class Form_Home extends javax.swing.JPanel {
         dtmBan.setColumnIdentifiers(headerBan);
         lstBanResponses = banResponseService.getAll();
         lstHoaDonResponses = hoaDonResponseService.getAll();
-        lstMonAnResponses = monAnResponseService.getAll();
+        lstMonAnResponses = monAnResponseService.getByDanhMuc("Đồ ăn");
         radioTatCa.setSelected(true);
         showDataMonAn(lstMonAnResponses);
         showDataBan(lstBanResponses);
@@ -149,7 +150,7 @@ public class Form_Home extends javax.swing.JPanel {
         searchText1 = new com.raven.swing.SearchText();
         jLabel1 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbbSanPham = new javax.swing.JComboBox<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbMonAn = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -206,12 +207,12 @@ public class Form_Home extends javax.swing.JPanel {
         jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton9.setText("Search");
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 0));
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đồ Ăn", "Đồ Uống", "ComBo" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cbbSanPham.setBackground(new java.awt.Color(255, 255, 0));
+        cbbSanPham.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cbbSanPham.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đồ Ăn", "Đồ Uống", "ComBo" }));
+        cbbSanPham.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cbbSanPhamActionPerformed(evt);
             }
         });
 
@@ -521,7 +522,7 @@ public class Form_Home extends javax.swing.JPanel {
                                 .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27)
                                 .addComponent(jButton9))
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbbSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton8)
@@ -619,7 +620,7 @@ public class Form_Home extends javax.swing.JPanel {
                                 .addComponent(jButton9)
                                 .addComponent(jButton8)))
                         .addGap(10, 10, 10)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbbSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
@@ -897,6 +898,7 @@ public class Form_Home extends javax.swing.JPanel {
                 // show lại data bàn
                 lstBanResponses = banResponseService.getAll();
                 showDataBan(lstBanResponses);
+                dtmHoaDonCT.setRowCount(0);
                 return;
             } else if (cbChuyenKhoan.isSelected()) {
                 hinhThucThanhToan = "Chuyển khoản";
@@ -932,6 +934,7 @@ public class Form_Home extends javax.swing.JPanel {
                 // show lại data bàn
                 lstBanResponses = banResponseService.getAll();
                 showDataBan(lstBanResponses);
+                dtmHoaDonCT.setRowCount(0);
                 return;
             } else {
                 hinhThucThanhToan = "Tiền mặt";
@@ -967,6 +970,7 @@ public class Form_Home extends javax.swing.JPanel {
                 //show lại data bàn
                 lstBanResponses = banResponseService.getAll();
                 showDataBan(lstBanResponses);
+                dtmHoaDonCT.setRowCount(0);
             }
 
         }
@@ -1084,14 +1088,26 @@ public class Form_Home extends javax.swing.JPanel {
         showDataHoaDon(lstHoaDonResponses);
     }//GEN-LAST:event_rdoDaThanhToanActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cbbSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbSanPhamActionPerformed
         // TODO add your handling code here:
-        //    k có gì
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+        if (cbbSanPham.getSelectedItem().equals("Đồ Ăn")) {
+            loadTableMonAn();
+            lstMonAnResponses = monAnResponseService.getByDanhMuc("Đồ ăn");
+            showDataMonAn(lstMonAnResponses);
+        } else if (cbbSanPham.getSelectedItem().equals("Đồ Uống")) {
+            loadTableMonAn();
+            lstMonAnResponses = monAnResponseService.getByDanhMuc("Đồ uống");
+            showDataMonAn(lstMonAnResponses);
+        } else {
+            lstComboResponses = comboResponseService.getAll();
+            loadDataCombo(lstComboResponses);
+        }
+    }//GEN-LAST:event_cbbSanPhamActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        JDialogTachHoaDon jDialogTachHoaDon = new JDialogTachHoaDon(null, true);
+        HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
+        JDialogTachHoaDon jDialogTachHoaDon = new JDialogTachHoaDon(null, true, hd);
         jDialogTachHoaDon.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -1157,6 +1173,7 @@ public class Form_Home extends javax.swing.JPanel {
     }
 
     private void showDataMonAn(List<MonAnResponse> monAnResponses) {
+
         dtmMonAn.setRowCount(0);
         int stt = 0;
         for (MonAnResponse monAnResponse : monAnResponses) {
@@ -1193,6 +1210,9 @@ public class Form_Home extends javax.swing.JPanel {
     }
 
     private void loadDataCombo(List<ComboResponse> comboResponses) {
+        String headerCombo[] = {"Stt", "Mã combo", "Tên combo", "Đơn giá combo"};
+        tbMonAn.setModel(dtmCombo);
+        dtmCombo.setColumnIdentifiers(headerCombo);
         dtmCombo.setRowCount(0);
         int stt = 0;
         for (ComboResponse comboResponse : comboResponses) {
@@ -1207,6 +1227,7 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox cbChuyenKhoan;
     private javax.swing.JCheckBox cbTienMat;
+    private javax.swing.JComboBox<String> cbbSanPham;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1215,7 +1236,6 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

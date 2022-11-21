@@ -7,6 +7,7 @@ package com.mycompany.repository.impl;
 import com.mycompany.customModel.MonAnResponse;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.ICommonResponseRepository;
+import com.mycompany.repository.IMonAnResponseRepository;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -15,7 +16,7 @@ import org.hibernate.Session;
  *
  * @author Admin
  */
-public class MonAnResponseRepository implements ICommonResponseRepository<MonAnResponse> {
+public class MonAnResponseRepository implements IMonAnResponseRepository<MonAnResponse, String> {
 
     private static final Session session = HibernateUtil.getFactory().openSession();
     private String fromTable = " FROM MonAn MA WHERE trangThai = 0";
@@ -29,10 +30,20 @@ public class MonAnResponseRepository implements ICommonResponseRepository<MonAnR
     }
 
     public static void main(String[] args) {
-        List<MonAnResponse> test = new MonAnResponseRepository().getAll();
+        List<MonAnResponse> test = new MonAnResponseRepository().getByDanhMuc("Đồ uống");
         for (MonAnResponse monAnResponse : test) {
             System.out.println(test);
         }
+    }
+
+    @Override
+    public List<MonAnResponse> getByDanhMuc(String tenDanhMuc) {
+        String hql = "SELECT new com.mycompany.customModel.MonAnResponse(MA.maMonAn,MA.tenMonAn,MA.donGia,MA.donViTinh,MA.loai.tenLoai)" + fromTable
+                + " AND MA.loai.danhMuc.tenDanhMuc = :tenDanhMuc";
+        Query query = session.createQuery(hql);
+        query.setParameter("tenDanhMuc", tenDanhMuc);
+        List<MonAnResponse> monAnResponses = query.getResultList();
+        return monAnResponses;
     }
 
 }
