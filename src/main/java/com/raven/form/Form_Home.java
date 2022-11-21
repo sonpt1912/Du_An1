@@ -79,7 +79,7 @@ public class Form_Home extends javax.swing.JPanel {
     private int checkMonAn = 1;
     // để khi click vào rdo nào thì hiện ra hoa đơn có trạng thái như thế
     //tất cả là 3 , chờ thanh toán là 0, đã thanh toán là 1, đã huỷ là 2
-    private int checkRdo = 0;
+    private int checkRdo = 3;
     // khi click vào button đồ ăn thì hiện thị lên đồ ăn
     // 1 là đồ ăn, 2 là đồ uống
     private int checkBtnMonAn = 1;
@@ -137,6 +137,8 @@ public class Form_Home extends javax.swing.JPanel {
         txtTienMat.setEnabled(false);
         txtChuyenKhoan.setEnabled(false);
         txtTienThua.setText("0");
+        txtTongTien.setEnabled(false);
+        txtTienThua.setEnabled(false);
         // lbNhanVien.setText(nv.getMa());
     }
 
@@ -148,6 +150,10 @@ public class Form_Home extends javax.swing.JPanel {
         lbMaHD.setText("");
         lbMaHDThanhToan.setText("");
         lbSoBan.setText("");
+        cbChuyenKhoan.setSelected(false);
+        cbTienMat.setSelected(false);
+        txtChuyenKhoan.setEnabled(false);
+        txtTienMat.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -708,55 +714,6 @@ public class Form_Home extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tbMonAnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMonAnMouseClicked
-// TODO add your handling code here:
-        // check nếu bấm vào btn món ăn thì thêm món ăn
-        if (checkBtnMonAn == 1) {
-            if (checkTrangThaiHD == 1) {
-                JOptionPane.showMessageDialog(this, "Không thể thêm sản phẩm");
-                return;
-            } else if (checkMonAn == 1) {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn");
-                return;
-            } else {
-                int soLuong = Integer.valueOf(JOptionPane.showInputDialog("Mời bạn nhập số lượng"));
-                int index = tbMonAn.getSelectedRow();
-                MonAnResponse mar = lstMonAnResponses.get(index);// lấy ra món ăn đang chọn
-                MonAn ma = (MonAn) mas.getOne(mar.getMaMonAn());// chuyển đổi về món ăn để add vào hdct
-                HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
-                // khai báo hdct để add
-                HoaDonChiTiet hdct = new HoaDonChiTiet(null, ma, hd, null, soLuong, ma.getDonGia(), 0, BigDecimal.valueOf(0));
-                //add hdct
-                String addHDCT = (String) hdctService.add(hdct);
-                lstHDCTResponses = hdctResponseService.getAll(hd);
-                showDataHDCT(lstHDCTResponses);
-                //gọi lại fill tổng tiền để cập nhập lại tổng tiền mỗi khi thêm món ăn vào hdct
-                fillTongTien();
-                return;
-            }
-        }
-        //check khi click vào btn đồ uống thì thêm đồ uống vào hdct
-        if (checkBtnMonAn == 2) {
-            //thêm sản phẩm nước uống vào hdct
-        } else {
-            if (checkTrangThaiHD == 1) {
-                JOptionPane.showMessageDialog(this, "Không thể thêm sản phẩm");
-            } else if (checkMonAn == 1) {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn");
-            } else {
-                int soLuong = Integer.valueOf(JOptionPane.showInputDialog("Mời bạn nhập số lượng"));
-                int index = tbMonAn.getSelectedRow();
-                ComboResponse cbr = lstComboResponses.get(index);
-                ComBo cb = (ComBo) cbs.getOne(cbr.getMaCB());
-                HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
-                HoaDonChiTiet hdct = new HoaDonChiTiet(null, null, hd, cb, 0, BigDecimal.valueOf(0), soLuong, cb.getDonGia());
-                String addHDCT = (String) hdctService.add(hdct);
-                lstHDCTResponses = hdctResponseService.getAll(hd);
-                showDataHDCT(lstHDCTResponses);
-                fillTongTien();
-            }
-        }    }//GEN-LAST:event_tbMonAnMouseClicked
-
     private void tbHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoaDonMouseClicked
         // TODO add your handling code here:
         lstMaBan.clear();// clear để lấy mã bàn mới
@@ -779,13 +736,18 @@ public class Form_Home extends javax.swing.JPanel {
         List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hd);
         String maBan = lstChiTietBanHoaDons.get(0).getBan().getMaBan().toString();
 //        lbSoBan.setText(maBan);
-        for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
+        // fill label so ban
+        for (int i = 0; i < lstChiTietBanHoaDons.size(); i++) {
             if (lstChiTietBanHoaDons.size() > 1) {
-                lbSoBan.setText(maBan + ", " + lstChiTietBanHoaDon.getBan().getMaBan());
+                if (i == 0) {
+                    continue;
+                }
+                maBan += ", " + lstChiTietBanHoaDons.get(i).getBan().getMaBan().toString();
+//                lbSoBan.setText(maBan + ", " + lstChiTietBanHoaDon.getBan().getMaBan());
+                lbSoBan.setText(maBan);
             } else {
-                lbSoBan.setText(lstChiTietBanHoaDon.getBan().getMaBan().toString());
+                lbSoBan.setText(lstChiTietBanHoaDons.get(i).getBan().getMaBan().toString());
             }
-            System.out.println(lstChiTietBanHoaDon.getBan().getMaBan());
         }
 //        lbSoBan.setText("aaaaa");
 
@@ -824,6 +786,14 @@ public class Form_Home extends javax.swing.JPanel {
         String maBan = lbSoBan.getText();
         BanResponse banResponse = lstBanResponses.get(index);
         // check bàn được click đã có trong list chưa
+//        List<ChiTietBanHoaDon> chiTietBanHoaDons = chiTietBanHoaDonService.getByBanAndHoaDon(banResponse.getMaBan().toString());
+//        if (chiTietBanHoaDons.size()>0) {
+//            JOptionPane.showMessageDialog(this, "Bàn đang có khách");
+//        }
+        if (banResponse.getTrangThai() == 1) {
+            JOptionPane.showMessageDialog(this, "Bàn đang có khách");
+            return;
+        }
         for (BanResponse banResponse1 : lstMaBan) {
             if (banResponse1.getMaBan() == banResponse.getMaBan()) {
                 JOptionPane.showMessageDialog(this, "Đã có bàn rồi");
@@ -904,14 +874,14 @@ public class Form_Home extends javax.swing.JPanel {
                 if (checkRdo == 3) {
                     lstHoaDonResponses = hoaDonResponseService.getAll();
                     showDataHoaDon(lstHoaDonResponses);
-                } else if (checkRdo == 0) {
-                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
-                    showDataHoaDon(lstHoaDonResponses);
                 } else if (checkRdo == 1) {
                     lstHoaDonResponses = hoaDonResponseService.getByTrangThai(1);
                     showDataHoaDon(lstHoaDonResponses);
-                } else {
+                } else if (checkRdo == 2) {
                     lstHoaDonResponses = hoaDonResponseService.getByTrangThai(2);
+                    showDataHoaDon(lstHoaDonResponses);
+                } else {
+                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
                     showDataHoaDon(lstHoaDonResponses);
                 }
                 // show lại data bàn
@@ -941,14 +911,14 @@ public class Form_Home extends javax.swing.JPanel {
                 if (checkRdo == 3) {
                     lstHoaDonResponses = hoaDonResponseService.getAll();
                     showDataHoaDon(lstHoaDonResponses);
-                } else if (checkRdo == 0) {
-                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
-                    showDataHoaDon(lstHoaDonResponses);
                 } else if (checkRdo == 1) {
                     lstHoaDonResponses = hoaDonResponseService.getByTrangThai(1);
                     showDataHoaDon(lstHoaDonResponses);
-                } else {
+                } else if (checkRdo == 2) {
                     lstHoaDonResponses = hoaDonResponseService.getByTrangThai(2);
+                    showDataHoaDon(lstHoaDonResponses);
+                } else {
+                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
                     showDataHoaDon(lstHoaDonResponses);
                 }
                 // show lại data bàn
@@ -978,20 +948,22 @@ public class Form_Home extends javax.swing.JPanel {
                 if (checkRdo == 3) {
                     lstHoaDonResponses = hoaDonResponseService.getAll();
                     showDataHoaDon(lstHoaDonResponses);
-                } else if (checkRdo == 0) {
-                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
-                    showDataHoaDon(lstHoaDonResponses);
                 } else if (checkRdo == 1) {
                     lstHoaDonResponses = hoaDonResponseService.getByTrangThai(1);
                     showDataHoaDon(lstHoaDonResponses);
-                } else {
+                } else if (checkRdo == 2) {
                     lstHoaDonResponses = hoaDonResponseService.getByTrangThai(2);
+                    showDataHoaDon(lstHoaDonResponses);
+                } else {
+                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
                     showDataHoaDon(lstHoaDonResponses);
                 }
                 //show lại data bàn
                 lstBanResponses = banResponseService.getAll();
                 showDataBan(lstBanResponses);
                 dtmHoaDonCT.setRowCount(0);
+                cbChuyenKhoan.setSelected(false);
+                cbTienMat.setSelected(false);
                 clearFrom();
             }
             lstMaBan.clear();
@@ -1137,6 +1109,51 @@ public class Form_Home extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void tbMonAnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMonAnMouseClicked
+        // TODO add your handling code here:
+        if (cbbSanPham.getSelectedItem().equals("ComBo")) {
+            if (checkTrangThaiHD == 1) {
+                JOptionPane.showMessageDialog(this, "Không thể thêm sản phẩm");
+            } else if (checkMonAn == 1) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn");
+            } else {
+                int soLuong = Integer.valueOf(JOptionPane.showInputDialog("Mời bạn nhập số lượng"));
+                int index = tbMonAn.getSelectedRow();
+                ComboResponse cbr = lstComboResponses.get(index);
+                ComBo cb = (ComBo) cbs.getOne(cbr.getMaCB());
+                HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
+                HoaDonChiTiet hdct = new HoaDonChiTiet(null, null, hd, cb, 0, BigDecimal.valueOf(0), soLuong, cb.getDonGia());
+                String addHDCT = (String) hdctService.add(hdct);
+                lstHDCTResponses = hdctResponseService.getAll(hd);
+                showDataHDCT(lstHDCTResponses);
+                fillTongTien();
+            }
+        } else {
+            if (checkTrangThaiHD == 1) {
+                JOptionPane.showMessageDialog(this, "Không thể thêm sản phẩm");
+                return;
+            } else if (checkMonAn == 1) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn");
+                return;
+            } else {
+                int soLuong = Integer.valueOf(JOptionPane.showInputDialog("Mời bạn nhập số lượng"));
+                int index = tbMonAn.getSelectedRow();
+                MonAnResponse mar = lstMonAnResponses.get(index);// lấy ra món ăn đang chọn
+                MonAn ma = (MonAn) mas.getOne(mar.getMaMonAn());// chuyển đổi về món ăn để add vào hdct
+                HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
+                // khai báo hdct để add
+                HoaDonChiTiet hdct = new HoaDonChiTiet(null, ma, hd, null, soLuong, ma.getDonGia(), 0, BigDecimal.valueOf(0));
+                //add hdct
+                String addHDCT = (String) hdctService.add(hdct);
+                lstHDCTResponses = hdctResponseService.getAll(hd);
+                showDataHDCT(lstHDCTResponses);
+                //gọi lại fill tổng tiền để cập nhập lại tổng tiền mỗi khi thêm món ăn vào hdct
+                fillTongTien();
+                return;
+            }
+        }
+    }//GEN-LAST:event_tbMonAnMouseClicked
+
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
         // lấy dữ liệut ừ ô tếch phiu
@@ -1149,10 +1166,13 @@ public class Form_Home extends javax.swing.JPanel {
         if ("".equals(chuyenKhoan)) {
             chuyenKhoan = "0";
         }
-        Double tienThua = Double.valueOf(txtTienThua.getText());
-        tienThua = (Double.valueOf(tienMat) + (Double.valueOf(chuyenKhoan))) - Double.valueOf(txtTongTien.getText());
+        try {
+            Double tienThua = Double.valueOf(txtTienThua.getText());
+            tienThua = (Double.valueOf(tienMat) + (Double.valueOf(chuyenKhoan))) - Double.valueOf(txtTongTien.getText());
+            txtTienThua.setText(tienThua.toString());
+        } catch (Exception e) {
+        }
 
-        txtTienThua.setText(tienThua.toString());
     }
 
     private void fillTienThuaTienMat() {
@@ -1165,9 +1185,12 @@ public class Form_Home extends javax.swing.JPanel {
         if ("".equals(tienMat)) {
             tienMat = "0";
         }
-        Double tienThua = Double.valueOf(txtTienThua.getText());
-        tienThua = (Double.valueOf(tienMat) + Double.valueOf(chuyenKhoan)) - Double.valueOf(txtTongTien.getText());
-        txtTienThua.setText(tienThua.toString());
+        try {
+            Double tienThua = Double.valueOf(txtTienThua.getText());
+            tienThua = (Double.valueOf(tienMat) + Double.valueOf(chuyenKhoan)) - Double.valueOf(txtTongTien.getText());
+            txtTienThua.setText(tienThua.toString());
+        } catch (Exception e) {
+        }
     }
 
     private void fillTongTien() {

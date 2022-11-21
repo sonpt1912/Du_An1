@@ -21,7 +21,7 @@ import org.hibernate.Transaction;
 public class ChiTietBanHoaDonRepository implements IChiTietBanHoaDonRepository<ChiTietBanHoaDon, Boolean, HoaDon, Ban> {
 
     private static Session session = HibernateUtil.getFactory().openSession();
-    private String fromTable = " FROM ChiTietBanHoaDon ";
+    private String fromTable = " FROM ChiTietBanHoaDon CTBHD ";
 
     @Override
     public List<ChiTietBanHoaDon> getAll() {
@@ -47,7 +47,7 @@ public class ChiTietBanHoaDonRepository implements IChiTietBanHoaDonRepository<C
 
     @Override
     public Boolean update(ChiTietBanHoaDon chiTietBanHoaDon, HoaDon hoaDon, Ban ban) {
-        String hql = "UPDATE" + fromTable + "SET hd = :hd, ban = :ban WHERE hd = :hdOut AND ban = :banOut";
+        String hql = "UPDATE" + fromTable + "SET CTBHD.hd = :hd, CTBHD.ban = :ban WHERE CTBHD.hd = :hdOut AND CTBHD.ban = :banOut";
         Transaction transaction = null;
         int check = 0;
         try {
@@ -69,7 +69,7 @@ public class ChiTietBanHoaDonRepository implements IChiTietBanHoaDonRepository<C
 
     @Override
     public List<ChiTietBanHoaDon> getByHoaDon(HoaDon hoaDon) {
-        String hql = fromTable + "WHERE hd = :hd";
+        String hql = fromTable + "WHERE CTBHD.hd = :hd";
         Query query = session.createQuery(hql);
         query.setParameter("hd", hoaDon);
         List<ChiTietBanHoaDon> chiTietBanHoaDons = query.getResultList();
@@ -77,8 +77,8 @@ public class ChiTietBanHoaDonRepository implements IChiTietBanHoaDonRepository<C
     }
 
     public static void main(String[] args) {
-        HoaDon hoaDon = new HoaDon();
-        hoaDon.setId("75E38A4A-D7E4-4B1F-84D3-A6677696BB83");
+//        HoaDon hoaDon = new HoaDon();
+//        hoaDon.setId("75E38A4A-D7E4-4B1F-84D3-A6677696BB83");
 //        Ban b = new Ban();
 //        b.setId("BCD9EBC1-B3B5-480D-9A7B-1B6C2FEAD603");
 //        HoaDon hd = new HoaDon();
@@ -88,10 +88,12 @@ public class ChiTietBanHoaDonRepository implements IChiTietBanHoaDonRepository<C
 //        ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon(null, hd, ban);
 //        Boolean add = new ChiTietBanHoaDonRepository().update(chiTietBanHoaDon,hoaDon,b);
 //        System.out.println(add);
-        List<ChiTietBanHoaDon> chiTietBanHoaDons = new ChiTietBanHoaDonRepository().getByHoaDon(hoaDon);
-        for (ChiTietBanHoaDon chiTietBanHoaDon : chiTietBanHoaDons) {
-            System.out.println(chiTietBanHoaDon);
-        }
+//        Ban b = new Ban();
+//        b.setId("BCD9EBC1-B3B5-480D-9A7B-1B6C2FEAD603");
+//        List<ChiTietBanHoaDon> chiTietBanHoaDons = new ChiTietBanHoaDonRepository().getByBanAndHoaDon("1");
+//        for (ChiTietBanHoaDon chiTietBanHoaDon : chiTietBanHoaDons) {
+//            System.out.println(chiTietBanHoaDon);
+//        }
     }
 
 }

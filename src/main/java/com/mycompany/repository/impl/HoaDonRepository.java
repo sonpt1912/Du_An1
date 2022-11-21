@@ -130,4 +130,5 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
         Boolean test = new HoaDonRepository().update(hoaDon, "HD5");
         System.out.println(test);
     }
+    // hàm để check bàn đã có hoá đơn chờ hay chưa
 }
