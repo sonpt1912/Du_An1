@@ -50,12 +50,16 @@ public class ChiTietBanHoaDonService implements IChiTietBanHoaDonService<ChiTiet
 
     public static void main(String[] args) {
         HoaDon hd = new HoaDon();
-        hd.setId("EE38F876-447A-41E3-8CCA-B0E37A508E23");
-        Ban ban = new Ban();
-        ban.setId("BCD9EBC1-B3B5-480D-9A7B-1B6C2FEAD603");
-        ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon(null, hd, ban);
-        String add = new ChiTietBanHoaDonService().add(chiTietBanHoaDon);
-        System.out.println(add);
+        hd.setId("62EC88A4-C690-4F57-BD61-2885AD03A78D");
+//        Ban ban = new Ban();
+//        ban.setId("BCD9EBC1-B3B5-480D-9A7B-1B6C2FEAD603");
+//        ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon(null, hd, ban);
+//        String add = new ChiTietBanHoaDonService().add(chiTietBanHoaDon);
+//        System.out.println(add);
+        List<ChiTietBanHoaDon> chiTietBanHoaDons = new ChiTietBanHoaDonService().getByHoaDon(hd);
+        for (ChiTietBanHoaDon chiTietBanHoaDon1 : chiTietBanHoaDons) {
+            System.out.println(chiTietBanHoaDon1.getBan().getMaBan());
+        }
     }
 
 }

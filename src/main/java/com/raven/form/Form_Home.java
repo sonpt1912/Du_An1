@@ -140,6 +140,16 @@ public class Form_Home extends javax.swing.JPanel {
         // lbNhanVien.setText(nv.getMa());
     }
 
+    private void clearFrom() {
+        txtTongTien.setText("0");
+        txtTienMat.setText("0");
+        txtTienThua.setText("0");
+        txtChuyenKhoan.setText("0");
+        lbMaHD.setText("");
+        lbMaHDThanhToan.setText("");
+        lbSoBan.setText("");
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -749,6 +759,7 @@ public class Form_Home extends javax.swing.JPanel {
 
     private void tbHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoaDonMouseClicked
         // TODO add your handling code here:
+        lstMaBan.clear();// clear để lấy mã bàn mới
         // set lại tiền thừa với tổng tiền  = 0.0 để cho dữ liệu được chính xác hơn
         txtTienThua.setText("0");
         txtTongTien.setText("0");
@@ -759,6 +770,7 @@ public class Form_Home extends javax.swing.JPanel {
         int index = tbHoaDon.getSelectedRow();
         HoaDonResponse hdr = lstHoaDonResponses.get(index);
         lbMaHDThanhToan.setText(hdr.getMaHoaDon());
+        lbMaHD.setText(hdr.getMaHoaDon());
         // con vớt về hoá đơn
         HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
         // lấy ra những giao dịch có trong hoá đơn đã được chọn
@@ -766,12 +778,14 @@ public class Form_Home extends javax.swing.JPanel {
         //list để fill mã bàn, không khai bảo toàn cục nhé
         List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hd);
         String maBan = lstChiTietBanHoaDons.get(0).getBan().getMaBan().toString();
+//        lbSoBan.setText(maBan);
         for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
             if (lstChiTietBanHoaDons.size() > 1) {
                 lbSoBan.setText(maBan + ", " + lstChiTietBanHoaDon.getBan().getMaBan());
             } else {
                 lbSoBan.setText(lstChiTietBanHoaDon.getBan().getMaBan().toString());
             }
+            System.out.println(lstChiTietBanHoaDon.getBan().getMaBan());
         }
 //        lbSoBan.setText("aaaaa");
 
@@ -904,6 +918,7 @@ public class Form_Home extends javax.swing.JPanel {
                 lstBanResponses = banResponseService.getAll();
                 showDataBan(lstBanResponses);
                 dtmHoaDonCT.setRowCount(0);
+                clearFrom();
                 return;
             } else if (cbChuyenKhoan.isSelected()) {
                 hinhThucThanhToan = "Chuyển khoản";
@@ -923,13 +938,13 @@ public class Form_Home extends javax.swing.JPanel {
                 }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công");
                 // check xem đang chọn radio nào thì hiện thị đúng dữ liệu của radio đấy
-                if (checkRdo == 0) {
+                if (checkRdo == 3) {
                     lstHoaDonResponses = hoaDonResponseService.getAll();
                     showDataHoaDon(lstHoaDonResponses);
-                } else if (checkRdo == 1) {
+                } else if (checkRdo == 0) {
                     lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
                     showDataHoaDon(lstHoaDonResponses);
-                } else if (checkRdo == 2) {
+                } else if (checkRdo == 1) {
                     lstHoaDonResponses = hoaDonResponseService.getByTrangThai(1);
                     showDataHoaDon(lstHoaDonResponses);
                 } else {
@@ -940,6 +955,7 @@ public class Form_Home extends javax.swing.JPanel {
                 lstBanResponses = banResponseService.getAll();
                 showDataBan(lstBanResponses);
                 dtmHoaDonCT.setRowCount(0);
+                clearFrom();
                 return;
             } else {
                 hinhThucThanhToan = "Tiền mặt";
@@ -959,13 +975,13 @@ public class Form_Home extends javax.swing.JPanel {
                 }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công");
                 // check xem đang chọn radio nào thì hiện thị đúng dữ liệu của radio đấy
-                if (checkRdo == 0) {
+                if (checkRdo == 3) {
                     lstHoaDonResponses = hoaDonResponseService.getAll();
                     showDataHoaDon(lstHoaDonResponses);
-                } else if (checkRdo == 1) {
+                } else if (checkRdo == 0) {
                     lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
                     showDataHoaDon(lstHoaDonResponses);
-                } else if (checkRdo == 2) {
+                } else if (checkRdo == 1) {
                     lstHoaDonResponses = hoaDonResponseService.getByTrangThai(1);
                     showDataHoaDon(lstHoaDonResponses);
                 } else {
@@ -976,8 +992,9 @@ public class Form_Home extends javax.swing.JPanel {
                 lstBanResponses = banResponseService.getAll();
                 showDataBan(lstBanResponses);
                 dtmHoaDonCT.setRowCount(0);
+                clearFrom();
             }
-
+            lstMaBan.clear();
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
