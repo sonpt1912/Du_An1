@@ -500,6 +500,11 @@ public class Form_Home extends javax.swing.JPanel {
         jButton8.setBackground(new java.awt.Color(204, 204, 204));
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton8.setText("Tách HĐ");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -739,8 +744,8 @@ public class Form_Home extends javax.swing.JPanel {
     private void tbHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoaDonMouseClicked
         // TODO add your handling code here:
         // set lại tiền thừa với tổng tiền  = 0.0 để cho dữ liệu được chính xác hơn
-        txtTienThua.setText("0.0");
-        txtTongTien.setText("0.0");
+        txtTienThua.setText("0");
+        txtTongTien.setText("0");
         // gọi lại hàm để dữ liệu được cập nhập
         fillTienThuaChuyenKhoan();
         fillTienThuaTienMat();
@@ -841,10 +846,7 @@ public class Form_Home extends javax.swing.JPanel {
             Double tongTien = Double.valueOf(txtTongTien.getText());
             // gọi hàm lấy ngày từ máy tính
             String ngayThanhToan = new HoaDonUtil().layNgay();
-            // get ont bàn lấy mã từ label mã bàn
-            Ban ban = (Ban) banService.getOne(lbSoBan.getText());
-            // set trạng thái = 0 cho bàn đã getone về
-            ban.setTrangThai(0);
+
             //fix cuwnsg nv
             // NhanVien nv = (NhanVien) nvs.getOne(lbNhanVien.getText());
             NhanVien nv = (NhanVien) nvs.getOne("NV1");
@@ -856,6 +858,7 @@ public class Form_Home extends javax.swing.JPanel {
             hd.setNhanVien(nv);
             hd.setTongTien(BigDecimal.valueOf(tongTien));
             hd.setNgayThanhToan(Date.valueOf(ngayThanhToan));
+
             // check trường hợp ô checkBox
             if (cbTienMat.isSelected() && cbChuyenKhoan.isSelected()) {
                 // nếu cả 2 check box cùng chọn thì add 2 dữ liệu vào bảng giao dịch
@@ -868,7 +871,14 @@ public class Form_Home extends javax.swing.JPanel {
                 // update lại hoá đơn
                 String addHD = (String) hds.update(hd, lbMaHDThanhToan.getText());
                 // up date lại bàn
-                String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hd);
+                for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
+                    // get ont bàn lấy mã từ label mã bàn
+                    Ban ban = (Ban) banService.getOne(lstChiTietBanHoaDon.getBan().getMaBan().toString());
+                    // set trạng thái = 0 cho bàn đã getone về
+                    ban.setTrangThai(0);
+                    String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công");
                 // check xem đang chọn radio nào thì hiện thị đúng dữ liệu của radio đấy
                 if (checkRdo == 0) {
@@ -896,7 +906,14 @@ public class Form_Home extends javax.swing.JPanel {
                 // update lại hd
                 String addHD = (String) hds.update(hd, lbMaHDThanhToan.getText());
                 //update lại bàn
-                String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hd);
+                for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
+                    // get ont bàn lấy mã từ label mã bàn
+                    Ban ban = (Ban) banService.getOne(lstChiTietBanHoaDon.getBan().getMaBan().toString());
+                    // set trạng thái = 0 cho bàn đã getone về
+                    ban.setTrangThai(0);
+                    String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công");
                 // check xem đang chọn radio nào thì hiện thị đúng dữ liệu của radio đấy
                 if (checkRdo == 0) {
@@ -924,7 +941,14 @@ public class Form_Home extends javax.swing.JPanel {
                 // update HD
                 String addHD = (String) hds.update(hd, lbMaHDThanhToan.getText());
                 //UPdate bàn
-                String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hd);
+                for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
+                    // get ont bàn lấy mã từ label mã bàn
+                    Ban ban = (Ban) banService.getOne(lstChiTietBanHoaDon.getBan().getMaBan().toString());
+                    // set trạng thái = 0 cho bàn đã getone về
+                    ban.setTrangThai(0);
+                    String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công");
                 // check xem đang chọn radio nào thì hiện thị đúng dữ liệu của radio đấy
                 if (checkRdo == 0) {
@@ -1063,8 +1087,13 @@ public class Form_Home extends javax.swing.JPanel {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
         //    k có gì
-
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        JDialogTachHoaDon jDialogTachHoaDon = new JDialogTachHoaDon(null, true);
+        jDialogTachHoaDon.setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
@@ -1079,12 +1108,8 @@ public class Form_Home extends javax.swing.JPanel {
             chuyenKhoan = "0";
         }
         Double tienThua = Double.valueOf(txtTienThua.getText());
-//        Double chuyenKhoan = 0.0;
-        try {
-//            chuyenKhoan = Double.valueOf(txtChuyenKhoan.getText());
-            tienThua = (Double.valueOf(tienMat) + (Double.valueOf(chuyenKhoan))) - Double.valueOf(txtTongTien.getText());
-        } catch (java.lang.NumberFormatException e) {
-        }
+        tienThua = (Double.valueOf(tienMat) + (Double.valueOf(chuyenKhoan))) - Double.valueOf(txtTongTien.getText());
+
         txtTienThua.setText(tienThua.toString());
     }
 
@@ -1099,12 +1124,7 @@ public class Form_Home extends javax.swing.JPanel {
             tienMat = "0";
         }
         Double tienThua = Double.valueOf(txtTienThua.getText());
-//        Double tienMat = 0.0;
-        try {
-//            tienMat = Double.valueOf(txtTienMat.getText());
-            tienThua = (Double.valueOf(tienMat) + Double.valueOf(chuyenKhoan)) - Double.valueOf(txtTongTien.getText());
-        } catch (java.lang.NumberFormatException e) {
-        }
+        tienThua = (Double.valueOf(tienMat) + Double.valueOf(chuyenKhoan)) - Double.valueOf(txtTongTien.getText());
         txtTienThua.setText(tienThua.toString());
     }
 

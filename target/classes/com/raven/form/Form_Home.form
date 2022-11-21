@@ -819,6 +819,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="T&#xe1;ch H&#x110;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
