@@ -56,7 +56,7 @@ public class Form_Combo extends javax.swing.JPanel {
     private ComBo comBo;
     private MonAn monAn;
     private ChiTietComBo chiTietComBo;
-    
+
     public Form_Combo() {
         initComponents();
         tbComBo.setModel(dtComBo);
@@ -78,7 +78,7 @@ public class Form_Combo extends javax.swing.JPanel {
         txtMa.setEnabled(false);
         setCbb();
     }
-    
+
     private void showDataComBo(List<ComBo> list) {
         dtComBo.setRowCount(0);
         int i = 1;
@@ -86,7 +86,7 @@ public class Form_Combo extends javax.swing.JPanel {
             dtComBo.addRow(cb.toDataRow(i++));
         }
     }
-    
+
     private void showDataCTComBo(List<ChiTietComBo> list) {
         dtCTComBo.setRowCount(0);
         int i = 1;
@@ -94,7 +94,7 @@ public class Form_Combo extends javax.swing.JPanel {
             dtCTComBo.addRow(cb.toShowData(i++));
         }
     }
-    
+
     private void showDataSanPham(List<MonAn> list) {
         dtSanPham.setRowCount(0);
         int i = 1;
@@ -102,19 +102,19 @@ public class Form_Combo extends javax.swing.JPanel {
             dtSanPham.addRow(cb.toDataRow(i++));
         }
     }
-    
+
     private void setCbb() {
         List<NhanVien> listNhanVien = nhanVienService.getAll();
         for (NhanVien nv : listNhanVien) {
             dcbNhanVien.addElement(nv.getMa());
         }
-        
+
         List<DanhMuc> listDanhMuc = danhMucService.getAll();
         for (DanhMuc dv : listDanhMuc) {
             dcbLoai.addElement(dv.getMaDanhMuc());
         }
     }
-    
+
     private void clear() {
         txtDonGia.setText("");
         txtMa.setText("");
@@ -123,7 +123,7 @@ public class Form_Combo extends javax.swing.JPanel {
         cbbLoaiMonAn.setSelectedIndex(0);
         rdoApDung.setSelected(true);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -229,6 +229,11 @@ public class Form_Combo extends javax.swing.JPanel {
         });
 
         cbbMaNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbMaNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbMaNhanVienActionPerformed(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setText("Hình Ảnh       :");
@@ -542,7 +547,7 @@ public class Form_Combo extends javax.swing.JPanel {
                 ComBo comBo = new ComBo(null, nhanVien, comBoService.randomMaHoaDon(), txtTen.getText(), null, new BigDecimal(txtDonGia.getText()), 2);
                 String addComBo = comBoService.add(comBo);
                 JOptionPane.showMessageDialog(this, addComBo);
-                showDataComBo(listComBo = comBoService.getAll());
+                rdoChoApDung.setSelected(true);
             }
         } else {
             JOptionPane.showMessageDialog(this, "vui lòng clear trước khi add");
@@ -669,12 +674,20 @@ public class Form_Combo extends javax.swing.JPanel {
 
     private void btnApDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApDungActionPerformed
         // TODO add your handling code here:
-        if (txtMa.getText() != null) {
-            String ma = comBo.getMaCB();
-            ComBo cb = new ComBo(comBo.getId(), nhanVien, comBo.getMaCB(), comBo.getTenCB(), comBo.getHinhAnh(), comBo.getDonGia(), 0);
-            comBoService.update(cb, ma);
+        if (rdoChoApDung.isSelected()) {
+            if (txtMa.getText() != null) {
+                String ma = comBo.getMaCB();
+                ComBo cb = new ComBo(comBo.getId(), nhanVien, comBo.getMaCB(), comBo.getTenCB(), comBo.getHinhAnh(), comBo.getDonGia(), 0);
+                String update = comBoService.update(cb, ma);
+                JOptionPane.showMessageDialog(this, update);
+                showDataComBo(listComBo = comBoService.getAllByTrangThai(2));
+                showDataCTComBo(listCTComBo = chiTietComBoService.getAllByComBo(null));
+                clear();
+            } else {
+                JOptionPane.showMessageDialog(this, "vui lòng chọn combo");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "vui lòng chọn combo");
+            JOptionPane.showMessageDialog(this, "vui lòng chọn combo chờ áp dụng");
         }
     }//GEN-LAST:event_btnApDungActionPerformed
 
@@ -699,6 +712,11 @@ public class Form_Combo extends javax.swing.JPanel {
     private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchCaretUpdate
+
+    private void cbbMaNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbMaNhanVienActionPerformed
+        // TODO add your handling code here:
+        nhanVien = nhanVienService.getOne((String) cbbMaNhanVien.getSelectedItem());
+    }//GEN-LAST:event_cbbMaNhanVienActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

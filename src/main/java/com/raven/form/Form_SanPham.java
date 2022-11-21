@@ -251,13 +251,14 @@ public class Form_SanPham extends javax.swing.JPanel {
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel12)
-                    .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbbLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddDanhMuc)
-                    .addComponent(lbLoaiMon))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAddDanhMuc, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel12)
+                        .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbbLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbLoaiMon)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -491,14 +492,28 @@ public class Form_SanPham extends javax.swing.JPanel {
         // TODO add your handling code here:
         String xoa = monAnService.remove(txtMa.getText());
         JOptionPane.showMessageDialog(this, xoa);
+        rdoListNgungApDung.setSelected(true);
         rdoListNgungApDungActionPerformed(evt);
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        if(monAn != null){
-            
-        }else{
+        //t
+        int trangThai = -1;
+        if (rdoApDung.isSelected()) {
+            trangThai = 0;
+        } else {
+            trangThai = 1;
+        }
+        //
+        if (monAn != null) {
+            Loai loai = loaiService.getOne((String) cbbLoai.getSelectedItem());
+            MonAn ma = new MonAn(null, loai, null, monAnService.maTuDong(), txtTen.getText(), null, new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), trangThai);
+            String update = monAnService.update(monAn, monAn.getMaMonAn());
+            JOptionPane.showMessageDialog(this, update);
+            rdoApDung.setSelected(true);
+            rdoListApDungActionPerformed(evt);
+        } else {
             JOptionPane.showMessageDialog(this, "vui lòng chọn sản phẩm");
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
