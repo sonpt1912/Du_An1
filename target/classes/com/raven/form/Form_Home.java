@@ -1018,17 +1018,17 @@ public class Form_Home extends javax.swing.JPanel {
             }
 
             // check xem đang ở radio nào thì show dữ liệu của radio đấy
-            if (checkRdo == 0) {
+            if (checkRdo == 3) {
                 lstHoaDonResponses = hoaDonResponseService.getAll();
                 showDataHoaDon(lstHoaDonResponses);
             } else if (checkRdo == 1) {
-                lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
-                showDataHoaDon(lstHoaDonResponses);
-            } else if (checkRdo == 2) {
                 lstHoaDonResponses = hoaDonResponseService.getByTrangThai(1);
                 showDataHoaDon(lstHoaDonResponses);
-            } else {
+            } else if (checkRdo == 2) {
                 lstHoaDonResponses = hoaDonResponseService.getByTrangThai(2);
+                showDataHoaDon(lstHoaDonResponses);
+            } else {
+                lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
                 showDataHoaDon(lstHoaDonResponses);
             }
             lstBanResponses = banResponseService.getAll();
@@ -1158,7 +1158,7 @@ public class Form_Home extends javax.swing.JPanel {
         for (HoaDonChiTietResponse lstHDCTResponse : lstHDCTResponses) {
             String giaCB = lstHDCTResponse.getDonGiaCombo().toString();
             String giaMA = lstHDCTResponse.getDonGiaMonAn().toString();
-            tongTien += (Double.valueOf(giaCB) * 1) + (Double.valueOf(giaMA) * 1);
+            tongTien += (Double.valueOf(giaCB) * lstHDCTResponse.getSoLuongCombo()) + (Double.valueOf(giaMA) * lstHDCTResponse.getSoLuongMonAn());
         }
         txtTongTien.setText(tongTien.toString());
     }
