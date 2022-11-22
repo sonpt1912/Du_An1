@@ -88,6 +88,7 @@ public class Form_Home extends javax.swing.JPanel {
     private HoaDonUtil hoaDonUtil = new HoaDonUtil();
     // thực thể
     private NhanVien nhanV;
+    private HoaDon hdTong;
 
     public Form_Home() {
         initComponents();
@@ -730,6 +731,7 @@ public class Form_Home extends javax.swing.JPanel {
         lbMaHD.setText(hdr.getMaHoaDon());
         // con vớt về hoá đơn
         HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
+        hdTong = hd;
         // lấy ra những giao dịch có trong hoá đơn đã được chọn
         List<GiaoDich> giaoDichs = gds2.getTheoHoaDon(hd);
         //list để fill mã bàn, không khai bảo toàn cục nhé
@@ -1100,7 +1102,7 @@ public class Form_Home extends javax.swing.JPanel {
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
+        HoaDon hd = hdTong;
         JDialogTachHoaDon jDialogTachHoaDon = new JDialogTachHoaDon(null, true, hd);
         jDialogTachHoaDon.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
@@ -1122,7 +1124,7 @@ public class Form_Home extends javax.swing.JPanel {
                 ComboResponse cbr = lstComboResponses.get(index);
                 ComBo cb = (ComBo) cbs.getOne(cbr.getMaCB());
                 HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
-                HoaDonChiTiet hdct = new HoaDonChiTiet(null, null, hd, cb, 0, BigDecimal.valueOf(0), soLuong, cb.getDonGia());
+                HoaDonChiTiet hdct = new HoaDonChiTiet(null, null, hd, cb, 0, BigDecimal.valueOf(0), soLuong, cb.getDonGia(),null);
                 String addHDCT = (String) hdctService.add(hdct);
                 lstHDCTResponses = hdctResponseService.getAll(hd);
                 showDataHDCT(lstHDCTResponses);
@@ -1142,7 +1144,7 @@ public class Form_Home extends javax.swing.JPanel {
                 MonAn ma = (MonAn) mas.getOne(mar.getMaMonAn());// chuyển đổi về món ăn để add vào hdct
                 HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
                 // khai báo hdct để add
-                HoaDonChiTiet hdct = new HoaDonChiTiet(null, ma, hd, null, soLuong, ma.getDonGia(), 0, BigDecimal.valueOf(0));
+                HoaDonChiTiet hdct = new HoaDonChiTiet(null, ma, hd, null, soLuong, ma.getDonGia(), 0, BigDecimal.valueOf(0),null);
                 //add hdct
                 String addHDCT = (String) hdctService.add(hdct);
                 lstHDCTResponses = hdctResponseService.getAll(hd);

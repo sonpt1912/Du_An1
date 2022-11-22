@@ -58,6 +58,8 @@ public class HoaDonChiTiet {
     @Column(name = "DonGiaCombo", nullable = false)
     private BigDecimal donGiaCombo;
     
+    @Column(name = "GhiChu")
+    private String ghiChu;
 //    public Object[] toDataRow() {
 //        return new Object[]{monAn.getId(), hoaDon.getId(), ban.getId(), comBo==null?"Null":comBo.getId(), soLuong, donGia};
 //    }
