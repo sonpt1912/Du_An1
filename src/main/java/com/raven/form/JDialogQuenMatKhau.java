@@ -4,11 +4,18 @@
  */
 package com.raven.form;
 
+import com.mycompany.service.impl.NhanVienService;
+import com.mycompany.util.LoginUtil;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
  */
 public class JDialogQuenMatKhau extends javax.swing.JDialog {
+
+    private NhanVienService nhanVienService = new NhanVienService();
+    private LoginUtil UtilLogin = new LoginUtil();
 
     /**
      * Creates new form QuenMK
@@ -127,14 +134,14 @@ public class JDialogQuenMatKhau extends javax.swing.JDialog {
 
     private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuayLaiActionPerformed
         // TODO add your handling code here:
-                ViewLogin viewLogin = new ViewLogin();
-                this.dispose();
-                viewLogin.setVisible(true);
+        ViewLogin viewLogin = new ViewLogin();
+        this.dispose();
+        viewLogin.setVisible(true);
     }//GEN-LAST:event_btnQuayLaiActionPerformed
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         // TODO add your handling code here:
-        //        JOptionPane.showMessageDialog(this, loginUtil.checkMail(txtUser.getText()));
+        JOptionPane.showMessageDialog(this, UtilLogin.checkMail(txtUser.getText()));
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
     /**

@@ -34,6 +34,18 @@ public class NhanVienRepository implements ICommonRepository<NhanVien, Boolean, 
         return lisstNV;
     }
 
+    public List<NhanVien> getAllByTrangThai(int trangThai) {
+        //tajo lisst
+        List<NhanVien> lisstNV = new ArrayList<>();
+        //mowr ss
+        try ( Session session = HibernateUtil.getFactory().openSession()) {
+            Query query = session.createQuery("FROM NhanVien WHERE trangThai = :TrangThai");
+            query.setParameter("TrangThai", trangThai);
+            lisstNV = query.getResultList();
+        }
+        return lisstNV;
+    }
+
     @Override
     public NhanVien getOne(String ma) {
         try ( Session session = HibernateUtil.getFactory().openSession()) {

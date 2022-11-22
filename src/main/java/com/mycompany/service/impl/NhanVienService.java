@@ -83,4 +83,9 @@ public class NhanVienService implements ICommonService<NhanVien, String>, INhanV
         return nvRepo.searchByNameAndMa(name, ma);
     }
 
+    @Override
+    public List<NhanVien> getAllByTrangThai(int trangThai) {
+        return nvRepo.getAllByTrangThai(trangThai);
+    }
+
 }

@@ -9,8 +9,10 @@ import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.KhachHang;
 import com.mycompany.domainModel.NhanVien;
 import com.mycompany.repository.ICommonRepository;
+import com.mycompany.repository.IHoaDonRepository;
 import com.mycompany.repository.impl.HoaDonRepository;
 import com.mycompany.service.ICommonService;
+import com.mycompany.service.IHoaDonService;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
@@ -19,9 +21,10 @@ import java.util.List;
  *
  * @author Admin
  */
-public class HoaDonService implements ICommonService<HoaDon, String> {
+public class HoaDonService implements ICommonService<HoaDon, String>, IHoaDonService {
 
     private ICommonRepository hdr = new HoaDonRepository();
+    private IHoaDonRepository hoaDonrepo = new HoaDonRepository();
 
     @Override
     public List<HoaDon> getAll() {
@@ -86,5 +89,9 @@ public class HoaDonService implements ICommonService<HoaDon, String> {
 //        }
 //
 //    }
+    @Override
+    public List<HoaDon> getHDByTrangThai(int trangThai) {
+        return hoaDonrepo.getHDByTrangThai(trangThai);
+    }
 
 }

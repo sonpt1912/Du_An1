@@ -82,7 +82,7 @@ public class NhanVien {
 //    @OneToMany(mappedBy = "nhanVien", fetch = FetchType.LAZY)
 //    private List<CaLamViec> listCLV;
     public Object[] toDataRow() {
-        return new Object[]{ma,ho+" "+tenDem+" "+ten,gioiTinh,soDienThoai,ngaySinh,trangThai};
+        return new Object[]{ma,ho+" "+tenDem+" "+ten,gioiTinh,soDienThoai,ngaySinh,trangThai == 0 ? "Active":"UnActive"};
     }
 
 }

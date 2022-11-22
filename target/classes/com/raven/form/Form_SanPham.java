@@ -508,8 +508,8 @@ public class Form_SanPham extends javax.swing.JPanel {
         //
         if (monAn != null) {
             Loai loai = loaiService.getOne((String) cbbLoai.getSelectedItem());
-            MonAn ma = new MonAn(null, loai, null, monAnService.maTuDong(), txtTen.getText(), null, new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), trangThai);
-            String update = monAnService.update(monAn, monAn.getMaMonAn());
+            MonAn ma = new MonAn(monAn.getId(), loai, monAn.getKhuyenMai(), monAn.getMaMonAn(), txtTen.getText(), monAn.getHinhAnh(), new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), trangThai);
+            String update = monAnService.update(ma, monAn.getMaMonAn());
             JOptionPane.showMessageDialog(this, update);
             rdoApDung.setSelected(true);
             rdoListApDungActionPerformed(evt);

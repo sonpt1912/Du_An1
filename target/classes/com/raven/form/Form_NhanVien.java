@@ -5,11 +5,11 @@
  */
 package com.raven.form;
 
-
 import com.mycompany.domainModel.ChucVu;
 import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.impl.ChucVuService;
 import com.mycompany.service.impl.NhanVienService;
+import com.mycompany.util.NhanVienUtil;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,6 +36,9 @@ public class Form_NhanVien extends javax.swing.JPanel {
     private DefaultComboBoxModel dcbmMaCV = new DefaultComboBoxModel();
     // tạo thực thể
     private NhanVien nv;
+    private ChucVu chucVu;
+    // util
+    private NhanVienUtil nhanVienUtil = new NhanVienUtil();
     // format ngày
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private java.util.Date today = new java.util.Date();
@@ -47,10 +50,10 @@ public class Form_NhanVien extends javax.swing.JPanel {
         cbbChucVu.setModel(dcbmMaCV);
         String header[] = {"MÃ", "HỌ VÀ Tên", "GIỚI TÍNH", "SDT", "NGÀY SINH", "TRẠNG THÁI"};
         dtmNhanVien.setColumnIdentifiers(header);
-        showData(listNhanVien = nhanVienService.getAll());
-        listChucVu = chucVuService.getChucVuActive();
-        loadCBB(listChucVu);
+        showData(listNhanVien = nhanVienService.getAllByTrangThai(0));
+        loadCBB(listChucVu = chucVuService.getChucVuActive());
         txtNgaySinh.setDate(today);
+        txtMa.setEnabled(false);
     }
 
     public void showData(List<NhanVien> list) {
@@ -73,7 +76,7 @@ public class Form_NhanVien extends javax.swing.JPanel {
         txtEmail.setText(nv.getEmail());
         txtHo.setText(nv.getHo());
         txtMa.setText(nv.getMa());
-        txtMa.setEnabled(false);
+//        txtMa.setEnabled(false);
         txtSdt.setText(nv.getSoDienThoai());
         txtTen.setText(nv.getTen());
         txtTenDem.setText(nv.getTenDem());
@@ -83,16 +86,16 @@ public class Form_NhanVien extends javax.swing.JPanel {
             radioUnactive.setSelected(true);
         }
         if (nv.getGioiTinh().equals("Nam")) {
-            radioNam.setSelected(true);
+            rdoNam.setSelected(true);
         } else if (nv.getGioiTinh().equals("Nữ")) {
-            radioNu.setSelected(true);
+            rdoNu.setSelected(true);
         } else {
-            radioKoXD.setSelected(true);
+            rdoKoXacDinh.setSelected(true);
         }
         cbbChucVu.setSelectedItem(nv.getChucVu().getMa());
         txtNgaySinh.setDate(nv.getNgaySinh());
         txtMatKhau.setText(nv.getMatKhau());
-        txtTenCV.setText(nv.getChucVu().getTen());
+        txtTenCv.setText(nv.getChucVu().getTen());
     }
 
     private NhanVien newNV() {
@@ -101,15 +104,15 @@ public class Form_NhanVien extends javax.swing.JPanel {
         nhanVien.setChucVu(chucVu);
         nhanVien.setDiaChi(txtDiaChi.getText());
         nhanVien.setEmail(txtEmail.getText());
-        if (radioNam.isSelected()) {
+        if (rdoNam.isSelected()) {
             nhanVien.setGioiTinh("Nam");
-        } else if (radioNu.isSelected()) {
+        } else if (rdoNu.isSelected()) {
             nhanVien.setGioiTinh("Nữ");
         } else {
             nhanVien.setGioiTinh("Ko xác định");
         }
         nhanVien.setHo(txtHo.getText());
-        nhanVien.setMa(txtMa.getText());
+        nhanVien.setMa(nhanVienUtil.maTuDong(listNhanVien = nhanVienService.getAll()));
         nhanVien.setMatKhau(txtMatKhau.getText());
         nhanVien.setNgaySinh(Date.valueOf(simpleDateFormat.format(txtNgaySinh.getDate())));
         nhanVien.setSoDienThoai(txtSdt.getText());
@@ -129,6 +132,7 @@ public class Form_NhanVien extends javax.swing.JPanel {
 
         radioTrangThaiNV = new javax.swing.ButtonGroup();
         radioGioiTinh = new javax.swing.ButtonGroup();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         panelBorder1 = new com.raven.swing.PanelBorder();
         txtSearch = new com.raven.swing.SearchText();
         jLabel1 = new javax.swing.JLabel();
@@ -161,10 +165,10 @@ public class Form_NhanVien extends javax.swing.JPanel {
         radioActive = new javax.swing.JRadioButton();
         radioUnactive = new javax.swing.JRadioButton();
         jLabel16 = new javax.swing.JLabel();
-        txtTenCV = new javax.swing.JTextField();
-        radioNam = new javax.swing.JRadioButton();
-        radioNu = new javax.swing.JRadioButton();
-        radioKoXD = new javax.swing.JRadioButton();
+        rdoNam = new javax.swing.JRadioButton();
+        rdoNu = new javax.swing.JRadioButton();
+        rdoKoXacDinh = new javax.swing.JRadioButton();
+        txtTenCv = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbNhanVien = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -173,6 +177,8 @@ public class Form_NhanVien extends javax.swing.JPanel {
         btnUpdate = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
+        radioListActive = new javax.swing.JRadioButton();
+        radioListUnactive = new javax.swing.JRadioButton();
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -255,14 +261,17 @@ public class Form_NhanVien extends javax.swing.JPanel {
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setText("Tên CV:");
 
-        radioGioiTinh.add(radioNam);
-        radioNam.setText("Nam");
+        radioGioiTinh.add(rdoNam);
+        rdoNam.setSelected(true);
+        rdoNam.setText("Nam");
 
-        radioGioiTinh.add(radioNu);
-        radioNu.setText("Nữ");
+        radioGioiTinh.add(rdoNu);
+        rdoNu.setText("Nữ");
 
-        radioGioiTinh.add(radioKoXD);
-        radioKoXD.setText("Ko xác định");
+        radioGioiTinh.add(rdoKoXacDinh);
+        rdoKoXacDinh.setText("Ko xác định");
+
+        txtTenCv.setText("jLabel17");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -298,11 +307,11 @@ public class Form_NhanVien extends javax.swing.JPanel {
                                             .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(26, 26, 26)
-                                        .addComponent(radioNam)
+                                        .addComponent(rdoNam)
                                         .addGap(18, 18, 18)
-                                        .addComponent(radioNu)
+                                        .addComponent(rdoNu)
                                         .addGap(18, 18, 18)
-                                        .addComponent(radioKoXD)))))
+                                        .addComponent(rdoKoXacDinh)))))
                         .addGap(217, 217, 217))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -336,9 +345,9 @@ public class Form_NhanVien extends javax.swing.JPanel {
                             .addComponent(jLabel14)
                             .addComponent(jLabel16))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbbChucVu, 0, 162, Short.MAX_VALUE)
-                            .addComponent(txtTenCV))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbbChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTenCv, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAddChucVu)
@@ -380,9 +389,9 @@ public class Form_NhanVien extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel8)
-                                .addComponent(radioNam)
-                                .addComponent(radioNu)
-                                .addComponent(radioKoXD))
+                                .addComponent(rdoNam)
+                                .addComponent(rdoNu)
+                                .addComponent(rdoKoXacDinh))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel14)
                                 .addComponent(cbbChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -390,9 +399,9 @@ public class Form_NhanVien extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel16)
-                            .addComponent(txtTenCV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnLoad)
-                            .addComponent(jLabel9)))
+                            .addComponent(jLabel9)
+                            .addComponent(txtTenCv)))
                     .addComponent(txtNgaySinh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -460,6 +469,23 @@ public class Form_NhanVien extends javax.swing.JPanel {
             }
         });
 
+        buttonGroup1.add(radioListActive);
+        radioListActive.setSelected(true);
+        radioListActive.setText("Active");
+        radioListActive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioListActiveActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(radioListUnactive);
+        radioListUnactive.setText("Unactive");
+        radioListUnactive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioListUnactiveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -482,6 +508,10 @@ public class Form_NhanVien extends javax.swing.JPanel {
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(radioListActive)
+                                .addGap(27, 27, 27)
+                                .addComponent(radioListUnactive)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnAdd)
                                 .addGap(18, 18, 18)
@@ -508,7 +538,11 @@ public class Form_NhanVien extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
+                    .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(radioListActive)
+                            .addComponent(radioListUnactive)))
                     .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAdd)
                         .addComponent(btnUpdate)
@@ -533,11 +567,14 @@ public class Form_NhanVien extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
 //        ChucVu chucVu = chucVuService.getOne((String) cbbChucVu.getSelectedItem());
-//        NhanVien nhanVien = new NhanVien(null, chucVu, txtMa.getText(), txtHo.getText(), txtTenDem.getText(), txtTen.getText(), txtGioiTinh.getText(), txtSdt.getText(), txtEmail.getText(), Date.valueOf(simpleDateFormat.format(txtNgaySinh.getDate())), txtDiaChi.getText(), txtMatKhau.getText(), Integer.valueOf(txtTrangThai.getText()));
-        NhanVien nhanVien = newNV();
-        String add = nhanVienService.add(nhanVien);
-        JOptionPane.showMessageDialog(this, add);
-        showData(listNhanVien = nhanVienService.getAll());
+        if (txtMa.getText().isEmpty()) {
+            NhanVien nhanVien = newNV();
+            String add = nhanVienService.add(nhanVien);
+            JOptionPane.showMessageDialog(this, add);
+            showData(listNhanVien = nhanVienService.getAll());
+        } else {
+            JOptionPane.showMessageDialog(this, "vui lòng clear");
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAddChucVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddChucVuActionPerformed
@@ -559,6 +596,8 @@ public class Form_NhanVien extends javax.swing.JPanel {
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         String xoa = nhanVienService.remove(txtMa.getText());
+        showData(listNhanVien = nhanVienService.getAllByTrangThai(0));
+        radioListActiveActionPerformed(evt);
         JOptionPane.showMessageDialog(this, xoa);
     }//GEN-LAST:event_btnRemoveActionPerformed
 
@@ -572,17 +611,17 @@ public class Form_NhanVien extends javax.swing.JPanel {
         txtEmail.setText("");
         txtHo.setText("");
         txtMa.setText("");
-        txtMa.setEnabled(true);
+        txtMa.setEnabled(false);
         txtSdt.setText("");
         txtTen.setText("");
         txtTenDem.setText("");
         radioActive.setSelected(true);
-        radioNam.setSelected(true);
+        rdoNam.setSelected(true);
         cbbChucVu.setSelectedIndex(0);
         txtNgaySinh.setDate(today);
         txtMatKhau.setText("");
         if (dcbmMaCV != null) {
-            txtTenCV.setText(chucVuService.getOne(dcbmMaCV.getSelectedItem().toString()).getTen());
+            txtTenCv.setText(chucVuService.getOne(dcbmMaCV.getSelectedItem().toString()).getTen());
         }
     }//GEN-LAST:event_btnClearActionPerformed
 
@@ -602,11 +641,22 @@ public class Form_NhanVien extends javax.swing.JPanel {
 
     private void cbbChucVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbChucVuActionPerformed
         try {
-            txtTenCV.setText(chucVuService.getOne(dcbmMaCV.getSelectedItem().toString()).getTen());
+            chucVu = chucVuService.getOne((String) dcbmMaCV.getSelectedItem());
+            txtTenCv.setText(chucVu.getTen());
         } catch (Exception e) {
-            txtTenCV.setText("");
+            txtTenCv.setText("");
         }
     }//GEN-LAST:event_cbbChucVuActionPerformed
+
+    private void radioListActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioListActiveActionPerformed
+        // TODO add your handling code here:
+        showData(listNhanVien = nhanVienService.getAllByTrangThai(0));
+    }//GEN-LAST:event_radioListActiveActionPerformed
+
+    private void radioListUnactiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioListUnactiveActionPerformed
+        // TODO add your handling code here:
+        showData(listNhanVien = nhanVienService.getAllByTrangThai(1));
+    }//GEN-LAST:event_radioListUnactiveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -616,6 +666,7 @@ public class Form_NhanVien extends javax.swing.JPanel {
     private javax.swing.JButton btnLoad;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbChucVu;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
@@ -639,11 +690,13 @@ public class Form_NhanVien extends javax.swing.JPanel {
     private com.raven.swing.PanelBorder panelBorder1;
     private javax.swing.JRadioButton radioActive;
     private javax.swing.ButtonGroup radioGioiTinh;
-    private javax.swing.JRadioButton radioKoXD;
-    private javax.swing.JRadioButton radioNam;
-    private javax.swing.JRadioButton radioNu;
+    private javax.swing.JRadioButton radioListActive;
+    private javax.swing.JRadioButton radioListUnactive;
     private javax.swing.ButtonGroup radioTrangThaiNV;
     private javax.swing.JRadioButton radioUnactive;
+    private javax.swing.JRadioButton rdoKoXacDinh;
+    private javax.swing.JRadioButton rdoNam;
+    private javax.swing.JRadioButton rdoNu;
     private javax.swing.JTable tbNhanVien;
     private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtEmail;
@@ -654,7 +707,7 @@ public class Form_NhanVien extends javax.swing.JPanel {
     private javax.swing.JTextField txtSdt;
     private com.raven.swing.SearchText txtSearch;
     private javax.swing.JTextField txtTen;
-    private javax.swing.JTextField txtTenCV;
+    private javax.swing.JLabel txtTenCv;
     private javax.swing.JTextField txtTenDem;
     // End of variables declaration//GEN-END:variables
 }

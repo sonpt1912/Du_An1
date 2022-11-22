@@ -36,7 +36,7 @@ public class LoginUtil {
         return "";
     }
 
-    public String guiEmail(String email, String pass) {
+    private String guiEmail(String email, String pass) {
         final String username = "sonptph25875@fpt.edu.vn";
         final String password = "Son191203";
 
