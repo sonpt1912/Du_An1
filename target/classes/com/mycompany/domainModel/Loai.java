@@ -50,8 +50,7 @@ public class Loai {
     @Column(name = "TrangThai", nullable = true)
     private int trangThai;
 
-//    @Override
-//    public String toString() {
-//        return "Loai{" + "idLoai=" + idLoai + ", maLoai=" + maLoai + ", tenLoai=" + tenLoai + ", trangThai=" + trangThai + '}';
-//    }
+    public Object[] toDataRow() {
+        return new Object[]{danhMuc.getTenDanhMuc(), tenLoai, (trangThai == 0 ? "Kinh doanh" : "Ngừng kinh doanh")};
+    }
 }
