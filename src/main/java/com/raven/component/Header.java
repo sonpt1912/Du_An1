@@ -16,7 +16,7 @@ public class Header extends javax.swing.JPanel {
     private void initComponents() {
 
         lbTenMaNhanVien = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lbClock = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -25,8 +25,17 @@ public class Header extends javax.swing.JPanel {
         lbTenMaNhanVien.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbTenMaNhanVien.setText("Nguyễn Đức Dụng - Nhân Viên");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setText("2022-11-17 12:42:20");
+        lbClock.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbClock.setText("2022-11-17 12:42:20");
+        lbClock.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lbClockAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(0, 0, 0));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -41,7 +50,7 @@ public class Header extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(lbTenMaNhanVien)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
+                .addComponent(lbClock)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 303, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
@@ -52,11 +61,17 @@ public class Header extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbTenMaNhanVien)
-                    .addComponent(jLabel1)
+                    .addComponent(lbClock)
                     .addComponent(jButton1))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lbClockAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lbClockAncestorAdded
+        // TODO add your handling code here:
+        ClockThread clock = new ClockThread(lbClock);
+        clock.start();
+    }//GEN-LAST:event_lbClockAncestorAdded
 
     @Override
     protected void paintComponent(Graphics grphcs) {
@@ -71,7 +86,7 @@ public class Header extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lbClock;
     private javax.swing.JLabel lbTenMaNhanVien;
     // End of variables declaration//GEN-END:variables
 }

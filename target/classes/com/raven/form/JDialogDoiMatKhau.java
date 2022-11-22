@@ -39,6 +39,7 @@ public class JDialogDoiMatKhau extends javax.swing.JDialog {
         txtXacNhanMatKhauMoi = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Đổi Mật Khẩu");
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -86,9 +87,9 @@ public class JDialogDoiMatKhau extends javax.swing.JDialog {
                 .addGap(72, 72, 72)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnQuayLai)
-                        .addGap(271, 271, 271)
-                        .addComponent(btnXacNhan))
+                        .addComponent(btnQuayLai, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(223, 223, 223)
+                        .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(22, 22, 22)
@@ -127,9 +128,9 @@ public class JDialogDoiMatKhau extends javax.swing.JDialog {
                     .addComponent(txtXacNhanMatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnXacNhan)
-                    .addComponent(btnQuayLai))
-                .addContainerGap(67, Short.MAX_VALUE))
+                    .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnQuayLai, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -149,9 +150,9 @@ public class JDialogDoiMatKhau extends javax.swing.JDialog {
 
     private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuayLaiActionPerformed
         // TODO add your handling code here:
-        //        ViewLogin viewLogin = new ViewLogin();
-        //        this.dispose();
-        //        viewLogin.setVisible(true);
+                ViewLogin viewLogin = new ViewLogin();
+                this.dispose();
+                viewLogin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnQuayLaiActionPerformed
 
