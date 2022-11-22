@@ -25,18 +25,20 @@ public class HoaDonChiTietResponse {
     private BigDecimal donGiaMonAn;
 
     private Integer soLuongMonAn;
-    
+
     private String maCombo;
 
     private String tenCombo;
 
     private BigDecimal donGiaCombo;
-    
+
     private Integer soLuongCombo;
+
+    private String ghiChu;
 
     public Object[] toDataRow(int stt) {
 //        return new Object[]{stt, maMonAn, tenMonAn, donGiaMonAn,
 //            maCombo != null ? maCombo : "", tenCombo != null ? tenCombo : "", donGiaCombo != null ? donGiaCombo : ""};
-        return new Object[]{stt, maMonAn, tenMonAn, donGiaMonAn, soLuongMonAn, maCombo == null ? "" : maCombo, tenCombo == null ? "" : tenCombo, donGiaCombo == null ? "" : donGiaCombo, soLuongCombo};
+        return new Object[]{stt, tenMonAn, donGiaMonAn, soLuongMonAn, tenCombo == null ? "" : tenCombo, donGiaCombo == null ? "" : donGiaCombo, soLuongCombo,ghiChu};
     }
 }

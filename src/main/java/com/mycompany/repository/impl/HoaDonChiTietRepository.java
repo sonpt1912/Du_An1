@@ -50,19 +50,23 @@ public class HoaDonChiTietRepository implements IHoaDonChiTiet<HoaDonChiTiet, Bo
     @Override
     public Boolean update(HoaDonChiTiet kh, HoaDon hd) {
         Transaction transaction = null;
-        String hql = "UPDATE " + fromTable + "SET monAn = :monAn, ban = :ban, comBo = :comBo, soLuong = :soLuong, donGia = :donGia "
+        String hql = "UPDATE " + fromTable + "SET monAn = :monAn,soLuongMonAn = :soLuongMonAn,donGiaMonAn = :donGiaMonAn,"
+                + " comBo = :comBo, soLuongCombo = :soLuongCombo, donGiaCombo = :donGiaCombo, ghiChu = :ghiChu "
                 + "WHERE hoaDon = :hoaDon";
         int check = 0;
         try {
             transaction = session.beginTransaction();
             Query query = session.createQuery(hql);
             query.setParameter("monAn", kh.getMonAn());
-//            query.setParameter("ban", kh.getBan());
-//            query.setParameter("comBo", kh.getComBo());
-//            query.setParameter("soLuong", kh.getSoLuong());
-//            query.setParameter("donGia", kh.getDonGia());
+            query.setParameter("soLuongMonAn", kh.getSoLuongMonAn());
+            query.setParameter("donGiaMonAn", kh.getDonGiaMonAn());
+            query.setParameter("comBo", kh.getComBo());
+            query.setParameter("soLuongCombo", kh.getSoLuongCombo());
+            query.setParameter("donGiaCombo", kh.getDonGiaCombo());
+            query.setParameter("ghiChu", kh.getGhiChu());
             query.setParameter("hoaDon", hd);
             check = query.executeUpdate();
+            transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }

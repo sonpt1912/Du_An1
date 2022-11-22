@@ -24,13 +24,14 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
     private IHoaDonChiTietResponseService hdctrs = new HoaDonChiTietResponseService();
     private DefaultTableModel dtmHDCu = new DefaultTableModel();
     private DefaultTableModel dtmHDMoi = new DefaultTableModel();
+    // thực thể cả class
     private HoaDon hoaDon;
 
     public JDialogTachHoaDon(java.awt.Frame parent, boolean modal, HoaDon hd) {
         super(parent, modal);
         initComponents();
         hoaDon = hd;
-        String headerHoaDonCT[] = {"STT", "Mã món ăn", "Tên món ăn", "Giá món ăn", "Số lượng món ăn", "Mã combo", "Tên combo", "Giá combo", "Số lượng combo"};
+        String headerHoaDonCT[] = {"STT", "Tên món ăn", "Giá món ăn", "Số lượng món ăn", "Tên combo", "Giá combo", "Số lượng combo", "Ghi chú"};
         tbHDCTCu.setModel(dtmHDCu);
         tbHDCTMoi.setModel(dtmHDMoi);
         dtmHDCu.setColumnIdentifiers(headerHoaDonCT);
@@ -148,35 +149,56 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
 
     private void tbHDCTCuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHDCTCuMouseClicked
         // TODO add your handling code here:
+        // lấy thằng cần tách
         int index = tbHDCTCu.getSelectedRow();
         HoaDonChiTietResponse hdctrCu = lstDonChiTietResponsesCu.get(index);
+        // con vớt thằng cần tách vào thằng mới
         HoaDonChiTietResponse hdctrMoi = hdctrCu;
+        // lấy số lượng của thằng cũ
         Integer soLuongMonAnCu = hdctrCu.getSoLuongMonAn();
         Integer soLuongComboCu = hdctrCu.getSoLuongCombo();
         String soLuong = JOptionPane.showInputDialog("Mời nhập số lượng");
         if (soLuong == null) {
             return;
         } else if (soLuong.equals("")) {
-            soLuong = "0";
             return;
         } else {
-            String check = null;
             if (hdctrCu.getMaMonAn() == null) {
+                //tính số lượng còn lại của thằng cũ
                 Integer soLuongConLai = soLuongComboCu - Integer.valueOf(soLuong);
-                if (soLuongConLai == 0) {
-                    JOptionPane.showMessageDialog(this, "Số lượng món ăn ở hoá đơn cũ không thể về 0");
+                if (soLuongConLai < 0) {
+                    JOptionPane.showMessageDialog(this, "Số lượng còn lại không được âm");
                     return;
                 }
+                // sét  số lượng cho thằng mới
                 hdctrMoi.setSoLuongCombo(Integer.valueOf(soLuong));
+                //sét số lượng còn lại cho thằng cũ
                 hdctrCu.setSoLuongCombo(soLuongConLai);
+//                hdctrCu.setGhiChu("");
+                lstDonChiTietResponsesMoi.add(hdctrMoi);
+                showDataHDMoi(lstDonChiTietResponsesMoi);
+                showDataHDCu(lstDonChiTietResponsesCu);
+                if (soLuongConLai == 0) {
+                    dtmHDCu.removeRow(index);
+                }
             } else {
                 Integer soLuongConLai = soLuongMonAnCu - Integer.valueOf(soLuong);
+                if (soLuongConLai < 0) {
+                    JOptionPane.showMessageDialog(this, "Số lượng còn lại không được âm");
+                    return;
+                }
+                // sét  số lượng cho thằng mới
                 hdctrMoi.setSoLuongMonAn(Integer.valueOf(soLuong));
+                //sét số lượng còn lại cho thằng cũ
                 hdctrCu.setSoLuongMonAn(soLuongConLai);
+//                hdctrCu.setGhiChu("");
+                lstDonChiTietResponsesMoi.add(hdctrMoi);
+                showDataHDMoi(lstDonChiTietResponsesMoi);
+                showDataHDCu(lstDonChiTietResponsesCu);
+                if (soLuongConLai == 0) {
+                    dtmHDCu.removeRow(index);
+                }
             }
-            lstDonChiTietResponsesMoi.add(hdctrMoi);
-            showDataHDMoi(lstDonChiTietResponsesMoi);
-            showDataHDCu(lstDonChiTietResponsesCu);
         }
     }//GEN-LAST:event_tbHDCTCuMouseClicked
 
