@@ -10,6 +10,7 @@ import com.mycompany.service.IHoaDonChiTietResponseService;
 import com.mycompany.service.impl.HoaDonChiTietResponseService;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,17 +19,42 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JDialogTachHoaDon extends javax.swing.JDialog {
 
-    private List<HoaDonChiTietResponse> lstDonChiTietResponses = new ArrayList<>();
+    private List<HoaDonChiTietResponse> lstDonChiTietResponsesCu = new ArrayList<>();
+    private List<HoaDonChiTietResponse> lstDonChiTietResponsesMoi = new ArrayList<>();
     private IHoaDonChiTietResponseService hdctrs = new HoaDonChiTietResponseService();
-    private DefaultTableModel dtm = new DefaultTableModel();
+    private DefaultTableModel dtmHDCu = new DefaultTableModel();
+    private DefaultTableModel dtmHDMoi = new DefaultTableModel();
+    private HoaDon hoaDon;
 
     public JDialogTachHoaDon(java.awt.Frame parent, boolean modal, HoaDon hd) {
         super(parent, modal);
         initComponents();
+        hoaDon = hd;
         String headerHoaDonCT[] = {"STT", "Mã món ăn", "Tên món ăn", "Giá món ăn", "Số lượng món ăn", "Mã combo", "Tên combo", "Giá combo", "Số lượng combo"};
-        tbHDCTCu.setModel(dtm);
-        tbHDCTMoi.setModel(dtm);
-        dtm.setColumnIdentifiers(headerHoaDonCT);
+        tbHDCTCu.setModel(dtmHDCu);
+        tbHDCTMoi.setModel(dtmHDMoi);
+        dtmHDCu.setColumnIdentifiers(headerHoaDonCT);
+        dtmHDMoi.setColumnIdentifiers(headerHoaDonCT);
+        lstDonChiTietResponsesCu = hdctrs.getAll(hoaDon);
+        showDataHDCu(lstDonChiTietResponsesCu);
+    }
+
+    private void showDataHDCu(List<HoaDonChiTietResponse> hoaDonChiTietResponses) {
+        dtmHDCu.setRowCount(0);
+        int stt = 0;
+        for (HoaDonChiTietResponse hoaDonChiTietResponse : hoaDonChiTietResponses) {
+            stt++;
+            dtmHDCu.addRow(hoaDonChiTietResponse.toDataRow(stt));
+        }
+    }
+
+    private void showDataHDMoi(List<HoaDonChiTietResponse> hoaDonChiTietResponses) {
+        dtmHDMoi.setRowCount(0);
+        int stt = 0;
+        for (HoaDonChiTietResponse hoaDonChiTietResponse : hoaDonChiTietResponses) {
+            stt++;
+            dtmHDMoi.addRow(hoaDonChiTietResponse.toDataRow(stt));
+        }
     }
 
     /**
@@ -66,6 +92,11 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbHDCTCu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbHDCTCuMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbHDCTCu);
 
         tbHDCTMoi.setModel(new javax.swing.table.DefaultTableModel(
@@ -114,6 +145,40 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tbHDCTCuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHDCTCuMouseClicked
+        // TODO add your handling code here:
+        int index = tbHDCTCu.getSelectedRow();
+        HoaDonChiTietResponse hdctrCu = lstDonChiTietResponsesCu.get(index);
+        HoaDonChiTietResponse hdctrMoi = hdctrCu;
+        Integer soLuongMonAnCu = hdctrCu.getSoLuongMonAn();
+        Integer soLuongComboCu = hdctrCu.getSoLuongCombo();
+        String soLuong = JOptionPane.showInputDialog("Mời nhập số lượng");
+        if (soLuong == null) {
+            return;
+        } else if (soLuong.equals("")) {
+            soLuong = "0";
+            return;
+        } else {
+            String check = null;
+            if (hdctrCu.getMaMonAn() == null) {
+                Integer soLuongConLai = soLuongComboCu - Integer.valueOf(soLuong);
+                if (soLuongConLai == 0) {
+                    JOptionPane.showMessageDialog(this, "Số lượng món ăn ở hoá đơn cũ không thể về 0");
+                    return;
+                }
+                hdctrMoi.setSoLuongCombo(Integer.valueOf(soLuong));
+                hdctrCu.setSoLuongCombo(soLuongConLai);
+            } else {
+                Integer soLuongConLai = soLuongMonAnCu - Integer.valueOf(soLuong);
+                hdctrMoi.setSoLuongMonAn(Integer.valueOf(soLuong));
+                hdctrCu.setSoLuongMonAn(soLuongConLai);
+            }
+            lstDonChiTietResponsesMoi.add(hdctrMoi);
+            showDataHDMoi(lstDonChiTietResponsesMoi);
+            showDataHDCu(lstDonChiTietResponsesCu);
+        }
+    }//GEN-LAST:event_tbHDCTCuMouseClicked
 
     /**
      * @param args the command line arguments
