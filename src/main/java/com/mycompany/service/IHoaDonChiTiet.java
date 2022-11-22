@@ -6,12 +6,12 @@ package com.mycompany.service;
 
 import java.util.List;
 
-
 //O = Object
 //B = boolean
 //S = String
 //O2 = Object2
-public interface IHoaDonChiTiet<O,S,O2> {
+public interface IHoaDonChiTiet<O, S, O2> {
+
     List<O> getAll();
 
     O getOne(S ma);
@@ -21,4 +21,6 @@ public interface IHoaDonChiTiet<O,S,O2> {
     S update(O kh, O2 ma);
 
     S remove(O2 ma);
+
+    List<O> getHDCTByHD(O2 hoaDon);
 }

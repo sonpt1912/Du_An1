@@ -60,8 +60,10 @@ public class HoaDonChiTiet {
 
     @Column(name = "GhiChu")
     private String ghiChu;
-//    public Object[] toDataRow() {
-//        return new Object[]{monAn.getId(), hoaDon.getId(), ban.getId(), comBo==null?"Null":comBo.getId(), soLuong, donGia};
-//    }
+
+    public Object[] toDataRow() {
+        return new Object[]{hoaDon.getMaHoaDon(), (monAn == null ? "" : monAn.getTenMonAn()),
+            soLuongMonAn, donGiaMonAn, (comBo == null ? "" : comBo.getTenCB()), soLuongCombo, donGiaCombo, ghiChu};
+    }
 
 }

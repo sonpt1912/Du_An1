@@ -62,6 +62,7 @@ public class HoaDonChiTietService implements IHoaDonChiTiet<HoaDonChiTiet, Strin
         return hdctRep.tinhTongTien(listHDCT);
     }
 
+    @Override
     public List<HoaDonChiTiet> getHDCTByHD(HoaDon hoaDon) {
         return hdctRep.getHDCTByHD(hoaDon);
     }

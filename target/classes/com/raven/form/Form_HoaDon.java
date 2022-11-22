@@ -34,7 +34,7 @@ import javax.swing.table.DefaultTableModel;
  * @author RAVEN
  */
 public class Form_HoaDon extends javax.swing.JPanel {
-
+    
     private DefaultTableModel dtmHoaDon = new DefaultTableModel();
     private List<HoaDon> listHD = new ArrayList<>();
     private HoaDonService hoaDonService = new HoaDonService();
@@ -51,7 +51,8 @@ public class Form_HoaDon extends javax.swing.JPanel {
     private List<String> listTrangThaiHD = new ArrayList<>();
     private ChiTietBanHoaDonService chiTietBanHoaDonService = new ChiTietBanHoaDonService();
     private List<ChiTietBanHoaDon> listCTBan_HD = new ArrayList<>();
-
+    private DefaultTableModel dtmHDCT = new DefaultTableModel();
+    
     public Form_HoaDon() {
         initComponents();
         this.nhanV = nhanV;
@@ -70,8 +71,11 @@ public class Form_HoaDon extends javax.swing.JPanel {
         //lbNgayGio.setText(String.valueOf(today));
         cbbTrangThaiHoaDon.setModel(dcbmTrangThaiHD);
         loadCbbTrangThaiHD();
+        String headersHDCT[] = {"Mã HD", "Mã MA", "Sl món", "Đơn giá", "Combo", "SL combo", "Đơn giá", "Ghi chú"};
+        tbHoaDonChiTiet.setModel(dtmHDCT);
+        dtmHDCT.setColumnIdentifiers(headersHDCT);
     }
-
+    
     private void showData(List<HoaDon> listHD) {
         if (listHD.size() > 0) {
             dtmHoaDon.setRowCount(0);
@@ -80,7 +84,16 @@ public class Form_HoaDon extends javax.swing.JPanel {
             }
         }
     }
-
+    
+    private void showDataHDCT(List<HoaDonChiTiet> listHDCT) {
+        dtmHDCT.setRowCount(0);
+        if (listHDCT.size() > 0) {
+            for (HoaDonChiTiet hoaDonChiTiet : listHDCT) {
+                dtmHDCT.addRow(hoaDonChiTiet.toDataRow());
+            }
+        }
+    }
+    
     private void loadCbbTrangThaiHD() {
         listTrangThaiHD.add("Tất cả");
         listTrangThaiHD.add("Chờ thanh toán");
@@ -90,7 +103,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
             dcbmTrangThaiHD.addElement(string);
         }
     }
-
+    
     private void fillHD(int index, List<HoaDon> listHD) {
         HoaDon hoaDon = listHD.get(index);
         lbMaHD.setText(hoaDon.getMaHoaDon());
@@ -128,7 +141,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
         txtNgayTao.setEnabled(false);
         lbKhuVuc.setText(banService.getOne(listCTBan_HD.get(0).getBan().getMaBan().toString()).getKv().getTenKV());
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -519,11 +532,15 @@ public class Form_HoaDon extends javax.swing.JPanel {
         radioDaHuy.setEnabled(true);
         radioDaTT.setEnabled(true);
         txtNgayTao.setEnabled(true);
+        dtmHDCT.setRowCount(0);
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void tbHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoaDonMouseClicked
         int index = tbHoaDon.getSelectedRow();
         fillHD(index, listHD);
+        HoaDon hoaDon = listHD.get(index);
+        listHDCT = hoaDonChiTietService.getHDCTByHD(hoaDon);
+        showDataHDCT(listHDCT);
     }//GEN-LAST:event_tbHoaDonMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
