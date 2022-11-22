@@ -10,6 +10,7 @@ import com.mycompany.domainModel.Loai;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.ICommonRepository;
+import com.mycompany.repository.IMonAnRepository;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import org.hibernate.Transaction;
  *
  * @author Admin
  */
-public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String> {
+public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String>, IMonAnRepository {
 
     private static final Session session = HibernateUtil.getFactory().openSession();
     private String fromTable = "FROM MonAn ";
@@ -68,7 +69,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
     @Override
     public Boolean update(MonAn kh, String ma) {
         String hql = "UPDATE " + fromTable + "SET tenMonAn = :ten, hinhAnh = :hinhAnh, donGia = :donGia, donViTinh = :donViTinh,"
-                + "loai = :loaiMA, trangThai = :TrangThai  "
+                + "loai = :loaiMA, trangThai = :TrangThai, khuyenMai = :KM "
                 + "WHERE maMonAn =:ma";
         Transaction transaction = null;
         int check = 0;
@@ -82,6 +83,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
             query.setParameter("donViTinh", kh.getDonViTinh());
             query.setParameter("loaiMA", kh.getLoai());
             query.setParameter("TrangThai", kh.getTrangThai());
+            query.setParameter("KM", kh.getKhuyenMai());
             query.setParameter("ma", ma);
             check = query.executeUpdate();
             transaction.commit();
@@ -173,11 +175,23 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
 ////        monAn.setTrangThai(0);
 //        boolean add = new MonAnRepository().remove("MA3");
 //        System.out.println(add);
-        DanhMuc danhMuc = new DanhMuc();
-        danhMuc.setIdDanhMuc("E90C9CF5-5D6A-4DE0-8609-F190956442A7");
-        List<MonAn> list = new MonAnRepository().getMonAnByDanhMuc(danhMuc);
-        for (MonAn monAn : list) {
-            System.out.println(monAn.toString());
-        }
+//        DanhMuc danhMuc = new DanhMuc();
+//        danhMuc.setIdDanhMuc("E90C9CF5-5D6A-4DE0-8609-F190956442A7");
+//        List<MonAn> list = new MonAnRepository().getMonAnByDanhMuc(danhMuc);
+//        for (MonAn monAn : list) {
+//            System.out.println(monAn.toString());
+//        }
+//        List<MonAn> listMA = new MonAnRepository().getMonAnCoKM();
+//        System.out.println("Sdfhjkhgfdfhjvsd: " + listMA.size());
     }
+
+    @Override
+    public List<MonAn> getMonAnCoKM() {
+        List<MonAn> monAns = new ArrayList<>();
+//        String hql = "FROM MonAn MA RIGHT OUTER JOIN KhuyenMai KM ON KM.id = MA.khuyenMai.id";
+//        Query query = session.createQuery(hql);
+//        monAns = query.getResultList();
+        return monAns;
+    }
+
 }

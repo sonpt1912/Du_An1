@@ -10,6 +10,7 @@ import com.mycompany.domainModel.MonAn;
 //import com.mycompany.repository.ICommon;
 import com.mycompany.repository.ICommonRepository;
 import com.mycompany.repository.impl.MonAnRepository;
+import com.mycompany.service.IMonAnService;
 import com.mycompany.util.ThongBao;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
  *
  * @author Admin
  */
-public class MonAnService implements com.mycompany.service.ICommonService<MonAn, String> {
+public class MonAnService implements com.mycompany.service.ICommonService<MonAn, String>, IMonAnService {
 
     private final ICommonRepository mar = new MonAnRepository();
     private ThongBao thongBao = new ThongBao();
@@ -68,14 +69,26 @@ public class MonAnService implements com.mycompany.service.ICommonService<MonAn,
     }
 
     public String maTuDong() {
+//        List<MonAn> listMon = new MonAnService().getAllMonAn();
+//        int index = listMon.size();
+//        String viTri = "";
+//        String maMon = "";
+//        viTri += listMon.get(index - 1).getMaMonAn();
+//        int soMa = Integer.valueOf(viTri.substring(2)) + 1;
+//        maMon = "MA" + soMa;
+//        return maMon;
         List<MonAn> listMon = new MonAnService().getAllMonAn();
         int index = listMon.size();
-        String viTri = "";
-        String maMon = "";
-        viTri += listMon.get(index - 1).getMaMonAn();
-        int soMa = Integer.valueOf(viTri.substring(2)) + 1;
-        maMon = "MA" + soMa;
-        return maMon;
+        if (index <= 0) {
+            return "MA1";
+        } else {
+            String viTri = "";
+            String maMon = "";
+            viTri += listMon.get(index - 1).getMaMonAn();
+            int soMa = Integer.valueOf(viTri.substring(2)) + 1;
+            maMon = "MA" + soMa;
+            return maMon;
+        }
     }
 
     private List<MonAn> getAllMonAn() {
@@ -84,6 +97,11 @@ public class MonAnService implements com.mycompany.service.ICommonService<MonAn,
 
     public List<MonAn> getMonAnByDanhMuc(DanhMuc danhMuc) {
         return monAnRepo.getMonAnByDanhMuc(danhMuc);
+    }
+
+    @Override
+    public List<MonAn> getMonAnCoKM() {
+        return monAnRepo.getMonAnCoKM();
     }
 
 }
