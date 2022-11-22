@@ -17,6 +17,7 @@ import com.mycompany.repository.ICommonRepository;
 public class BanService implements com.mycompany.service.ICommonService<Ban, String> {
 
     private final ICommonRepository br = new BanRepository();
+    private BanRepository banRep = new BanRepository();
 
     @Override
     public List<Ban> getAll() {
@@ -54,7 +55,11 @@ public class BanService implements com.mycompany.service.ICommonService<Ban, Str
             return "Xoá thất bại";
         }
     }
-    
+
+    public List<Ban> getFull() {
+        return banRep.getFull();
+    }
+
     public static void main(String[] args) {
         KhuVuc kv = new KhuVuc();
         kv.setIdKV("8E04689D-D3BD-42D9-82F6-71C99A4AF932");
@@ -66,5 +71,5 @@ public class BanService implements com.mycompany.service.ICommonService<Ban, Str
             System.out.println(ban.toString());
         }
     }
-    
+
 }

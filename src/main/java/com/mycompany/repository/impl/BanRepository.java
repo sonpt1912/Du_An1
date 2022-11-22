@@ -95,13 +95,21 @@ public class BanRepository implements ICommonRepository<Ban, Boolean, String> {
         }
         return check > 0;
     }
+
+    public List<Ban> getFull() {
+        String hql = fromTable;
+        Query query = session.createQuery(hql);
+        List<Ban> bans = query.getResultList();
+        return bans;
+    }
+
     public static void main(String[] args) {
         KhuVuc kv = new KhuVuc();
         kv.setIdKV("8E04689D-D3BD-42D9-82F6-71C99A4AF932");
         Ban ban = new BanRepository().getOne("1");
         ban.setTrangThai(0);
 //        ban.setKv(kv);
-        Boolean test = new BanRepository().update(ban,ban.getMaBan().toString());
+        Boolean test = new BanRepository().update(ban, ban.getMaBan().toString());
         System.out.println(test);
     }
 
