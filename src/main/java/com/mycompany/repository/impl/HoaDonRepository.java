@@ -9,6 +9,7 @@ import com.mycompany.domainModel.KhachHang;
 import com.mycompany.domainModel.NhanVien;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.ICommonRepository;
+import com.mycompany.repository.IHoaDonRepository;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
@@ -20,7 +21,7 @@ import org.hibernate.Transaction;
  *
  * @author Admin
  */
-public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, String> {
+public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, String>, IHoaDonRepository {
 
     private static final Session session = HibernateUtil.getFactory().openSession();
     private String fromTable = "FROM HoaDon ";
@@ -119,16 +120,29 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
 //        }
 //    }
     public static void main(String[] args) {
-        NhanVien nv = new NhanVien();
-        nv.setId("E26EFCD1-8F31-446A-B791-5A11F3ED0C2A");
-//        KhachHang kh = new KhachHang();
-//        kh.setId("09D9DF89-6F3E-4DD1-8B1E-55E1835F3CEC");
-        // HoaDon hd = new  HoaDon(null, "HD02", nv, kh, Date.valueOf("2022-11-11"),Date.valueOf("2022-11-11"), BigDecimal.valueOf(300000), "Tiền mặt", BigDecimal.valueOf(500000), "HIiii", 0);
-
-        HoaDon hoaDon = new HoaDonRepository().getOne("HD5");
-        hoaDon.setTrangThai(3);
-        Boolean test = new HoaDonRepository().update(hoaDon, "HD5");
-        System.out.println(test);
+//        NhanVien nv = new NhanVien();
+//        nv.setId("E26EFCD1-8F31-446A-B791-5A11F3ED0C2A");
+////        KhachHang kh = new KhachHang();
+////        kh.setId("09D9DF89-6F3E-4DD1-8B1E-55E1835F3CEC");
+//        // HoaDon hd = new  HoaDon(null, "HD02", nv, kh, Date.valueOf("2022-11-11"),Date.valueOf("2022-11-11"), BigDecimal.valueOf(300000), "Tiền mặt", BigDecimal.valueOf(500000), "HIiii", 0);
+//
+//        HoaDon hoaDon = new HoaDonRepository().getOne("HD5");
+//        hoaDon.setTrangThai(3);
+//        Boolean test = new HoaDonRepository().update(hoaDon, "HD5");
+//        System.out.println(test);
+//        List<HoaDon> list = new HoaDonRepository().getHDByTrangThai(0);
+//        for (HoaDon hoaDon : list) {
+//            System.out.println(hoaDon.toString());
+//        }
     }
     // hàm để check bàn đã có hoá đơn chờ hay chưa
+
+    @Override
+    public List<HoaDon> getHDByTrangThai(int trangThaiHD) {
+        String hql = fromTable + " WHERE trangThai = :trangThaiHD";
+        Query query = session.createQuery(hql);
+        query.setParameter("trangThaiHD", trangThaiHD);
+        List<HoaDon> hoaDons = query.getResultList();
+        return hoaDons;
+    }
 }

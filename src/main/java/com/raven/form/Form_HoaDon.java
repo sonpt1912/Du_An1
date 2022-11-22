@@ -32,7 +32,7 @@ import javax.swing.table.DefaultTableModel;
  * @author RAVEN
  */
 public class Form_HoaDon extends javax.swing.JPanel {
-
+    
     private DefaultTableModel dtmHoaDon = new DefaultTableModel();
     private List<HoaDon> listHD = new ArrayList<>();
     private HoaDonService hoaDonService = new HoaDonService();
@@ -46,9 +46,12 @@ public class Form_HoaDon extends javax.swing.JPanel {
     private NhanVienService nhanVienService = new NhanVienService();
     private NhanVien nhanV;
     private java.util.Date today = new java.util.Date();
-
+    private DefaultComboBoxModel dcbmTrangThaiHD = new DefaultComboBoxModel();
+    private List<String> listTrangThaiHD = new ArrayList<>();
+    
     public Form_HoaDon() {
         initComponents();
+        
         this.nhanV = nhanV;
         //lấy ngày giờ hnay:
 
@@ -66,8 +69,10 @@ public class Form_HoaDon extends javax.swing.JPanel {
         listBan = banService.getAll();
         loadCbb(listBan);
         //lbNgayGio.setText(String.valueOf(today));
+        cbbTrangThaiHoaDon.setModel(dcbmTrangThaiHD);
+        loadCbbTrangThaiHD();
     }
-
+    
     private void showData(List<HoaDon> listHD) {
         if (listHD.size() > 0) {
             dtmHoaDon.setRowCount(0);
@@ -76,13 +81,23 @@ public class Form_HoaDon extends javax.swing.JPanel {
             }
         }
     }
-
+    
     private void loadCbb(List<Ban> listBan) {
         for (Ban ban : listBan) {
             dcbmChonBan.addElement(ban.getMaBan());
         }
     }
-
+    
+    private void loadCbbTrangThaiHD() {
+        listTrangThaiHD.add("Tất cả");
+        listTrangThaiHD.add("Chờ thanh toán");
+        listTrangThaiHD.add("Đã thanh toán");
+        listTrangThaiHD.add("Đã huỷ");
+        for (String string : listTrangThaiHD) {
+            dcbmTrangThaiHD.addElement(string);
+        }
+    }
+    
     private void fillHD(int index, List<HoaDon> listHD) {
         HoaDon hoaDon = listHD.get(index);
         lbMaHD.setText(hoaDon.getMaHoaDon());
@@ -97,9 +112,9 @@ public class Form_HoaDon extends javax.swing.JPanel {
 //        lbKhuVuc.setText(hoaDon.getBan().getKv().getTenKV());
 //        txtBan.setText(String.valueOf(hoaDon.getBan().getMaBan()));
         txtNgayTao.setEnabled(false);
-
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -138,6 +153,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
         tbHoaDonChiTiet = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        cbbTrangThaiHoaDon = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
@@ -363,6 +379,13 @@ public class Form_HoaDon extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Danh sách hóa đơn chi tiết:");
 
+        cbbTrangThaiHoaDon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbTrangThaiHoaDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbTrangThaiHoaDonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -373,8 +396,11 @@ public class Form_HoaDon extends javax.swing.JPanel {
                         .addGap(29, 29, 29)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(0, 219, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(42, 42, 42)
+                                .addComponent(cbbTrangThaiHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 120, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,7 +412,9 @@ public class Form_HoaDon extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(cbbTrangThaiHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -439,11 +467,11 @@ public class Form_HoaDon extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(btnAdd)
-                .addGap(52, 52, 52)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(btnUpdate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
                 .addComponent(btnRemove)
-                .addGap(56, 56, 56)
+                .addGap(36, 36, 36)
                 .addComponent(btnClear)
                 .addGap(28, 28, 28))
         );
@@ -471,11 +499,10 @@ public class Form_HoaDon extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
-                        .addComponent(jButton9)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                        .addComponent(jButton9))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -596,6 +623,36 @@ public class Form_HoaDon extends javax.swing.JPanel {
         loadCbb(listBan);
     }//GEN-LAST:event_btnLoadActionPerformed
 
+    private void cbbTrangThaiHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbTrangThaiHoaDonActionPerformed
+        //mặc định cbb chọn tất cả => trạng thái = -1 và showList getAll;
+        //ktra gtri chọin của cbb để set trạng thái hoá đơn cần tìm
+        int trangThaiHD = 0;
+        if (cbbTrangThaiHoaDon.getSelectedItem().toString().equals("Tất cả")) {
+            trangThaiHD = -1;
+        } else if (cbbTrangThaiHoaDon.getSelectedItem().toString().equals("Chờ thanh toán")) {
+            trangThaiHD = 0;
+        } else if (cbbTrangThaiHoaDon.getSelectedItem().toString().equals("Đã thanh toán")) {
+            trangThaiHD = 1;
+        } else if (cbbTrangThaiHoaDon.getSelectedItem().toString().equals("Đã huỷ")) {
+            trangThaiHD = 3;
+        } else {
+            //ko biết để gì
+        }
+        if (trangThaiHD == -1) {
+            listHD = hoaDonService.getAll();
+            showData(listHD);
+        } else {
+            listHD = hoaDonService.getHDByTrangThai(trangThaiHD);
+            //nếu list có phần tử=> show
+            //ko có phần tử => table setRowCount = 0 
+            if (listHD.size() > 0) {
+                showData(listHD);
+            } else {
+                dtmHoaDon.setRowCount(0);
+            }
+        }
+    }//GEN-LAST:event_cbbTrangThaiHoaDonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -604,6 +661,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbbChonBan;
+    private javax.swing.JComboBox<String> cbbTrangThaiHoaDon;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
