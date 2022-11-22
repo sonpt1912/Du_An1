@@ -6,6 +6,7 @@ package com.raven.form;
 
 import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.impl.NhanVienService;
+import com.raven.main.Main;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,12 +104,12 @@ public class ViewLogin extends javax.swing.JFrame {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         // TODO add your handling code here:
-//         String pass = new String(txtMatKhau.getPassword());
+//        String pass = new String(txtMatKhau.getPassword());
 //        String user = txtUser.getText();
 //        List<NhanVien> login = nhanVienService.getUserAndPass(user, pass);
 //        for (NhanVien nv : login) {
 //            if (login != null) {
-//                ViewTrangChu trangChu = new ViewTrangChu(nv);
+//                Main trangChu = new Main(nv);
 //                this.dispose();
 //                trangChu.setVisible(true);
 //            }
