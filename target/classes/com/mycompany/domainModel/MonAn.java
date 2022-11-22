@@ -72,4 +72,7 @@ public class MonAn {
     public Object[] toDataRowViewKM(int stt) {
         return new Object[]{stt, (khuyenMai == null ? "ko xác định" : khuyenMai.getMaKhuyenMai()), maMonAn, tenMonAn};
     }
+      public Object[] toDataRowThongKe(int stt) {
+        return new Object[]{stt, maMonAn, tenMonAn, donGia, trangThai};
+    }
 }
