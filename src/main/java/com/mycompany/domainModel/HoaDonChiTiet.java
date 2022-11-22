@@ -1,4 +1,4 @@
-    /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -51,13 +51,13 @@ public class HoaDonChiTiet {
 
     @Column(name = "DonGiaMonAn", nullable = false)
     private BigDecimal donGiaMonAn;
-    
+
     @Column(name = "SoLuongCombo", nullable = false)
     private Integer soLuongCombo;
 
     @Column(name = "DonGiaCombo", nullable = false)
     private BigDecimal donGiaCombo;
-    
+
     @Column(name = "GhiChu")
     private String ghiChu;
 //    public Object[] toDataRow() {
