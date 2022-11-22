@@ -24,7 +24,7 @@ public class HoaDonChiTietResponseRepository implements IHoaDonChiTietResponseRe
     @Override
     public List<HoaDonChiTietResponse> getAll(HoaDon hd) {
         String hql = "SELECT new com.mycompany.customModel.HoaDonChiTietResponse(MA.maMonAn,MA.tenMonAn,"
-                + "HDCT.donGiaMonAn,HDCT.soLuongMonAn,CB.maCB,CB.tenCB,HDCT.donGiaCombo,HDCT.soLuongCombo)"
+                + "HDCT.donGiaMonAn,HDCT.soLuongMonAn,CB.maCB,CB.tenCB,HDCT.donGiaCombo,HDCT.soLuongCombo,HDCT.ghiChu)"
                 + fromTable + "LEFT JOIN ComBo CB ON CB.id = HDCT.comBo LEFT JOIN MonAn MA ON HDCT.monAn = MA.id "
                 + "WHERE HDCT.hoaDon = :hd";
         Query query = session.createQuery(hql);

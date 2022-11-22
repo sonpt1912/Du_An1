@@ -120,7 +120,7 @@ public class Form_Home extends javax.swing.JPanel {
         tbHoaDonCT.setModel(dtmHoaDonCT);
         tbBan.setModel(dtmBan);
         String headerHoaDon[] = {"STT", "MÃ HĐ", "MÃ KH", "Ngày Tạo", "Bàn", "Trạng Thái", "Ghi Chú"};
-        String headerHoaDonCT[] = {"STT", "Mã món ăn", "Tên món ăn", "Giá món ăn", "Số lượng món ăn", "Mã combo", "Tên combo", "Giá combo", "Số lượng combo"};
+        String headerHoaDonCT[] = {"STT", "Tên món ăn", "Giá món ăn", "Số lượng món ăn", "Tên combo", "Giá combo", "Số lượng combo", "Ghi chú"};
         String headerBan[] = {"STT", "Mã Bàn", "Số lượng chỗ ngồi", "Khu vực", "Trạng thái"};
         loadTableMonAn();
         dtmHoaDon.setColumnIdentifiers(headerHoaDon);
@@ -1124,7 +1124,7 @@ public class Form_Home extends javax.swing.JPanel {
                 ComboResponse cbr = lstComboResponses.get(index);
                 ComBo cb = (ComBo) cbs.getOne(cbr.getMaCB());
                 HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
-                HoaDonChiTiet hdct = new HoaDonChiTiet(null, null, hd, cb, 0, BigDecimal.valueOf(0), soLuong, cb.getDonGia(),null);
+                HoaDonChiTiet hdct = new HoaDonChiTiet(null, null, hd, cb, 0, BigDecimal.valueOf(0), soLuong, cb.getDonGia(), null);
                 String addHDCT = (String) hdctService.add(hdct);
                 lstHDCTResponses = hdctResponseService.getAll(hd);
                 showDataHDCT(lstHDCTResponses);
@@ -1144,7 +1144,7 @@ public class Form_Home extends javax.swing.JPanel {
                 MonAn ma = (MonAn) mas.getOne(mar.getMaMonAn());// chuyển đổi về món ăn để add vào hdct
                 HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
                 // khai báo hdct để add
-                HoaDonChiTiet hdct = new HoaDonChiTiet(null, ma, hd, null, soLuong, ma.getDonGia(), 0, BigDecimal.valueOf(0),null);
+                HoaDonChiTiet hdct = new HoaDonChiTiet(null, ma, hd, null, soLuong, ma.getDonGia(), 0, BigDecimal.valueOf(0), null);
                 //add hdct
                 String addHDCT = (String) hdctService.add(hdct);
                 lstHDCTResponses = hdctResponseService.getAll(hd);
