@@ -119,7 +119,7 @@ public class Form_Home extends javax.swing.JPanel {
         tbHoaDon.setModel(dtmHoaDon);
         tbHoaDonCT.setModel(dtmHoaDonCT);
         tbBan.setModel(dtmBan);
-        String headerHoaDon[] = {"STT", "MÃ HĐ", "MÃ KH", "Ngày Tạo", "Bàn", "Trạng Thái", "Ghi Chú"};
+        String headerHoaDon[] = {"STT", "MÃ HĐ", "MÃ KH", "Ngày Tạo", "Trạng Thái", "Ghi Chú"};
         String headerHoaDonCT[] = {"STT", "Tên món ăn", "Giá món ăn", "Số lượng món ăn", "Tên combo", "Giá combo", "Số lượng combo", "Ghi chú"};
         String headerBan[] = {"STT", "Mã Bàn", "Số lượng chỗ ngồi", "Khu vực", "Trạng thái"};
         loadTableMonAn();
@@ -497,6 +497,11 @@ public class Form_Home extends javax.swing.JPanel {
         jButton4.setBackground(new java.awt.Color(204, 204, 204));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton4.setText("In");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(153, 255, 0));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1155,6 +1160,10 @@ public class Form_Home extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_tbMonAnMouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
