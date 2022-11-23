@@ -10,6 +10,7 @@ import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.impl.LoaiRepository;
 import com.mycompany.service.ICommonService;
 import com.mycompany.util.ThongBao;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -50,6 +51,10 @@ public class LoaiService implements ICommonService<Loai, String> {
 
     public Loai getOneByDanhMuc(DanhMuc danhMuc) {
         return loaiRepo.getOneByDanhMuc(danhMuc);
+    }
+
+    public List<Loai> getAllByTrangThai(int trangThai) {
+        return loaiRepo.getAllByTrangThai(trangThai);
     }
 
 }

@@ -42,4 +42,7 @@ public class DanhMuc {
     @Column(name = "TrangThai")
     private Integer trangThai;
 
+    public Object[] toDataRow() {
+        return new Object[]{maDanhMuc, tenDanhMuc, (trangThai == 0 ? "Đang kinh doanh" : "Ngừng kinh doanh")};
+    }
 }

@@ -17,10 +17,10 @@ import org.hibernate.Transaction;
  * @author Admin
  */
 public class DanhMucRepository implements ICommonRepository<DanhMuc, Boolean, String> {
-    
+
     private static final Session session = HibernateUtil.getFactory().openSession();
     private String fromTable = "FROM DanhMuc ";
-    
+
     @Override
     public List<DanhMuc> getAll() {
         String hql = fromTable;
@@ -28,7 +28,7 @@ public class DanhMucRepository implements ICommonRepository<DanhMuc, Boolean, St
         List<DanhMuc> danhMucs = query.getResultList();
         return danhMucs;
     }
-    
+
     @Override
     public DanhMuc getOne(String ma) {
         String hql = fromTable + "WHERE trangThai = 0 AND maDanhMuc = :ma";
@@ -37,7 +37,7 @@ public class DanhMucRepository implements ICommonRepository<DanhMuc, Boolean, St
         DanhMuc dm = (DanhMuc) query.getSingleResult();
         return dm;
     }
-    
+
     @Override
     public Boolean add(DanhMuc kh) {
         Transaction transaction = null;
@@ -52,7 +52,7 @@ public class DanhMucRepository implements ICommonRepository<DanhMuc, Boolean, St
         }
         return false;
     }
-    
+
     @Override
     public Boolean update(DanhMuc kh, String ma) {
         String hql = "UPDATE " + fromTable + "SET tenDanhMuc = :tenDanhMuc, trangThai = :trangThaiDM WHERE maDanhMuc = :ma ";
@@ -72,7 +72,7 @@ public class DanhMucRepository implements ICommonRepository<DanhMuc, Boolean, St
         }
         return check > 0;
     }
-    
+
     @Override
     public Boolean remove(String ma) {
         String hql = "UPDATE " + fromTable + "SET trangThai = 1 WHERE maDanhMuc = :ma ";
@@ -90,7 +90,7 @@ public class DanhMucRepository implements ICommonRepository<DanhMuc, Boolean, St
         }
         return check > 0;
     }
-    
+
     public static void main(String[] args) {
         //DanhMuc danhMuc = new DanhMucRepository().getOne("DM1");
         //System.out.println(danhMuc.toString());

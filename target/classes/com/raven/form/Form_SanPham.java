@@ -92,7 +92,8 @@ public class Form_SanPham extends javax.swing.JPanel {
     }
 
     private void setCBB() {
-        List<Loai> listLoai = loaiService.getAll();
+        List<Loai> listLoai = loaiService.getAllByTrangThai(0);
+        dcbm.removeAllElements();
         for (Loai dm : listLoai) {
             dcbm.addElement(dm.getMaLoai());
         }
@@ -127,6 +128,7 @@ public class Form_SanPham extends javax.swing.JPanel {
         rdoApDung = new javax.swing.JRadioButton();
         rdoNgungApDung = new javax.swing.JRadioButton();
         jLabel14 = new javax.swing.JLabel();
+        btnLoad = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbMonAn = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -195,6 +197,13 @@ public class Form_SanPham extends javax.swing.JPanel {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel14.setText("Trạng thái   :");
 
+        btnLoad.setText("@");
+        btnLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -220,9 +229,11 @@ public class Form_SanPham extends javax.swing.JPanel {
                         .addComponent(cbbLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(11, 11, 11)
                         .addComponent(lbLoaiMon)
-                        .addGap(56, 56, 56)
-                        .addComponent(btnAddDanhMuc)))
-                .addGap(192, 192, 192)
+                        .addGap(45, 45, 45)
+                        .addComponent(btnAddDanhMuc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLoad)))
+                .addGap(155, 155, 155)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel11)
@@ -240,7 +251,7 @@ public class Form_SanPham extends javax.swing.JPanel {
                         .addComponent(rdoApDung)
                         .addGap(18, 18, 18)
                         .addComponent(rdoNgungApDung)))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,16 +261,16 @@ public class Form_SanPham extends javax.swing.JPanel {
                     .addComponent(jLabel5)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAddDanhMuc, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
-                        .addComponent(jLabel12)
-                        .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cbbLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbLoaiMon)))
-                .addGap(18, 18, 18)
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel12)
+                    .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbLoaiMon)
+                    .addComponent(btnAddDanhMuc)
+                    .addComponent(btnLoad))
+                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -438,8 +449,8 @@ public class Form_SanPham extends javax.swing.JPanel {
 
     private void btnAddDanhMucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDanhMucActionPerformed
         // TODO add your handling code here:
-        JDialogDanhMuc viewDanhMuc = new JDialogDanhMuc(null, true);
-        viewDanhMuc.setVisible(true);
+        JDialogLoaiMonAn dialogLoaiMonAn = new JDialogLoaiMonAn(null, true);
+        dialogLoaiMonAn.setVisible(true);
     }//GEN-LAST:event_btnAddDanhMucActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -469,9 +480,11 @@ public class Form_SanPham extends javax.swing.JPanel {
 
     private void cbbLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLoaiActionPerformed
         // TODO add your handling code here:
-        String ma = (String) cbbLoai.getSelectedItem();
-        Loai loai = loaiService.getOne(ma);
-        lbLoaiMon.setText(loai.getTenLoai());
+        if (cbbLoai.getSelectedItem() != null) {
+            String ma = (String) cbbLoai.getSelectedItem();
+            Loai loai = loaiService.getOne(ma);
+            lbLoaiMon.setText(loai.getTenLoai());
+        }
     }//GEN-LAST:event_cbbLoaiActionPerformed
 
     private void rdoListApDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoListApDungActionPerformed
@@ -518,11 +531,16 @@ public class Form_SanPham extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
+    private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
+        setCBB();
+    }//GEN-LAST:event_btnLoadActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnAddDanhMuc;
     private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnLoad;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;

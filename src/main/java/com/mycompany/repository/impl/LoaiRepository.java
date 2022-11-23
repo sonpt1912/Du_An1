@@ -137,4 +137,14 @@ public class LoaiRepository implements ICommonRepository<Loai, Boolean, String> 
 //        System.out.println(loai.toString());
     }
 
+    public List<Loai> getAllByTrangThai(int trangThai) {
+        List<Loai> listLoai = new ArrayList<>();
+        try ( Session session = HibernateUtil.getFactory().openSession()) {
+            Query query = session.createQuery("FROM Loai WHERE trangThai = :TrangThai ORDER BY maLoai");
+            query.setParameter("TrangThai", trangThai);
+            listLoai = query.getResultList();
+        } finally {
+            return listLoai;
+        }
+    }
 }
