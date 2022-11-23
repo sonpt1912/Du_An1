@@ -4,17 +4,12 @@
  */
 package com.mycompany.service.impl;
 
-import com.mycompany.domainModel.Ban;
 import com.mycompany.domainModel.HoaDon;
-import com.mycompany.domainModel.KhachHang;
-import com.mycompany.domainModel.NhanVien;
 import com.mycompany.repository.ICommonRepository;
 import com.mycompany.repository.IHoaDonRepository;
 import com.mycompany.repository.impl.HoaDonRepository;
 import com.mycompany.service.ICommonService;
 import com.mycompany.service.IHoaDonService;
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -92,6 +87,11 @@ public class HoaDonService implements ICommonService<HoaDon, String>, IHoaDonSer
     @Override
     public List<HoaDon> getHDByTrangThai(int trangThai) {
         return hoaDonrepo.getHDByTrangThai(trangThai);
+    }
+
+    @Override
+    public List<HoaDon> getHDChoByMaBan(int maBan) {
+        return hoaDonrepo.getHDChoByMaBan(maBan);
     }
 
 }

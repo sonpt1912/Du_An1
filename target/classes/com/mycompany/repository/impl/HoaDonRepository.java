@@ -5,13 +5,10 @@
 package com.mycompany.repository.impl;
 
 import com.mycompany.domainModel.HoaDon;
-import com.mycompany.domainModel.KhachHang;
-import com.mycompany.domainModel.NhanVien;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.ICommonRepository;
 import com.mycompany.repository.IHoaDonRepository;
-import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -144,5 +141,17 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
         query.setParameter("trangThaiHD", trangThaiHD);
         List<HoaDon> hoaDons = query.getResultList();
         return hoaDons;
+    }
+
+    @Override
+    public List<HoaDon> getHDChoByMaBan(int maBan) {
+        List<HoaDon> listHD = new ArrayList<>();
+        String hql = "FROM HoaDon HD JOIN ChiTietBanHoaDon ctBan_HD ON HD.id = ctBan_HD.hd.id "
+                + " JOIN Ban b ON ctBan_HD.ban.id = b.id "
+                + "WHERE HD.trangThai = 0 AND b.maBan = :maBan";
+        Query query = session.createQuery(hql);
+        query.setParameter("maBan", maBan);
+        listHD = query.getResultList();
+        return listHD;
     }
 }

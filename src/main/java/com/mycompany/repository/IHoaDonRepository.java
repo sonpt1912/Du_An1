@@ -14,4 +14,6 @@ import java.util.List;
 public interface IHoaDonRepository {
 
     List<HoaDon> getHDByTrangThai(int trangThaiHD);
+
+    List<HoaDon> getHDChoByMaBan(int maBan);
 }

@@ -867,14 +867,22 @@ public class Form_Home extends javax.swing.JPanel {
                 String addGD1 = (String) gds.add(gd1);
                 // update lại hoá đơn
                 String addHD = (String) hds.update(hd, lbMaHDThanhToan.getText());
-                // up date lại bàn
+                //UPdate bàn
                 List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hd);
+                //SET TRẠNG THÁI BÀN
+                //for lấy mã bàn
                 for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
-                    // get ont bàn lấy mã từ label mã bàn
                     Ban ban = (Ban) banService.getOne(lstChiTietBanHoaDon.getBan().getMaBan().toString());
-                    // set trạng thái = 0 cho bàn đã getone về
-                    ban.setTrangThai(0);
-                    String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                    //khai báo list để getHD chờ where mã bàn:
+                    List<HoaDon> listHDChuaTT = hoaDonService.getHDChoByMaBan(ban.getMaBan());
+                    if (listHDChuaTT.size() <= 0) {
+                        // set trạng thái = 0 cho bàn đã getone về
+                        ban.setTrangThai(0);
+                        String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                    } else {
+                        ban.setTrangThai(1);
+                        String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                    }
                 }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công");
                 // check xem đang chọn radio nào thì hiện thị đúng dữ liệu của radio đấy
@@ -904,14 +912,22 @@ public class Form_Home extends javax.swing.JPanel {
                 String addGD = (String) gds.add(gd);
                 // update lại hd
                 String addHD = (String) hds.update(hd, lbMaHDThanhToan.getText());
-                //update lại bàn
+                //UPdate bàn
                 List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hd);
+                //SET TRẠNG THÁI BÀN
+                //for lấy mã bàn
                 for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
-                    // get ont bàn lấy mã từ label mã bàn
                     Ban ban = (Ban) banService.getOne(lstChiTietBanHoaDon.getBan().getMaBan().toString());
-                    // set trạng thái = 0 cho bàn đã getone về
-                    ban.setTrangThai(0);
-                    String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                    //khai báo list để getHD chờ where mã bàn:
+                    List<HoaDon> listHDChuaTT = hoaDonService.getHDChoByMaBan(ban.getMaBan());
+                    if (listHDChuaTT.size() <= 0) {
+                        // set trạng thái = 0 cho bàn đã getone về
+                        ban.setTrangThai(0);
+                        String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                    } else {
+                        ban.setTrangThai(1);
+                        String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                    }
                 }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công");
                 // check xem đang chọn radio nào thì hiện thị đúng dữ liệu của radio đấy
@@ -943,12 +959,20 @@ public class Form_Home extends javax.swing.JPanel {
                 String addHD = (String) hds.update(hd, lbMaHDThanhToan.getText());
                 //UPdate bàn
                 List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hd);
+                //SET TRẠNG THÁI BÀN
+                //for lấy mã bàn
                 for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
-                    // get ont bàn lấy mã từ label mã bàn
                     Ban ban = (Ban) banService.getOne(lstChiTietBanHoaDon.getBan().getMaBan().toString());
-                    // set trạng thái = 0 cho bàn đã getone về
-                    ban.setTrangThai(0);
-                    String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                    //khai báo list để getHD chờ where mã bàn:
+                    List<HoaDon> listHDChuaTT = hoaDonService.getHDChoByMaBan(ban.getMaBan());
+                    if (listHDChuaTT.size() <= 0) {
+                        // set trạng thái = 0 cho bàn đã getone về
+                        ban.setTrangThai(0);
+                        String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                    } else {
+                        ban.setTrangThai(1);
+                        String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                    }
                 }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công");
                 // check xem đang chọn radio nào thì hiện thị đúng dữ liệu của radio đấy
