@@ -14,17 +14,19 @@ import java.util.List;
 //B = boolean
 //S = String
 //O2 = Object2
-public interface IHoaDonChiTiet<O, B, S, O2, O3, O4> {
+public interface IHoaDonChiTietRepository<O, B, S, O2, O3, O4> {
 
     List<O> getAll();
 
     O getOneCombo(O2 hd, O3 combo);
 
-    O getOneMonAn(O2 hd, O4 monAn);
+    O getOneHDCTByMAHD(O2 hd, O4 monAn);
 
     B add(O kh);
 
     B update(O kh, O2 ma);
 
     B remove(O2 ma);
+
+    B updateHDCTById(O kh,S idHDCT);
 }

@@ -17,7 +17,6 @@ import com.mycompany.service.IChiTietBanHoaDonService;
 import com.mycompany.service.impl.HoaDonChiTietResponseService;
 import com.mycompany.service.ICommonResponseService;
 import com.mycompany.service.ICommonService;
-import com.mycompany.service.IHoaDonChiTiet;
 import com.mycompany.service.IHoaDonChiTietResponseService;
 import com.mycompany.service.IMonAnResponseService;
 import com.mycompany.service.IcommonHoaDonResponseService;
@@ -41,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import com.mycompany.service.IHoaDonChiTietService;
 
 public class Form_Home extends javax.swing.JPanel {
 
@@ -67,7 +67,7 @@ public class Form_Home extends javax.swing.JPanel {
     private ICommonService nvs = new NhanVienService();
     private ICommonService monAnService = new MonAnService();
     private ICommonService banService = new BanService();
-    private IHoaDonChiTiet hdctService = new HoaDonChiTietService();
+    private IHoaDonChiTietService hdctService = new HoaDonChiTietService();
     private IChiTietBanHoaDonService chiTietBanHoaDonService = new ChiTietBanHoaDonService();
     private GiaoDichService gds2 = new GiaoDichService();// khai báo như này mới có hàm fill tiên thừa
     private IHoaDonChiTietResponseService hdctResponseService = new HoaDonChiTietResponseService();

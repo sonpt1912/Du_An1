@@ -5,11 +5,15 @@
 package com.raven.form;
 
 import com.mycompany.customModel.HoaDonChiTietResponse;
+import com.mycompany.domainModel.Ban;
+import com.mycompany.domainModel.ChiTietBanHoaDon;
 import com.mycompany.domainModel.ComBo;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.HoaDonChiTiet;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.service.IHoaDonChiTietResponseService;
+import com.mycompany.service.impl.BanService;
+import com.mycompany.service.impl.ChiTietBanHoaDonService;
 import com.mycompany.service.impl.ComBoService;
 import com.mycompany.service.impl.HoaDonChiTietResponseService;
 import com.mycompany.service.impl.HoaDonChiTietService;
@@ -42,6 +46,9 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
     private HoaDonChiTietService hoaDonChiTietService = new HoaDonChiTietService();
     private MonAnService monAnService = new MonAnService();
     private ComBoService comBoService = new ComBoService();
+    private List<ChiTietBanHoaDon> listCTBan_HD = new ArrayList<>();
+    private ChiTietBanHoaDonService chiTietBanHoaDonService = new ChiTietBanHoaDonService();
+    private BanService banService = new BanService();
     // thực thể cả class
     private HoaDon hoaDon;
 
@@ -190,78 +197,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tbHDCTCuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHDCTCuMouseClicked
-//        // TODO add your handling code here:
-//        // lấy thằng cần tách
-//        int index = tbHDCTCu.getSelectedRow();
-//        HoaDonChiTietResponse hdctrCu = lstDonChiTietResponsesCu.get(index);
-//        // con vớt thằng cần tách vào thằng mới
-//        HoaDonChiTietResponse hdctrMoi = hdctrCu;
-//        // lấy số lượng của thằng cũ
-//        Integer soLuongMonAnCu = hdctrCu.getSoLuongMonAn();
-//        Integer soLuongComboCu = hdctrCu.getSoLuongCombo();
-//        String soLuong = JOptionPane.showInputDialog("Mời nhập số lượng");
-//        if (soLuong == null) {
-//            return;
-//        } else if (soLuong.equals("")) {
-//            return;
-//        } else {
-//            if (hdctrCu.getMaMonAn() == null) {
-//                //tính số lượng còn lại của thằng cũ
-//                Integer soLuongConLai = soLuongComboCu - Integer.valueOf(soLuong);
-//                if (soLuongConLai < 0) {
-//                    JOptionPane.showMessageDialog(this, "Số lượng còn lại không được âm");
-//                    return;
-//                }
-//                // sét  số lượng cho thằng mới
-//                hdctrMoi.setSoLuongCombo(Integer.valueOf(soLuong));
-//                System.out.println(hdctrMoi);
-////                hdctrCu.setGhiChu("");
-//                //sét số lượng còn lại cho thằng cũ
-//                lstDonChiTietResponsesMoi.add(hdctrMoi);
-//                showDataHDMoi(lstDonChiTietResponsesMoi);
-////                hdctrCu.setSoLuongCombo(soLuongConLai);
-//                showDataHDCu(lstDonChiTietResponsesCu);
-////                if (soLuongConLai == 0) {
-////                    dtmHDCu.removeRow(index);
-////                }
-////                for (int i = 0; i < lstDonChiTietResponsesCu.size(); i++) {
-////                    if (lstDonChiTietResponsesCu.get(i).getSoLuongCombo() == 0 && lstDonChiTietResponsesCu.get(i).getSoLuongMonAn() > 0) {
-////                        dtmHDCu.removeRow(i);
-////                    }
-////                }
-//                for (HoaDonChiTietResponse hoaDonChiTietResponse : lstDonChiTietResponsesMoi) {
-//                    System.out.println(hoaDonChiTietResponse);
-//                }
-//                return;
-//            } else {
-//                Integer soLuongConLai = soLuongMonAnCu - Integer.valueOf(soLuong);
-//                if (soLuongConLai < 0) {
-//                    JOptionPane.showMessageDialog(this, "Số lượng còn lại không được âm");
-//                    return;
-//                }
-//                // sét  số lượng cho thằng mới
-//                hdctrMoi.setSoLuongMonAn(Integer.valueOf(soLuong));
-////                hdctrCu.setGhiChu("");
-//                lstDonChiTietResponsesMoi.add(hdctrMoi);
-//                showDataHDMoi(lstDonChiTietResponsesMoi);
-//                //sét số lượng còn lại cho thằng cũ
-////                hdctrCu.setSoLuongMonAn(soLuongConLai);
-//                showDataHDCu(lstDonChiTietResponsesCu);
-////                if (soLuongConLai == 0) {
-////                    dtmHDCu.removeRow(index);
-////                }
-////                for (int i = 0; i < lstDonChiTietResponsesCu.size(); i++) {
-////                    if (lstDonChiTietResponsesCu.get(i).getSoLuongMonAn() == 0 && lstDonChiTietResponsesCu.get(i).getSoLuongCombo() > 0) {
-////                        dtmHDCu.removeRow(i);
-////                    }
-////                }
-//                for (HoaDonChiTietResponse hoaDonChiTietResponse : lstDonChiTietResponsesMoi) {
-//                    System.out.println(hoaDonChiTietResponse);
-//                }
-//                return;
-//            }
-//        }
-// TODO add your handling code here:
+
         // lấy thằng cần tách
         int index = tbHDCTCu.getSelectedRow();
         HoaDonChiTietResponse hdctrCu = lstDonChiTietResponsesCu.get(index);
@@ -299,8 +235,6 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
                 showDataHDMoi(lstDonChiTietResponsesMoi);
                 //sét số lượng còn lại cho thằng cũ
                 hdctrCu.setSoLuongCombo(soLuongConLai);
-                //sét số lượng còn lại cho thằng cũ
-//    dtmHDCu.setValueAt(evt, 0, 0);
                 showDataHDCu(lstDonChiTietResponsesCu);
 //                if (soLuongConLai == 0) {
 //                    dtmHDCu.removeRow(index);
@@ -315,6 +249,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
                 }
                 return;
             } else {
+                //tạo hdct mới (tạm thời)
                 HoaDonChiTietResponse hdctrMoi = new HoaDonChiTietResponse();
                 hdctrMoi.setDonGiaMonAn(hdctrCu.getDonGiaMonAn());
                 hdctrMoi.setGhiChu(hdctrCu.getGhiChu());
@@ -328,6 +263,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
                 // sét  số lượng cho thằng mới
                 hdctrMoi.setSoLuongMonAn(Integer.valueOf(soLuong));
                 hdctrCu.setGhiChu("Da tach " + soLuong + " sp sang HD moi");
+                //add vào list tạm thời
                 lstDonChiTietResponsesMoi.add(hdctrMoi);
                 showDataHDMoi(lstDonChiTietResponsesMoi);
                 //sét số lượng còn lại cho thằng cũ
@@ -352,6 +288,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         listHD = hoaDonService.getAll();
         String maHD = hoaDonUtil.zenMaThuyDuong(listHD);
+        //tạo hoá đơn mới
         HoaDon hoaDonNew = new HoaDon();
         hoaDonNew.setGhiChu("Tach tu HD " + hoaDon.getMaHoaDon());
         hoaDonNew.setMaHoaDon(maHD);
@@ -359,6 +296,31 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         hoaDonNew.setNhanVien(hoaDon.getNhanVien());
         hoaDonNew.setTrangThai(0);
         String themHD = hoaDonService.add(hoaDonNew);
+
+        //get list chi tiết bàn hoá đơn của hoá đơn cũ
+        listCTBan_HD = chiTietBanHoaDonService.getByHoaDon(hoaDon);
+        for (ChiTietBanHoaDon chiTietBanHoaDon : listCTBan_HD) {
+            System.out.println(chiTietBanHoaDon.toString());
+        }
+        //in sz bàn:
+        int sz = listCTBan_HD.size();
+        System.out.println("Hello World   dzdfghjkl " + sz);
+        //duyệt for để cập nhật bàn đó cho hoá đơn mới => chung bàn
+        //getOne hoaDonNew:
+        HoaDon HDNew = hoaDonService.getOne(hoaDonNew.getMaHoaDon());
+        for (ChiTietBanHoaDon chiTietBanHoaDon : listCTBan_HD) {
+            ChiTietBanHoaDon chiTietBanHoaDonNew = new ChiTietBanHoaDon();
+            chiTietBanHoaDonNew.setBan(chiTietBanHoaDon.getBan());
+            chiTietBanHoaDonNew.setHd(HDNew);
+            ///add vào db
+            String themCTBan_HD = chiTietBanHoaDonService.add(chiTietBanHoaDonNew);
+        }
+//        list ctbanf mới thêm:
+        List<ChiTietBanHoaDon> listMoi = chiTietBanHoaDonService.getByHoaDon(HDNew);
+        for (ChiTietBanHoaDon chiTietBanHoaDon : listMoi) {
+            System.out.println(chiTietBanHoaDon.toString());
+        }
+        //duyệt list hdct mới tách để insert vào hoá đơn mới tạo
         for (HoaDonChiTietResponse hoaDonChiTietResponse : lstDonChiTietResponsesMoi) {
             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
             hoaDonChiTiet.setHoaDon(hoaDonNew);
@@ -369,6 +331,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
                 hoaDonChiTiet.setSoLuongMonAn(hoaDonChiTietResponse.getSoLuongMonAn());
                 hoaDonChiTiet.setDonGiaCombo(BigDecimal.valueOf(0));
                 hoaDonChiTiet.setSoLuongCombo(0);
+                String themHDCT = hoaDonChiTietService.add(hoaDonChiTiet);
             } else {
                 ComBo comBo = comBoService.getOne(hoaDonChiTietResponse.getMaCombo());
                 hoaDonChiTiet.setComBo(comBo);
@@ -376,8 +339,9 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
                 hoaDonChiTiet.setSoLuongCombo(hoaDonChiTietResponse.getSoLuongCombo());
                 hoaDonChiTiet.setDonGiaMonAn(BigDecimal.valueOf(0));
                 hoaDonChiTiet.setSoLuongMonAn(0);
+                String themHDCT = hoaDonChiTietService.add(hoaDonChiTiet);
             }
-            String themHDCT = hoaDonChiTietService.add(hoaDonChiTiet);
+
         }
         //theem xong, clear lisst moiw
         lstDonChiTietResponsesMoi.clear();
@@ -386,20 +350,25 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
             if (hoaDonChiTietResponse.getMaMonAn() != null) {
                 MonAn monAn = monAnService.getOne(hoaDonChiTietResponse.getMaMonAn());
+                //System.out.println("HELLOOOOOOOOO  " + HDNew.getId() + " - " + monAn.getId());
+                HoaDonChiTiet hdct = hoaDonChiTietService.getOneHDCTByMAHD(hoaDon, monAn);
                 hoaDonChiTiet.setMonAn(monAn);
                 hoaDonChiTiet.setDonGiaMonAn(hoaDonChiTietResponse.getDonGiaMonAn());
                 hoaDonChiTiet.setSoLuongMonAn(hoaDonChiTietResponse.getSoLuongMonAn());
                 hoaDonChiTiet.setDonGiaCombo(BigDecimal.valueOf(0));
                 hoaDonChiTiet.setSoLuongCombo(0);
+                String updatHDCT = hoaDonChiTietService.updateHDCTById(hoaDonChiTiet, hdct.getId());
             } else {
                 ComBo comBo = comBoService.getOne(hoaDonChiTietResponse.getMaCombo());
+                // System.out.println("HELLOOOOOOOOO  " + HDNew.getId() + " - " + comBo.getId());
+                HoaDonChiTiet hdct = hoaDonChiTietService.getOneHDCTByCombo(hoaDon, comBo);
                 hoaDonChiTiet.setComBo(comBo);
                 hoaDonChiTiet.setDonGiaCombo(hoaDonChiTietResponse.getDonGiaCombo());
                 hoaDonChiTiet.setSoLuongCombo(hoaDonChiTietResponse.getSoLuongCombo());
                 hoaDonChiTiet.setDonGiaMonAn(BigDecimal.valueOf(0));
                 hoaDonChiTiet.setSoLuongMonAn(0);
+                String updatHDCT = hoaDonChiTietService.updateHDCTById(hoaDonChiTiet, hdct.getId());
             }
-            String updatHDCT = hoaDonChiTietService.update(hoaDonChiTiet, hoaDon);
         }
         JOptionPane.showMessageDialog(this, "Thanh cong!");
         this.dispose();

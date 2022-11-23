@@ -10,18 +10,18 @@ import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.HoaDonChiTiet;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.hibernateUtil.HibernateUtil;
-import com.mycompany.repository.IHoaDonChiTiet;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import com.mycompany.repository.IHoaDonChiTietRepository;
 
 /**
  *
  * @author Admin
  */
-public class HoaDonChiTietRepository implements IHoaDonChiTiet<HoaDonChiTiet, Boolean, String, HoaDon, ComBo, MonAn> {
+public class HoaDonChiTietRepository implements IHoaDonChiTietRepository<HoaDonChiTiet, Boolean, String, HoaDon, ComBo, MonAn> {
 
     private static final Session session = HibernateUtil.getFactory().openSession();
     private String fromTable = "FROM HoaDonChiTiet ";
@@ -116,10 +116,16 @@ public class HoaDonChiTietRepository implements IHoaDonChiTiet<HoaDonChiTiet, Bo
 //        HoaDonChiTiet hdct = new HoaDonChiTiet(null, ban, monAn, null, null, 10, BigDecimal.ONE);
 //        boolean test = new HoaDonChiTietRepository().update(hdct,hd);
 //        System.out.println(test);
-        List<HoaDonChiTiet> getAll = new HoaDonChiTietRepository().getAll();
-        for (HoaDonChiTiet hoaDonChiTiet : getAll) {
-            System.out.println(hoaDonChiTiet.toString());
-        }
+//        List<HoaDonChiTiet> getAll = new HoaDonChiTietRepository().getAll();
+//        for (HoaDonChiTiet hoaDonChiTiet : getAll) {
+//            System.out.println(hoaDonChiTiet.toString());
+//        }
+        HoaDon hoaDon = new HoaDon();
+        hoaDon.setId("602EA574-B3FC-4991-8243-F5BCD5FEF480");
+        MonAn monAn = new MonAn();
+        monAn.setId("735E2EAE-92A5-458F-8CB7-8211402B3361");
+        HoaDonChiTiet hdct = new HoaDonChiTietRepository().getOneHDCTByMAHD(hoaDon, monAn);
+        System.out.println(hdct.toString());
     }
 
     @Override
@@ -127,14 +133,19 @@ public class HoaDonChiTietRepository implements IHoaDonChiTiet<HoaDonChiTiet, Bo
         String hql = fromTable + "WHERE hoaDon = :hd AND comBo = :comBo";
         Query query = session.createQuery(hql);
         query.setParameter("hd", hd);
-        query.setParameter("hd", hd);
+        query.setParameter("comBo", combo);
         HoaDonChiTiet kh = (HoaDonChiTiet) query.getSingleResult();
         return kh;
     }
 
     @Override
-    public HoaDonChiTiet getOneMonAn(HoaDon hd, MonAn monAn) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public HoaDonChiTiet getOneHDCTByMAHD(HoaDon hd, MonAn monAn) {
+        String hql = fromTable + "WHERE hoaDon = :hd AND monAn = :MA";
+        Query query = session.createQuery(hql);
+        query.setParameter("hd", hd);
+        query.setParameter("MA", monAn);
+        HoaDonChiTiet kh = (HoaDonChiTiet) query.getSingleResult();
+        return kh;
     }
 
     public List<HoaDonChiTiet> getHDCTByHD(HoaDon hoaDon) {
@@ -142,6 +153,32 @@ public class HoaDonChiTietRepository implements IHoaDonChiTiet<HoaDonChiTiet, Bo
         query.setParameter("hoaDon", hoaDon);
         List<HoaDonChiTiet> hoaDonChiTiets = query.getResultList();
         return hoaDonChiTiets;
+    }
+
+    @Override
+    public Boolean updateHDCTById(HoaDonChiTiet kh, String idHDCT) {
+        Transaction transaction = null;
+        String hql = "UPDATE " + fromTable + "SET monAn = :monAn,soLuongMonAn = :soLuongMonAn,donGiaMonAn = :donGiaMonAn,"
+                + " comBo = :comBo, soLuongCombo = :soLuongCombo, donGiaCombo = :donGiaCombo, ghiChu = :ghiChu "
+                + "WHERE id = :idHDCT";
+        int check = 0;
+        try {
+            transaction = session.beginTransaction();
+            Query query = session.createQuery(hql);
+            query.setParameter("monAn", kh.getMonAn());
+            query.setParameter("soLuongMonAn", kh.getSoLuongMonAn());
+            query.setParameter("donGiaMonAn", kh.getDonGiaMonAn());
+            query.setParameter("comBo", kh.getComBo());
+            query.setParameter("soLuongCombo", kh.getSoLuongCombo());
+            query.setParameter("donGiaCombo", kh.getDonGiaCombo());
+            query.setParameter("ghiChu", kh.getGhiChu());
+            query.setParameter("idHDCT", idHDCT);
+            check = query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return check > 0;
     }
 
 }

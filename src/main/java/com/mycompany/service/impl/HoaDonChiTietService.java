@@ -4,21 +4,23 @@
  */
 package com.mycompany.service.impl;
 
+import com.mycompany.domainModel.ComBo;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.HoaDonChiTiet;
+import com.mycompany.domainModel.MonAn;
 import com.mycompany.repository.impl.HoaDonChiTietRepository;
-import com.mycompany.service.IHoaDonChiTiet;
 import java.util.List;
 import com.mycompany.service.ICommonService;
 import java.math.BigDecimal;
+import com.mycompany.service.IHoaDonChiTietService;
 
 /**
  *
  * @author Admin
  */
-public class HoaDonChiTietService implements IHoaDonChiTiet<HoaDonChiTiet, String, HoaDon> {
+public class HoaDonChiTietService implements IHoaDonChiTietService<HoaDonChiTiet, String, HoaDon> {
 
-    private final com.mycompany.repository.IHoaDonChiTiet hdctr = new HoaDonChiTietRepository();
+    private final com.mycompany.repository.IHoaDonChiTietRepository hdctr = new HoaDonChiTietRepository();
     private HoaDonChiTietRepository hdctRep = new HoaDonChiTietRepository();
 
     @Override
@@ -67,4 +69,31 @@ public class HoaDonChiTietService implements IHoaDonChiTiet<HoaDonChiTiet, Strin
         return hdctRep.getHDCTByHD(hoaDon);
     }
 
+    @Override
+    public HoaDonChiTiet getOneHDCTByMAHD(HoaDon hd, MonAn monAn) {
+        return hdctRep.getOneHDCTByMAHD(hd, monAn);
+    }
+
+    @Override
+    public HoaDonChiTiet getOneHDCTByCombo(HoaDon hd, ComBo combo) {
+        return hdctRep.getOneCombo(hd, combo);
+    }
+
+    @Override
+    public String updateHDCTById(HoaDonChiTiet kh, String idHDCT) {
+        if ((Boolean) hdctr.updateHDCTById(kh, idHDCT)) {
+            return "Sửa thành công";
+        } else {
+            return "Sửa thất bại";
+        }
+    }
+
+    public static void main(String[] args) {
+        HoaDon hoaDon = new HoaDon();
+        hoaDon.setId("602EA574-B3FC-4991-8243-F5BCD5FEF480");
+        MonAn monAn = new MonAn();
+        monAn.setId("735E2EAE-92A5-458F-8CB7-8211402B3361");
+        HoaDonChiTiet hdct = new HoaDonChiTietService().getOneHDCTByMAHD(hoaDon, monAn);
+        System.out.println(hdct.toString());
+    }
 }

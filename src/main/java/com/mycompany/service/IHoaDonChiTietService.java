@@ -4,13 +4,16 @@
  */
 package com.mycompany.service;
 
+import com.mycompany.domainModel.ComBo;
+import com.mycompany.domainModel.HoaDon;
+import com.mycompany.domainModel.MonAn;
 import java.util.List;
 
 //O = Object
 //B = boolean
 //S = String
 //O2 = Object2
-public interface IHoaDonChiTiet<O, S, O2> {
+public interface IHoaDonChiTietService<O, S, O2> {
 
     List<O> getAll();
 
@@ -23,4 +26,10 @@ public interface IHoaDonChiTiet<O, S, O2> {
     S remove(O2 ma);
 
     List<O> getHDCTByHD(O2 hoaDon);
+
+    O getOneHDCTByMAHD(HoaDon hd, MonAn monAn);
+
+    O getOneHDCTByCombo(HoaDon hd, ComBo combo);
+
+    S updateHDCTById(O kh, S idHDCT);
 }
