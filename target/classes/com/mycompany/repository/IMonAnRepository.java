@@ -16,5 +16,5 @@ public interface IMonAnRepository {
 
     List<MonAn> getMonAnCoKM();
     
-    List<MonAn> getMonAnByComBo(ComBo id);
+    List<MonAn> getMonAnByComBo(MonAn id);
 }

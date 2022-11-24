@@ -87,7 +87,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
             query.setParameter("loaiMA", kh.getLoai());
             query.setParameter("TrangThai", kh.getTrangThai());
             //bỏ KM
-           // query.setParameter("KM", kh.getKhuyenMai());
+            // query.setParameter("KM", kh.getKhuyenMai());
             query.setParameter("ma", ma);
             check = query.executeUpdate();
             transaction.commit();
@@ -187,10 +187,6 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
 //        }
 //        List<MonAn> listMA = new MonAnRepository().getMonAnCoKM();
 //        System.out.println("Sdfhjkhgfdfhjvsd: " + listMA.size());
-        ComBo cb = new ComBoRepository().getOne("CB1");
-        for (Object mm : new MonAnRepository().get(cb)) {
-            System.out.println((MonAn) mm);
-        }
     }
 
     @Override
@@ -203,25 +199,14 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
     }
 
     @Override
-    public List<MonAn> getMonAnByComBo(ComBo id) {
-        String hql = "SELECT new  FROM MonAn MA JOIN ChiTietComBo CTCB ON CTCB.monAn.id = MA.id "
-                + "WHERE CTCB.comBo.id = :ID";
+    public List<MonAn> getMonAnByComBo(MonAn id) {
+        String hql = "FROM MonAn WHERE id = : ID";
         Query query = session.createQuery(hql);
         query.setParameter("ID", id.getId());
         // join ạ lấy điều kiện đúng oi
-        List<MonAn> monAns = new ArrayList<>();
-        List<Object> list = query.getResultList();
+        List<MonAn> monAns = query.getResultList();
         return monAns;
-    }
 
-    public List<Object> get(ComBo id) {
-        String hql = "FROM MonAn MA JOIN ChiTietComBo CTCB ON CTCB.monAn.id = MA.id "
-                + "WHERE CTCB.comBo.id = :ID";
-        Query query = session.createQuery(hql);
-        query.setParameter("ID", id.getId());
-        // join ạ lấy điều kiện đúng oi
-        List<Object> list = query.getResultList();
-        return list;
     }
 
 }

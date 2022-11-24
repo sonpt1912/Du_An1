@@ -4,6 +4,7 @@
  */
 package com.mycompany.service.impl;
 
+import com.mycompany.domainModel.ChiTietComBo;
 import com.mycompany.domainModel.ComBo;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.domainModel.NhanVien;
@@ -14,6 +15,7 @@ import com.mycompany.service.IComBoService;
 import java.math.BigDecimal;
 import java.util.List;
 import com.mycompany.service.ICommonService;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -25,6 +27,7 @@ public class ComBoService implements ICommonService<ComBo, String>, IComBoServic
     private final com.mycompany.repository.ICommonRepository cbr = new ComBoRepository();
     private ComBoRepository cb = new ComBoRepository();
     private MonAnRepository mar = new MonAnRepository();
+    private ChiTietComBoRepository ctbr = new ChiTietComBoRepository();
 
     @Override
     public List<ComBo> getAll() {
@@ -91,13 +94,15 @@ public class ComBoService implements ICommonService<ComBo, String>, IComBoServic
 
     @Override
     public void checkTrangThaiMonAn(ComBo ComBo) {
-        List<MonAn> list = mar.getMonAnByComBo(ComBo);
-        List<MonAn> list1 = mar.getAllMonAnByTrangThai(1);
-        ComBo.setTrangThai(1);
-        for (MonAn m : list1) {
-            for (MonAn s : list) {
-                if (m.getId().equalsIgnoreCase(s.getId())) {
-                    update(ComBo, ComBo.getMaCB());
+        List<ChiTietComBo> listChiTiet = ctbr.getAllByComBo(ComBo);
+        List<MonAn> listMonAn = new ArrayList<>();
+        for (ChiTietComBo ct : listChiTiet) {
+            listMonAn = mar.getMonAnByComBo(ct.getMonAn());
+            for (MonAn ma : mar.getAllMonAnByTrangThai(1)) {
+                for (MonAn a : listMonAn) {
+                    if (ma.getId().equalsIgnoreCase(a.getId())) {
+                        remove(ComBo.getMaCB());
+                    }
                 }
             }
         }
