@@ -5,6 +5,7 @@
  */
 package com.raven.form;
 
+import com.mycompany.customModel.MonAnKMResponse;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -12,9 +13,11 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import com.mycompany.customModel.MonAnKhuyenMaiResponse;
 import com.mycompany.domainModel.KhuyenMai;
+import com.mycompany.domainModel.KhuyenMaiChiTiet;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.domainModel.NhanVien;
 import com.mycompany.repository.impl.KhuyenMaiRepository;
+import com.mycompany.service.impl.KhuyenMaiChiTiettService;
 //import com.mycompany.domainModel.KhuyenMaiChiTiet;
 //import com.mycompany.service.impl.KhuyenMaiChiTietService;
 import com.mycompany.service.impl.KhuyenMaiService;
@@ -34,7 +37,7 @@ import javax.swing.table.DefaultTableModel;
  * @author RAVEN
  */
 public class Form_KhuyenMai extends javax.swing.JPanel {
-    
+
     private DefaultTableModel dtmKhuyenMai = new DefaultTableModel();
     private DefaultTableModel dtmKMCT = new DefaultTableModel();
     private List<KhuyenMai> listKM = new ArrayList<>();
@@ -55,30 +58,44 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
     private List<MonAn> listThemKM_MA = new ArrayList<>();
     private NhanVienService nhanVienService = new NhanVienService();
     private DefaultComboBoxModel dcbmMonAn = new DefaultComboBoxModel();
-    
+    private KhuyenMaiChiTiettService khuyenMaiChiTiettService = new KhuyenMaiChiTiettService();
+
     public Form_KhuyenMai(NhanVien nv) {
         initComponents();
+        dtmMonAn = (DefaultTableModel) tbMonAn.getModel();
+        dtmKhuyenMai = (DefaultTableModel) tbKhuyenMai.getModel();
+        dtmKMCT = (DefaultTableModel) tbKMCT.getModel();
         this.nhanV = nhanV;
-        tbKhuyenMai.setModel(dtmKhuyenMai);
+        // tbKhuyenMai.setModel(dtmKhuyenMai);
         String headers[] = {"STT", "Mã KM", "Tên KM", "TrangThai"};
         dtmKhuyenMai.setColumnIdentifiers(headers);
         listKM = khuyenMaiRepository.getAll();
         showData(listKM, 1);
         //  radioDangApDung.setSelected(true);
         cbbLoaiKM.setModel(dcbmLoaiKM);
-        String headerMonAn[] = {"STT", "Mã món ăn", "Tên món ăn", "Đơn giá", "Đv tính"};
+        String headerMonAn[] = {"Mã món ăn", "Tên món ăn", "Đơn giá", "Áp dụng"};
         dtmMonAn.setColumnIdentifiers(headerMonAn);
-        tbMonAn.setModel(dtmMonAn);
+        // tbMonAn.setModel(dtmMonAn);
         listMonAn = monAnService.getAll();
-        showDataMonAn(listMonAn, 1);
-        tbKMCT.setModel(dtmKMCT);
+        for (MonAn monAn : listMonAn) {
+            System.out.println(monAn.toString() + "fvd csa");
+        }
+        //showDataMonAn(listMonAn, 1);
+        showDataMonAn2(listMonAn);
+        //tbKMCT.setModel(dtmKMCT);
         String headersKMCT[] = {"STT", "Mã KM", "Mã món ăn", "Tên món ăn"};
         dtmKMCT.setColumnIdentifiers(headersKMCT);
         loadLoaiKM();
-        cbbMonAn.setModel(dcbmMonAn);
-        loadCbbMonAn();
     }
-    
+
+    private void showDataMonAn2(List<MonAn> listMonAn) {
+        dtmMonAn.setRowCount(0);
+        for (int i = 0; i < listMonAn.size(); i++) {
+            dtmMonAn.addRow(new Object[]{listMonAn.get(i).getMaMonAn(), listMonAn.get(i).getTenMonAn(),
+                listMonAn.get(i).getDonGia(), false});
+        }
+    }
+
     private void showDataCTKM(List<MonAn> listKMCT, int stt) {
         dtmKMCT.setRowCount(0);
         for (MonAn monAn : listKMCT) {
@@ -86,7 +103,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
             stt++;
         }
     }
-    
+
     private void showData(List<KhuyenMai> listKM, int stt) {
         dtmKhuyenMai.setRowCount(0);
         for (KhuyenMai khuyenMai : listKM) {
@@ -94,7 +111,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
             stt++;
         }
     }
-    
+
     private void showDataMonAn(List<MonAn> listMonAn, int stt) {
         dtmMonAn.setRowCount(0);
         for (MonAn monAn : listMonAn) {
@@ -102,17 +119,17 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
             stt++;
         }
     }
-    
+
     private void loadLoaiKM() {
         dcbmLoaiKM.addElement("Phần trăm");
         dcbmLoaiKM.addElement("Tiền mặt");
     }
-    
+
     private void loadCbbMonAn() {
         dcbmMonAn.addElement("Món ăn đang được áp dụng khuyến mãi");
         dcbmMonAn.addElement("Món ăn đang không áp dụng khuyến mãi");
     }
-    
+
     private void fillKM(int index, List<KhuyenMai> listKM) {
         KhuyenMai khuyenMai = listKM.get(index);
         txtTenKhuyenMai.setText(khuyenMai.getMaKhuyenMai());
@@ -128,7 +145,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
             radioNgungApDung.setSelected(true);
         }
     }
-    
+
     private KhuyenMai newKM() {
         KhuyenMai khuyenMai = new KhuyenMai();
         khuyenMai.setMaKhuyenMai(txtMaKM.getText());
@@ -153,7 +170,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         }
         return khuyenMai;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -196,7 +213,6 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         tbKMCT = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         btnApDungKM = new javax.swing.JButton();
-        cbbMonAn = new javax.swing.JComboBox<>();
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -378,15 +394,20 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
 
         tbMonAn.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tbMonAn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbMonAnMouseClicked(evt);
@@ -451,13 +472,6 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
             }
         });
 
-        cbbMonAn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbbMonAn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbMonAnActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -474,22 +488,17 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
                                 .addComponent(btnApDungKM, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(61, 61, 61))))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addGroup(panelBorder1Layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(jButton9))
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3)))
-                            .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(cbbMonAn, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(jButton9))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
                         .addGap(18, 18, 18)))
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
@@ -523,10 +532,8 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0)
                 .addComponent(jLabel3)
-                .addGap(0, 0, 0)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(cbbMonAn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
+                .addGap(2, 2, 2)
+                .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
@@ -603,7 +610,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
 
     private void tbMonAnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMonAnMouseClicked
         int index = tbMonAn.getSelectedRow();
-        String maMA = dtmMonAn.getValueAt(index, 1).toString();
+        String maMA = dtmMonAn.getValueAt(index, 0).toString();
         // System.out.println(maMA);
         //MonAn monAn = listMonAn.get(index);
         //getOne = getValue at => lấy mã:
@@ -621,77 +628,76 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
     }//GEN-LAST:event_tbMonAnMouseClicked
 
     private void btnApDungKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApDungKMActionPerformed
+        //lấy số lượng món ăn  trên table đang có
+        int szTable = dtmMonAn.getRowCount();
+        //list custom model: thêm thuộc tính áp dụng hay ko
+        List<MonAnKMResponse> listMaKm = new ArrayList<>();
+        for (int i = 0; i < szTable; i++) {
+            MonAnKMResponse monAnKMResponse = new MonAnKMResponse();
+            monAnKMResponse.setApDungKM((boolean) dtmMonAn.getValueAt(i, 3));
+            monAnKMResponse.setGiaCu((BigDecimal) dtmMonAn.getValueAt(i, 2));
+            monAnKMResponse.setTenMonAn((String) dtmMonAn.getValueAt(i, 1));
+            monAnKMResponse.setMaMA((String) dtmMonAn.getValueAt(i, 0));
+            listMaKm.add(monAnKMResponse);
+        }
+        //laasy max KM đang được chọn:
         String maKM = txtMaKM.getText();
-        int szListThemKM_Ma = listThemKM_MA.size();
-        if (maKM.isEmpty() || szListThemKM_Ma <= 0) {
-            JOptionPane.showMessageDialog(this, "??");
+        if (maKM.isEmpty() || maKM == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn KM cần áp dụng!");
         } else {
+            //chạy for list món ăn trên table:
             KhuyenMai khuyenMai = khuyenMaiService.getOne(maKM);
-            try {
-                for (int i = 0; i < szListThemKM_Ma; i++) {
-                    String maMA = listThemKM_MA.get(i).getMaMonAn();
-                    String updateKM_MA = monAnService.themKMChoMonAn(khuyenMai, maMA);
+            for (MonAnKMResponse monAnKMResponse : listMaKm) {
+                MonAn monAn = monAnService.getOne(monAnKMResponse.getMaMA());
+                //nếu check box được chọn thì ktra xem trong db món đó đã được áp dụng từ trước hay chưa
+                //nếu rồi bỏ qua, nếu chưa insert kmct
+                if (monAnKMResponse.isApDungKM()) {
+                    List<KhuyenMaiChiTiet> kmct = khuyenMaiChiTiettService.getKMCTByMaAndKM(monAn, khuyenMai);
+                    if (kmct == null) {
+                        KhuyenMaiChiTiet khuyenMaiChiTiet = new KhuyenMaiChiTiet();
+                        khuyenMaiChiTiet.setKhuyenMai(khuyenMai);
+                        khuyenMaiChiTiet.setMonAn(monAn);
+                        String addKMCT = khuyenMaiChiTiettService.add(khuyenMaiChiTiet);
+                    }
                 }
-                listThemKM_MA.removeAll(listThemKM_MA);
-                JOptionPane.showMessageDialog(this, "Áp dụng KM thành công!");
-                showDataCTKM(listThemKM_MA, 1);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Áp dụng KM ko thành công!");
             }
+            JOptionPane.showMessageDialog(this, "Thành công!");
         }
-    }//GEN-LAST:event_btnApDungKMActionPerformed
-
-    private void cbbMonAnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbMonAnActionPerformed
-        if (dcbmMonAn.getSelectedItem().equals("Món ăn đang được áp dụng khuyến mãi")) {
-//            listMonAn = monAnService.getMonAnCoKM();
-//            showDataMonAn(listMonAn, 1);
-            listMonAn = monAnService.getAll();
-            //duyeejt for, món ăn nào ko đượcc KM add vào list mới=> showLisst mới
-            List<MonAn> listMACoKM = new ArrayList<>();
-            for (MonAn monAn : listMonAn) {
-                //ánha xạ lại
-//                if (monAn.getKhuyenMai() != null) {
-//                    listMACoKM.add(monAn);;
+//        String maKM = txtMaKM.getText();
+//        int szListThemKM_Ma = listThemKM_MA.size();
+//        if (maKM.isEmpty() || szListThemKM_Ma <= 0) {
+//            JOptionPane.showMessageDialog(this, "??");
+//        } else {
+//            KhuyenMai khuyenMai = khuyenMaiService.getOne(maKM);
+//            try {
+//                for (int i = 0; i < szListThemKM_Ma; i++) {
+//                    String maMA = listThemKM_MA.get(i).getMaMonAn();
+//                    String updateKM_MA = monAnService.themKMChoMonAn(khuyenMai, maMA);
 //                }
-            }
-            if (listMACoKM.size() > 0) {
-                showDataMonAn(listMACoKM, 1);
-            } else {
-                dtmMonAn.setRowCount(0);
-            }
-        } else {
-            listMonAn = monAnService.getAll();
-            //duyeejt for, món ăn nào ko đượcc KM add vào list mới=> showLisst mới
-            List<MonAn> listMAKoKM = new ArrayList<>();
-            //ánh xạ lại
-//            for (MonAn monAn : listMonAn) {
-//                if (monAn.getKhuyenMai() == null) {
-//                    listMAKoKM.add(monAn);;
-//                }
+//                listThemKM_MA.removeAll(listThemKM_MA);
+//                JOptionPane.showMessageDialog(this, "Áp dụng KM thành công!");
+//                showDataCTKM(listThemKM_MA, 1);
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(this, "Áp dụng KM ko thành công!");
 //            }
-            if (listMAKoKM.size() > 0) {
-                showDataMonAn(listMAKoKM, 1);
-            } else {
-                dtmMonAn.setRowCount(0);
-            }
-        }
-    }//GEN-LAST:event_cbbMonAnActionPerformed
+//        }
+    }//GEN-LAST:event_btnApDungKMActionPerformed
 
     private void tbKMCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbKMCTMouseClicked
         int index = tbKMCT.getSelectedRow();
         String maMA = dtmKMCT.getValueAt(index, 2).toString();
         MonAn monAn = monAnService.getOne(maMA);
         //ánh xạ lại
-       // if (monAn.getKhuyenMai() != null) {
-           // KhuyenMai khuyenMaiDangShow = monAn.getKhuyenMai();
-            int checkOut = JOptionPane.showConfirmDialog(null, "Ngừng áp dụng KM cho sản phẩm này?");
-            if (checkOut == 0) {
-               // monAn.setKhuyenMai(null);
-                String updateMA_KM = monAnService.update(monAn, maMA);
-                JOptionPane.showMessageDialog(this, "Thành công!");
-               // listCTKM = monAnService.getMonAnByKhuyenMai(khuyenMaiDangShow);
-                showDataCTKM(listCTKM, 1);
-            }
+        // if (monAn.getKhuyenMai() != null) {
+        // KhuyenMai khuyenMaiDangShow = monAn.getKhuyenMai();
+        int checkOut = JOptionPane.showConfirmDialog(null, "Ngừng áp dụng KM cho sản phẩm này?");
+        if (checkOut == 0) {
+            // monAn.setKhuyenMai(null);
+            String updateMA_KM = monAnService.update(monAn, maMA);
+            JOptionPane.showMessageDialog(this, "Thành công!");
+            // listCTKM = monAnService.getMonAnByKhuyenMai(khuyenMaiDangShow);
+            showDataCTKM(listCTKM, 1);
+        }
         //}
     }//GEN-LAST:event_tbKMCTMouseClicked
 
@@ -704,7 +710,6 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbLoaiKM;
-    private javax.swing.JComboBox<String> cbbMonAn;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

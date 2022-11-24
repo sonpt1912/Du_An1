@@ -4,10 +4,13 @@
  */
 package com.mycompany.service.impl;
 
+import com.mycompany.domainModel.KhuyenMai;
 import com.mycompany.domainModel.KhuyenMaiChiTiet;
+import com.mycompany.domainModel.MonAn;
 import com.mycompany.repository.ICommonRepository;
 import com.mycompany.repository.impl.KhuyenMaiChiTietRepository;
 import com.mycompany.service.ICommonService;
+import com.mycompany.service.IKMCTService;
 import com.mycompany.util.ThongBao;
 import java.util.List;
 
@@ -15,9 +18,9 @@ import java.util.List;
  *
  * @author Duongntt
  */
-public class KhuyenMaiChiTiettService implements ICommonService<KhuyenMaiChiTiet, String> {
+public class KhuyenMaiChiTiettService implements ICommonService<KhuyenMaiChiTiet, String>, IKMCTService {
 
-    private ICommonRepository kmctRepo = new KhuyenMaiChiTietRepository();
+    private KhuyenMaiChiTietRepository kmctRepo = new KhuyenMaiChiTietRepository();
     private ThongBao thongBao = new ThongBao();
 
     @Override
@@ -43,6 +46,11 @@ public class KhuyenMaiChiTiettService implements ICommonService<KhuyenMaiChiTiet
     @Override
     public String remove(String ma) {
         return thongBao.thongBaoDELETE((boolean) kmctRepo.remove(ma));
+    }
+
+    @Override
+    public List<KhuyenMaiChiTiet> getKMCTByMaAndKM(MonAn monAn, KhuyenMai khuyenMai) {
+        return kmctRepo.getKMCTByMaAndKM(monAn, khuyenMai);
     }
 
 }

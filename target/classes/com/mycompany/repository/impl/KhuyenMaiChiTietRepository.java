@@ -4,9 +4,12 @@
  */
 package com.mycompany.repository.impl;
 
+import com.mycompany.domainModel.KhuyenMai;
 import com.mycompany.domainModel.KhuyenMaiChiTiet;
+import com.mycompany.domainModel.MonAn;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.ICommonRepository;
+import com.mycompany.repository.IKMCTRepository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
@@ -17,7 +20,7 @@ import org.hibernate.Transaction;
  *
  * @author Duongntt
  */
-public class KhuyenMaiChiTietRepository implements ICommonRepository<KhuyenMaiChiTiet, Boolean, String> {
+public class KhuyenMaiChiTietRepository implements ICommonRepository<KhuyenMaiChiTiet, Boolean, String>, IKMCTRepository {
 
     @Override
     public List<KhuyenMaiChiTiet> getAll() {
@@ -106,4 +109,25 @@ public class KhuyenMaiChiTietRepository implements ICommonRepository<KhuyenMaiCh
         }
     }
 
+    @Override
+    public List<KhuyenMaiChiTiet> getKMCTByMaAndKM(MonAn monAn, KhuyenMai khuyenMai) {
+        List<KhuyenMaiChiTiet> listKMCT = new ArrayList<>();
+        Session session = HibernateUtil.getFactory().openSession();
+        Query query = session.createQuery("FROM KhuyenMaiChiTiet WHERE monAn = :MA AND khuyenMai = :KM");
+        query.setParameter("MA", monAn);
+        query.setParameter("KM", khuyenMai);
+        listKMCT = query.getResultList();
+        return listKMCT;
+    }
+
+    public static void main(String[] args) {
+        MonAn monAn = new MonAn();
+        monAn.setId("91855412-290D-470F-9CB9-C95C18C60CB7");
+        KhuyenMai khuyenMai = new KhuyenMai();
+        khuyenMai.setId("7BC6AC30-4199-44B4-9931-899EB6B78805");
+        List<KhuyenMaiChiTiet> listKM = new KhuyenMaiChiTietRepository().getKMCTByMaAndKM(monAn, khuyenMai);
+        for (KhuyenMaiChiTiet khuyenMaiChiTiet : listKM) {
+            System.out.println(khuyenMaiChiTiet);
+        }
+    }
 }
