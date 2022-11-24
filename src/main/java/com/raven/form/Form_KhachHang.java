@@ -33,7 +33,7 @@ public class Form_KhachHang extends javax.swing.JPanel {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private NhanVien nhanV;
 
-    public Form_KhachHang() {
+    public Form_KhachHang(NhanVien nv) {
         initComponents();
         this.nhanV = nhanV;
         tbKhachHang.setModel(dtmKhachHang);

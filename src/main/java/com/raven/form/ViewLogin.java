@@ -108,6 +108,7 @@ public class ViewLogin extends javax.swing.JFrame {
         String user = txtUser.getText();
         List<NhanVien> login = nhanVienService.getUserAndPass(user, pass);
         for (NhanVien nv : login) {
+            System.out.println(nv.getTen() + "    vdscahjkvbu,ioumynvfdc");
             if (login != null) {
                 Main trangChu = new Main(nv);
                 this.dispose();

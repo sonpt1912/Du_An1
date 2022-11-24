@@ -7,6 +7,7 @@ package com.raven.form;
 
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.MonAn;
+import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.impl.HoaDonService;
 import com.mycompany.service.impl.MonAnService;
 import com.mycompany.service.impl.ThongKeService;
@@ -27,7 +28,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
     private int checkTatCaHoaDon;
     private int checkSanPham;
 
-    public Form_ThongKe() {
+    public Form_ThongKe(NhanVien nv) {
         initComponents();
         String headerHD[] = {"STT", "MaHD", "Ngày Tạo", "Tổng tiền", "Trạng thái"};
         String headerSP[] = {"STT", "MaSP", "Tên SP", "Đơn giá", "Trạng thái"};

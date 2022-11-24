@@ -143,6 +143,7 @@ public class JDialogDanhMuc extends javax.swing.JDialog {
 
         radioTrangThaiDM.add(radioKinhDoanhDM);
         radioKinhDoanhDM.setText("Kinh doanh");
+        radioKinhDoanhDM.setAutoscrolls(true);
 
         radioTrangThaiDM.add(radioNgungKDDM);
         radioNgungKDDM.setText("Ngừng kinh doanh");

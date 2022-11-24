@@ -46,6 +46,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 
 public class Form_Home extends javax.swing.JPanel {
 
@@ -95,32 +96,9 @@ public class Form_Home extends javax.swing.JPanel {
     private NhanVien nhanV;
     private HoaDon hdTong;
 
-    public Form_Home() {
+    public Form_Home(NhanVien nv) {
         initComponents();
-//        card1.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/stock.png")), "Stock Total", "$200000", "Increased by 60%"));
-//        card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/profit.png")), "Total Profit", "$15000", "Increased by 25%"));
-//        card3.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/flag.png")), "Unique Visitors", "$300000", "Increased by 70%"));
-//        //  add row table
-//        spTable.setVerticalScrollBar(new ScrollBar());
-//        spTable.getVerticalScrollBar().setBackground(Color.WHITE);
-//        spTable.getViewport().setBackground(Color.WHITE);
-//        JPanel p = new JPanel();
-//        p.setBackground(Color.WHITE);
-//        spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
-//        table.addRow(new Object[]{"Mike Bhand", "mikebhand@gmail.com", "Admin", "25 Apr,2018", StatusType.PENDING});
-//        table.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018", StatusType.APPROVED});
-//        table.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018", StatusType.APPROVED});
-//        table.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018", StatusType.REJECT});
-//        table.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018", StatusType.PENDING});
-//        table.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018", StatusType.APPROVED});
-//        table.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018", StatusType.APPROVED});
-//        table.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018", StatusType.REJECT});
-//        table.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018", StatusType.PENDING});
-//        table.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018", StatusType.PENDING});
-//        table.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018", StatusType.APPROVED});
-//        table.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018", StatusType.APPROVED});
-//        table.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018", StatusType.REJECT});
-//        table.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018", StatusType.PENDING});
+        nhanV = nv;
         tbHoaDon.setModel(dtmHoaDon);
         tbHoaDonCT.setModel(dtmHoaDonCT);
         tbBan.setModel(dtmBan);
@@ -221,6 +199,7 @@ public class Form_Home extends javax.swing.JPanel {
         cbTienMat = new javax.swing.JCheckBox();
         cbChuyenKhoan = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
+        btnRefresh = new javax.swing.JButton();
 
         gopHD.setText("Gộp hoá đơn");
         gopHD.addActionListener(new java.awt.event.ActionListener() {
@@ -499,6 +478,13 @@ public class Form_Home extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Mã HĐ       :");
 
+        btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -516,15 +502,17 @@ public class Form_Home extends javax.swing.JPanel {
                                     .addGap(18, 18, 18)
                                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(34, 34, 34)
-                                .addComponent(btnTachHD))
-                            .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addComponent(cbbSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelBorder1Layout.createSequentialGroup()
+                                .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(btnTachHD)
+                                .addGap(38, 38, 38)
+                                .addComponent(btnRefresh)))
                         .addGap(18, 18, 18)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
@@ -576,8 +564,7 @@ public class Form_Home extends javax.swing.JPanel {
                                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                                 .addComponent(txtSdtKH, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btnSearchKH)
-                                                .addGap(0, 0, Short.MAX_VALUE))
+                                                .addComponent(btnSearchKH))
                                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                                 .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(14, 14, 14)
@@ -589,7 +576,8 @@ public class Form_Home extends javax.swing.JPanel {
                                                 .addGap(18, 18, 18)
                                                 .addComponent(btnThanhToanAndIn)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btnThanhToan)))))
+                                                .addComponent(btnThanhToan)))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
                                 .addContainerGap())
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -692,7 +680,8 @@ public class Form_Home extends javax.swing.JPanel {
                         .addGap(16, 16, 16)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTachHD))))
+                            .addComponent(btnTachHD)
+                            .addComponent(btnRefresh))))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
 
@@ -1013,7 +1002,7 @@ public class Form_Home extends javax.swing.JPanel {
             String ngayThanhToan = new HoaDonUtil().layNgay();
 
             // fixx cứng nv
-            NhanVien nhanVien = (NhanVien) nvs.getOne("NV1");
+            NhanVien nhanVien = (NhanVien) nvs.getOne(nhanV.getMa());
             HoaDon hd = new HoaDon();
             //  HoaDon hd = new HoaDon(null, maHD, nhanVien, null, ngayTao, Date.valueOf(ngayThanhToan), null, null, 0);
             hd.setMaHoaDon(maHD);
@@ -1227,9 +1216,22 @@ public class Form_Home extends javax.swing.JPanel {
 // sự kiện của chuột phải vào hoá đơn
     private void gopHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gopHDActionPerformed
         // TODO add your handling code here:
-        JDialogGopHoaDon dialogGopHoaDon = new JDialogGopHoaDon(null, true,hdTong);
+        JDialogGopHoaDon dialogGopHoaDon = new JDialogGopHoaDon(null, true, hdTong);
         dialogGopHoaDon.setVisible(true);
     }//GEN-LAST:event_gopHDActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        btnClearActionPerformed(evt);
+        lstBanResponses = banResponseService.getAll();
+        lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
+        lstMonAnResponses = monAnResponseService.getByDanhMuc("Đồ ăn");
+        loadTableMonAn();
+        rdoChoThanhToan.setSelected(true);
+        showDataMonAn(lstMonAnResponses);
+        showDataHoaDon(lstHoaDonResponses);
+        showDataHDCT(lstHDCTResponses);
+        showDataBan(lstBanResponses);
+    }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
@@ -1350,6 +1352,7 @@ public class Form_Home extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnHuy;
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSearchKH;
     private javax.swing.JButton btnTachBan;
     private javax.swing.JButton btnTachHD;

@@ -8,6 +8,7 @@ package com.raven.form;
 import com.mycompany.domainModel.DanhMuc;
 import com.mycompany.domainModel.Loai;
 import com.mycompany.domainModel.MonAn;
+import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.impl.DanhMucService;
 import com.mycompany.service.impl.LoaiService;
 import com.mycompany.service.impl.MonAnService;
@@ -52,7 +53,7 @@ public class Form_SanPham extends javax.swing.JPanel {
     /**
      * Creates new form Form_1
      */
-    public Form_SanPham() {
+    public Form_SanPham(NhanVien nv) {
         initComponents();
         String header[] = {"STT", "MÃ SẢN PHẨM", "TÊN SẢN PHẨM", "ĐƠN GIÁ", "ĐƠN VỊ TÍNH", "ẢNH"};
         dtm.setColumnIdentifiers(header);
