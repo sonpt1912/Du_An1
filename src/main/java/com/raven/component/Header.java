@@ -1,12 +1,13 @@
 package com.raven.component;
 
+import com.mycompany.domainModel.NhanVien;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 public class Header extends javax.swing.JPanel {
 
-    public Header() {
+    public Header(NhanVien nv) {
         initComponents();
         setOpaque(false);
     }

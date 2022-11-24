@@ -109,7 +109,7 @@ public class ViewLogin extends javax.swing.JFrame {
         List<NhanVien> login = nhanVienService.getUserAndPass(user, pass);
         for (NhanVien nv : login) {
             if (login != null) {
-                Main trangChu = new Main();
+                Main trangChu = new Main(nv);
                 this.dispose();
                 trangChu.setVisible(true);
             }
