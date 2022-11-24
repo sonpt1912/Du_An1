@@ -46,6 +46,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 
 public class Form_Home extends javax.swing.JPanel {
 
@@ -120,6 +121,7 @@ public class Form_Home extends javax.swing.JPanel {
 //        table.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018", StatusType.APPROVED});
 //        table.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018", StatusType.REJECT});
 //        table.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018", StatusType.PENDING});
+        initComponents();
         tbHoaDon.setModel(dtmHoaDon);
         tbHoaDonCT.setModel(dtmHoaDonCT);
         tbBan.setModel(dtmBan);
@@ -220,7 +222,6 @@ public class Form_Home extends javax.swing.JPanel {
         cbTienMat = new javax.swing.JCheckBox();
         cbChuyenKhoan = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
 
         gopHD.setText("Gộp hoá đơn");
         gopHD.addActionListener(new java.awt.event.ActionListener() {
@@ -499,8 +500,6 @@ public class Form_Home extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Mã HĐ       :");
 
-        jLabel6.setText("jLabel6");
-
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -526,10 +525,7 @@ public class Form_Home extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addGap(172, 172, 172)
-                                .addComponent(jLabel6)))
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
@@ -697,9 +693,7 @@ public class Form_Home extends javax.swing.JPanel {
                         .addGap(16, 16, 16)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTachHD))
-                        .addGap(74, 74, 74)
-                        .addComponent(jLabel6)))
+                            .addComponent(btnTachHD))))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
 
@@ -1234,7 +1228,7 @@ public class Form_Home extends javax.swing.JPanel {
 // sự kiện của chuột phải vào hoá đơn
     private void gopHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gopHDActionPerformed
         // TODO add your handling code here:
-        JDialogGopHoaDon dialogGopHoaDon = new JDialogGopHoaDon(null, true,hdTong);
+        JDialogGopHoaDon dialogGopHoaDon = new JDialogGopHoaDon(null, true, hdTong);
         dialogGopHoaDon.setVisible(true);
     }//GEN-LAST:event_gopHDActionPerformed
 
@@ -1382,7 +1376,6 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
