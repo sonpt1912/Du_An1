@@ -98,6 +98,7 @@ public class Form_Home extends javax.swing.JPanel {
 
     public Form_Home(NhanVien nv) {
         initComponents();
+        nhanV = nv;
         tbHoaDon.setModel(dtmHoaDon);
         tbHoaDonCT.setModel(dtmHoaDonCT);
         tbBan.setModel(dtmBan);
@@ -1001,7 +1002,7 @@ public class Form_Home extends javax.swing.JPanel {
             String ngayThanhToan = new HoaDonUtil().layNgay();
 
             // fixx cứng nv
-            NhanVien nhanVien = (NhanVien) nvs.getOne("NV1");
+            NhanVien nhanVien = (NhanVien) nvs.getOne(nhanV.getMa());
             HoaDon hd = new HoaDon();
             //  HoaDon hd = new HoaDon(null, maHD, nhanVien, null, ngayTao, Date.valueOf(ngayThanhToan), null, null, 0);
             hd.setMaHoaDon(maHD);
