@@ -91,6 +91,24 @@ public class ChiTietComBoRepository implements IChiTietComBoRepository<ChiTietCo
         return check > 0;
     }
 
+    public Boolean delete(String id) {
+        String hql = "DELETE " + fromTable + "WHERE id = :ID";
+        Transaction transaction = null;
+        int check = 0;
+        try {
+            transaction = session.beginTransaction();
+            session.clear();
+            Query query = session.createQuery(hql);
+            query.setParameter("ID", id);
+            check = query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        }
+        return check > 0;
+    }
+
     public static void main(String[] args) {
         MonAn ma = new MonAn();
         ma.setId("F140701F-1D94-49E6-97EC-46CDAB6D9EC6");

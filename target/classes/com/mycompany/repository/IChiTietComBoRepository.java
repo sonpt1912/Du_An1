@@ -28,5 +28,7 @@ public interface IChiTietComBoRepository<O, B, I, O2, O3> {
     O getOneById(O chiTietComBo);
 
     B updateSoLuong(O chiTietComBo, O2 comBo, int soLuong);
+    
+    B delete(String id);
 
 }

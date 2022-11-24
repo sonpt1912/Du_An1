@@ -14,7 +14,7 @@ import java.util.List;
 public class NhanVienUtil {
 
     public String maTuDong(List<NhanVien> list) {
-        String maNV = "KH";
+        String maNV = "NV";
         int sz = list.size();
         return maNV + (sz + 1);
     }

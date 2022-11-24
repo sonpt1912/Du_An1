@@ -16,11 +16,21 @@ import java.util.List;
  */
 public class ComboResponseService implements ICommonResponseService<ComboResponse> {
 
-    private final ICommonResponseRepository cbrr = new ComboResponseRepository();
+    private final ComboResponseRepository cbrr = new ComboResponseRepository();
 
     @Override
     public List<ComboResponse> getAll() {
         return cbrr.getAll();
+    }
+
+    public List<ComboResponse> getByTenComBo(String tenCB) {
+        return cbrr.getByTenComBo(tenCB);
+    }
+    public static void main(String[] args) {
+        List<ComboResponse> comboResponses = new ComboResponseService().getByTenComBo("Com");
+        for (ComboResponse comboResponse : comboResponses) {
+            System.out.println(comboResponse.toString());
+        }
     }
 
 }

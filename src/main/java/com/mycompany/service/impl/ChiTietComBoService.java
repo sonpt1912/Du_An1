@@ -108,4 +108,14 @@ public class ChiTietComBoService implements IChiTietComBoService<ChiTietComBo, S
             return updateSoLuong(c, comBo, soLuong);
         }
     }
+
+    @Override
+    public String deleteCTCombo(String id) {
+        if ((boolean) ctcbr.delete(id)) {
+            return "xóa thành công";
+        } else {
+            return "xóa không thành công";
+        }
+    }
+
 }

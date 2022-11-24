@@ -27,15 +27,16 @@ public class ComboResponseRepository implements ICommonResponseRepository<ComboR
         List<ComboResponse> comboResponses = query.getResultList();
         return comboResponses;
     }
-    public List<ComboResponse> getByTenComBo() {
-        String hql = "SELECT new com.mycompany.customModel.ComboResponse(CB.maCB,CB.tenCB,CB.donGia)" + fromTable;
+
+    public List<ComboResponse> getByTenComBo(String tenCB) {
+        String hql = "SELECT new com.mycompany.customModel.ComboResponse(CB.maCB,CB.tenCB,CB.donGia)" + fromTable
+                + "WHERE CB.tenCB like :tenCB";
         Query query = session.createQuery(hql);
+        query.setParameter("tenCB", "%" + tenCB + "%");
         List<ComboResponse> comboResponses = query.getResultList();
         return comboResponses;
     }
-    
-    
-    
+
     public static void main(String[] args) {
         List<ComboResponse> comboResponses = new ComboResponseRepository().getAll();
         for (ComboResponse comboResponse : comboResponses) {
