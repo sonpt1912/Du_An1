@@ -16,6 +16,7 @@ import com.mycompany.domainModel.HoaDonChiTiet;
 import com.mycompany.domainModel.KhachHang;
 import com.mycompany.domainModel.KhuVuc;
 import com.mycompany.domainModel.KhuyenMai;
+import com.mycompany.domainModel.KhuyenMaiChiTiet;
 import com.mycompany.domainModel.Loai;
 //import com.mycompany.domainModel.KhuyenMaiChiTiet;
 import com.mycompany.domainModel.MonAn;
@@ -42,9 +43,9 @@ public class HibernateUtil {
         Properties properties = new Properties();
         properties.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
         properties.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        properties.put(Environment.URL, "jdbc:sqlserver://localhost:1433;databaseName=DuAn1Nhom102");
+        properties.put(Environment.URL, "jdbc:sqlserver://localhost:1433;databaseName=DuAn1Nhom102_LuongKM");
         properties.put(Environment.USER, "sa");
-        properties.put(Environment.PASS, "Son191203");
+        properties.put(Environment.PASS, "12123");
         properties.put(Environment.SHOW_SQL, "true");
 //        properties.put(Environment.HBM2DDL_AUTO, "create"); // tu dong tao ra cac truong trong sql
 
@@ -67,6 +68,7 @@ public class HibernateUtil {
         conf.addAnnotatedClass(DanhMuc.class);
         conf.addAnnotatedClass(GiaoDich.class);
         conf.addAnnotatedClass(Loai.class);
+        conf.addAnnotatedClass(KhuyenMaiChiTiet.class);
 
         FACTORY = conf.buildSessionFactory(registry);
     }
