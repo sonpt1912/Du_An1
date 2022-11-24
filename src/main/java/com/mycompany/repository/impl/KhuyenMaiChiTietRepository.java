@@ -130,4 +130,14 @@ public class KhuyenMaiChiTietRepository implements ICommonRepository<KhuyenMaiCh
             System.out.println(khuyenMaiChiTiet);
         }
     }
+
+    @Override
+    public List<KhuyenMaiChiTiet> getKMCTsByKM(KhuyenMai khuyenMai) {
+        List<KhuyenMaiChiTiet> listKMCT = new ArrayList<>();
+        Session session = HibernateUtil.getFactory().openSession();
+        Query query = session.createQuery("FROM KhuyenMaiChiTiet WHERE khuyenMai = :KM");
+        query.setParameter("KM", khuyenMai);
+        listKMCT = query.getResultList();
+        return listKMCT;
+    }
 }

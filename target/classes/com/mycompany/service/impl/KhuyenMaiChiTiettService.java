@@ -7,7 +7,6 @@ package com.mycompany.service.impl;
 import com.mycompany.domainModel.KhuyenMai;
 import com.mycompany.domainModel.KhuyenMaiChiTiet;
 import com.mycompany.domainModel.MonAn;
-import com.mycompany.repository.ICommonRepository;
 import com.mycompany.repository.impl.KhuyenMaiChiTietRepository;
 import com.mycompany.service.ICommonService;
 import com.mycompany.service.IKMCTService;
@@ -51,6 +50,11 @@ public class KhuyenMaiChiTiettService implements ICommonService<KhuyenMaiChiTiet
     @Override
     public List<KhuyenMaiChiTiet> getKMCTByMaAndKM(MonAn monAn, KhuyenMai khuyenMai) {
         return kmctRepo.getKMCTByMaAndKM(monAn, khuyenMai);
+    }
+
+    @Override
+    public List<KhuyenMaiChiTiet> getKMCTsByKM(KhuyenMai khuyenMai) {
+        return kmctRepo.getKMCTsByKM(khuyenMai);
     }
 
 }
