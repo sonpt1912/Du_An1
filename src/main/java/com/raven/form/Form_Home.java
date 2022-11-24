@@ -41,6 +41,11 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import com.mycompany.service.IHoaDonChiTietService;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 public class Form_Home extends javax.swing.JPanel {
 
@@ -162,6 +167,8 @@ public class Form_Home extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        popMenu = new javax.swing.JPopupMenu();
+        gopHD = new javax.swing.JMenuItem();
         panel = new javax.swing.JLayeredPane();
         panelBorder1 = new com.raven.swing.PanelBorder();
         txtSearch = new com.raven.swing.SearchText();
@@ -186,7 +193,7 @@ public class Form_Home extends javax.swing.JPanel {
         jScrollPane7 = new javax.swing.JScrollPane();
         tbBan = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnTachBan = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
         btnThanhToan = new javax.swing.JButton();
         btnHuy = new javax.swing.JButton();
@@ -198,7 +205,7 @@ public class Form_Home extends javax.swing.JPanel {
         jLabel17 = new javax.swing.JLabel();
         txtTenKH = new javax.swing.JTextField();
         btnThemKH = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        btnTachHD = new javax.swing.JButton();
         lbMaHDThanhToan = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -214,6 +221,14 @@ public class Form_Home extends javax.swing.JPanel {
         cbTienMat = new javax.swing.JCheckBox();
         cbChuyenKhoan = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
+
+        gopHD.setText("Gộp hoá đơn");
+        gopHD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gopHDActionPerformed(evt);
+            }
+        });
+        popMenu.add(gopHD);
 
         panel.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
@@ -368,8 +383,13 @@ public class Form_Home extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Bàn");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setText("Tách Bàn");
+        btnTachBan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnTachBan.setText("Tách Bàn");
+        btnTachBan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTachBanActionPerformed(evt);
+            }
+        });
 
         jComboBox2.setBackground(new java.awt.Color(255, 255, 0));
         jComboBox2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -419,12 +439,12 @@ public class Form_Home extends javax.swing.JPanel {
         btnThemKH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnThemKH.setText("+");
 
-        jButton8.setBackground(new java.awt.Color(204, 204, 204));
-        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton8.setText("Tách HĐ");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnTachHD.setBackground(new java.awt.Color(204, 204, 204));
+        btnTachHD.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnTachHD.setText("Tách HĐ");
+        btnTachHD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnTachHDActionPerformed(evt);
             }
         });
 
@@ -492,13 +512,13 @@ public class Form_Home extends javax.swing.JPanel {
                                 .addComponent(jLabel2)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
                                     .addGap(220, 220, 220)
-                                    .addComponent(jButton1)
+                                    .addComponent(btnTachBan)
                                     .addGap(18, 18, 18)
                                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(34, 34, 34)
-                                .addComponent(jButton8))
+                                .addComponent(btnTachHD))
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addComponent(cbbSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -620,7 +640,7 @@ public class Form_Home extends javax.swing.JPanel {
                     .addComponent(jLabel5)
                     .addComponent(lbMaHD, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jButton1)
+                    .addComponent(btnTachBan)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -672,7 +692,7 @@ public class Form_Home extends javax.swing.JPanel {
                         .addGap(16, 16, 16)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8))))
+                            .addComponent(btnTachHD))))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
 
@@ -697,68 +717,73 @@ public class Form_Home extends javax.swing.JPanel {
 
     private void tbHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoaDonMouseClicked
         // TODO add your handling code here:
-        lstMaBan.clear();// clear để lấy mã bàn mới
-        // set lại tiền thừa với tổng tiền  = 0.0 để cho dữ liệu được chính xác hơn
-        txtTienThua.setText("0");
-        txtTongTien.setText("0");
-        // gọi lại hàm để dữ liệu được cập nhập
-        fillTienThuaChuyenKhoan();
-        fillTienThuaTienMat();
-        // lấy ra hoá đơn response đang chọn
-        int index = tbHoaDon.getSelectedRow();
-        HoaDonResponse hdr = lstHoaDonResponses.get(index);
-        lbMaHDThanhToan.setText(hdr.getMaHoaDon());
-        lbMaHD.setText(hdr.getMaHoaDon());
-        // con vớt về hoá đơn
-        HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
-        hdTong = hd;
-        // lấy ra những giao dịch có trong hoá đơn đã được chọn
-        List<GiaoDich> giaoDichs = gds2.getTheoHoaDon(hd);
-        //list để fill mã bàn, không khai bảo toàn cục nhé
-        List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hd);
-        String maBan = lstChiTietBanHoaDons.get(0).getBan().getMaBan().toString();
+        if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
+            popMenu.show(this, evt.getX(), evt.getY());
+
+        } else {
+            lstMaBan.clear();// clear để lấy mã bàn mới
+            // set lại tiền thừa với tổng tiền  = 0.0 để cho dữ liệu được chính xác hơn
+            txtTienThua.setText("0");
+            txtTongTien.setText("0");
+            // gọi lại hàm để dữ liệu được cập nhập
+            fillTienThuaChuyenKhoan();
+            fillTienThuaTienMat();
+            // lấy ra hoá đơn response đang chọn
+            int index = tbHoaDon.getSelectedRow();
+            HoaDonResponse hdr = lstHoaDonResponses.get(index);
+            lbMaHDThanhToan.setText(hdr.getMaHoaDon());
+            lbMaHD.setText(hdr.getMaHoaDon());
+            // con vớt về hoá đơn
+            HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
+            hdTong = hd;
+            // lấy ra những giao dịch có trong hoá đơn đã được chọn
+            List<GiaoDich> giaoDichs = gds2.getTheoHoaDon(hd);
+            //list để fill mã bàn, không khai bảo toàn cục nhé
+            List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hd);
+            String maBan = lstChiTietBanHoaDons.get(0).getBan().getMaBan().toString();
 //        lbSoBan.setText(maBan);
-        // fill label so ban
-        for (int i = 0; i < lstChiTietBanHoaDons.size(); i++) {
-            if (lstChiTietBanHoaDons.size() > 1) {
-                if (i == 0) {
-                    continue;
-                }
-                maBan += ", " + lstChiTietBanHoaDons.get(i).getBan().getMaBan().toString();
+            // fill label so ban
+            for (int i = 0; i < lstChiTietBanHoaDons.size(); i++) {
+                if (lstChiTietBanHoaDons.size() > 1) {
+                    if (i == 0) {
+                        continue;
+                    }
+                    maBan += ", " + lstChiTietBanHoaDons.get(i).getBan().getMaBan().toString();
 //                lbSoBan.setText(maBan + ", " + lstChiTietBanHoaDon.getBan().getMaBan());
-                lbSoBan.setText(maBan);
-            } else {
-                lbSoBan.setText(lstChiTietBanHoaDons.get(i).getBan().getMaBan().toString());
+                    lbSoBan.setText(maBan);
+                } else {
+                    lbSoBan.setText(lstChiTietBanHoaDons.get(i).getBan().getMaBan().toString());
+                }
             }
-        }
 //        lbSoBan.setText("aaaaa");
 
-        // nếu hoá đơn đang chọn có trạng thái là dang chờ thanh toán thì set check trangthaiHD = 0
-        //, và check món ăn = 0 và fill mã HD lên label
-        // ngược lại nếu hd đã thanh toán hoặc đã huỷ thì check TrangTHaiHD = 1 và fill rỗng lên ô tếch phiu mã HD
-        if (hd.getTrangThai() == 0) {
-            checkTrangThaiHD = 0;
-            checkMonAn = 0;
-            lbMaHDThanhToan.setText(hdr.getMaHoaDon());
-        } else {
-            checkTrangThaiHD = 1;
-            lbMaHDThanhToan.setText("");
-        }
+            // nếu hoá đơn đang chọn có trạng thái là dang chờ thanh toán thì set check trangthaiHD = 0
+            //, và check món ăn = 0 và fill mã HD lên label
+            // ngược lại nếu hd đã thanh toán hoặc đã huỷ thì check TrangTHaiHD = 1 và fill rỗng lên ô tếch phiu mã HD
+            if (hd.getTrangThai() == 0) {
+                checkTrangThaiHD = 0;
+                checkMonAn = 0;
+                lbMaHDThanhToan.setText(hdr.getMaHoaDon());
+            } else {
+                checkTrangThaiHD = 1;
+                lbMaHDThanhToan.setText("");
+            }
 //        txtTienMat.setText("");
 //        txtChuyenKhoan.setText("");
-        // để fill hình thức thanh toán và số tiền
-        for (GiaoDich giaoDich : giaoDichs) {
-            if (giaoDich.getHinhThucThanhToan().equals("Chuyển khoản")) {
-                txtChuyenKhoan.setText(giaoDich.getSoTienThanhToan().toString());
+            // để fill hình thức thanh toán và số tiền
+            for (GiaoDich giaoDich : giaoDichs) {
+                if (giaoDich.getHinhThucThanhToan().equals("Chuyển khoản")) {
+                    txtChuyenKhoan.setText(giaoDich.getSoTienThanhToan().toString());
+                }
+                if (giaoDich.getHinhThucThanhToan().equals("Tiền mặt")) {
+                    txtTienMat.setText(giaoDich.getSoTienThanhToan().toString());
+                }
             }
-            if (giaoDich.getHinhThucThanhToan().equals("Tiền mặt")) {
-                txtTienMat.setText(giaoDich.getSoTienThanhToan().toString());
-            }
+            // show data hdct theo hd đang chọn
+            lstHDCTResponses = hdctResponseService.getAll(hd);
+            showDataHDCT(lstHDCTResponses);
+            fillTongTien();
         }
-        // show data hdct theo hd đang chọn
-        lstHDCTResponses = hdctResponseService.getAll(hd);
-        showDataHDCT(lstHDCTResponses);
-        fillTongTien();
     }//GEN-LAST:event_tbHoaDonMouseClicked
 
     private void tbBanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbBanMouseClicked
@@ -1109,12 +1134,12 @@ public class Form_Home extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbbSanPhamActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btnTachHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTachHDActionPerformed
         // TODO add your handling code here:
         HoaDon hd = hdTong;
         JDialogTachHoaDon jDialogTachHoaDon = new JDialogTachHoaDon(null, true, hd);
         jDialogTachHoaDon.setVisible(true);
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_btnTachHDActionPerformed
 
     private void btnThanhToanAndInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanAndInActionPerformed
         // TODO add your handling code here:
@@ -1195,6 +1220,16 @@ public class Form_Home extends javax.swing.JPanel {
             showDataMonAn(lstMonAnResponses);
         }
     }//GEN-LAST:event_txtSearchCaretUpdate
+
+    private void btnTachBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTachBanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTachBanActionPerformed
+// sự kiện của chuột phải vào hoá đơn
+    private void gopHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gopHDActionPerformed
+        // TODO add your handling code here:
+        JDialogGopHoaDon dialogGopHoaDon = new JDialogGopHoaDon(null, true,hdTong);
+        dialogGopHoaDon.setVisible(true);
+    }//GEN-LAST:event_gopHDActionPerformed
 
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
@@ -1316,6 +1351,8 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnSearchKH;
+    private javax.swing.JButton btnTachBan;
+    private javax.swing.JButton btnTachHD;
     private javax.swing.JButton btnTaoHoaDon;
     private javax.swing.JButton btnThanhToan;
     private javax.swing.JButton btnThanhToanAndIn;
@@ -1324,8 +1361,7 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JCheckBox cbChuyenKhoan;
     private javax.swing.JCheckBox cbTienMat;
     private javax.swing.JComboBox<String> cbbSanPham;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JMenuItem gopHD;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1351,6 +1387,7 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JLabel lbSoBan;
     private javax.swing.JLayeredPane panel;
     private com.raven.swing.PanelBorder panelBorder1;
+    private javax.swing.JPopupMenu popMenu;
     private javax.swing.JRadioButton radioTatCa;
     private javax.swing.JRadioButton rdoChoThanhToan;
     private javax.swing.JRadioButton rdoDaHuy;
