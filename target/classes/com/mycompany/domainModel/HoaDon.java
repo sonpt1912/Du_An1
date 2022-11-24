@@ -51,7 +51,6 @@ public class HoaDon {
 //    @ManyToOne
 //    @JoinColumn(name = "IdBan", nullable = false)
 //    private Ban ban;
-
     @Column(name = "NgayTao", nullable = false)
     private String ngayTao;
 
@@ -60,6 +59,9 @@ public class HoaDon {
 
     @Column(name = "TongTien")
     private BigDecimal tongTien;
+
+    @Column(name = "GiamGia")
+    private BigDecimal tienDuocGiam;
 
     @Column(name = "GhiChu")
     private String ghiChu;
@@ -91,7 +93,8 @@ public class HoaDon {
         return new Object[]{maHoaDon, (nhanVien != null ? nhanVien.getMa() : " "), (khachHang != null ? khachHang.getMa() : " "),
             ngayTao, ngayThanhToan, ghiChu, (trangThai != null ? fillTrangThai(String.valueOf(trangThai)) : "")};
     }
-     public Object[] toDataRowThongKe(int stt) {
+
+    public Object[] toDataRowThongKe(int stt) {
         return new Object[]{stt, maHoaDon, ngayTao, tongTien, fillTrangThai(String.valueOf(trangThai))};
     }
 }

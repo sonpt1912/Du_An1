@@ -1009,7 +1009,12 @@ public class Form_Home extends javax.swing.JPanel {
 
             // fixx cứng nv
             NhanVien nhanVien = (NhanVien) nvs.getOne("NV1");
-            HoaDon hd = new HoaDon(null, maHD, nhanVien, null, ngayTao, Date.valueOf(ngayThanhToan), null, null, 0);
+            HoaDon hd = new HoaDon();
+            //  HoaDon hd = new HoaDon(null, maHD, nhanVien, null, ngayTao, Date.valueOf(ngayThanhToan), null, null, 0);
+            hd.setMaHoaDon(maHD);
+            hd.setNhanVien(nhanVien);
+            hd.setNgayTao(ngayTao);
+            hd.setTrangThai(0);
             // tạo hd
             JOptionPane.showMessageDialog(this, hds.add(hd));
             for (BanResponse banResponse : lstMaBan) {
