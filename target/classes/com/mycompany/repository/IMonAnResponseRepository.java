@@ -15,5 +15,7 @@ public interface IMonAnResponseRepository<O, S> {
     List<O> getAll();
 
     List<O> getByDanhMuc(S tenDanhMuc);
-    
+
+    List<O> getByDanhMucAndTenMonAn(S tenMonAn, S tenDanhMuc);
+
 }
