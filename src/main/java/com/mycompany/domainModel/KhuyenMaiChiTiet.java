@@ -43,9 +43,9 @@ public class KhuyenMaiChiTiet {
 
     @ManyToOne
     @JoinColumn(name = "IdKM")
-    private MonAn khuyenMai;
+    private KhuyenMai khuyenMai;
 
     @Column(name = "GhiChu", nullable = false)
-    private Integer ghiChu;
+    private String ghiChu;
 
 }
