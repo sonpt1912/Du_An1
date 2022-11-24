@@ -30,10 +30,10 @@ public class MonAnResponseRepository implements IMonAnResponseRepository<MonAnRe
     }
 
     public static void main(String[] args) {
-        List<MonAnResponse> test = new MonAnResponseRepository().getByDanhMucAndTenMonAn("Đồ uống",);
-        for (MonAnResponse monAnResponse : test) {
-            System.out.println(test);
-        }
+//        List<MonAnResponse> test = new MonAnResponseRepository().getByDanhMucAndTenMonAn("Đồ uống");
+//        for (MonAnResponse monAnResponse : test) {
+//            System.out.println(test);
+//        }
     }
 
     @Override

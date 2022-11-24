@@ -604,14 +604,15 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         //getOne = getValue at => lấy mã:
         MonAn monAn = monAnService.getOne(maMA);
         String maKM = txtMaKM.getText();
-        if (maKM.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn KM!");
-        } else if (monAn.getKhuyenMai() != null) {
-            JOptionPane.showMessageDialog(this, "Sản phẩm này đã được áp dụng KM!");
-        } else {
-            listThemKM_MA.add(monAn);
-            showDataCTKM(listThemKM_MA, 1);
-        }
+        //ánh xạ lại
+//        if (maKM.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Vui lòng chọn KM!");
+//        } else if (monAn.getKhuyenMai() != null) {
+//            JOptionPane.showMessageDialog(this, "Sản phẩm này đã được áp dụng KM!");
+//        } else {
+//            listThemKM_MA.add(monAn);
+//            showDataCTKM(listThemKM_MA, 1);
+//        }
     }//GEN-LAST:event_tbMonAnMouseClicked
 
     private void btnApDungKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApDungKMActionPerformed
@@ -643,9 +644,10 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
             //duyeejt for, món ăn nào ko đượcc KM add vào list mới=> showLisst mới
             List<MonAn> listMACoKM = new ArrayList<>();
             for (MonAn monAn : listMonAn) {
-                if (monAn.getKhuyenMai() != null) {
-                    listMACoKM.add(monAn);;
-                }
+                //ánha xạ lại
+//                if (monAn.getKhuyenMai() != null) {
+//                    listMACoKM.add(monAn);;
+//                }
             }
             if (listMACoKM.size() > 0) {
                 showDataMonAn(listMACoKM, 1);
@@ -656,11 +658,12 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
             listMonAn = monAnService.getAll();
             //duyeejt for, món ăn nào ko đượcc KM add vào list mới=> showLisst mới
             List<MonAn> listMAKoKM = new ArrayList<>();
-            for (MonAn monAn : listMonAn) {
-                if (monAn.getKhuyenMai() == null) {
-                    listMAKoKM.add(monAn);;
-                }
-            }
+            //ánh xạ lại
+//            for (MonAn monAn : listMonAn) {
+//                if (monAn.getKhuyenMai() == null) {
+//                    listMAKoKM.add(monAn);;
+//                }
+//            }
             if (listMAKoKM.size() > 0) {
                 showDataMonAn(listMAKoKM, 1);
             } else {
@@ -673,17 +676,18 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         int index = tbKMCT.getSelectedRow();
         String maMA = dtmKMCT.getValueAt(index, 2).toString();
         MonAn monAn = monAnService.getOne(maMA);
-        if (monAn.getKhuyenMai() != null) {
-            KhuyenMai khuyenMaiDangShow = monAn.getKhuyenMai();
+        //ánh xạ lại
+       // if (monAn.getKhuyenMai() != null) {
+           // KhuyenMai khuyenMaiDangShow = monAn.getKhuyenMai();
             int checkOut = JOptionPane.showConfirmDialog(null, "Ngừng áp dụng KM cho sản phẩm này?");
             if (checkOut == 0) {
-                monAn.setKhuyenMai(null);
+               // monAn.setKhuyenMai(null);
                 String updateMA_KM = monAnService.update(monAn, maMA);
                 JOptionPane.showMessageDialog(this, "Thành công!");
-                listCTKM = monAnService.getMonAnByKhuyenMai(khuyenMaiDangShow);
+               // listCTKM = monAnService.getMonAnByKhuyenMai(khuyenMaiDangShow);
                 showDataCTKM(listCTKM, 1);
             }
-        }
+        //}
     }//GEN-LAST:event_tbKMCTMouseClicked
 
 

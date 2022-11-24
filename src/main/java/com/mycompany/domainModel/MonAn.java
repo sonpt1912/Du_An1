@@ -38,10 +38,9 @@ public class MonAn {
     @JoinColumn(name = "IdLoai", nullable = false)
     private Loai loai;
 
-    @ManyToOne
-    @JoinColumn(name = "IdKM", nullable = true)
-    private KhuyenMai khuyenMai;
-
+//    @ManyToOne
+//    @JoinColumn(name = "IdKM", nullable = true)
+//    private KhuyenMai khuyenMai;
     @Column(name = "MaMonAn", nullable = false)
     private String maMonAn;
 
@@ -69,10 +68,14 @@ public class MonAn {
         return new Object[]{stt, maMonAn, tenMonAn, donGia + "K", donViTinh};
     }
 
+//    public Object[] toDataRowViewKM(int stt) {
+//        return new Object[]{stt, (khuyenMai == null ? "ko xác định" : khuyenMai.getMaKhuyenMai()), maMonAn, tenMonAn};
+//    }
     public Object[] toDataRowViewKM(int stt) {
-        return new Object[]{stt, (khuyenMai == null ? "ko xác định" : khuyenMai.getMaKhuyenMai()), maMonAn, tenMonAn};
+        return new Object[]{stt, "cái này đang bỏ để ánh xạ lại", maMonAn, tenMonAn};
     }
-      public Object[] toDataRowThongKe(int stt) {
+
+    public Object[] toDataRowThongKe(int stt) {
         return new Object[]{stt, maMonAn, tenMonAn, donGia, trangThai};
     }
 }

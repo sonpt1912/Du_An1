@@ -457,7 +457,10 @@ public class Form_SanPham extends javax.swing.JPanel {
         // TODO add your handling code here:
         if (txtMa.getText().isEmpty()) {
             Loai loai = loaiService.getOne((String) cbbLoai.getSelectedItem());
-            MonAn ma = new MonAn(null, loai, null, monAnService.maTuDong(), txtTen.getText(), null, new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), 0);
+            // bỏ KM khỏi món ăn
+//            MonAn ma = new MonAn(null, loai, null, monAnService.maTuDong(), txtTen.getText(), null, new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), 0);
+            MonAn ma = new MonAn(null, loai, monAnService.maTuDong(), txtTen.getText(), null, new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), 0);
+
             String add = monAnService.add(ma);
             JOptionPane.showMessageDialog(this, add);
             rdoListApDungActionPerformed(evt);
@@ -521,7 +524,10 @@ public class Form_SanPham extends javax.swing.JPanel {
         //
         if (monAn != null) {
             Loai loai = loaiService.getOne((String) cbbLoai.getSelectedItem());
-            MonAn ma = new MonAn(monAn.getId(), loai, monAn.getKhuyenMai(), monAn.getMaMonAn(), txtTen.getText(), monAn.getHinhAnh(), new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), trangThai);
+            //bỏ KM
+//            MonAn ma = new MonAn(monAn.getId(), loai, monAn.getKhuyenMai(), monAn.getMaMonAn(), txtTen.getText(), monAn.getHinhAnh(), new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), trangThai);
+            MonAn ma = new MonAn(monAn.getId(), loai, monAn.getMaMonAn(), txtTen.getText(),
+                    monAn.getHinhAnh(), new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), trangThai);
             String update = monAnService.update(ma, monAn.getMaMonAn());
             JOptionPane.showMessageDialog(this, update);
             rdoApDung.setSelected(true);

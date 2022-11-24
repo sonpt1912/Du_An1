@@ -86,7 +86,8 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
             query.setParameter("donViTinh", kh.getDonViTinh());
             query.setParameter("loaiMA", kh.getLoai());
             query.setParameter("TrangThai", kh.getTrangThai());
-            query.setParameter("KM", kh.getKhuyenMai());
+            //bỏ KM
+           // query.setParameter("KM", kh.getKhuyenMai());
             query.setParameter("ma", ma);
             check = query.executeUpdate();
             transaction.commit();
