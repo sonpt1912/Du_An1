@@ -56,7 +56,7 @@ public class Form_Combo extends javax.swing.JPanel {
     private ComBo comBo;
     private MonAn monAn;
     private ChiTietComBo chiTietComBo;
-    
+
     public Form_Combo() {
         initComponents();
         tbComBo.setModel(dtComBo);
@@ -72,17 +72,18 @@ public class Form_Combo extends javax.swing.JPanel {
         //
         cbbMaNhanVien.setModel(dcbNhanVien);
         cbbLoaiMonAn.setModel(dcbLoai);
+        // check
+//        for (ComBo c : listComBo = comBoService.getAllByTrangThai(0)) {
+//            comBoService.checkTrangThaiMonAn(c);
+//        }
         //
         showDataComBo(listComBo = comBoService.getAllByTrangThai(0));
 //        showDataSanPham(listMonAn = monAnService.getAll());
         txtMa.setEnabled(false);
         setCbb();
-        // check
-        for (ComBo c : listComBo = comBoService.getAllByTrangThai(0)) {
-            comBoService.checkTrangThaiMonAn(c);
-        }
+
     }
-    
+
     private void showDataComBo(List<ComBo> list) {
         dtComBo.setRowCount(0);
         int i = 1;
@@ -90,7 +91,7 @@ public class Form_Combo extends javax.swing.JPanel {
             dtComBo.addRow(cb.toDataRow(i++));
         }
     }
-    
+
     private void showDataCTComBo(List<ChiTietComBo> list) {
         dtCTComBo.setRowCount(0);
         int i = 1;
@@ -98,7 +99,7 @@ public class Form_Combo extends javax.swing.JPanel {
             dtCTComBo.addRow(cb.toShowData(i++));
         }
     }
-    
+
     private void showDataSanPham(List<MonAn> list) {
         dtSanPham.setRowCount(0);
         int i = 1;
@@ -106,28 +107,27 @@ public class Form_Combo extends javax.swing.JPanel {
             dtSanPham.addRow(cb.toDataRow(i++));
         }
     }
-    
+
     private void setCbb() {
         List<NhanVien> listNhanVien = nhanVienService.getAll();
         for (NhanVien nv : listNhanVien) {
             dcbNhanVien.addElement(nv.getMa());
         }
-        
+
         List<DanhMuc> listDanhMuc = danhMucService.getAll();
         for (DanhMuc dv : listDanhMuc) {
             dcbLoai.addElement(dv.getMaDanhMuc());
         }
     }
-    
+
     private void clear() {
         txtDonGia.setText("");
         txtMa.setText("");
         txtTen.setText("");
         cbbMaNhanVien.setSelectedIndex(0);
         cbbLoaiMonAn.setSelectedIndex(0);
-        rdoApDung.setSelected(true);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -167,9 +167,9 @@ public class Form_Combo extends javax.swing.JPanel {
         tbCTCombo = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         btnApDung = new javax.swing.JButton();
-        jRadioButton8 = new javax.swing.JRadioButton();
-        jRadioButton9 = new javax.swing.JRadioButton();
-        jRadioButton10 = new javax.swing.JRadioButton();
+        rdoListChoApDung = new javax.swing.JRadioButton();
+        rdoListApDung = new javax.swing.JRadioButton();
+        rdoListNgungApDung = new javax.swing.JRadioButton();
         lbLoaiMon = new javax.swing.JLabel();
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
@@ -416,28 +416,28 @@ public class Form_Combo extends javax.swing.JPanel {
             }
         });
 
-        buttonGroup2.add(jRadioButton8);
-        jRadioButton8.setText("Chờ Áp dụng");
-        jRadioButton8.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup2.add(rdoListChoApDung);
+        rdoListChoApDung.setText("Chờ Áp dụng");
+        rdoListChoApDung.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton8ActionPerformed(evt);
+                rdoListChoApDungActionPerformed(evt);
             }
         });
 
-        buttonGroup2.add(jRadioButton9);
-        jRadioButton9.setSelected(true);
-        jRadioButton9.setText("Áp dụng");
-        jRadioButton9.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup2.add(rdoListApDung);
+        rdoListApDung.setSelected(true);
+        rdoListApDung.setText("Áp dụng");
+        rdoListApDung.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton9ActionPerformed(evt);
+                rdoListApDungActionPerformed(evt);
             }
         });
 
-        buttonGroup2.add(jRadioButton10);
-        jRadioButton10.setText("Ngừng áp dụng");
-        jRadioButton10.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup2.add(rdoListNgungApDung);
+        rdoListNgungApDung.setText("Ngừng áp dụng");
+        rdoListNgungApDung.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton10ActionPerformed(evt);
+                rdoListNgungApDungActionPerformed(evt);
             }
         });
 
@@ -475,11 +475,11 @@ public class Form_Combo extends javax.swing.JPanel {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelBorder1Layout.createSequentialGroup()
                                         .addComponent(jLabel9)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButton9)
+                                        .addComponent(rdoListApDung)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButton8)
+                                        .addComponent(rdoListChoApDung)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButton10))
+                                        .addComponent(rdoListNgungApDung))
                                     .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(63, 63, 63))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -496,9 +496,9 @@ public class Form_Combo extends javax.swing.JPanel {
                 .addGap(8, 8, 8)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioButton9)
-                        .addComponent(jRadioButton8)
-                        .addComponent(jRadioButton10)
+                        .addComponent(rdoListApDung)
+                        .addComponent(rdoListChoApDung)
+                        .addComponent(rdoListNgungApDung)
                         .addComponent(jLabel9))
                     .addComponent(jLabel2))
                 .addGap(4, 4, 4)
@@ -548,10 +548,11 @@ public class Form_Combo extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "đơn giá phải là số");
             } else {
                 NhanVien nhanVien = nhanVienService.getOne(dcbNhanVien.getSelectedItem().toString());
-                ComBo comBo = new ComBo(null, nhanVien, comBoService.randomMaHoaDon(), txtTen.getText(), null, new BigDecimal(txtDonGia.getText()), 2);
-                String addComBo = comBoService.add(comBo);
+                ComBo comB = new ComBo(null, nhanVien, comBoService.randomMaHoaDon(), txtTen.getText(), null, new BigDecimal(txtDonGia.getText()), 2);
+                String addComBo = comBoService.add(comB);
                 JOptionPane.showMessageDialog(this, addComBo);
                 rdoChoApDung.setSelected(true);
+                showDataComBo(listComBo = comBoService.getAllByTrangThai(2));
             }
         } else {
             JOptionPane.showMessageDialog(this, "vui lòng clear trước khi add");
@@ -574,8 +575,8 @@ public class Form_Combo extends javax.swing.JPanel {
         // TODO add your handling code here:
         // lấy mã com bo
         int index = tbComBo.getSelectedRow();
-        comBo = listComBo.get(index);
-        // lấy danh sách ct hóa đơn
+        comBo = comBoService.getOne((String) dtComBo.getValueAt(index, 1));
+        // lấy danh sách ct combo
         listCTComBo = chiTietComBoService.getAllByComBo(comBo);
         showDataCTComBo(listCTComBo);
 
@@ -584,19 +585,12 @@ public class Form_Combo extends javax.swing.JPanel {
         txtTen.setText(comBo.getTenCB());
         txtDonGia.setText(comBo.getDonGia().toString());
         cbbMaNhanVien.setSelectedItem(comBo.getNhanVien().getMa());
-        if (comBo.getTrangThai() == 0) {
-            rdoApDung.setSelected(true);
-        } else if (comBo.getTrangThai() == 2) {
-            rdoChoApDung.setSelected(true);
-        } else if (comBo.getTrangThai() == 1) {
-            rdoNgungApDung.setSelected(true);
-        }
     }//GEN-LAST:event_tbComBoMouseClicked
 
     private void tbChonMonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbChonMonMouseClicked
         // TODO add your handling code here:
         if (comBo != null) {
-            if (comBo.getTrangThai() == 2) {
+            if (rdoListChoApDung.isSelected()) {
                 // lấy món ăn
                 int index = tbChonMon.getSelectedRow();
                 monAn = listMonAn.get(index);
@@ -646,35 +640,41 @@ public class Form_Combo extends javax.swing.JPanel {
             apDung = 1;
         }
         NhanVien nhanVien = nhanVienService.getOne(dcbNhanVien.getSelectedItem().toString());
-        ComBo comBo = new ComBo(null, nhanVien, txtMa.getText(), txtTen.getText(), null, new BigDecimal(txtDonGia.getText()), apDung);
-        String update = comBoService.update(comBo, txtMa.getText());
+        ComBo comB = new ComBo(this.comBo.getId(), nhanVien, this.comBo.getMaCB(), this.comBo.getTenCB(), null, this.comBo.getDonGia(), apDung);
+        String update = comBoService.update(comB, txtMa.getText());
         JOptionPane.showMessageDialog(this, update);
+        rdoListApDungActionPerformed(evt);
+        showDataComBo(listComBo = comBoService.getAllByTrangThai(0));
+
         // chưa show lại list
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void jRadioButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton9ActionPerformed
+    private void rdoListApDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoListApDungActionPerformed
         // TODO add your handling code here:
         comBo = null;
         clear();
         showDataCTComBo(listCTComBo = chiTietComBoService.getAllByComBo(comBo));
+        rdoApDung.setSelected(true);
         showDataComBo(listComBo = comBoService.getAllByTrangThai(0));
-    }//GEN-LAST:event_jRadioButton9ActionPerformed
+    }//GEN-LAST:event_rdoListApDungActionPerformed
 
-    private void jRadioButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton8ActionPerformed
+    private void rdoListChoApDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoListChoApDungActionPerformed
         // TODO add your handling code here:
         comBo = null;
         clear();
+        rdoChoApDung.setSelected(true);
         showDataCTComBo(listCTComBo = chiTietComBoService.getAllByComBo(comBo));
         showDataComBo(listComBo = comBoService.getAllByTrangThai(2));
-    }//GEN-LAST:event_jRadioButton8ActionPerformed
+    }//GEN-LAST:event_rdoListChoApDungActionPerformed
 
-    private void jRadioButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton10ActionPerformed
+    private void rdoListNgungApDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoListNgungApDungActionPerformed
         // TODO add your handling code here:
         comBo = null;
         clear();
+        rdoNgungApDung.setSelected(true);
         showDataCTComBo(listCTComBo = chiTietComBoService.getAllByComBo(comBo));
         showDataComBo(listComBo = comBoService.getAllByTrangThai(1));
-    }//GEN-LAST:event_jRadioButton10ActionPerformed
+    }//GEN-LAST:event_rdoListNgungApDungActionPerformed
 
     private void btnApDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApDungActionPerformed
         // TODO add your handling code here:
@@ -698,18 +698,27 @@ public class Form_Combo extends javax.swing.JPanel {
     private void tbCTComboMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCTComboMouseClicked
         // TODO add your handling code here:
         // lấy chi tiết combo
-        int index = tbCTCombo.getSelectedRow();
-        chiTietComBo = listCTComBo.get(index);
+        if (rdoChoApDung.isSelected()) {
+            int index = tbCTCombo.getSelectedRow();
+            chiTietComBo = listCTComBo.get(index);
 
-        //tạo chi tiết combo để update
-        String soLuongGiam = JOptionPane.showInputDialog("chọn số lượng muốn giảm");
-        if (soLuongGiam.matches("[0-9]+")) {
-            int soLuongMonAn = chiTietComBo.getSoLuongMonAn() - Integer.valueOf(soLuongGiam);
-            String update = chiTietComBoService.updateSoLuong(chiTietComBo, comBo, soLuongMonAn);
-            JOptionPane.showMessageDialog(this, update);
-            showDataCTComBo(listCTComBo = chiTietComBoService.getAllByComBo(comBo));
-        } else {
-            JOptionPane.showMessageDialog(this, "vui lòng nhập số");
+            //tạo chi tiết combo để update
+            String soLuongGiam = JOptionPane.showInputDialog("chọn số lượng muốn giảm");
+            if (soLuongGiam.matches("[0-9]+")) {
+                int soLuongMonAn = chiTietComBo.getSoLuongMonAn() - Integer.valueOf(soLuongGiam);
+                if (soLuongMonAn <= 0) {
+                    String xoa = chiTietComBoService.deleteCTCombo(chiTietComBo.getId());
+                    JOptionPane.showMessageDialog(this, xoa);
+                } else {
+                    String update = chiTietComBoService.updateSoLuong(chiTietComBo, comBo, soLuongMonAn);
+                    JOptionPane.showMessageDialog(this, update);
+                }
+                showDataCTComBo(listCTComBo = chiTietComBoService.getAllByComBo(comBo));
+            } else {
+                JOptionPane.showMessageDialog(this, "vui lòng nhập số");
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "không thể sửa hoặc xóa");
         }
     }//GEN-LAST:event_tbCTComboMouseClicked
 
@@ -745,9 +754,6 @@ public class Form_Combo extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton10;
-    private javax.swing.JRadioButton jRadioButton8;
-    private javax.swing.JRadioButton jRadioButton9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
@@ -755,6 +761,9 @@ public class Form_Combo extends javax.swing.JPanel {
     private com.raven.swing.PanelBorder panelBorder1;
     private javax.swing.JRadioButton rdoApDung;
     private javax.swing.JRadioButton rdoChoApDung;
+    private javax.swing.JRadioButton rdoListApDung;
+    private javax.swing.JRadioButton rdoListChoApDung;
+    private javax.swing.JRadioButton rdoListNgungApDung;
     private javax.swing.JRadioButton rdoNgungApDung;
     private javax.swing.JTable tbCTCombo;
     private javax.swing.JTable tbChonMon;

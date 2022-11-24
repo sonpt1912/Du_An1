@@ -25,4 +25,6 @@ public interface IChiTietComBoService<O, S, I, O2, O3, B> {
     S updateSoLuong(O chiTietComBo, O2 comBo, int soLuong);
 
     O getOneById(O chiTietComBo);
+
+    S deleteCTCombo(String id);
 }
