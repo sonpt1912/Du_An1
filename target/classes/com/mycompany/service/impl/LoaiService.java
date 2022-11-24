@@ -36,7 +36,21 @@ public class LoaiService implements ICommonService<Loai, String> {
 
     @Override
     public String add(Loai kh) {
-        return thongBao.thongBaoADD(loaiRepo.add(kh));
+        if (kh.getMaLoai().isEmpty()) {
+            return "Mã không được để trống";
+        }
+        if (kh.getTenLoai().isEmpty()) {
+            return "Tên không được để trống";
+        }
+        if (kh.getMaLoai().contains(kh.getMaLoai())) {
+            return "Mã đã tồn tại";
+        }
+        if (kh.getTenLoai().contains(kh.getTenLoai())) {
+            return "Tên đã tồn tại";
+        } else {
+            return thongBao.thongBaoADD(loaiRepo.add(kh));
+        }
+
     }
 
     @Override

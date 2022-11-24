@@ -51,6 +51,6 @@ public class Loai {
     private int trangThai;
 
     public Object[] toDataRow() {
-        return new Object[]{danhMuc.getTenDanhMuc(), tenLoai, (trangThai == 0 ? "Kinh doanh" : "Ngừng kinh doanh")};
+        return new Object[]{maLoai,danhMuc.getTenDanhMuc(), tenLoai, (trangThai == 0 ? "Kinh doanh" : "Ngừng kinh doanh")};
     }
 }
