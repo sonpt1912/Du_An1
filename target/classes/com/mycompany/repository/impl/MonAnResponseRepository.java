@@ -30,7 +30,7 @@ public class MonAnResponseRepository implements IMonAnResponseRepository<MonAnRe
     }
 
     public static void main(String[] args) {
-        List<MonAnResponse> test = new MonAnResponseRepository().getByDanhMuc("Đồ uống");
+        List<MonAnResponse> test = new MonAnResponseRepository().getByDanhMucAndTenMonAn("Đồ uống",);
         for (MonAnResponse monAnResponse : test) {
             System.out.println(test);
         }
@@ -42,6 +42,17 @@ public class MonAnResponseRepository implements IMonAnResponseRepository<MonAnRe
                 + " AND MA.loai.danhMuc.tenDanhMuc = :tenDanhMuc";
         Query query = session.createQuery(hql);
         query.setParameter("tenDanhMuc", tenDanhMuc);
+        List<MonAnResponse> monAnResponses = query.getResultList();
+        return monAnResponses;
+    }
+
+    @Override
+    public List<MonAnResponse> getByDanhMucAndTenMonAn(String tenMonAn, String tenDanhMuc) {
+        String hql = "SELECT new com.mycompany.customModel.MonAnResponse(MA.maMonAn,MA.tenMonAn,MA.donGia,MA.donViTinh,MA.loai.tenLoai)" + fromTable
+                + " AND MA.loai.danhMuc.tenDanhMuc = :tenDanhMuc AND MA.tenMonAn like :tenMonAn";
+        Query query = session.createQuery(hql);
+        query.setParameter("tenDanhMuc", tenDanhMuc);
+        query.setParameter("tenMonAn", "%" + tenMonAn + "%");
         List<MonAnResponse> monAnResponses = query.getResultList();
         return monAnResponses;
     }

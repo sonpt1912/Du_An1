@@ -10,10 +10,12 @@ import java.util.List;
  *
  * @author Admin
  */
-public interface IMonAnResponseService<O,S> {
-    
+public interface IMonAnResponseService<O, S> {
+
     List<O> getAll();
 
     List<O> getByDanhMuc(S tenDanhMuc);
-    
+
+    List<O> getByDanhMucAndTenMonAn(S tenMonAn, S tenDanhMuc);
+
 }

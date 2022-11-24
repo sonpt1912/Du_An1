@@ -30,4 +30,9 @@ public class MonAnResponseService implements IMonAnResponseService<MonAnResponse
         return marr.getByDanhMuc(tenDanhMuc);
     }
 
+    @Override
+    public List<MonAnResponse> getByDanhMucAndTenMonAn(String tenMonAn, String tenDanhMuc) {
+        return marr.getByDanhMucAndTenMonAn(tenMonAn, tenDanhMuc);
+    }
+
 }

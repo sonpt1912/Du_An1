@@ -14,4 +14,6 @@ public interface ICommonResponseRepository<O> {
 
     List<O> getAll();
     
+//    List<O> getAll();
+    
 }
