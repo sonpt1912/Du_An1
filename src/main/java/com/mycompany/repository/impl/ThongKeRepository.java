@@ -21,9 +21,10 @@ public class ThongKeRepository implements IThongKeRepository {
     private static final Session SESSION = HibernateUtil.getFactory().openSession();
 
     @Override
-    public List<HoaDon> getAllHoaDon() {
-        String hql = "FROM HoaDon ";
+    public List<HoaDon> getAllHoaDon(int trangThai) {
+        String hql = "FROM HoaDon WHERE trangThai <> :TrangThai";
         Query query = SESSION.createQuery(hql);
+        query.setParameter("TrangThai", trangThai);
         List<HoaDon> hoaDons = query.getResultList();
         return hoaDons;
     }
@@ -37,9 +38,27 @@ public class ThongKeRepository implements IThongKeRepository {
     }
 
     public static void main(String[] args) {
-//        List<MonAn> listHoaDon = new ThongKeRepository().getAllSanPham();
-//        for (MonAn hoaDon : listHoaDon) {
-//            System.out.println(hoaDon.toString());
-//        }
+        List<HoaDon> listHoaDon = new ThongKeRepository().getAllHoaDon(0);
+        for (HoaDon hoaDon : listHoaDon) {
+            System.out.println(hoaDon.toString());
+        }
+    }
+
+    @Override
+    public List<HoaDon> getAllHoaDonTrangThai(int trangThai) {
+        String hql = "FROM HoaDon WHERE trangThai = :TrangThai";
+        Query query = SESSION.createQuery(hql);
+        query.setParameter("TrangThai", trangThai);
+        List<HoaDon> hoaDons = query.getResultList();
+        return hoaDons;
+    }
+
+    @Override
+    public List<MonAn> getAllSanPhamTrangThai(int trangThai) {
+        String hql = "FROM MonAn WHERE trangThai = :TrangThai";
+        Query query = SESSION.createQuery(hql);
+        query.setParameter("TrangThai", trangThai);
+        List<MonAn> monAns = query.getResultList();
+        return monAns;
     }
 }

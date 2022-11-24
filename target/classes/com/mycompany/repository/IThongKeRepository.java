@@ -14,8 +14,12 @@ import java.util.List;
  */
 public interface IThongKeRepository {
 
-    List<HoaDon> getAllHoaDon();
+    List<HoaDon> getAllHoaDon(int t);
 
     List<MonAn> getAllSanPham();
+    
+    List<HoaDon> getAllHoaDonTrangThai(int trangThai);
+    
+     List<MonAn> getAllSanPhamTrangThai(int trangThai);
     
 }

@@ -20,10 +20,12 @@ public class Form_ThongKe extends javax.swing.JPanel {
     private DefaultTableModel dtmHoaDon = new DefaultTableModel();
     private DefaultTableModel dtmSP = new DefaultTableModel();
     private ThongKeService thongKeService = new ThongKeService();
-    private List<HoaDon> listHoaDon = thongKeService.getAllHoaDon();
+    private List<HoaDon> listHoaDon = thongKeService.getAllHoaDon(1);
     private List<MonAn> listMonAn = thongKeService.getAllSanPham();
     private DefaultComboBoxModel dcbmNgayThang = new DefaultComboBoxModel();
     private List<String> listTenNgayThang = new ArrayList<>();
+    private int checkTatCaHoaDon;
+    private int checkSanPham;
 
     public Form_ThongKe() {
         initComponents();
@@ -37,7 +39,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         cbbDate();
         showDataHoaDon(listHoaDon, 1);
         showDataSanPham(listMonAn, 1);
-        showSoLuongDon();
+        showSoLuongDon(1);
     }
 
     @SuppressWarnings("unchecked")
@@ -374,12 +376,27 @@ public class Form_ThongKe extends javax.swing.JPanel {
         buttonGroup2.add(rdTatCaHoaDon);
         rdTatCaHoaDon.setSelected(true);
         rdTatCaHoaDon.setText("Tất cả ");
+        rdTatCaHoaDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdTatCaHoaDonActionPerformed(evt);
+            }
+        });
 
         buttonGroup2.add(rdDaThanhToanHoaDon);
         rdDaThanhToanHoaDon.setText("Đã thanh toán");
+        rdDaThanhToanHoaDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdDaThanhToanHoaDonActionPerformed(evt);
+            }
+        });
 
         buttonGroup2.add(rdDaHuyHoaDon);
         rdDaHuyHoaDon.setText("Đã hủy");
+        rdDaHuyHoaDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdDaHuyHoaDonActionPerformed(evt);
+            }
+        });
 
         cbbNgayThang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -482,7 +499,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-    public void cbbDate(){
+    public void cbbDate() {
         listTenNgayThang.add("Hóa đơn theo ngày");
         listTenNgayThang.add("Hóa đơn theo tháng");
         for (String string : listTenNgayThang) {
@@ -492,6 +509,27 @@ public class Form_ThongKe extends javax.swing.JPanel {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void rdTatCaHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdTatCaHoaDonActionPerformed
+        // TODO add your handling code here:
+        checkTatCaHoaDon = 0;
+        listHoaDon = thongKeService.getAllHoaDon(checkTatCaHoaDon);
+        showDataHoaDon(listHoaDon, 1);
+    }//GEN-LAST:event_rdTatCaHoaDonActionPerformed
+
+    private void rdDaThanhToanHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdDaThanhToanHoaDonActionPerformed
+        // TODO add your handling code here:
+        checkTatCaHoaDon = 1;
+        listHoaDon = thongKeService.getAllHoaDonTrangThai(checkTatCaHoaDon);
+        showDataHoaDon(listHoaDon, 1);
+    }//GEN-LAST:event_rdDaThanhToanHoaDonActionPerformed
+
+    private void rdDaHuyHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdDaHuyHoaDonActionPerformed
+        // TODO add your handling code here:
+        checkTatCaHoaDon = 2;
+        listHoaDon = thongKeService.getAllHoaDonTrangThai(checkTatCaHoaDon);
+        showDataHoaDon(listHoaDon, 1);
+    }//GEN-LAST:event_rdDaHuyHoaDonActionPerformed
     private void showDataHoaDon(List<HoaDon> listHoaDon, int stt) {
         dtmHoaDon.setRowCount(0);
         for (HoaDon hoaDon : listHoaDon) {
@@ -507,9 +545,9 @@ public class Form_ThongKe extends javax.swing.JPanel {
             stt++;
         }
     }
-    
-    private void showSoLuongDon(){
-        List list1 = thongKeService.getAllHoaDon();
+
+    private void showSoLuongDon(int trangThai) {
+        List list1 = thongKeService.getAllHoaDon(trangThai);
         lbDonHangHomNay.setText(list1.size() + "");
     }
 

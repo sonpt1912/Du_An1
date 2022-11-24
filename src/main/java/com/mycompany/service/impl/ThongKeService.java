@@ -20,13 +20,18 @@ public class ThongKeService implements IThongKeService {
     private ThongKeRepository thongKeRepository = new ThongKeRepository();
 
     @Override
-    public List<HoaDon> getAllHoaDon() {
-        return thongKeRepository.getAllHoaDon();
+    public List<HoaDon> getAllHoaDon(int trangThai) {
+        return thongKeRepository.getAllHoaDon(trangThai);
     }
 
     @Override
     public List<MonAn> getAllSanPham() {
         return thongKeRepository.getAllSanPham();
+    }
+
+    @Override
+    public List<HoaDon> getAllHoaDonTrangThai(int trangThai) {
+        return thongKeRepository.getAllHoaDonTrangThai(trangThai);
     }
 
 }

@@ -75,7 +75,19 @@ public class MonAn {
         return new Object[]{stt, "cái này đang bỏ để ánh xạ lại", maMonAn, tenMonAn};
     }
 
+    public String fillTrangThai(String trangThai) {
+        if (Integer.valueOf(trangThai) == 0) {
+            return "Kinh doanh";
+        } else if (Integer.valueOf(trangThai) == 1) {
+            return "Ngừng kinh doanh";
+        } else if (trangThai == null) {
+            return "";
+        } else {
+            return "";
+        }
+    }
+
     public Object[] toDataRowThongKe(int stt) {
-        return new Object[]{stt, maMonAn, tenMonAn, donGia, trangThai};
+        return new Object[]{stt, maMonAn, tenMonAn, donGia, fillTrangThai(String.valueOf(trangThai))};
     }
 }
