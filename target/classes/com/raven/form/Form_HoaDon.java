@@ -53,7 +53,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
     private List<ChiTietBanHoaDon> listCTBan_HD = new ArrayList<>();
     private DefaultTableModel dtmHDCT = new DefaultTableModel();
     
-    public Form_HoaDon() {
+    public Form_HoaDon(NhanVien nv) {
         initComponents();
         this.nhanV = nhanV;
         //lấy ngày giờ hnay:

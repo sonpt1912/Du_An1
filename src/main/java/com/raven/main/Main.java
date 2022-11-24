@@ -46,16 +46,16 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         lbTenMaNhanVien.setText(nv.getMa() + " - " + nv.getChucVu().getTen() + " - " + nv.getHo() + " " + nv.getTenDem() + " " + nv.getTen());
         setBackground(new Color(0, 0, 0, 0));
-        home = new Form_Home();
-        form1 = new Form_HoaDon();
-        form2 = new Form_NhanVien();
-        form3 = new Form_KhachHang();
-        form4 = new Form_Ban();
-        form5 = new Form_KhuyenMai();
-        form6 = new Form_SanPham();
-        form7 = new Form_Combo();
-        form8 = new Form_ThongKe();
-        form9 = new Form_TaiKhoan();
+        home = new Form_Home(nv);
+        form1 = new Form_HoaDon(nv);
+        form2 = new Form_NhanVien(nv);
+        form3 = new Form_KhachHang(nv);
+        form4 = new Form_Ban(nv);
+        form5 = new Form_KhuyenMai(nv);
+        form6 = new Form_SanPham(nv);
+        form7 = new Form_Combo(nv);
+        form8 = new Form_ThongKe(nv);
+        form9 = new Form_TaiKhoan(nv);
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
@@ -95,7 +95,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         //  set when system open start with home form
-        setForm(new Form_Home());
+        setForm(new Form_Home(nv));
     }
 
     private void setForm(JComponent com) {

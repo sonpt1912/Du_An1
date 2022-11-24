@@ -38,7 +38,7 @@ public class Form_Ban extends javax.swing.JPanel {
     private KhuVucService khuVucService = new KhuVucService();
     private NhanVien nv;
 
-    public Form_Ban() {
+    public Form_Ban(NhanVien nv) {
         initComponents();
         //nv = nhanVien;
         tbBan.setModel(dtmBan);

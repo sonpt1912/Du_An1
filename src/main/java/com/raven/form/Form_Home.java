@@ -95,8 +95,7 @@ public class Form_Home extends javax.swing.JPanel {
     private NhanVien nhanV;
     private HoaDon hdTong;
 
-    public Form_Home() {
-        initComponents();
+    public Form_Home(NhanVien nv) {
 //        card1.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/stock.png")), "Stock Total", "$200000", "Increased by 60%"));
 //        card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/profit.png")), "Total Profit", "$15000", "Increased by 25%"));
 //        card3.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/flag.png")), "Unique Visitors", "$300000", "Increased by 70%"));
@@ -221,6 +220,7 @@ public class Form_Home extends javax.swing.JPanel {
         cbTienMat = new javax.swing.JCheckBox();
         cbChuyenKhoan = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         gopHD.setText("Gộp hoá đơn");
         gopHD.addActionListener(new java.awt.event.ActionListener() {
@@ -499,6 +499,8 @@ public class Form_Home extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Mã HĐ       :");
 
+        jLabel6.setText("jLabel6");
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -524,7 +526,10 @@ public class Form_Home extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelBorder1Layout.createSequentialGroup()
+                                .addGap(172, 172, 172)
+                                .addComponent(jLabel6)))
                         .addGap(18, 18, 18)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
@@ -576,8 +581,7 @@ public class Form_Home extends javax.swing.JPanel {
                                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                                 .addComponent(txtSdtKH, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btnSearchKH)
-                                                .addGap(0, 0, Short.MAX_VALUE))
+                                                .addComponent(btnSearchKH))
                                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                                 .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(14, 14, 14)
@@ -589,7 +593,8 @@ public class Form_Home extends javax.swing.JPanel {
                                                 .addGap(18, 18, 18)
                                                 .addComponent(btnThanhToanAndIn)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btnThanhToan)))))
+                                                .addComponent(btnThanhToan)))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
                                 .addContainerGap())
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -692,7 +697,9 @@ public class Form_Home extends javax.swing.JPanel {
                         .addGap(16, 16, 16)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTachHD))))
+                            .addComponent(btnTachHD))
+                        .addGap(74, 74, 74)
+                        .addComponent(jLabel6)))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
 
@@ -1375,6 +1382,7 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

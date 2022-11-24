@@ -5,6 +5,8 @@
  */
 package com.raven.form;
 
+import com.mycompany.domainModel.NhanVien;
+
 
 /**
  *
@@ -15,7 +17,7 @@ public class Form_TaiKhoan extends javax.swing.JPanel {
     /**
      * Creates new form Form_1
      */
-    public Form_TaiKhoan() {
+    public Form_TaiKhoan(NhanVien nv) {
         initComponents();
     }
 

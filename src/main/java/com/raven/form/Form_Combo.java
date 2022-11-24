@@ -57,7 +57,7 @@ public class Form_Combo extends javax.swing.JPanel {
     private MonAn monAn;
     private ChiTietComBo chiTietComBo;
 
-    public Form_Combo() {
+    public Form_Combo(NhanVien nv) {
         initComponents();
         tbComBo.setModel(dtComBo);
         tbCTCombo.setModel(dtCTComBo);

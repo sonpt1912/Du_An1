@@ -56,7 +56,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
     private NhanVienService nhanVienService = new NhanVienService();
     private DefaultComboBoxModel dcbmMonAn = new DefaultComboBoxModel();
     
-    public Form_KhuyenMai() {
+    public Form_KhuyenMai(NhanVien nv) {
         initComponents();
         this.nhanV = nhanV;
         tbKhuyenMai.setModel(dtmKhuyenMai);

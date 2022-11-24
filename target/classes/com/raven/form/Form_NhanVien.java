@@ -43,7 +43,7 @@ public class Form_NhanVien extends javax.swing.JPanel {
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private java.util.Date today = new java.util.Date();
 
-    public Form_NhanVien() {
+    public Form_NhanVien(NhanVien nv) {
         initComponents();
         //        lbNhanVien.setText("WELCOME " + nhanVien.getTen());
         tbNhanVien.setModel(dtmNhanVien);
