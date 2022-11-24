@@ -15,4 +15,6 @@ import java.util.List;
 public interface IComBoService {
 
     List<ComBo> getAllByTrangThai(int trangThai);
+    
+    void checkTrangThaiMonAn(ComBo idComBo);
 }
