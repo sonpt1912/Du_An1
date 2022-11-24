@@ -32,7 +32,7 @@ public class JDialogLoaiMonAn extends javax.swing.JDialog {
         initComponents();
         tbLoaiMA.setModel(dtmLoai);
         cbbDanhMuc.setModel(dcbmDanhMuc);
-        String headers[] = {"Mã", "Loại", "Trạng thái"};
+        String headers[] = {"Mã","Tên danh mục", "Tên Loại", "Trạng thái"};
         dtmLoai.setColumnIdentifiers(headers);
         listLoai = loaiService.getAll();
         showData(listLoai);

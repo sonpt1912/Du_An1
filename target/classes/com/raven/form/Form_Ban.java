@@ -46,13 +46,12 @@ public class Form_Ban extends javax.swing.JPanel {
         dtmBan.setColumnIdentifiers(header);
         cbbMaKhuVuc.setModel(dcbmKhuVuc);
         //trạng thái = 0 => còn trống, = 1 có người
-        listBan = banService.getAll();
+        listBan = banService.getFull();
         //thêm toData row vào domain
         showData(listBan);
         listKV = khuVucService.getAll();
         loadCbb(listKV);
     }
-
 
     private void showData(List<Ban> listBan) {
         dtmBan.setRowCount(0);
@@ -74,7 +73,12 @@ public class Form_Ban extends javax.swing.JPanel {
         ban.setKv(khuVuc);
         ban.setMaBan(Integer.valueOf(txtMa.getText()));
         ban.setSoLuongChoNgoi(Integer.valueOf(txtSoLuong.getText()));
-        ban.setTrangThai(Integer.valueOf(txtTrangThai.getText()));
+        
+        if (radioCoNguoi.isSelected()) {
+            ban.setTrangThai(1);
+        } else {
+            ban.setTrangThai(0);
+        }
         return ban;
     }
 
@@ -83,14 +87,19 @@ public class Form_Ban extends javax.swing.JPanel {
         txtMa.setText(String.valueOf(ban.getMaBan()));
         txtMa.setEnabled(false);
         txtSoLuong.setText(String.valueOf(ban.getSoLuongChoNgoi()));
-        txtTrangThai.setText(String.valueOf(ban.getTrangThai()));
-        cbbMaKhuVuc.setSelectedItem(ban.getKv().getMaKV());
+        if (ban.getTrangThai() == 0) {
+            radioCoNguoi.setSelected(true);
+        } else {
+            radioControng.setSelected(true);
+            cbbMaKhuVuc.setSelectedItem(ban.getKv().getMaKV());
+        }
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         panelBorder1 = new com.raven.swing.PanelBorder();
         searchText1 = new com.raven.swing.SearchText();
         jLabel1 = new javax.swing.JLabel();
@@ -99,7 +108,6 @@ public class Form_Ban extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtTrangThai = new javax.swing.JTextField();
         txtMa = new javax.swing.JTextField();
         txtSoLuong = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -108,6 +116,8 @@ public class Form_Ban extends javax.swing.JPanel {
         cbbMaKhuVuc = new javax.swing.JComboBox<>();
         btnAddKhuVuc = new javax.swing.JButton();
         btnLamMoiKhuVuc = new javax.swing.JButton();
+        radioControng = new javax.swing.JRadioButton();
+        radioCoNguoi = new javax.swing.JRadioButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbBan = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -162,26 +172,38 @@ public class Form_Ban extends javax.swing.JPanel {
             }
         });
 
+        buttonGroup1.add(radioControng);
+        radioControng.setText("Còn trống");
+
+        buttonGroup1.add(radioCoNguoi);
+        radioCoNguoi.setText("Có người");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(21, 21, 21)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(radioControng)
+                                .addGap(56, 56, 56)
+                                .addComponent(radioCoNguoi))
+                            .addComponent(txtSoLuong)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(171, 171, 171)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 316, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel12)
@@ -191,7 +213,7 @@ public class Form_Ban extends javax.swing.JPanel {
                         .addComponent(jLabel11)
                         .addGap(18, 18, 18)
                         .addComponent(cbbMaKhuVuc, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 20, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
                 .addComponent(btnAddKhuVuc)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLamMoiKhuVuc)
@@ -214,11 +236,12 @@ public class Form_Ban extends javax.swing.JPanel {
                     .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
                     .addComponent(txtTenKhuVuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(88, 88, 88))
+                    .addComponent(jLabel7)
+                    .addComponent(radioControng)
+                    .addComponent(radioCoNguoi))
+                .addGap(86, 86, 86))
         );
 
         tbBan.setModel(new javax.swing.table.DefaultTableModel(
@@ -367,7 +390,7 @@ public class Form_Ban extends javax.swing.JPanel {
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         txtMa.setText("");
         txtSoLuong.setText("0");
-        txtTrangThai.setText("0");
+        buttonGroup1.clearSelection();
         cbbMaKhuVuc.setSelectedIndex(0);
         txtMa.setEnabled(true);
     }//GEN-LAST:event_btnClearActionPerformed
@@ -418,6 +441,7 @@ public class Form_Ban extends javax.swing.JPanel {
     private javax.swing.JButton btnLamMoiKhuVuc;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbMaKhuVuc;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
@@ -431,11 +455,12 @@ public class Form_Ban extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane5;
     private com.raven.swing.PanelBorder panelBorder1;
+    private javax.swing.JRadioButton radioCoNguoi;
+    private javax.swing.JRadioButton radioControng;
     private com.raven.swing.SearchText searchText1;
     private javax.swing.JTable tbBan;
     private javax.swing.JTextField txtMa;
     private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtTenKhuVuc;
-    private javax.swing.JTextField txtTrangThai;
     // End of variables declaration//GEN-END:variables
 }
