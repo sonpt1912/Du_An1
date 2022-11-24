@@ -8,7 +8,7 @@ import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.repository.IThongKeRepository;
 import com.mycompany.repository.impl.ThongKeRepository;
-import com.mycompany.service.IThongKeService;
+import com.mycompany.IThongKeService;
 import java.util.List;
 
 /**

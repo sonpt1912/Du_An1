@@ -36,22 +36,10 @@ public class ThongKeRepository implements IThongKeRepository {
         return monAns;
     }
 
-    @Override
-    public int getCountHoaDon(int trangThai) {
-        String hql = "SELECT COUNT(*) FROM dbo.HoaDon WHERE TrangThai = :trangThai";
-        Query query = SESSION.createQuery(hql);
-        query.setParameter("trangThai", trangThai);
-        int hoaDon = (int) query.getSingleResult();
-        return hoaDon;
-    }
-
     public static void main(String[] args) {
 //        List<MonAn> listHoaDon = new ThongKeRepository().getAllSanPham();
 //        for (MonAn hoaDon : listHoaDon) {
 //            System.out.println(hoaDon.toString());
 //        }
-        int trangThai = 1;
-        int hoaDon = new ThongKeRepository().getCountHoaDon(trangThai);
-        System.out.println(hoaDon);
     }
 }

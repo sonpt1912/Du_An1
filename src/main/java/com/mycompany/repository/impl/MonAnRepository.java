@@ -4,6 +4,7 @@
  */
 package com.mycompany.repository.impl;
 
+import com.mycompany.domainModel.ComBo;
 import com.mycompany.domainModel.DanhMuc;
 import com.mycompany.domainModel.KhuyenMai;
 import com.mycompany.domainModel.Loai;
@@ -13,7 +14,9 @@ import com.mycompany.repository.ICommonRepository;
 import com.mycompany.repository.IMonAnRepository;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.function.UnaryOperator;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -183,6 +186,10 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
 //        }
 //        List<MonAn> listMA = new MonAnRepository().getMonAnCoKM();
 //        System.out.println("Sdfhjkhgfdfhjvsd: " + listMA.size());
+        ComBo cb = new ComBoRepository().getOne("CB1");
+        for (Object mm : new MonAnRepository().get(cb)) {
+            System.out.println((MonAn) mm);
+        }
     }
 
     @Override
@@ -192,6 +199,28 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
 //        Query query = session.createQuery(hql);
 //        monAns = query.getResultList();
         return monAns;
+    }
+
+    @Override
+    public List<MonAn> getMonAnByComBo(ComBo id) {
+        String hql = "SELECT new  FROM MonAn MA JOIN ChiTietComBo CTCB ON CTCB.monAn.id = MA.id "
+                + "WHERE CTCB.comBo.id = :ID";
+        Query query = session.createQuery(hql);
+        query.setParameter("ID", id.getId());
+        // join ạ lấy điều kiện đúng oi
+        List<MonAn> monAns = new ArrayList<>();
+        List<Object> list = query.getResultList();
+        return monAns;
+    }
+
+    public List<Object> get(ComBo id) {
+        String hql = "FROM MonAn MA JOIN ChiTietComBo CTCB ON CTCB.monAn.id = MA.id "
+                + "WHERE CTCB.comBo.id = :ID";
+        Query query = session.createQuery(hql);
+        query.setParameter("ID", id.getId());
+        // join ạ lấy điều kiện đúng oi
+        List<Object> list = query.getResultList();
+        return list;
     }
 
 }

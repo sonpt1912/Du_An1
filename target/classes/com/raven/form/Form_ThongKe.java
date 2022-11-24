@@ -37,12 +37,15 @@ public class Form_ThongKe extends javax.swing.JPanel {
         cbbDate();
         showDataHoaDon(listHoaDon, 1);
         showDataSanPham(listMonAn, 1);
+        showSoLuongDon();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         scrollBar1 = new com.raven.swing.ScrollBar();
         panelBorder1 = new com.raven.swing.PanelBorder();
         jLabel1 = new javax.swing.JLabel();
@@ -143,10 +146,14 @@ public class Form_ThongKe extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tbSanPham);
 
+        buttonGroup1.add(rdTatCaSP);
+        rdTatCaSP.setSelected(true);
         rdTatCaSP.setText("Tất cả ");
 
+        buttonGroup1.add(rdKinhDoanh);
         rdKinhDoanh.setText("Kinh doanh");
 
+        buttonGroup1.add(rdNgungKinhDoanh);
         rdNgungKinhDoanh.setText("Ngừng kinh doanh");
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
@@ -364,10 +371,14 @@ public class Form_ThongKe extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(tbHoaDon);
 
+        buttonGroup2.add(rdTatCaHoaDon);
+        rdTatCaHoaDon.setSelected(true);
         rdTatCaHoaDon.setText("Tất cả ");
 
+        buttonGroup2.add(rdDaThanhToanHoaDon);
         rdDaThanhToanHoaDon.setText("Đã thanh toán");
 
+        buttonGroup2.add(rdDaHuyHoaDon);
         rdDaHuyHoaDon.setText("Đã hủy");
 
         cbbNgayThang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -481,7 +492,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnUpdateActionPerformed
-    public void showDataHoaDon(List<HoaDon> listHoaDon, int stt) {
+    private void showDataHoaDon(List<HoaDon> listHoaDon, int stt) {
         dtmHoaDon.setRowCount(0);
         for (HoaDon hoaDon : listHoaDon) {
             dtmHoaDon.addRow(hoaDon.toDataRowThongKe(stt));
@@ -489,16 +500,23 @@ public class Form_ThongKe extends javax.swing.JPanel {
         }
     }
 
-    public void showDataSanPham(List<MonAn> listMonAn, int stt) {
+    private void showDataSanPham(List<MonAn> listMonAn, int stt) {
         dtmSP.setRowCount(0);
         for (MonAn monAn : listMonAn) {
             dtmSP.addRow(monAn.toDataRowThongKe(stt));
             stt++;
         }
     }
+    
+    private void showSoLuongDon(){
+        List list1 = thongKeService.getAllHoaDon();
+        lbDonHangHomNay.setText(list1.size() + "");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cbbNgayThang;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;

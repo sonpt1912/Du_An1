@@ -18,5 +18,4 @@ public interface IThongKeRepository {
 
     List<MonAn> getAllSanPham();
     
-    int getCountHoaDon(int trangThai);
 }

@@ -56,7 +56,7 @@ public class Form_Combo extends javax.swing.JPanel {
     private ComBo comBo;
     private MonAn monAn;
     private ChiTietComBo chiTietComBo;
-
+    
     public Form_Combo() {
         initComponents();
         tbComBo.setModel(dtComBo);
@@ -77,8 +77,12 @@ public class Form_Combo extends javax.swing.JPanel {
 //        showDataSanPham(listMonAn = monAnService.getAll());
         txtMa.setEnabled(false);
         setCbb();
+        // check
+        for (ComBo c : listComBo = comBoService.getAllByTrangThai(0)) {
+            comBoService.checkTrangThaiMonAn(c);
+        }
     }
-
+    
     private void showDataComBo(List<ComBo> list) {
         dtComBo.setRowCount(0);
         int i = 1;
@@ -86,7 +90,7 @@ public class Form_Combo extends javax.swing.JPanel {
             dtComBo.addRow(cb.toDataRow(i++));
         }
     }
-
+    
     private void showDataCTComBo(List<ChiTietComBo> list) {
         dtCTComBo.setRowCount(0);
         int i = 1;
@@ -94,7 +98,7 @@ public class Form_Combo extends javax.swing.JPanel {
             dtCTComBo.addRow(cb.toShowData(i++));
         }
     }
-
+    
     private void showDataSanPham(List<MonAn> list) {
         dtSanPham.setRowCount(0);
         int i = 1;
@@ -102,19 +106,19 @@ public class Form_Combo extends javax.swing.JPanel {
             dtSanPham.addRow(cb.toDataRow(i++));
         }
     }
-
+    
     private void setCbb() {
         List<NhanVien> listNhanVien = nhanVienService.getAll();
         for (NhanVien nv : listNhanVien) {
             dcbNhanVien.addElement(nv.getMa());
         }
-
+        
         List<DanhMuc> listDanhMuc = danhMucService.getAll();
         for (DanhMuc dv : listDanhMuc) {
             dcbLoai.addElement(dv.getMaDanhMuc());
         }
     }
-
+    
     private void clear() {
         txtDonGia.setText("");
         txtMa.setText("");
@@ -123,7 +127,7 @@ public class Form_Combo extends javax.swing.JPanel {
         cbbLoaiMonAn.setSelectedIndex(0);
         rdoApDung.setSelected(true);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -584,7 +588,7 @@ public class Form_Combo extends javax.swing.JPanel {
             rdoApDung.setSelected(true);
         } else if (comBo.getTrangThai() == 2) {
             rdoChoApDung.setSelected(true);
-        } else {
+        } else if (comBo.getTrangThai() == 1) {
             rdoNgungApDung.setSelected(true);
         }
     }//GEN-LAST:event_tbComBoMouseClicked

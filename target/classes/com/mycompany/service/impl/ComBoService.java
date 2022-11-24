@@ -5,8 +5,11 @@
 package com.mycompany.service.impl;
 
 import com.mycompany.domainModel.ComBo;
+import com.mycompany.domainModel.MonAn;
 import com.mycompany.domainModel.NhanVien;
+import com.mycompany.repository.impl.ChiTietComBoRepository;
 import com.mycompany.repository.impl.ComBoRepository;
+import com.mycompany.repository.impl.MonAnRepository;
 import com.mycompany.service.IComBoService;
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,6 +24,7 @@ public class ComBoService implements ICommonService<ComBo, String>, IComBoServic
 
     private final com.mycompany.repository.ICommonRepository cbr = new ComBoRepository();
     private ComBoRepository cb = new ComBoRepository();
+    private MonAnRepository mar = new MonAnRepository();
 
     @Override
     public List<ComBo> getAll() {
@@ -83,6 +87,20 @@ public class ComBoService implements ICommonService<ComBo, String>, IComBoServic
             }
         }
         return ma;
+    }
+
+    @Override
+    public void checkTrangThaiMonAn(ComBo ComBo) {
+        List<MonAn> list = mar.getMonAnByComBo(ComBo);
+        List<MonAn> list1 = mar.getAllMonAnByTrangThai(1);
+        ComBo.setTrangThai(1);
+        for (MonAn m : list1) {
+            for (MonAn s : list) {
+                if (m.getId().equalsIgnoreCase(s.getId())) {
+                    update(ComBo, ComBo.getMaCB());
+                }
+            }
+        }
     }
 
 }
