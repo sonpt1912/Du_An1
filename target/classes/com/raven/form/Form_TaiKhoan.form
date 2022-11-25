@@ -101,19 +101,9 @@
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel15" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="radioActive" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                                      <Component id="radioUnactive" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="txtNgaySinh" alignment="0" min="-2" pref="213" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="txtNgaySinh" min="-2" pref="213" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="219" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -132,18 +122,13 @@
                                               <Component id="txtMa" alignment="0" max="32767" attributes="0"/>
                                               <Component id="txtHo" alignment="0" pref="213" max="32767" attributes="0"/>
                                           </Group>
-                                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                              <Component id="radioKoXD" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtTen" min="-2" pref="212" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="txtTen" min="-2" pref="212" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                      <Component id="radioNam" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                      <Component id="radioNu" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtGioiTinh" min="-2" pref="212" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -178,13 +163,8 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnLoad" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cbbChucVu" min="-2" pref="162" max="-2" attributes="0"/>
-                          </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="37" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -215,36 +195,27 @@
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtTen" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtMatKhau" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtTen" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="36" max="32767" attributes="0"/>
+                      <EmptySpace pref="40" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="radioNam" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="radioNu" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="radioKoXD" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbbChucVu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtGioiTinh" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtTenCV" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnLoad" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                           <Component id="txtNgaySinh" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtTenCV" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnLoad" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="radioActive" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="radioUnactive" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -298,7 +269,7 @@
                 <Property name="text" type="java.lang.String" value="Ng&#xe0;y Sinh              :"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtTen">
+            <Component class="javax.swing.JTextField" name="txtGioiTinh">
             </Component>
             <Component class="javax.swing.JTextField" name="txtMa">
             </Component>
@@ -340,22 +311,6 @@
                 <Property name="text" type="java.lang.String" value="M&#x1ead;t Kh&#x1ea9;u   :"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel14">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="12" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Ch&#x1ee9;c V&#x1ee5;     :"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel15">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="12" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Tr&#x1ea1;ng Th&#xe1;i  :"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JTextField" name="txtSdt">
             </Component>
             <Component class="javax.swing.JTextField" name="txtEmail">
@@ -364,24 +319,6 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtMatKhau">
             </Component>
-            <Component class="javax.swing.JComboBox" name="cbbChucVu">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                  </StringArray>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbbChucVuActionPerformed"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
-            </Component>
             <Component class="javax.swing.JButton" name="btnLoad">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Load"/>
@@ -389,16 +326,6 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoadActionPerformed"/>
               </Events>
-            </Component>
-            <Component class="javax.swing.JRadioButton" name="radioActive">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Active"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JRadioButton" name="radioUnactive">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Unactive"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel16">
               <Properties>
@@ -410,20 +337,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtTenCV">
             </Component>
-            <Component class="javax.swing.JRadioButton" name="radioNam">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Nam"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JRadioButton" name="radioNu">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="N&#x1eef;"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JRadioButton" name="radioKoXD">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Ko x&#xe1;c &#x111;&#x1ecb;nh"/>
-              </Properties>
+            <Component class="javax.swing.JTextField" name="txtTen">
             </Component>
           </SubComponents>
         </Container>

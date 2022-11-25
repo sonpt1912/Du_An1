@@ -16,4 +16,6 @@ import java.util.List;
 public interface IKMCTRepository {
 
     List<KhuyenMaiChiTiet> getKMCTByMaAndKM(MonAn monAn, KhuyenMai khuyenMai);
+
+    List<KhuyenMaiChiTiet> getKMCTsByKM(KhuyenMai khuyenMai);
 }

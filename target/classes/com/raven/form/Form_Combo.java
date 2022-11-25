@@ -21,12 +21,22 @@ import com.mycompany.service.impl.ComBoService;
 import com.mycompany.service.impl.DanhMucService;
 import com.mycompany.service.impl.MonAnService;
 import com.mycompany.service.impl.NhanVienService;
+import java.awt.Component;
+import java.awt.Image;
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -56,15 +66,17 @@ public class Form_Combo extends javax.swing.JPanel {
     private ComBo comBo;
     private MonAn monAn;
     private ChiTietComBo chiTietComBo;
+    //đường dẫn
+    private String selectedImagePath = "";
 
     public Form_Combo(NhanVien nv) {
         initComponents();
         tbComBo.setModel(dtComBo);
         tbCTCombo.setModel(dtCTComBo);
         tbChonMon.setModel(dtSanPham);
-        String headerComBo[] = {"STT", "MÃ", "TÊN", "ĐƠN GIÁ"};
+        String headerComBo[] = {"STT", "MÃ", "TÊN", "ĐƠN GIÁ", "HÌNH ẢNH"};
         String headerCTComBo[] = {"STT", "TÊN COMBO", "TÊN MÓN ĂN", "SỐ LƯỢNG MÓN ĂN"};
-        String headerSanPham[] = {"STT", "MÃ SẢN PHẨM", "TÊN SẢN PHẨM", "ĐƠN VỊ TÍNH", "ĐƠN GIÁ"};
+        String headerSanPham[] = {"STT", "MÃ SẢN PHẨM", "TÊN SẢN PHẨM", "ĐƠN VỊ TÍNH", "ĐƠN GIÁ", "ẢNH"};
         //
         dtCTComBo.setColumnIdentifiers(headerCTComBo);
         dtComBo.setColumnIdentifiers(headerComBo);
@@ -76,19 +88,75 @@ public class Form_Combo extends javax.swing.JPanel {
 //        for (ComBo c : listComBo = comBoService.getAllByTrangThai(0)) {
 //            comBoService.checkTrangThaiMonAn(c);
 //        }
+// tb combo
+        tbComBo.setFillsViewportHeight(true);
+        tbComBo.getColumn("HÌNH ẢNH").setCellRenderer(new CellRenderers());
+        //tb san pham
+        tbChonMon.setFillsViewportHeight(true);
+        tbChonMon.getColumn("ẢNH").setCellRenderer(new CellRenderer());
         //
-        showDataComBo(listComBo = comBoService.getAllByTrangThai(0));
+        listComBo = comBoService.getAllByTrangThai(0);
+        showDataComBo(listComBo);
 //        showDataSanPham(listMonAn = monAnService.getAll());
         txtMa.setEnabled(false);
         setCbb();
 
     }
 
-    private void showDataComBo(List<ComBo> list) {
+    class CellRenderer implements TableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table,
+                Object value,
+                boolean isSelected,
+                boolean hasFocus,
+                int row,
+                int column) {
+            //tb sanPham
+            TableColumn tb = tbChonMon.getColumn("ẢNH");
+            tb.setMaxWidth(100);
+            tb.setMinWidth(100);
+
+            tbChonMon.setRowHeight(60);
+
+            return (Component) value;
+        }
+
+    }
+
+    //
+    class CellRenderers implements TableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table,
+                Object value,
+                boolean isSelected,
+                boolean hasFocus,
+                int row,
+                int column) {
+            TableColumn tbComBos = tbComBo.getColumn("HÌNH ẢNH");
+            tbComBos.setMaxWidth(100);
+            tbComBos.setMinWidth(100);
+            tbComBo.setRowHeight(60);
+
+            return (Component) value;
+        }
+
+    }
+
+    private void showDataComBo(List<ComBo> listComBo) {
         dtComBo.setRowCount(0);
-        int i = 1;
-        for (ComBo cb : list) {
-            dtComBo.addRow(cb.toDataRow(i++));
+        for (int i = 0; i < listComBo.size(); i++) {
+            if (listComBo.get(i).getHinhAnh() != null) {
+                JLabel imageLabel1 = new JLabel();
+                ImageIcon imageicon = new ImageIcon(listComBo.get(i).getHinhAnh());
+                Image img = imageicon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                imageLabel1.setIcon(new ImageIcon(img));
+                imageLabel1.setIcon(imageicon);
+                dtComBo.addRow(new Object[]{i + 1, listComBo.get(i).getMaCB(), listComBo.get(i).getTenCB(), listComBo.get(i).getDonGia() + "K", imageLabel1});
+            } else {
+                dtComBo.addRow(new Object[]{i + 1, listComBo.get(i).getMaCB(), listComBo.get(i).getTenCB(), listComBo.get(i).getDonGia() + "K", null});
+            }
         }
     }
 
@@ -100,11 +168,19 @@ public class Form_Combo extends javax.swing.JPanel {
         }
     }
 
-    private void showDataSanPham(List<MonAn> list) {
+    private void showDataSanPham(List<MonAn> listMonAn) {
         dtSanPham.setRowCount(0);
-        int i = 1;
-        for (MonAn cb : list) {
-            dtSanPham.addRow(cb.toDataRow(i++));
+        for (int i = 0; i < listMonAn.size(); i++) {
+            if (listMonAn.get(i).getHinhAnh() != null) {
+                JLabel imageLabel = new JLabel();
+                ImageIcon imageicon = new ImageIcon(listMonAn.get(i).getHinhAnh());
+                Image img = imageicon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                imageLabel.setIcon(new ImageIcon(img));
+                imageLabel.setIcon(imageicon);
+                dtSanPham.addRow(new Object[]{i + 1, listMonAn.get(i).getMaMonAn(), listMonAn.get(i).getTenMonAn(), listMonAn.get(i).getDonGia() + "K", listMonAn.get(i).getDonViTinh(), imageLabel});
+            } else {
+                dtSanPham.addRow(new Object[]{i + 1, listMonAn.get(i).getMaMonAn(), listMonAn.get(i).getTenMonAn(), listMonAn.get(i).getDonGia() + "K", listMonAn.get(i).getDonViTinh(), null});
+            }
         }
     }
 
@@ -126,6 +202,7 @@ public class Form_Combo extends javax.swing.JPanel {
         txtTen.setText("");
         cbbMaNhanVien.setSelectedIndex(0);
         cbbLoaiMonAn.setSelectedIndex(0);
+        jLabelImage.setText(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -151,10 +228,11 @@ public class Form_Combo extends javax.swing.JPanel {
         btnClear = new javax.swing.JButton();
         txtTen = new javax.swing.JTextField();
         cbbMaNhanVien = new javax.swing.JComboBox<>();
-        jLabel11 = new javax.swing.JLabel();
         rdoApDung = new javax.swing.JRadioButton();
         rdoChoApDung = new javax.swing.JRadioButton();
         rdoNgungApDung = new javax.swing.JRadioButton();
+        jLabelImage = new javax.swing.JLabel();
+        btnChonAnh = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbChonMon = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -239,9 +317,6 @@ public class Form_Combo extends javax.swing.JPanel {
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel11.setText("Hình Ảnh       :");
-
         buttonGroup1.add(rdoApDung);
         rdoApDung.setSelected(true);
         rdoApDung.setText("Áp dụng");
@@ -251,6 +326,16 @@ public class Form_Combo extends javax.swing.JPanel {
 
         buttonGroup1.add(rdoNgungApDung);
         rdoNgungApDung.setText("Ngừng áp dụng");
+
+        jLabelImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        btnChonAnh.setBackground(new java.awt.Color(204, 204, 204));
+        btnChonAnh.setText("Chọn Ảnh:");
+        btnChonAnh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChonAnhActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -288,8 +373,10 @@ public class Form_Combo extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11))))))
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnChonAnh)
+                                        .addGap(17, 17, 17)))))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
@@ -298,7 +385,9 @@ public class Form_Combo extends javax.swing.JPanel {
                             .addComponent(btnClear)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbbMaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbbMaNhanVien, 0, 119, Short.MAX_VALUE))))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -310,16 +399,27 @@ public class Form_Combo extends javax.swing.JPanel {
                     .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(cbbMaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel11))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6))
+                                .addGap(30, 30, 30))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(btnChonAnh)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(14, 14, 14))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(rdoApDung)
@@ -442,7 +542,7 @@ public class Form_Combo extends javax.swing.JPanel {
         });
 
         lbLoaiMon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbLoaiMon.setText("Hình Ảnh       :");
+        lbLoaiMon.setText("loaiMon");
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -547,8 +647,9 @@ public class Form_Combo extends javax.swing.JPanel {
             } else if (!txtDonGia.getText().matches("[0-9]+")) {
                 JOptionPane.showMessageDialog(this, "đơn giá phải là số");
             } else {
+                String hinhAnh = selectedImagePath;
                 NhanVien nhanVien = nhanVienService.getOne(dcbNhanVien.getSelectedItem().toString());
-                ComBo comB = new ComBo(null, nhanVien, comBoService.randomMaHoaDon(), txtTen.getText(), null, new BigDecimal(txtDonGia.getText()), 2);
+                ComBo comB = new ComBo(null, nhanVien, comBoService.randomMaHoaDon(), txtTen.getText(), hinhAnh, new BigDecimal(txtDonGia.getText()), 2);
                 String addComBo = comBoService.add(comB);
                 JOptionPane.showMessageDialog(this, addComBo);
                 rdoChoApDung.setSelected(true);
@@ -717,7 +818,7 @@ public class Form_Combo extends javax.swing.JPanel {
             } else {
                 JOptionPane.showMessageDialog(this, "vui lòng nhập số");
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "không thể sửa hoặc xóa");
         }
     }//GEN-LAST:event_tbCTComboMouseClicked
@@ -731,10 +832,32 @@ public class Form_Combo extends javax.swing.JPanel {
         nhanVien = nhanVienService.getOne((String) cbbMaNhanVien.getSelectedItem());
     }//GEN-LAST:event_cbbMaNhanVienActionPerformed
 
+    private void btnChonAnhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonAnhActionPerformed
+        // TODO add your handling code here:
+        JFileChooser browseImageFile = new JFileChooser("C:\\Users\\Public\\Pictures\\Sample Pictures");
+        //Filter image extensions
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpg", "jpeg");
+        browseImageFile.addChoosableFileFilter(fnef);
+        int showOpenDialogue = browseImageFile.showOpenDialog(null);
+
+        if (showOpenDialogue == JFileChooser.APPROVE_OPTION) {
+            File selectedImageFile = browseImageFile.getSelectedFile();
+            selectedImagePath = selectedImageFile.getAbsolutePath();
+            JOptionPane.showMessageDialog(null, "Bạn đã chọn ảnh: " + selectedImagePath);
+            //Display image on jlable
+            ImageIcon ii = new ImageIcon(selectedImagePath);
+//            Resize image to fit jlabel
+            Image image = ii.getImage().getScaledInstance(jLabelImage.getWidth(), jLabelImage.getHeight(), Image.SCALE_SMOOTH);
+//
+            jLabelImage.setIcon(new ImageIcon(image));
+        }
+    }//GEN-LAST:event_btnChonAnhActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnApDung;
+    private javax.swing.JButton btnChonAnh;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnUpdate;
@@ -744,7 +867,6 @@ public class Form_Combo extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbbMaNhanVien;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -753,6 +875,7 @@ public class Form_Combo extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelImage;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;

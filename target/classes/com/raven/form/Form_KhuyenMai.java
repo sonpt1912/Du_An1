@@ -23,6 +23,7 @@ import com.mycompany.service.impl.KhuyenMaiChiTiettService;
 import com.mycompany.service.impl.KhuyenMaiService;
 import com.mycompany.service.impl.MonAnService;
 import com.mycompany.service.impl.NhanVienService;
+import com.mycompany.util.KhuyenMaiUtil;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -53,19 +54,20 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
     private List<MonAn> listMonAn = new ArrayList<>();
     private MonAnService monAnService = new MonAnService();
     private DefaultTableModel dtmMonAn = new DefaultTableModel();
-    private List<MonAn> listCTKM = new ArrayList<>();
+    private List<KhuyenMaiChiTiet> listCTKM = new ArrayList<>();
     private List<String> listHinhThucTT = new ArrayList<>();
     private List<MonAn> listThemKM_MA = new ArrayList<>();
     private NhanVienService nhanVienService = new NhanVienService();
     private DefaultComboBoxModel dcbmMonAn = new DefaultComboBoxModel();
     private KhuyenMaiChiTiettService khuyenMaiChiTiettService = new KhuyenMaiChiTiettService();
+    private KhuyenMaiUtil khuyenMaiUtil = new KhuyenMaiUtil();
 
     public Form_KhuyenMai(NhanVien nv) {
         initComponents();
         dtmMonAn = (DefaultTableModel) tbMonAn.getModel();
         dtmKhuyenMai = (DefaultTableModel) tbKhuyenMai.getModel();
         dtmKMCT = (DefaultTableModel) tbKMCT.getModel();
-        this.nhanV = nhanV;
+        this.nhanV = nv;
         // tbKhuyenMai.setModel(dtmKhuyenMai);
         String headers[] = {"STT", "Mã KM", "Tên KM", "TrangThai"};
         dtmKhuyenMai.setColumnIdentifiers(headers);
@@ -77,18 +79,15 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         dtmMonAn.setColumnIdentifiers(headerMonAn);
         // tbMonAn.setModel(dtmMonAn);
         listMonAn = monAnService.getAll();
-        for (MonAn monAn : listMonAn) {
-            System.out.println(monAn.toString() + "fvd csa");
-        }
-        //showDataMonAn(listMonAn, 1);
-        showDataMonAn2(listMonAn);
+        showDataMonAn(listMonAn);
         //tbKMCT.setModel(dtmKMCT);
-        String headersKMCT[] = {"STT", "Mã KM", "Mã món ăn", "Tên món ăn"};
+        String headersKMCT[] = {"STT", "Mã KM", "Mã món ăn", "Tên món ăn", "Giá sau KM", "TT"};
         dtmKMCT.setColumnIdentifiers(headersKMCT);
         loadLoaiKM();
     }
+//show mặc định tất cả check box ko được chọn
 
-    private void showDataMonAn2(List<MonAn> listMonAn) {
+    private void showDataMonAn(List<MonAn> listMonAn) {
         dtmMonAn.setRowCount(0);
         for (int i = 0; i < listMonAn.size(); i++) {
             dtmMonAn.addRow(new Object[]{listMonAn.get(i).getMaMonAn(), listMonAn.get(i).getTenMonAn(),
@@ -96,10 +95,26 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         }
     }
 
-    private void showDataCTKM(List<MonAn> listKMCT, int stt) {
+    //show khi fill km
+    private void showDataMonAnCustom(List<MonAnKMResponse> listMaKM) {
+        dtmMonAn.setRowCount(0);
+        for (MonAnKMResponse monAnKMResponse : listMaKM) {
+            dtmMonAn.addRow(new Object[]{monAnKMResponse.getMaMA(), monAnKMResponse.getTenMonAn(), monAnKMResponse.getGiaCu(), monAnKMResponse.isApDungKM()});
+        }
+    }
+
+//    private void showDataCTKM(List<KhuyenMaiChiTiet> listKMCT, int stt) {
+//        dtmKMCT.setRowCount(0);
+//        for (KhuyenMaiChiTiet kmct : listKMCT) {
+//            dtmKMCT.addRow(new Object[]{stt, kmct.getKhuyenMai().getMaKhuyenMai(), kmct.getMonAn().getMaMonAn(), kmct.getMonAn().getTenMonAn()});
+//            stt++;
+//        }
+//    }
+    private void showDataCTKM(List<KhuyenMaiChiTiet> listKMCT, int stt) {
         dtmKMCT.setRowCount(0);
-        for (MonAn monAn : listKMCT) {
-            dtmKMCT.addRow(monAn.toDataRowViewKM(stt));
+        for (KhuyenMaiChiTiet kmct : listKMCT) {
+            dtmKMCT.addRow(new Object[]{stt, kmct.getKhuyenMai().getMaKhuyenMai(), kmct.getMonAn().getMaMonAn(),
+                kmct.getMonAn().getTenMonAn(), kmct.getDonGiaSauKM(), (kmct.getTrangThai() == 0 ? "Áp dụng" : "Ngừng")});
             stt++;
         }
     }
@@ -112,22 +127,16 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         }
     }
 
-    private void showDataMonAn(List<MonAn> listMonAn, int stt) {
-        dtmMonAn.setRowCount(0);
-        for (MonAn monAn : listMonAn) {
-            dtmMonAn.addRow(monAn.toDataRow(stt));
-            stt++;
-        }
-    }
-
+//    private void showDataMonAn(List<MonAn> listMonAn, int stt) {
+//        dtmMonAn.setRowCount(0);
+//        for (MonAn monAn : listMonAn) {
+//            dtmMonAn.addRow(monAn.toDataRow(stt));
+//            stt++;
+//        }
+//    }
     private void loadLoaiKM() {
         dcbmLoaiKM.addElement("Phần trăm");
         dcbmLoaiKM.addElement("Tiền mặt");
-    }
-
-    private void loadCbbMonAn() {
-        dcbmMonAn.addElement("Món ăn đang được áp dụng khuyến mãi");
-        dcbmMonAn.addElement("Món ăn đang không áp dụng khuyến mãi");
     }
 
     private void fillKM(int index, List<KhuyenMai> listKM) {
@@ -146,13 +155,51 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         }
     }
 
+    //fill món ăn + kmct: cột áp dụng có được click hay ko
+    private void fillKMCT() {
+        //lấy số lượng món ăn  trên table đang có
+        int szTable = dtmMonAn.getRowCount();
+        //list custom model: ko select = db mà chỉ tt view thêm thuộc tính áp dụng hay ko
+        List<MonAnKMResponse> listMaKm = new ArrayList<>();
+        for (int i = 0; i < szTable; i++) {
+            MonAnKMResponse monAnKMResponse = new MonAnKMResponse();
+            monAnKMResponse.setApDungKM((boolean) dtmMonAn.getValueAt(i, 3));
+            monAnKMResponse.setGiaCu((BigDecimal) dtmMonAn.getValueAt(i, 2));
+            monAnKMResponse.setTenMonAn((String) dtmMonAn.getValueAt(i, 1));
+            monAnKMResponse.setMaMA((String) dtmMonAn.getValueAt(i, 0));
+            listMaKm.add(monAnKMResponse);
+        }
+        //laasy max KM đang được chọn:
+        String maKM = txtMaKM.getText();
+        if (maKM.isEmpty() || maKM == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn KM cần áp dụng!");
+        } else {
+            //chạy for list món ăn trên table:
+            KhuyenMai khuyenMai = khuyenMaiService.getOne(maKM);
+            for (MonAnKMResponse monAnKMResponse : listMaKm) {
+                MonAn monAn = monAnService.getOne(monAnKMResponse.getMaMA());
+                //getOne kmct theo món ăn và km truyền vào
+                //nếu != null => món ăn này đã được áp dụng km này => cột áp dụng = true
+                //ngược lại
+                //dùng hàm showDataMon ăn khác
+                List<KhuyenMaiChiTiet> kmct = khuyenMaiChiTiettService.getKMCTByMaAndKM(monAn, khuyenMai);
+                if (kmct.size() <= 0) {
+                    monAnKMResponse.setApDungKM(false);
+                } else {
+                    monAnKMResponse.setApDungKM(true);
+                }
+            }
+            showDataMonAnCustom(listMaKm);
+        }
+    }
+
     private KhuyenMai newKM() {
         KhuyenMai khuyenMai = new KhuyenMai();
         khuyenMai.setMaKhuyenMai(txtMaKM.getText());
         khuyenMai.setGhiChu(txtGhiChu.getText());
         khuyenMai.setLoaiKhuyenMai(dcbmLoaiKM.getSelectedItem().toString());
         //khuyenMai.setNhanVien(nhanV);
-        khuyenMai.setNhanVien(nhanVienService.getOne("KH1"));
+        khuyenMai.setNhanVien(nhanVienService.getOne(nhanV.getMa()));
         khuyenMai.setTenKhuyenMai(txtTenKhuyenMai.getText());
         //Date.valueOf(dateFormat.format(date))
         khuyenMai.setThoiGianBD(Date.valueOf(dateFormat.format(txtThoiGianBatDau.getDate())));
@@ -562,8 +609,16 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         int index = tbKhuyenMai.getSelectedRow();
         fillKM(index, listKM);
         KhuyenMai khuyenMai = khuyenMaiService.getOne(txtMaKM.getText());
-        listCTKM = monAnService.getMonAnByKhuyenMai(khuyenMai);
-        showDataCTKM(listCTKM, 1);
+        listCTKM = khuyenMaiChiTiettService.getKMCTsByKM(khuyenMai);
+        //nếu list rỗng=> table món ăn cột áp dụng bỏ chọn check box
+        if (listCTKM.size() <= 0) {
+            listMonAn = monAnService.getAll();
+            showDataMonAn(listMonAn);
+            dtmKMCT.setRowCount(0);
+        } else {
+            showDataCTKM(listCTKM, 1);
+            fillKMCT();
+        }
     }//GEN-LAST:event_tbKhuyenMaiMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -571,6 +626,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, khuyenMaiService.add(khuyenMai));
         listKM = khuyenMaiService.getAll();
         showData(listKM, 1);
+        tbMonAn.setEnabled(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -582,6 +638,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, khuyenMaiService.update(khuyenMai, txtMaKM.getText()));
             listKM = khuyenMaiService.getAll();
             showData(listKM, WIDTH);
+            btnClearActionPerformed(evt);
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
@@ -595,6 +652,9 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         txtMaKM.setEnabled(true);
         listThemKM_MA.removeAll(listThemKM_MA);
         dtmKMCT.setRowCount(0);
+        listMonAn = monAnService.getAll();
+        showDataMonAn(listMonAn);
+        tbMonAn.setEnabled(true);
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -616,21 +676,12 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         //getOne = getValue at => lấy mã:
         MonAn monAn = monAnService.getOne(maMA);
         String maKM = txtMaKM.getText();
-        //ánh xạ lại
-//        if (maKM.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Vui lòng chọn KM!");
-//        } else if (monAn.getKhuyenMai() != null) {
-//            JOptionPane.showMessageDialog(this, "Sản phẩm này đã được áp dụng KM!");
-//        } else {
-//            listThemKM_MA.add(monAn);
-//            showDataCTKM(listThemKM_MA, 1);
-//        }
     }//GEN-LAST:event_tbMonAnMouseClicked
 
     private void btnApDungKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApDungKMActionPerformed
         //lấy số lượng món ăn  trên table đang có
         int szTable = dtmMonAn.getRowCount();
-        //list custom model: thêm thuộc tính áp dụng hay ko
+        //list custom model: ko select = db mà chỉ tt view thêm thuộc tính áp dụng hay ko
         List<MonAnKMResponse> listMaKm = new ArrayList<>();
         for (int i = 0; i < szTable; i++) {
             MonAnKMResponse monAnKMResponse = new MonAnKMResponse();
@@ -653,34 +704,22 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
                 //nếu rồi bỏ qua, nếu chưa insert kmct
                 if (monAnKMResponse.isApDungKM()) {
                     List<KhuyenMaiChiTiet> kmct = khuyenMaiChiTiettService.getKMCTByMaAndKM(monAn, khuyenMai);
-                    if (kmct == null) {
+                    if (kmct.size() <= 0) {
                         KhuyenMaiChiTiet khuyenMaiChiTiet = new KhuyenMaiChiTiet();
                         khuyenMaiChiTiet.setKhuyenMai(khuyenMai);
                         khuyenMaiChiTiet.setMonAn(monAn);
+                        BigDecimal donGiaSauKM = khuyenMaiUtil.tinhTienMonAnSauKM(khuyenMai, monAn);
+                        khuyenMaiChiTiet.setDonGiaSauKM(donGiaSauKM);
                         String addKMCT = khuyenMaiChiTiettService.add(khuyenMaiChiTiet);
                     }
+                } else {
+                    //ngược lại nếu cột áp dụng đang ko được chọn
+                    //ktra xem trước có áp dụng ko, nếu ko bỏ qua, nếu có update(xoá kmct)
                 }
             }
             JOptionPane.showMessageDialog(this, "Thành công!");
         }
-//        String maKM = txtMaKM.getText();
-//        int szListThemKM_Ma = listThemKM_MA.size();
-//        if (maKM.isEmpty() || szListThemKM_Ma <= 0) {
-//            JOptionPane.showMessageDialog(this, "??");
-//        } else {
-//            KhuyenMai khuyenMai = khuyenMaiService.getOne(maKM);
-//            try {
-//                for (int i = 0; i < szListThemKM_Ma; i++) {
-//                    String maMA = listThemKM_MA.get(i).getMaMonAn();
-//                    String updateKM_MA = monAnService.themKMChoMonAn(khuyenMai, maMA);
-//                }
-//                listThemKM_MA.removeAll(listThemKM_MA);
-//                JOptionPane.showMessageDialog(this, "Áp dụng KM thành công!");
-//                showDataCTKM(listThemKM_MA, 1);
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(this, "Áp dụng KM ko thành công!");
-//            }
-//        }
+
     }//GEN-LAST:event_btnApDungKMActionPerformed
 
     private void tbKMCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbKMCTMouseClicked

@@ -69,12 +69,13 @@ public class KhuyenMaiChiTietRepository implements ICommonRepository<KhuyenMaiCh
             Transaction transaction = session.getTransaction();
             transaction.begin();
             try {
-                String hql = "UPDATE KhuyenMaiChiTiet SET monAn = :MA, khuyenMai = :KM, "
-                        + " ghiChu = :ghiChu WHERE id = :idKMCT";
+                String hql = "UPDATE KhuyenMaiChiTiet SET monAn = :MA, khuyenMai = :KM, donGiaSauKM = :donGia "
+                        + " trangThai = :trangThai WHERE id = :idKMCT";
                 Query query = session.createQuery(hql);
                 query.setParameter("MA", kmct.getMonAn());
                 query.setParameter("KM", kmct.getKhuyenMai());
-                query.setParameter("ghiChu", kmct.getGhiChu());
+                query.setParameter("trangThai", kmct.getTrangThai());
+                query.setParameter("donGia", kmct.getDonGiaSauKM());
                 query.setParameter("idKMCT", id);
                 check = query.executeUpdate();
                 transaction.commit();
@@ -129,5 +130,15 @@ public class KhuyenMaiChiTietRepository implements ICommonRepository<KhuyenMaiCh
         for (KhuyenMaiChiTiet khuyenMaiChiTiet : listKM) {
             System.out.println(khuyenMaiChiTiet);
         }
+    }
+
+    @Override
+    public List<KhuyenMaiChiTiet> getKMCTsByKM(KhuyenMai khuyenMai) {
+        List<KhuyenMaiChiTiet> listKMCT = new ArrayList<>();
+        Session session = HibernateUtil.getFactory().openSession();
+        Query query = session.createQuery("FROM KhuyenMaiChiTiet WHERE khuyenMai = :KM");
+        query.setParameter("KM", khuyenMai);
+        listKMCT = query.getResultList();
+        return listKMCT;
     }
 }

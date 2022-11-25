@@ -57,13 +57,13 @@ public class MonAnService implements com.mycompany.service.ICommonService<MonAn,
         return monAnRepo.getAllMonAnByTrangThai(trangThai);
     }
 
-    public String themKMChoMonAn(KhuyenMai khuyenMai, String maMA) {
-        if (monAnRepo.themKMChoMonAn(khuyenMai, maMA)) {
-            return "Áp dụng KM cho món ăn thành công";
-        } else {
-            return "Áp dụng Km ko thành công";
-        }
-    }
+//    public String themKMChoMonAn(KhuyenMai khuyenMai, String maMA) {
+//        if (monAnRepo.themKMChoMonAn(khuyenMai, maMA)) {
+//            return "Áp dụng KM cho món ăn thành công";
+//        } else {
+//            return "Áp dụng Km ko thành công";
+//        }
+//    }
 
     public static void main(String[] args) {
     }

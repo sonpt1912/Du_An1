@@ -132,7 +132,9 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
     public List<MonAn> getMonAnByKhuyenMai(KhuyenMai khuyenMai) {
         List<MonAn> listMA = new ArrayList<>();
         try ( Session session = HibernateUtil.getFactory().openSession()) {
-            Query query = session.createQuery("FROM MonAn WHERE khuyenMai = :KM");
+            Query query = session.createQuery("FROM MonAn MA JOIN KhuyenMaiChiTiet kmct"
+                    + " ON MA.id = kmct.monAn.id "
+                    + "JOIN KhuyenMai km ON kmct.khuyenMai.id = km.id  WHERE khuyenMai = :KM");
             query.setParameter("KM", khuyenMai);
             listMA = query.getResultList();
         } finally {
@@ -141,24 +143,24 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
     }
     ////update khuyến mãi cho món ăn
 
-    public boolean themKMChoMonAn(KhuyenMai khuyenMai, String maMA) {
-        String hql = "UPDATE " + fromTable + "SET khuyenMai = :KM "
-                + "WHERE maMonAn =:ma";
-        Transaction transaction = null;
-        int check = 0;
-        try {
-            transaction = session.beginTransaction();
-            Query query = session.createQuery(hql);
-            query.setParameter("KM", khuyenMai);
-            query.setParameter("ma", maMA);
-            check = query.executeUpdate();
-            transaction.commit();
-        } catch (Exception e) {
-            transaction.rollback();
-            e.printStackTrace();
-        }
-        return check > 0;
-    }
+//    public boolean themKMChoMonAn(KhuyenMai khuyenMai, String maMA) {
+//        String hql = "UPDATE " + fromTable + "SET khuyenMai = :KM "
+//                + "WHERE maMonAn =:ma";
+//        Transaction transaction = null;
+//        int check = 0;
+//        try {
+//            transaction = session.beginTransaction();
+//            Query query = session.createQuery(hql);
+//            query.setParameter("KM", khuyenMai);
+//            query.setParameter("ma", maMA);
+//            check = query.executeUpdate();
+//            transaction.commit();
+//        } catch (Exception e) {
+//            transaction.rollback();
+//            e.printStackTrace();
+//        }
+//        return check > 0;
+//    }
 
     public List<MonAn> getAllMonAnByTrangThai(int trangThai) {
         String hql = fromTable + "WHERE trangThai = :TrangThai ORDER BY maMonAn";
@@ -187,6 +189,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
 //        }
 //        List<MonAn> listMA = new MonAnRepository().getMonAnCoKM();
 //        System.out.println("Sdfhjkhgfdfhjvsd: " + listMA.size());
+
     }
 
     @Override
