@@ -23,6 +23,7 @@ import com.mycompany.service.impl.KhuyenMaiChiTiettService;
 import com.mycompany.service.impl.KhuyenMaiService;
 import com.mycompany.service.impl.MonAnService;
 import com.mycompany.service.impl.NhanVienService;
+import com.mycompany.util.KhuyenMaiUtil;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -59,13 +60,14 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
     private NhanVienService nhanVienService = new NhanVienService();
     private DefaultComboBoxModel dcbmMonAn = new DefaultComboBoxModel();
     private KhuyenMaiChiTiettService khuyenMaiChiTiettService = new KhuyenMaiChiTiettService();
+    private KhuyenMaiUtil khuyenMaiUtil = new KhuyenMaiUtil();
 
     public Form_KhuyenMai(NhanVien nv) {
         initComponents();
         dtmMonAn = (DefaultTableModel) tbMonAn.getModel();
         dtmKhuyenMai = (DefaultTableModel) tbKhuyenMai.getModel();
         dtmKMCT = (DefaultTableModel) tbKMCT.getModel();
-        this.nhanV = nhanV;
+        this.nhanV = nv;
         // tbKhuyenMai.setModel(dtmKhuyenMai);
         String headers[] = {"STT", "Mã KM", "Tên KM", "TrangThai"};
         dtmKhuyenMai.setColumnIdentifiers(headers);
@@ -79,7 +81,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         listMonAn = monAnService.getAll();
         showDataMonAn(listMonAn);
         //tbKMCT.setModel(dtmKMCT);
-        String headersKMCT[] = {"STT", "Mã KM", "Mã món ăn", "Tên món ăn"};
+        String headersKMCT[] = {"STT", "Mã KM", "Mã món ăn", "Tên món ăn", "Giá sau KM", "TT"};
         dtmKMCT.setColumnIdentifiers(headersKMCT);
         loadLoaiKM();
     }
@@ -101,10 +103,18 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         }
     }
 
+//    private void showDataCTKM(List<KhuyenMaiChiTiet> listKMCT, int stt) {
+//        dtmKMCT.setRowCount(0);
+//        for (KhuyenMaiChiTiet kmct : listKMCT) {
+//            dtmKMCT.addRow(new Object[]{stt, kmct.getKhuyenMai().getMaKhuyenMai(), kmct.getMonAn().getMaMonAn(), kmct.getMonAn().getTenMonAn()});
+//            stt++;
+//        }
+//    }
     private void showDataCTKM(List<KhuyenMaiChiTiet> listKMCT, int stt) {
         dtmKMCT.setRowCount(0);
         for (KhuyenMaiChiTiet kmct : listKMCT) {
-            dtmKMCT.addRow(new Object[]{stt, kmct.getKhuyenMai().getMaKhuyenMai(), kmct.getMonAn().getMaMonAn(), kmct.getMonAn().getTenMonAn()});
+            dtmKMCT.addRow(new Object[]{stt, kmct.getKhuyenMai().getMaKhuyenMai(), kmct.getMonAn().getMaMonAn(),
+                kmct.getMonAn().getTenMonAn(), kmct.getDonGiaSauKM(), (kmct.getTrangThai() == 0 ? "Áp dụng" : "Ngừng")});
             stt++;
         }
     }
@@ -189,7 +199,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         khuyenMai.setGhiChu(txtGhiChu.getText());
         khuyenMai.setLoaiKhuyenMai(dcbmLoaiKM.getSelectedItem().toString());
         //khuyenMai.setNhanVien(nhanV);
-        khuyenMai.setNhanVien(nhanVienService.getOne("KH1"));
+        khuyenMai.setNhanVien(nhanVienService.getOne(nhanV.getMa()));
         khuyenMai.setTenKhuyenMai(txtTenKhuyenMai.getText());
         //Date.valueOf(dateFormat.format(date))
         khuyenMai.setThoiGianBD(Date.valueOf(dateFormat.format(txtThoiGianBatDau.getDate())));
@@ -616,6 +626,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, khuyenMaiService.add(khuyenMai));
         listKM = khuyenMaiService.getAll();
         showData(listKM, 1);
+        tbMonAn.setEnabled(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -627,6 +638,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, khuyenMaiService.update(khuyenMai, txtMaKM.getText()));
             listKM = khuyenMaiService.getAll();
             showData(listKM, WIDTH);
+            btnClearActionPerformed(evt);
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
@@ -642,6 +654,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         dtmKMCT.setRowCount(0);
         listMonAn = monAnService.getAll();
         showDataMonAn(listMonAn);
+        tbMonAn.setEnabled(true);
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -695,10 +708,11 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
                         KhuyenMaiChiTiet khuyenMaiChiTiet = new KhuyenMaiChiTiet();
                         khuyenMaiChiTiet.setKhuyenMai(khuyenMai);
                         khuyenMaiChiTiet.setMonAn(monAn);
-                        khuyenMaiChiTiet.setGhiChu(" ");
+                        BigDecimal donGiaSauKM = khuyenMaiUtil.tinhTienMonAnSauKM(khuyenMai, monAn);
+                        khuyenMaiChiTiet.setDonGiaSauKM(donGiaSauKM);
                         String addKMCT = khuyenMaiChiTiettService.add(khuyenMaiChiTiet);
                     }
-                }else{
+                } else {
                     //ngược lại nếu cột áp dụng đang ko được chọn
                     //ktra xem trước có áp dụng ko, nếu ko bỏ qua, nếu có update(xoá kmct)
                 }

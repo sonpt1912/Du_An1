@@ -4,6 +4,7 @@
  */
 package com.mycompany.domainModel;
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,7 +46,10 @@ public class KhuyenMaiChiTiet {
     @JoinColumn(name = "IdKM")
     private KhuyenMai khuyenMai;
 
-    @Column(name = "GhiChu", nullable = false)
-    private String ghiChu;
+    @Column(name = "DonGiaSauKM", nullable = false)
+    private BigDecimal donGiaSauKM;
+
+    @Column(name = "TrangThai", nullable = false)
+    private int trangThai;
 
 }
