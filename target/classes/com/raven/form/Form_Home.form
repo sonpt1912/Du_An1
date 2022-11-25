@@ -18,6 +18,19 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gopHDActionPerformed"/>
           </Events>
         </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="tachHD">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="T&#xe1;ch ho&#xe1; &#x111;&#x1a1;n"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tachHDActionPerformed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="chuyenBan">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Chuy&#x1ec3;n b&#xe0;n"/>
+          </Properties>
+        </MenuItem>
       </SubComponents>
     </Container>
   </NonVisualComponents>
@@ -69,6 +82,9 @@
           <Color blue="ff" green="cc" red="cc" type="rgb"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="panelBorder1MouseReleased"/>
+      </Events>
 
       <Layout>
         <DimensionLayout dim="0">

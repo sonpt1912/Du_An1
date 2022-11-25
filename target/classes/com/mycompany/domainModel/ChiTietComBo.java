@@ -59,4 +59,5 @@ public class ChiTietComBo {
     public Object[] toShowData(int stt) {
         return new Object[]{stt, comBo.getTenCB(), monAn.getTenMonAn(), soLuongMonAn};
     }
+    
 }

@@ -147,6 +147,8 @@ public class Form_Home extends javax.swing.JPanel {
         buttonGroup1 = new javax.swing.ButtonGroup();
         popMenu = new javax.swing.JPopupMenu();
         gopHD = new javax.swing.JMenuItem();
+        tachHD = new javax.swing.JMenuItem();
+        chuyenBan = new javax.swing.JMenuItem();
         panel = new javax.swing.JLayeredPane();
         panelBorder1 = new com.raven.swing.PanelBorder();
         txtSearch = new com.raven.swing.SearchText();
@@ -209,9 +211,25 @@ public class Form_Home extends javax.swing.JPanel {
         });
         popMenu.add(gopHD);
 
+        tachHD.setText("Tách hoá đơn");
+        tachHD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tachHDActionPerformed(evt);
+            }
+        });
+        popMenu.add(tachHD);
+
+        chuyenBan.setText("Chuyển bàn");
+        popMenu.add(chuyenBan);
+
         panel.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
+        panelBorder1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                panelBorder1MouseReleased(evt);
+            }
+        });
 
         txtSearch.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
@@ -707,8 +725,7 @@ public class Form_Home extends javax.swing.JPanel {
     private void tbHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoaDonMouseClicked
         // TODO add your handling code here:
         if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
-            popMenu.show(this, evt.getX(), evt.getY());
-
+            popMenu.show(this, evt.getX() + 417, evt.getY() + 85);
         } else {
             lstMaBan.clear();// clear để lấy mã bàn mới
             // set lại tiền thừa với tổng tiền  = 0.0 để cho dữ liệu được chính xác hơn
@@ -744,7 +761,6 @@ public class Form_Home extends javax.swing.JPanel {
                     lbSoBan.setText(lstChiTietBanHoaDons.get(i).getBan().getMaBan().toString());
                 }
             }
-//        lbSoBan.setText("aaaaa");
 
             // nếu hoá đơn đang chọn có trạng thái là dang chờ thanh toán thì set check trangthaiHD = 0
             //, và check món ăn = 0 và fill mã HD lên label
@@ -1125,9 +1141,9 @@ public class Form_Home extends javax.swing.JPanel {
 
     private void btnTachHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTachHDActionPerformed
         // TODO add your handling code here:
-        HoaDon hd = hdTong;
-        JDialogTachHoaDon jDialogTachHoaDon = new JDialogTachHoaDon(null, true, hd);
-        jDialogTachHoaDon.setVisible(true);
+//        HoaDon hd = hdTong;
+//        JDialogTachHoaDon jDialogTachHoaDon = new JDialogTachHoaDon(null, true, hd);
+//        jDialogTachHoaDon.setVisible(true);
     }//GEN-LAST:event_btnTachHDActionPerformed
 
     private void btnThanhToanAndInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanAndInActionPerformed
@@ -1232,6 +1248,17 @@ public class Form_Home extends javax.swing.JPanel {
         showDataHDCT(lstHDCTResponses);
         showDataBan(lstBanResponses);
     }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void tachHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tachHDActionPerformed
+        // TODO add your handling code here:
+        HoaDon hd = hdTong;
+        JDialogTachHoaDon jDialogTachHoaDon = new JDialogTachHoaDon(null, true, hd);
+        jDialogTachHoaDon.setVisible(true);
+    }//GEN-LAST:event_tachHDActionPerformed
+
+    private void panelBorder1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder1MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panelBorder1MouseReleased
 
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
@@ -1364,6 +1391,7 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JCheckBox cbChuyenKhoan;
     private javax.swing.JCheckBox cbTienMat;
     private javax.swing.JComboBox<String> cbbSanPham;
+    private javax.swing.JMenuItem chuyenBan;
     private javax.swing.JMenuItem gopHD;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -1395,6 +1423,7 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JRadioButton rdoChoThanhToan;
     private javax.swing.JRadioButton rdoDaHuy;
     private javax.swing.JRadioButton rdoDaThanhToan;
+    private javax.swing.JMenuItem tachHD;
     private javax.swing.JTable tbBan;
     private javax.swing.JTable tbHoaDon;
     private javax.swing.JTable tbHoaDonCT;

@@ -163,4 +163,9 @@ public class NhanVienRepository implements ICommonRepository<NhanVien, Boolean, 
         return lisstNV;
     }
 
+    public static void main(String[] args) {
+        NhanVien nv = new NhanVienRepository().getOne("NV2");
+        System.out.println(nv.toString());
+    }
+
 }

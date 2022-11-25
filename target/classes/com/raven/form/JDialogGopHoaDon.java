@@ -358,6 +358,9 @@ public class JDialogGopHoaDon extends javax.swing.JDialog {
                 int indexDeUpDate = 0;
                 int dem = 0;
                 for (int i = 0; i < lstDonChiTietResponsesMoi.size(); i++) {
+                    if (null == lstDonChiTietResponsesMoi.get(i).getTenMonAn()) {
+                        continue;
+                    }
                     if (lstDonChiTietResponsesMoi.get(i).getTenMonAn().equals(hdctrCu.getTenMonAn())) {
                         indexDeUpDate = i;
                         dem++;
