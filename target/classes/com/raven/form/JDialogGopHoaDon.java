@@ -281,7 +281,7 @@ public class JDialogGopHoaDon extends javax.swing.JDialog {
             }
         }
 
-        hoaDon.setTrangThai(2);
+        hoaDon.setTrangThai(0);
         String upDateTrangThaiHDCu = (String) hds1.update(hoaDon, hoaDon.getMaHoaDon());
         JOptionPane.showMessageDialog(this, "Gộp thành công");
         this.dispose();

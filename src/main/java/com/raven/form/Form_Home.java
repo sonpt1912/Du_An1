@@ -773,8 +773,8 @@ public class Form_Home extends javax.swing.JPanel {
                 checkTrangThaiHD = 1;
                 lbMaHDThanhToan.setText("");
             }
-//        txtTienMat.setText("");
-//        txtChuyenKhoan.setText("");
+            txtTienMat.setText("");
+            txtChuyenKhoan.setText("");
             // để fill hình thức thanh toán và số tiền
             for (GiaoDich giaoDich : giaoDichs) {
                 if (giaoDich.getHinhThucThanhToan().equals("Chuyển khoản")) {
