@@ -51,12 +51,12 @@ public class ViewLogin extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(255, 153, 153));
         jLabel2.setText("Tài Khoản :");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(255, 153, 153));
         jLabel3.setText("Mật Khẩu :");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, -1, -1));
         getContentPane().add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 200, -1));
@@ -82,12 +82,13 @@ public class ViewLogin extends javax.swing.JFrame {
         });
         getContentPane().add(btnQuenMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, -1, 40));
 
-        cbHienThiMatKhau.setForeground(new java.awt.Color(255, 255, 255));
+        cbHienThiMatKhau.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cbHienThiMatKhau.setForeground(new java.awt.Color(255, 51, 51));
         cbHienThiMatKhau.setText("Hiển Thị Mật Khẩu");
-        getContentPane().add(cbHienThiMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 240, -1, -1));
+        getContentPane().add(cbHienThiMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, -1, -1));
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/nen1.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/rsz_doremon.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 3, -1, 410));
 
         pack();
