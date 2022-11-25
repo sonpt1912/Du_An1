@@ -386,8 +386,8 @@ public class Form_Combo extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbbMaNhanVien, 0, 119, Short.MAX_VALUE))))
+                            .addComponent(cbbMaNhanVien, 0, 119, Short.MAX_VALUE)
+                            .addComponent(jLabelImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -686,6 +686,10 @@ public class Form_Combo extends javax.swing.JPanel {
         txtTen.setText(comBo.getTenCB());
         txtDonGia.setText(comBo.getDonGia().toString());
         cbbMaNhanVien.setSelectedItem(comBo.getNhanVien().getMa());
+        ImageIcon imageicon = new ImageIcon(comBo.getHinhAnh());
+        Image img = imageicon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        jLabelImage.setIcon(new ImageIcon(img));
+        jLabelImage.setIcon(imageicon);
     }//GEN-LAST:event_tbComBoMouseClicked
 
     private void tbChonMonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbChonMonMouseClicked
