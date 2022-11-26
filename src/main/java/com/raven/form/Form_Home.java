@@ -95,6 +95,7 @@ public class Form_Home extends javax.swing.JPanel {
     // thực thể
     private NhanVien nhanV;
     private HoaDon hdTong;
+    private Ban ban;
 
     public Form_Home(NhanVien nv) {
         initComponents();
@@ -149,6 +150,9 @@ public class Form_Home extends javax.swing.JPanel {
         gopHD = new javax.swing.JMenuItem();
         tachHD = new javax.swing.JMenuItem();
         chuyenBan = new javax.swing.JMenuItem();
+        popMenu1 = new javax.swing.JPopupMenu();
+        GopBan = new javax.swing.JMenuItem();
+        TachBan = new javax.swing.JMenuItem();
         panel = new javax.swing.JLayeredPane();
         panelBorder1 = new com.raven.swing.PanelBorder();
         txtSearch = new com.raven.swing.SearchText();
@@ -219,6 +223,25 @@ public class Form_Home extends javax.swing.JPanel {
 
         chuyenBan.setText("Chuyển bàn");
         popMenu.add(chuyenBan);
+
+        GopBan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        GopBan.setText("Gộp Bàn");
+        GopBan.setToolTipText("");
+        GopBan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GopBanActionPerformed(evt);
+            }
+        });
+        popMenu1.add(GopBan);
+
+        TachBan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        TachBan.setText("Tách Bàn");
+        TachBan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TachBanActionPerformed(evt);
+            }
+        });
+        popMenu1.add(TachBan);
 
         panel.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
@@ -496,31 +519,26 @@ public class Form_Home extends javax.swing.JPanel {
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnTachBan)
+                                .addGap(32, 32, 32)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panelBorder1Layout.createSequentialGroup()
                                         .addComponent(cbbSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnTachBan)
-                                        .addGap(8, 8, 8)
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(panelBorder1Layout.createSequentialGroup()
-                                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(panelBorder1Layout.createSequentialGroup()
-                                                .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(101, 101, 101)
-                                                .addComponent(btnRefresh))
-                                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                        .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(101, 101, 101)
+                                        .addComponent(btnRefresh))
+                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -585,7 +603,7 @@ public class Form_Home extends javax.swing.JPanel {
                                                         .addComponent(btnHuy)
                                                         .addGap(18, 18, 18)))
                                                 .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addGap(0, 30, Short.MAX_VALUE)))
                                 .addContainerGap())
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -791,31 +809,45 @@ public class Form_Home extends javax.swing.JPanel {
     private void tbBanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbBanMouseClicked
         // TODO add your handling code here:
         // lấy ra bàn đang chọn và fill mã bàn lên label
-        int index = tbBan.getSelectedRow();
-        String maBan = lbSoBan.getText();
-        BanResponse banResponse = lstBanResponses.get(index);
-        // check bàn được click đã có trong list chưa
+        if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
+            popMenu1.show(this, evt.getX() + 5, evt.getY() + 400);
+            int index = tbBan.getSelectedRow();
+            String maBan = lbSoBan.getText();
+            BanResponse banResponse = lstBanResponses.get(index);
+            if (banResponse.getTrangThai() == 1) {
+                GopBan.setEnabled(false);
+                TachBan.setEnabled(false);
+            } else {
+                GopBan.setEnabled(true);
+                TachBan.setEnabled(true);
+            }
+        } else {
+            int index = tbBan.getSelectedRow();
+            String maBan = lbSoBan.getText();
+            BanResponse banResponse = lstBanResponses.get(index);
+            // check bàn được click đã có trong list chưa
 //        List<ChiTietBanHoaDon> chiTietBanHoaDons = chiTietBanHoaDonService.getByBanAndHoaDon(banResponse.getMaBan().toString());
 //        if (chiTietBanHoaDons.size()>0) {
 //            JOptionPane.showMessageDialog(this, "Bàn đang có khách");
 //        }
-        if (banResponse.getTrangThai() == 1) {
-            JOptionPane.showMessageDialog(this, "Bàn đang có khách");
-            return;
-        }
-        for (BanResponse banResponse1 : lstMaBan) {
-            if (banResponse1.getMaBan() == banResponse.getMaBan()) {
-                JOptionPane.showMessageDialog(this, "Đã có bàn rồi");
+            if (banResponse.getTrangThai() == 1) {
+                JOptionPane.showMessageDialog(this, "Bàn đang có khách");
                 return;
             }
-        }
-        // add bàn click vào lstMaBan
-        lstMaBan.add(banResponse);
-        for (BanResponse banResponse1 : lstMaBan) {
-            if (lstMaBan.size() > 1) {
-                lbSoBan.setText(maBan + ", " + banResponse1.getMaBan());
-            } else {
-                lbSoBan.setText(banResponse1.getMaBan().toString());
+            for (BanResponse banResponse1 : lstMaBan) {
+                if (banResponse1.getMaBan() == banResponse.getMaBan()) {
+                    JOptionPane.showMessageDialog(this, "Đã có bàn rồi");
+                    return;
+                }
+            }
+            // add bàn click vào lstMaBan
+            lstMaBan.add(banResponse);
+            for (BanResponse banResponse1 : lstMaBan) {
+                if (lstMaBan.size() > 1) {
+                    lbSoBan.setText(maBan + ", " + banResponse1.getMaBan());
+                } else {
+                    lbSoBan.setText(banResponse1.getMaBan().toString());
+                }
             }
         }
     }//GEN-LAST:event_tbBanMouseClicked
@@ -1246,6 +1278,20 @@ public class Form_Home extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_panelBorder1MouseReleased
 
+    private void TachBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TachBanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TachBanActionPerformed
+
+    private void GopBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GopBanActionPerformed
+        // TODO add your handling code here:
+        int index = tbBan.getSelectedRow();
+        String ma = dtmBan.getValueAt(index, 1).toString();
+        Ban bans = (Ban) banService.getOne(ma);
+        JDialogGopBan viewGopBan = new JDialogGopBan(null, true, bans);
+        viewGopBan.setVisible(true);
+
+    }//GEN-LAST:event_GopBanActionPerformed
+
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
         // lấy dữ liệut ừ ô tếch phiu
@@ -1363,6 +1409,8 @@ public class Form_Home extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem GopBan;
+    private javax.swing.JMenuItem TachBan;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnRefresh;
@@ -1403,6 +1451,7 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JLayeredPane panel;
     private com.raven.swing.PanelBorder panelBorder1;
     private javax.swing.JPopupMenu popMenu;
+    private javax.swing.JPopupMenu popMenu1;
     private javax.swing.JRadioButton radioTatCa;
     private javax.swing.JRadioButton rdoChoThanhToan;
     private javax.swing.JRadioButton rdoDaHuy;

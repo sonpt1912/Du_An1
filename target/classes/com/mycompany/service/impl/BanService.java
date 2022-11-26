@@ -60,6 +60,14 @@ public class BanService implements com.mycompany.service.ICommonService<Ban, Str
         return banRep.getFull();
     }
 
+    public String delete(String ma) {
+        if (banRep.delete(ma)) {
+            return "Xoá thành công";
+        } else {
+            return "Xoá thất bại";
+        }
+    }
+
     public static void main(String[] args) {
         KhuVuc kv = new KhuVuc();
         kv.setIdKV("8E04689D-D3BD-42D9-82F6-71C99A4AF932");

@@ -102,7 +102,24 @@ public class BanRepository implements ICommonRepository<Ban, Boolean, String> {
         List<Ban> bans = query.getResultList();
         return bans;
     }
-
+    
+    public Boolean delete(String ma) {
+        String hql = "DELETE " + fromTable
+                + "WHERE maBan = :ma";
+        Transaction transaction = null;
+        int check = 0;
+        try {
+            transaction = session.beginTransaction();
+            Query query = session.createQuery(hql);
+            query.setParameter("ma", Integer.valueOf(ma));
+            check = query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        }
+        return check > 0;
+    }
     public static void main(String[] args) {
         KhuVuc kv = new KhuVuc();
         kv.setIdKV("8E04689D-D3BD-42D9-82F6-71C99A4AF932");
