@@ -126,6 +126,44 @@ public class Form_NhanVien extends javax.swing.JPanel {
         return nhanVien;
     }
 
+    private String check() {
+        if (txtDiaChi.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtEmail.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtHo.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtMatKhau.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtTen.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtTenDem.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtMatKhau.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtSdt.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (!txtHo.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+            return "không đúng định dạng";
+        } else if (!txtTenDem.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+            return "không đúng định dạng";
+        } else if (!txtTen.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+            return "không đúng định dạng";
+        } else if (!txtSdt.getText().matches("(0)((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))[0-9]{7}")) {
+            return "không đúng định dạng";
+        } else if (!txtEmail.getText().matches("[a-zA-Z0-9]+(@fpt|@gmail)((.com)|(.edu.vn))")) {
+            return "không đúng định dạng";
+        } else if (!txtDiaChi.getText().matches("[a-z A-Z0-9]+")) {
+            return "không đúng định dạng";
+        } else if (!txtMatKhau.getText().matches("[a-zA-Z0-9]{8}")) {
+            return "không đúng định dạng";
+        } else {
+            NhanVien nhanVien = newNV();
+            String add = nhanVienService.add(nhanVien);
+            return add;
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -253,6 +291,7 @@ public class Form_NhanVien extends javax.swing.JPanel {
         });
 
         radioTrangThaiNV.add(radioActive);
+        radioActive.setSelected(true);
         radioActive.setText("Active");
 
         radioTrangThaiNV.add(radioUnactive);
@@ -568,8 +607,7 @@ public class Form_NhanVien extends javax.swing.JPanel {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
 //        ChucVu chucVu = chucVuService.getOne((String) cbbChucVu.getSelectedItem());
         if (txtMa.getText().isEmpty()) {
-            NhanVien nhanVien = newNV();
-            String add = nhanVienService.add(nhanVien);
+            String add = check();
             JOptionPane.showMessageDialog(this, add);
             showData(listNhanVien = nhanVienService.getAll());
         } else {
