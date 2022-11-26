@@ -1246,6 +1246,7 @@ public class Form_Home extends javax.swing.JPanel {
 
     private void btnTachBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTachBanActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_btnTachBanActionPerformed
 // sự kiện của chuột phải vào hoá đơn
     private void gopHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gopHDActionPerformed
@@ -1280,6 +1281,11 @@ public class Form_Home extends javax.swing.JPanel {
 
     private void TachBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TachBanActionPerformed
         // TODO add your handling code here:
+        int index = tbBan.getSelectedRow();
+        String ma = dtmBan.getValueAt(index, 1).toString();
+        Ban bans = (Ban) banService.getOne(ma);
+        JDialogTachBan viewTachBan = new JDialogTachBan(null, true, bans);
+        viewTachBan.setVisible(true);
     }//GEN-LAST:event_TachBanActionPerformed
 
     private void GopBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GopBanActionPerformed
