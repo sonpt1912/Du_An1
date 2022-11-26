@@ -114,7 +114,7 @@ public class ViewLogin extends javax.swing.JFrame {
                 Main trangChu = new Main(nv);
                 this.dispose();
                 trangChu.setVisible(true);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "tài khoản hoặc mật khẩu không chính xác");
             }
         }
