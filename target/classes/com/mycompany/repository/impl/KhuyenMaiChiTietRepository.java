@@ -69,7 +69,7 @@ public class KhuyenMaiChiTietRepository implements ICommonRepository<KhuyenMaiCh
             Transaction transaction = session.getTransaction();
             transaction.begin();
             try {
-                String hql = "UPDATE KhuyenMaiChiTiet SET monAn = :MA, khuyenMai = :KM, donGiaSauKM = :donGia "
+                String hql = "UPDATE KhuyenMaiChiTiet SET monAn = :MA, khuyenMai = :KM, donGiaSauKM = :donGia, "
                         + " trangThai = :trangThai WHERE id = :idKMCT";
                 Query query = session.createQuery(hql);
                 query.setParameter("MA", kmct.getMonAn());
@@ -122,14 +122,10 @@ public class KhuyenMaiChiTietRepository implements ICommonRepository<KhuyenMaiCh
     }
 
     public static void main(String[] args) {
-        MonAn monAn = new MonAn();
-        monAn.setId("91855412-290D-470F-9CB9-C95C18C60CB7");
-        KhuyenMai khuyenMai = new KhuyenMai();
-        khuyenMai.setId("7BC6AC30-4199-44B4-9931-899EB6B78805");
-        List<KhuyenMaiChiTiet> listKM = new KhuyenMaiChiTietRepository().getKMCTByMaAndKM(monAn, khuyenMai);
-        for (KhuyenMaiChiTiet khuyenMaiChiTiet : listKM) {
-            System.out.println(khuyenMaiChiTiet);
-        }
+        KhuyenMaiChiTiet khuyenMaiChiTiet = new KhuyenMaiChiTietRepository().getOne("669C873A-35C5-43B0-BE56-AFBB14480C89");
+        khuyenMaiChiTiet.setTrangThai(1);
+        boolean update = new KhuyenMaiChiTietRepository().update(khuyenMaiChiTiet, "669C873A-35C5-43B0-BE56-AFBB14480C89");
+        System.out.println(update);
     }
 
     @Override
@@ -141,4 +137,15 @@ public class KhuyenMaiChiTietRepository implements ICommonRepository<KhuyenMaiCh
         listKMCT = query.getResultList();
         return listKMCT;
     }
+
+    @Override
+    public List<KhuyenMaiChiTiet> getKMCTsByMA(MonAn monAn) {
+        List<KhuyenMaiChiTiet> listKMCT = new ArrayList<>();
+        Session session = HibernateUtil.getFactory().openSession();
+        Query query = session.createQuery("FROM KhuyenMaiChiTiet WHERE monAn = :MA");
+        query.setParameter("MA", monAn);
+        listKMCT = query.getResultList();
+        return listKMCT;
+    }
+
 }

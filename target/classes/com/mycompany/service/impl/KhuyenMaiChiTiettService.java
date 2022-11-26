@@ -38,8 +38,8 @@ public class KhuyenMaiChiTiettService implements ICommonService<KhuyenMaiChiTiet
     }
 
     @Override
-    public String update(KhuyenMaiChiTiet kh, String ma) {
-        return thongBao.thongBaoUPDATE((boolean) kmctRepo.update(kh, ma));
+    public String update(KhuyenMaiChiTiet kh, String id) {
+        return thongBao.thongBaoUPDATE((boolean) kmctRepo.update(kh, id));
     }
 
     @Override
@@ -55,6 +55,11 @@ public class KhuyenMaiChiTiettService implements ICommonService<KhuyenMaiChiTiet
     @Override
     public List<KhuyenMaiChiTiet> getKMCTsByKM(KhuyenMai khuyenMai) {
         return kmctRepo.getKMCTsByKM(khuyenMai);
+    }
+
+    @Override
+    public List<KhuyenMaiChiTiet> getKMCTsByMA(MonAn monAn) {
+        return kmctRepo.getKMCTsByMA(monAn);
     }
 
 }

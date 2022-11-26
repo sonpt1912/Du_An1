@@ -18,4 +18,7 @@ public interface IKMCTRepository {
     List<KhuyenMaiChiTiet> getKMCTByMaAndKM(MonAn monAn, KhuyenMai khuyenMai);
 
     List<KhuyenMaiChiTiet> getKMCTsByKM(KhuyenMai khuyenMai);
+
+    List<KhuyenMaiChiTiet> getKMCTsByMA(MonAn monAn);
+    
 }
