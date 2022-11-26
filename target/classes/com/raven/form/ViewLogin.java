@@ -9,6 +9,7 @@ import com.mycompany.service.impl.NhanVienService;
 import com.raven.main.Main;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -109,11 +110,12 @@ public class ViewLogin extends javax.swing.JFrame {
         String user = txtUser.getText();
         List<NhanVien> login = nhanVienService.getUserAndPass(user, pass);
         for (NhanVien nv : login) {
-            System.out.println(nv.getTen() + "    vdscahjkvbu,ioumynvfdc");
             if (login != null) {
                 Main trangChu = new Main(nv);
                 this.dispose();
                 trangChu.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(this, "tài khoản hoặc mật khẩu không chính xác");
             }
         }
     }//GEN-LAST:event_btnDangNhapActionPerformed

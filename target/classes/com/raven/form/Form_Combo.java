@@ -661,11 +661,15 @@ public class Form_Combo extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        String delete = comBoService.remove(txtMa.getText());
-        JOptionPane.showMessageDialog(this, delete);
-        clear();
-        showDataComBo(listComBo = comBoService.getAll());
-        showDataCTComBo(listCTComBo = chiTietComBoService.getAll());
+        if (!txtMa.getText().isEmpty()) {
+            String delete = comBoService.remove(txtMa.getText());
+            JOptionPane.showMessageDialog(this, delete);
+            clear();
+            showDataComBo(listComBo = comBoService.getAll());
+            showDataCTComBo(listCTComBo = chiTietComBoService.getAll());
+        } else {
+            JOptionPane.showMessageDialog(this, "chọn combo cần xóa");
+        }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -735,21 +739,33 @@ public class Form_Combo extends javax.swing.JPanel {
     }//GEN-LAST:event_cbbLoaiMonAnActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
-        int apDung;
-        if (rdoApDung.isSelected()) {
-            apDung = 0;
-        } else if (rdoChoApDung.isSelected()) {
-            apDung = 2;
+        // TODO add your handling code here
+        if (txtMa.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "không được để trống");
+        } else if (txtDonGia.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "không được để trống");
+        } else if (txtTen.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "không được để trống");
+        } else if (!txtTen.getText().matches("[a-z A-Z0-9]+")) {
+            JOptionPane.showMessageDialog(this, "nhập sai định dạng");
+        } else if (!txtDonGia.getText().matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(this, "nhập sai định dạng");
         } else {
-            apDung = 1;
+            int apDung;
+            if (rdoApDung.isSelected()) {
+                apDung = 0;
+            } else if (rdoChoApDung.isSelected()) {
+                apDung = 2;
+            } else {
+                apDung = 1;
+            }
+            NhanVien nhanVien = nhanVienService.getOne(dcbNhanVien.getSelectedItem().toString());
+            ComBo comB = new ComBo(this.comBo.getId(), nhanVien, this.comBo.getMaCB(), this.comBo.getTenCB(), null, this.comBo.getDonGia(), apDung);
+            String update = comBoService.update(comB, txtMa.getText());
+            JOptionPane.showMessageDialog(this, update);
+            rdoListApDungActionPerformed(evt);
+            showDataComBo(listComBo = comBoService.getAllByTrangThai(0));
         }
-        NhanVien nhanVien = nhanVienService.getOne(dcbNhanVien.getSelectedItem().toString());
-        ComBo comB = new ComBo(this.comBo.getId(), nhanVien, this.comBo.getMaCB(), this.comBo.getTenCB(), null, this.comBo.getDonGia(), apDung);
-        String update = comBoService.update(comB, txtMa.getText());
-        JOptionPane.showMessageDialog(this, update);
-        rdoListApDungActionPerformed(evt);
-        showDataComBo(listComBo = comBoService.getAllByTrangThai(0));
 
         // chưa show lại list
     }//GEN-LAST:event_btnUpdateActionPerformed
