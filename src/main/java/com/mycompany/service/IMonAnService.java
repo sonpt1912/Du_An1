@@ -4,6 +4,7 @@
  */
 package com.mycompany.service;
 
+import com.mycompany.domainModel.KhuyenMaiChiTiet;
 import com.mycompany.domainModel.MonAn;
 import java.util.List;
 
@@ -14,4 +15,7 @@ import java.util.List;
 public interface IMonAnService {
 
     List<MonAn> getMonAnCoKM();
+
+    List<MonAn> getMonAnLeftJoinKMCT();
+
 }

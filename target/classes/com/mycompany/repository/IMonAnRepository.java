@@ -15,6 +15,8 @@ import java.util.List;
 public interface IMonAnRepository {
 
     List<MonAn> getMonAnCoKM();
-    
+
     List<MonAn> getMonAnByComBo(MonAn id);
+
+    List<MonAn> getMonAnLeftJoinKMCT();
 }

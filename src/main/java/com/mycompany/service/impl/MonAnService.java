@@ -6,8 +6,8 @@ package com.mycompany.service.impl;
 
 import com.mycompany.domainModel.DanhMuc;
 import com.mycompany.domainModel.KhuyenMai;
+import com.mycompany.domainModel.KhuyenMaiChiTiet;
 import com.mycompany.domainModel.MonAn;
-//import com.mycompany.repository.ICommon;
 import com.mycompany.repository.ICommonRepository;
 import com.mycompany.repository.impl.MonAnRepository;
 import com.mycompany.service.IMonAnService;
@@ -57,26 +57,10 @@ public class MonAnService implements com.mycompany.service.ICommonService<MonAn,
         return monAnRepo.getAllMonAnByTrangThai(trangThai);
     }
 
-//    public String themKMChoMonAn(KhuyenMai khuyenMai, String maMA) {
-//        if (monAnRepo.themKMChoMonAn(khuyenMai, maMA)) {
-//            return "Áp dụng KM cho món ăn thành công";
-//        } else {
-//            return "Áp dụng Km ko thành công";
-//        }
-//    }
-
     public static void main(String[] args) {
     }
 
     public String maTuDong() {
-//        List<MonAn> listMon = new MonAnService().getAllMonAn();
-//        int index = listMon.size();
-//        String viTri = "";
-//        String maMon = "";
-//        viTri += listMon.get(index - 1).getMaMonAn();
-//        int soMa = Integer.valueOf(viTri.substring(2)) + 1;
-//        maMon = "MA" + soMa;
-//        return maMon;
         List<MonAn> listMon = new MonAnService().getAllMonAn();
         int index = listMon.size();
         if (index <= 0) {
@@ -102,6 +86,11 @@ public class MonAnService implements com.mycompany.service.ICommonService<MonAn,
     @Override
     public List<MonAn> getMonAnCoKM() {
         return monAnRepo.getMonAnCoKM();
+    }
+
+    @Override
+    public List<MonAn> getMonAnLeftJoinKMCT() {
+        return monAnRepo.getMonAnLeftJoinKMCT();
     }
 
 }
