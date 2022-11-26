@@ -21,7 +21,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
     private DefaultTableModel dtmHoaDon = new DefaultTableModel();
     private DefaultTableModel dtmSP = new DefaultTableModel();
     private ThongKeService thongKeService = new ThongKeService();
-    private List<HoaDon> listHoaDon = thongKeService.getAllHoaDon(1);
+    private List<HoaDon> listHoaDon = thongKeService.getAllHoaDon(0);
     private List<MonAn> listMonAn = thongKeService.getAllSanPham();
     private DefaultComboBoxModel dcbmNgayThang = new DefaultComboBoxModel();
     private List<String> listTenNgayThang = new ArrayList<>();
@@ -40,7 +40,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         cbbDate();
         showDataHoaDon(listHoaDon, 1);
         showDataSanPham(listMonAn, 1);
-        showSoLuongDon(1);
+        showSoLuongDon();
     }
 
     @SuppressWarnings("unchecked")
@@ -216,7 +216,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 0));
-        jLabel2.setText("Đơn hàng theo tháng");
+        jLabel2.setText("Đơn hàng theo tuần");
 
         lbDonHangTheoThang.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         lbDonHangTheoThang.setForeground(new java.awt.Color(255, 0, 0));
@@ -252,7 +252,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(153, 0, 153));
-        jLabel3.setText("Doanh thu theo ngày");
+        jLabel3.setText("Đơn hàng theo tháng");
 
         lbDoanhThuTheoNgay.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         lbDoanhThuTheoNgay.setForeground(new java.awt.Color(255, 0, 0));
@@ -288,7 +288,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel5.setText("Doanh thu theo tháng");
+        jLabel5.setText("Đơn hàng theo năm");
 
         lbDoanhThuTheothang.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         lbDoanhThuTheothang.setForeground(new java.awt.Color(255, 0, 0));
@@ -326,7 +326,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Đơn hàng hôm nay");
 
-        lbDonHangHomNay.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lbDonHangHomNay.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbDonHangHomNay.setForeground(new java.awt.Color(255, 0, 0));
         lbDonHangHomNay.setText("1");
 
@@ -335,23 +335,20 @@ public class Form_ThongKe extends javax.swing.JPanel {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(lbDonHangHomNay)))
-                .addGap(18, 18, 18))
+                    .addComponent(jLabel4)
+                    .addComponent(lbDonHangHomNay, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(58, Short.MAX_VALUE)
-                .addComponent(lbDonHangHomNay)
-                .addGap(44, 44, 44)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(100, Short.MAX_VALUE)
+                .addComponent(lbDonHangHomNay, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addGap(21, 21, 21))
+                .addGap(24, 24, 24))
         );
 
         btnUpdate.setText("Update");
@@ -400,6 +397,11 @@ public class Form_ThongKe extends javax.swing.JPanel {
         });
 
         cbbNgayThang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbNgayThang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbNgayThangActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelBorder2Layout = new javax.swing.GroupLayout(panelBorder2);
         panelBorder2.setLayout(panelBorder2Layout);
@@ -468,7 +470,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(28, 28, 28)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(23, 23, 23)
                 .addComponent(scrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -527,10 +529,22 @@ public class Form_ThongKe extends javax.swing.JPanel {
 
     private void rdDaHuyHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdDaHuyHoaDonActionPerformed
         // TODO add your handling code here:
-        checkTatCaHoaDon = 2;
+        checkTatCaHoaDon = 3;
         listHoaDon = thongKeService.getAllHoaDonTrangThai(checkTatCaHoaDon);
         showDataHoaDon(listHoaDon, 1);
     }//GEN-LAST:event_rdDaHuyHoaDonActionPerformed
+
+    private void cbbNgayThangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbNgayThangActionPerformed
+        // TODO add your handling code here:
+        if (cbbNgayThang.getSelectedItem().toString().equals("Hóa đơn theo ngày")) {
+            listHoaDon = thongKeService.getAllDay();
+            showDataHoaDon(listHoaDon, 1);
+        }
+        if (cbbNgayThang.getSelectedItem().toString().equals("Hóa đơn theo tháng")) {
+            listHoaDon = thongKeService.getAllMonth();
+            showDataHoaDon(listHoaDon, 1);
+        }
+    }//GEN-LAST:event_cbbNgayThangActionPerformed
     private void showDataHoaDon(List<HoaDon> listHoaDon, int stt) {
         dtmHoaDon.setRowCount(0);
         for (HoaDon hoaDon : listHoaDon) {
@@ -547,9 +561,12 @@ public class Form_ThongKe extends javax.swing.JPanel {
         }
     }
 
-    private void showSoLuongDon(int trangThai) {
-        List list1 = thongKeService.getAllHoaDon(trangThai);
-        lbDonHangHomNay.setText(list1.size() + "");
+    private void showSoLuongDon() {
+        String ngayHomNay = String.valueOf(thongKeService.getCountAllDay());
+        lbDonHangHomNay.setText("Số lượng bán trong ngày " + ngayHomNay);
+
+        String thangHienTai = String.valueOf(thongKeService.getCountAllMonth());
+        lbDonHangTheoThang.setText(thangHienTai);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

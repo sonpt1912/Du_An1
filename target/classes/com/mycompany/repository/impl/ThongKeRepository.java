@@ -8,6 +8,7 @@ import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.IThongKeRepository;
+import java.sql.Date;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -38,10 +39,13 @@ public class ThongKeRepository implements IThongKeRepository {
     }
 
     public static void main(String[] args) {
-        List<HoaDon> listHoaDon = new ThongKeRepository().getAllHoaDon(0);
-        for (HoaDon hoaDon : listHoaDon) {
-            System.out.println(hoaDon.toString());
-        }
+        String ngayThanhToan = "2022-11-25";
+//        List<HoaDon> listHoaDon = new ThongKeRepository().getAllDay();
+//        for (HoaDon hoaDon : listHoaDon) {
+//            System.out.println(hoaDon.toString());
+//        }
+        long hoaDon = new ThongKeRepository().getCountAllDay();
+        System.out.println(hoaDon);
     }
 
     @Override
@@ -61,4 +65,37 @@ public class ThongKeRepository implements IThongKeRepository {
         List<MonAn> monAns = query.getResultList();
         return monAns;
     }
+
+    @Override
+    public List<HoaDon> getAllDay() {
+        String hql = "FROM HoaDon hd WHERE day(hd.ngayThanhToan) = day(sysdatetime())";
+        Query query = SESSION.createQuery(hql, HoaDon.class);
+        List<HoaDon> hoaDons = query.getResultList();
+        return hoaDons;
+    }
+
+    @Override
+    public List<HoaDon> getAllMonth() {
+        String hql = "FROM HoaDon hd WHERE month(hd.ngayThanhToan) = month(sysdatetime())";
+        Query query = SESSION.createQuery(hql, HoaDon.class);
+        List<HoaDon> hoaDons = query.getResultList();
+        return hoaDons;
+    }
+
+    @Override
+    public long getCountAllDay() {
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE day(hd.ngayThanhToan) = day(sysdatetime())";
+        Query query = SESSION.createQuery(hql);
+        long hoaDons = (long) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public long getCountAllMonth() {
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE month(hd.ngayThanhToan) = month(sysdatetime())";
+        Query query = SESSION.createQuery(hql);
+        long hoaDons = (long) query.getSingleResult();
+        return hoaDons;
+    }
+
 }

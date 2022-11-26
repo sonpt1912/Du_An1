@@ -31,21 +31,7 @@ public class KhuVucService implements ICommonService<KhuVuc, String> {
 
     @Override
     public String add(KhuVuc kh) {
-
-        if (kh.getMaKV().isEmpty()) {
-            return "Mã không được để trống";
-        }
-        if (kh.getTenKV().isEmpty()) {
-            return "Tên không được để trống";
-        }
-        if (kh.getMaKV().contains(kh.getMaKV())) {
-            return "Mã đã tồn tại";
-        }
-        if (kh.getTenKV().contains(kh.getTenKV())) {
-            return "Tên đã tồn tại";
-        } else {
             return thongBao.thongBaoADD(khuVucRepo.add(kh));
-        }
     }
 
     @Override

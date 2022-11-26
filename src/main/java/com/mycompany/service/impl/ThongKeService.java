@@ -34,4 +34,29 @@ public class ThongKeService implements IThongKeService {
         return thongKeRepository.getAllHoaDonTrangThai(trangThai);
     }
 
+    @Override
+    public List<MonAn> getAllSanPhamTrangThai(int trangThai) {
+        return thongKeRepository.getAllSanPhamTrangThai(trangThai);
+    }
+
+    @Override
+    public List<HoaDon> getAllDay() {
+        return thongKeRepository.getAllDay();
+    }
+
+    @Override
+    public List<HoaDon> getAllMonth() {
+        return thongKeRepository.getAllMonth();
+    }
+
+    @Override
+    public long getCountAllDay() {
+        return thongKeRepository.getCountAllDay();
+    }
+
+    @Override
+    public long getCountAllMonth() {
+        return thongKeRepository.getCountAllMonth();
+    }
+
 }

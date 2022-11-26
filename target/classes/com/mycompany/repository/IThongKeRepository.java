@@ -17,9 +17,16 @@ public interface IThongKeRepository {
     List<HoaDon> getAllHoaDon(int t);
 
     List<MonAn> getAllSanPham();
-    
+
     List<HoaDon> getAllHoaDonTrangThai(int trangThai);
-    
-     List<MonAn> getAllSanPhamTrangThai(int trangThai);
-    
+
+    List<MonAn> getAllSanPhamTrangThai(int trangThai);
+
+    List<HoaDon> getAllDay();
+
+    List<HoaDon> getAllMonth();
+
+    long getCountAllDay();
+
+    long getCountAllMonth();
 }

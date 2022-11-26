@@ -17,11 +17,11 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class JDialogChucVu extends javax.swing.JDialog {
-    
+
     private DefaultTableModel dtmChucVu = new DefaultTableModel();
     private List<ChucVu> listCV = new ArrayList<>();
     private ChucVuService chucVuService = new ChucVuService();
-    
+
     public JDialogChucVu(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -32,7 +32,7 @@ public class JDialogChucVu extends javax.swing.JDialog {
         showData(listCV, 1);
         radioActive.setSelected(true);
     }
-    
+
     private void showData(List<ChucVu> listCV, int stt) {
         dtmChucVu.setRowCount(0);
         for (ChucVu chucVu : listCV) {
@@ -40,7 +40,7 @@ public class JDialogChucVu extends javax.swing.JDialog {
             stt++;
         }
     }
-    
+
     private void fillData(int index, List<ChucVu> listCV) {
         ChucVu chucVu = listCV.get(index);
         lbid.setText(chucVu.getId());
@@ -53,7 +53,7 @@ public class JDialogChucVu extends javax.swing.JDialog {
             radioUnactive.setSelected(true);
         }
     }
-    
+
     private ChucVu newCV() {
         ChucVu chucVu = new ChucVu();
         chucVu.setMa(txtMaChucVu.getText());
@@ -65,7 +65,7 @@ public class JDialogChucVu extends javax.swing.JDialog {
         }
         return chucVu;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -300,11 +300,35 @@ public class JDialogChucVu extends javax.swing.JDialog {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         ChucVu chucVu = newCV();
-        JOptionPane.showMessageDialog(this, chucVuService.add(chucVu));
-        listCV = chucVuService.getAll();
-        showData(listCV, 1);
+        if (!(kiemTraTrungMaCV())) {
+            JOptionPane.showMessageDialog(this, "Mã đã tồn tại");
+            return;
+        }
+        if (txtMaChucVu.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã không được để trống");
+            return;
+        }
+        if (txtTenChucVu.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên không được để trống");
+            return;
+        }
+        if (!txtTenChucVu.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+            JOptionPane.showMessageDialog(this, "Tên phải là tiếng việt có dấu");
+        } else {
+            JOptionPane.showMessageDialog(this, chucVuService.add(chucVu));
+            listCV = chucVuService.getAll();
+            showData(listCV, 1);
+        }
     }//GEN-LAST:event_btnAddActionPerformed
-
+    private boolean kiemTraTrungMaCV() {
+        listCV = chucVuService.getAll();
+        for (ChucVu sv : listCV) {
+            if (txtMaChucVu.getText().equalsIgnoreCase(sv.getMa())) {
+                return false;
+            }
+        }
+        return true;
+    }
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         int index = tbChucVu.getSelectedRow();
         if (index < 0) {

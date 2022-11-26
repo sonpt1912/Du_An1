@@ -32,7 +32,7 @@ public class JDialogLoaiMonAn extends javax.swing.JDialog {
         initComponents();
         tbLoaiMA.setModel(dtmLoai);
         cbbDanhMuc.setModel(dcbmDanhMuc);
-        String headers[] = {"Mã","Tên danh mục", "Tên Loại", "Trạng thái"};
+        String headers[] = {"Mã", "Tên danh mục", "Tên Loại", "Trạng thái"};
         dtmLoai.setColumnIdentifiers(headers);
         listLoai = loaiService.getAll();
         showData(listLoai);
@@ -359,13 +359,40 @@ public class JDialogLoaiMonAn extends javax.swing.JDialog {
     }//GEN-LAST:event_tbLoaiMAMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        Loai loai = newLoai();
-        JOptionPane.showMessageDialog(this, loaiService.add(loai));
-        listLoai = loaiService.getAll();
-        showData(listLoai);
-        btnClearActionPerformed(evt);
-    }//GEN-LAST:event_btnAddActionPerformed
 
+        Loai loai = newLoai();
+        if (!(kiemTraTrungMaLoai())) {
+            JOptionPane.showMessageDialog(this, "Mã đã tồn tại");
+            return;
+
+        }
+        if (txtMa.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã không được để trống");
+            return;
+        }
+        if (txtTen.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã không được để trống");
+            return;
+        }
+        if (!txtTen.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+            JOptionPane.showMessageDialog(this, "Tên phải là tiếng việt có dấu");
+            return;
+        } else {
+            JOptionPane.showMessageDialog(this, loaiService.add(loai));
+            listLoai = loaiService.getAll();
+            showData(listLoai);
+            btnClearActionPerformed(evt);
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+    public boolean kiemTraTrungMaLoai() {
+        listLoai = loaiService.getAll();
+        for (Loai l : listLoai) {
+            if (txtMa.getText().equalsIgnoreCase(l.getMaLoai())) {
+                return false;
+            }
+        }
+        return true;
+    }
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         listDM = danhMucService.getAll();
         dcbmDanhMuc.setSelectedItem(listDM.get(0).getMaDanhMuc());

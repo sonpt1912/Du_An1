@@ -21,11 +21,11 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class JDialogKhuVuc extends javax.swing.JDialog {
-    
+
     private DefaultTableModel dtmKhuVuc = new DefaultTableModel();
     private List<KhuVuc> listKV = new ArrayList<>();
     private KhuVucService khuVucService = new KhuVucService();
-    
+
     public JDialogKhuVuc(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -36,14 +36,14 @@ public class JDialogKhuVuc extends javax.swing.JDialog {
         showData(listKV, 1);
         radioActive.setSelected(true);
     }
-    
+
     private void showData(List<KhuVuc> listKV, int stt) {
         dtmKhuVuc.setRowCount(0);
         for (KhuVuc khuVuc : listKV) {
             dtmKhuVuc.addRow(khuVuc.toDataRow(stt));
         }
     }
-    
+
     private void fill(int index, List<KhuVuc> listKV) {
         KhuVuc khuVuc = listKV.get(index);
         lbid.setText(khuVuc.getIdKV());
@@ -56,7 +56,7 @@ public class JDialogKhuVuc extends javax.swing.JDialog {
             radioUnactive.setSelected(true);
         }
     }
-    
+
     private KhuVuc newKV() {
         KhuVuc khuVuc = new KhuVuc();
         khuVuc.setMaKV(txtMaKhuVuc.getText());
@@ -70,7 +70,7 @@ public class JDialogKhuVuc extends javax.swing.JDialog {
         }
         return khuVuc;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -300,11 +300,35 @@ public class JDialogKhuVuc extends javax.swing.JDialog {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         KhuVuc khuVuc = newKV();
-        JOptionPane.showMessageDialog(this, khuVucService.add(khuVuc));
-        listKV = khuVucService.getAll();
-        showData(listKV, 1);
+        if (!(kiemTraTrungMaKV())) {
+            JOptionPane.showMessageDialog(this, "Mã đã tồn tại");
+            return;
+        }
+        if (txtMaKhuVuc.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã không được để trống");
+            return;
+        }
+        if (txtTenKhuVuc.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã không được để trống");
+            return;
+        }
+        if (!txtTenKhuVuc.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+            JOptionPane.showMessageDialog(this, "Tên phải là tiếng việt có dấu");
+        } else {
+            JOptionPane.showMessageDialog(this, khuVucService.add(khuVuc));
+            listKV = khuVucService.getAll();
+            showData(listKV, 1);
+        }
     }//GEN-LAST:event_btnAddActionPerformed
-
+    public boolean kiemTraTrungMaKV() {
+        listKV = khuVucService.getAll();
+        for (KhuVuc kv : listKV) {
+            if (txtMaKhuVuc.getText().equalsIgnoreCase(kv.getMaKV())) {
+                return false;
+            }
+        }
+        return true;
+    }
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         int index = tbKhuVuc.getSelectedRow();
         if (index < 0) {
