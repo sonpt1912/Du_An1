@@ -5,7 +5,9 @@
 package com.mycompany.domainModel;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDateTime;
+//import java.sql.Date;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,6 +51,8 @@ public class KhuyenMai {
     @Column(name = "TenKM", nullable = false)
     private String tenKhuyenMai;
 
+//    @Column(name = "ThoiGianBD", nullable = false)
+//    private Date thoiGianBD;
     @Column(name = "ThoiGianBD", nullable = false)
     private Date thoiGianBD;
 

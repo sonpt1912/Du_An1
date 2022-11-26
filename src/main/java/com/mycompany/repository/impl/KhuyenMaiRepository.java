@@ -37,8 +37,12 @@ public class KhuyenMaiRepository implements ICommonRepository<KhuyenMai, Boolean
         try ( Session session = HibernateUtil.getFactory().openSession()) {
             Query query = session.createQuery("FROM KhuyenMai WHERE maKhuyenMai = :maKM");
             query.setParameter("maKM", ma);
-            KhuyenMai khuyenMai = (KhuyenMai) query.getSingleResult();
-            return khuyenMai;
+            try {
+                KhuyenMai khuyenMai = (KhuyenMai) query.getSingleResult();
+                return khuyenMai;
+            } catch (Exception e) {
+                return null;
+            }
         }
     }
 

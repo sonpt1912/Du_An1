@@ -6,20 +6,12 @@
 package com.raven.form;
 
 import com.mycompany.customModel.MonAnKMResponse;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import com.mycompany.customModel.MonAnKhuyenMaiResponse;
 import com.mycompany.domainModel.KhuyenMai;
 import com.mycompany.domainModel.KhuyenMaiChiTiet;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.domainModel.NhanVien;
 import com.mycompany.repository.impl.KhuyenMaiRepository;
 import com.mycompany.service.impl.KhuyenMaiChiTiettService;
-//import com.mycompany.domainModel.KhuyenMaiChiTiet;
-//import com.mycompany.service.impl.KhuyenMaiChiTietService;
 import com.mycompany.service.impl.KhuyenMaiService;
 import com.mycompany.service.impl.MonAnService;
 import com.mycompany.service.impl.NhanVienService;
@@ -45,17 +37,13 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
     private KhuyenMaiRepository khuyenMaiRepository = new KhuyenMaiRepository();
     private DefaultComboBoxModel dcbmLoaiKM = new DefaultComboBoxModel();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//    private List<KhuyenMaiChiTiet> listKMCT = new ArrayList<>();
     private KhuyenMaiService khuyenMaiService = new KhuyenMaiService();
-//    private KhuyenMaiChiTietService khuyenMaiChiTietService = new KhuyenMaiChiTietService();
-    // private DefaultComboBoxModel
     private NhanVien nhanV;
     private java.util.Date today = new java.util.Date();
     private List<MonAn> listMonAn = new ArrayList<>();
     private MonAnService monAnService = new MonAnService();
     private DefaultTableModel dtmMonAn = new DefaultTableModel();
     private List<KhuyenMaiChiTiet> listCTKM = new ArrayList<>();
-    private List<String> listHinhThucTT = new ArrayList<>();
     private List<MonAn> listThemKM_MA = new ArrayList<>();
     private NhanVienService nhanVienService = new NhanVienService();
     private DefaultComboBoxModel dcbmMonAn = new DefaultComboBoxModel();
@@ -144,8 +132,10 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         txtTenKhuyenMai.setText(khuyenMai.getMaKhuyenMai());
         txtDonVi.setText(String.valueOf(khuyenMai.getGiaTriKM()));
         dcbmLoaiKM.setSelectedItem(khuyenMai.getLoaiKhuyenMai());
-        txtThoiGianBatDau.setDate(khuyenMai.getThoiGianBD());
-        txtThoiGianKetThuc.setDate(khuyenMai.getThoiGianKT());
+        Date tgBD = Date.valueOf(dateFormat.format(khuyenMai.getThoiGianBD()));
+        txtThoiGianBatDau.setDate(tgBD);
+        Date tgKT = Date.valueOf(dateFormat.format(khuyenMai.getThoiGianKT()));
+        txtThoiGianKetThuc.setDate(tgKT);
         txtMaKM.setText(khuyenMai.getMaKhuyenMai());
         txtMaKM.setEnabled(false);
         if (khuyenMai.getTrangThai() == 0) {
@@ -195,26 +185,19 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
 
     private KhuyenMai newKM() {
         KhuyenMai khuyenMai = new KhuyenMai();
-        khuyenMai.setMaKhuyenMai(txtMaKM.getText());
+        JOptionPane.showMessageDialog(this, txtThoiGianBatDau.getDate());
+        listKM = khuyenMaiService.getAll();
+        khuyenMai.setMaKhuyenMai(khuyenMaiUtil.zenMaKM(listKM));
         khuyenMai.setGhiChu(txtGhiChu.getText());
         khuyenMai.setLoaiKhuyenMai(dcbmLoaiKM.getSelectedItem().toString());
-        //khuyenMai.setNhanVien(nhanV);
-        khuyenMai.setNhanVien(nhanVienService.getOne(nhanV.getMa()));
+        khuyenMai.setNhanVien(nhanV);
         khuyenMai.setTenKhuyenMai(txtTenKhuyenMai.getText());
-        //Date.valueOf(dateFormat.format(date))
-        khuyenMai.setThoiGianBD(Date.valueOf(dateFormat.format(txtThoiGianBatDau.getDate())));
-        khuyenMai.setThoiGianKT(Date.valueOf(dateFormat.format(txtThoiGianKetThuc.getDate())));
+        Date ngayBD = Date.valueOf(dateFormat.format(txtThoiGianBatDau.getDate()));
+        Date ngayKT = Date.valueOf(dateFormat.format(txtThoiGianKetThuc.getDate()));
+        khuyenMai.setThoiGianBD(ngayBD);
+        khuyenMai.setThoiGianKT(ngayKT);
+        khuyenMai.setTrangThai(0);
         khuyenMai.setGiaTriKM(BigDecimal.valueOf(Double.valueOf(txtDonVi.getText())));
-        //so sánh date 
-//        date1.compareTo(date2); //date1 < date2, trả về giá trị nhỏ hơn 0 
-//        date2.compareTo(date1); //date2 > date1, trả về giá trị lớn hơn 0
-//        date1.compareTo(date3); //date1 = date3, hiển thị giá trị 0
-        if (Date.valueOf(dateFormat.format(txtThoiGianBatDau.getDate())).compareTo(today) <= 0
-                && Date.valueOf(dateFormat.format(txtThoiGianKetThuc.getDate())).compareTo(today) >= 0) {
-            khuyenMai.setTrangThai(0);
-        } else {
-            khuyenMai.setTrangThai(1);
-        }
         return khuyenMai;
     }
 
@@ -623,10 +606,12 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         KhuyenMai khuyenMai = newKM();
-        JOptionPane.showMessageDialog(this, khuyenMaiService.add(khuyenMai));
-        listKM = khuyenMaiService.getAll();
-        showData(listKM, 1);
-        tbMonAn.setEnabled(true);
+        if (khuyenMaiUtil.checkValidateKM(khuyenMai)) {
+            JOptionPane.showMessageDialog(this, khuyenMaiService.add(khuyenMai));
+            listKM = khuyenMaiService.getAll();
+            showData(listKM, 1);
+            tbMonAn.setEnabled(true);
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -646,8 +631,8 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         txtTenKhuyenMai.setText("");
         txtDonVi.setText("");
         dcbmLoaiKM.setSelectedItem("Phần trăm");
-        txtThoiGianBatDau.setDate(Date.valueOf(dateFormat.format(today)));
-        txtThoiGianKetThuc.setDate(Date.valueOf(dateFormat.format(today)));
+        txtThoiGianBatDau.setDate(today);
+        txtThoiGianKetThuc.setDate(today);
         txtMaKM.setText("");
         txtMaKM.setEnabled(true);
         listThemKM_MA.removeAll(listThemKM_MA);
