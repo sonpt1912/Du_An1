@@ -610,6 +610,10 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
     }//GEN-LAST:event_tbKhuyenMaiMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        int check = JOptionPane.showConfirmDialog(null, "Xác nhận thêm KM");
+        if (check == 0) {
+
+        }
         KhuyenMai khuyenMai = newKM();
         if (khuyenMaiUtil.checkValidateKM(khuyenMai)) {
             JOptionPane.showMessageDialog(this, khuyenMaiService.add(khuyenMai));
