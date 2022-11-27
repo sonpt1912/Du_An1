@@ -289,41 +289,45 @@ public class JDialogTachBan extends javax.swing.JDialog {
         KhuVuc khuVuc = (KhuVuc) khuVucService.getOne(maKhuVuc);
         Ban ban = (Ban) banService.getOne(ma);
         String maBanMoi = txtMaBanMoi.getText();
-        String soLuongCho = JOptionPane.showInputDialog("Mời bạn nhập số lượng chỗ: ");
-        if (soLuongCho != null) {
-            if (!soLuongCho.matches("[0-9]+")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng");
-            } else if (Integer.valueOf(soLuongCho) > ban.getSoLuongChoNgoi()) {
-                JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi vượt quá -.-");
-            } else if (Integer.valueOf(soLuongCho) > Integer.valueOf(txtSoLuongChoCoTheTach.getText())) {
-                JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi bàn cũ tối thiểu là 1");
-            } else if (maBanMoi.equalsIgnoreCase(ban.getMaBan().toString())) {
-                JOptionPane.showMessageDialog(this, "Trùng Mã");
-            } else {
-                bans.setKv(khuVuc);
-                bans.setMaBan(Integer.valueOf(maBanMoi));
-                bans.setTrangThai(ban.getTrangThai());
-                bans.setSoLuongChoNgoi(Integer.valueOf(soLuongCho));
-                //add bàn vào list
-                listBan.add(bans);
-                // set txtSoLuong
-                txtSoLuong.setText(String.valueOf(Integer.valueOf(txtSoLuong.getText()) - Integer.valueOf(soLuongCho)));
-                txtSoLuongChoCoTheTach.setText(String.valueOf(Integer.valueOf(txtSoLuongChoCoTheTach.getText()) - Integer.valueOf(soLuongCho)));
-                showDataBanMoi(listBan);
-                // show confirm
-                int tachBan = JOptionPane.showConfirmDialog(null, "Xác nhận tách bàn");
-                if (tachBan == JOptionPane.NO_OPTION) {
-                    return;
-                } else if (tachBan == JOptionPane.CLOSED_OPTION) {
-                    return;
-                } else if (tachBan == JOptionPane.CANCEL_OPTION) {
-                    return;
+        if (maBanMoi.equalsIgnoreCase("") || maBanMoi.matches("\\s+")) {
+            JOptionPane.showMessageDialog(this, "Không được để trống");
+        } else if (maBanMoi.equalsIgnoreCase(ban.getMaBan().toString())) {
+            JOptionPane.showMessageDialog(this, "Trùng Mã");
+        } else {
+            String soLuongCho = JOptionPane.showInputDialog("Mời bạn nhập số lượng chỗ: ");
+            if (soLuongCho != null) {
+                if (!soLuongCho.matches("[0-9]+")) {
+                    JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng");
+                } else if (Integer.valueOf(soLuongCho) > ban.getSoLuongChoNgoi()) {
+                    JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi vượt quá -.-");
+                } else if (Integer.valueOf(soLuongCho) > Integer.valueOf(txtSoLuongChoCoTheTach.getText())) {
+                    JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi bàn cũ tối thiểu là 1");
                 } else {
-                    JOptionPane.showMessageDialog(this, banService.add(bans));
-                    ban.setSoLuongChoNgoi(Integer.valueOf(txtSoLuong.getText()));
-                    banService.update(ban, ma);
-                    JOptionPane.showMessageDialog(this, "Tách Thành Công");
-                    this.dispose();
+                    bans.setKv(khuVuc);
+                    bans.setMaBan(Integer.valueOf(maBanMoi));
+                    bans.setTrangThai(ban.getTrangThai());
+                    bans.setSoLuongChoNgoi(Integer.valueOf(soLuongCho));
+                    //add bàn vào list
+                    listBan.add(bans);
+                    // set txtSoLuong
+                    txtSoLuong.setText(String.valueOf(Integer.valueOf(txtSoLuong.getText()) - Integer.valueOf(soLuongCho)));
+                    txtSoLuongChoCoTheTach.setText(String.valueOf(Integer.valueOf(txtSoLuongChoCoTheTach.getText()) - Integer.valueOf(soLuongCho)));
+                    showDataBanMoi(listBan);
+                    // show confirm
+                    int tachBan = JOptionPane.showConfirmDialog(null, "Xác nhận tách bàn");
+                    if (tachBan == JOptionPane.NO_OPTION) {
+                        return;
+                    } else if (tachBan == JOptionPane.CLOSED_OPTION) {
+                        return;
+                    } else if (tachBan == JOptionPane.CANCEL_OPTION) {
+                        return;
+                    } else {
+                        String hi = banService.add(bans);
+                        ban.setSoLuongChoNgoi(Integer.valueOf(txtSoLuong.getText()));
+                        banService.update(ban, ma);
+                        JOptionPane.showMessageDialog(this, "Tách Thành Công");
+                        this.dispose();
+                    }
                 }
             }
         }
