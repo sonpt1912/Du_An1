@@ -13,6 +13,7 @@ import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.HoaDonChiTiet;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.domainModel.NhanVien;
+import com.mycompany.service.IBanResponseService;
 import com.mycompany.service.IChiTietBanHoaDonService;
 import com.mycompany.service.impl.HoaDonChiTietResponseService;
 import com.mycompany.service.ICommonResponseService;
@@ -63,7 +64,7 @@ public class Form_Home extends javax.swing.JPanel {
     private List<HoaDonChiTietResponse> lstHDCTResponses = new ArrayList<>();
     private List<ComboResponse> lstComboResponses = new ArrayList<>();
     private IMonAnResponseService monAnResponseService = new MonAnResponseService();
-    private ICommonResponseService banResponseService = new BanResponseService();
+    private IBanResponseService banResponseService = new BanResponseService();
     private IcommonHoaDonResponseService hoaDonResponseService = new HoaDonResponseService();
     private ComboResponseService comboResponseService = new ComboResponseService();
     private ICommonService hds = new HoaDonService();
@@ -222,6 +223,11 @@ public class Form_Home extends javax.swing.JPanel {
         popMenu.add(tachHD);
 
         chuyenBan.setText("Chuyển bàn");
+        chuyenBan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chuyenBanActionPerformed(evt);
+            }
+        });
         popMenu.add(chuyenBan);
 
         GopBan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -659,7 +665,7 @@ public class Form_Home extends javax.swing.JPanel {
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnRefresh))
-                        .addContainerGap(21, Short.MAX_VALUE))
+                        .addContainerGap(24, Short.MAX_VALUE))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -739,7 +745,22 @@ public class Form_Home extends javax.swing.JPanel {
 
     private void tbHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoaDonMouseClicked
         // TODO add your handling code here:
+        int index = tbHoaDon.getSelectedRow();
+        HoaDonResponse hdr = lstHoaDonResponses.get(index);
         if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
+            if ("".equals(lbMaHDThanhToan.getText())) {
+                return;
+            }
+            if (hdr.getTrangThai() != 0) {
+                tachHD.setEnabled(false);
+                gopHD.setEnabled(false);
+                chuyenBan.setEnabled(false);
+            } else {
+                tachHD.setEnabled(true);
+                gopHD.setEnabled(true);
+                chuyenBan.setEnabled(true);
+
+            }
             popMenu.show(this, evt.getX() + 417, evt.getY() + 85);
         } else {
             lstMaBan.clear();// clear để lấy mã bàn mới
@@ -750,8 +771,6 @@ public class Form_Home extends javax.swing.JPanel {
             fillTienThuaChuyenKhoan();
             fillTienThuaTienMat();
             // lấy ra hoá đơn response đang chọn
-            int index = tbHoaDon.getSelectedRow();
-            HoaDonResponse hdr = lstHoaDonResponses.get(index);
             lbMaHDThanhToan.setText(hdr.getMaHoaDon());
             lbMaHD.setText(hdr.getMaHoaDon());
             // con vớt về hoá đơn
@@ -810,7 +829,7 @@ public class Form_Home extends javax.swing.JPanel {
         // TODO add your handling code here:
         // lấy ra bàn đang chọn và fill mã bàn lên label
         if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
-            popMenu1.show(this, evt.getX() + 5, evt.getY() + 400);
+            popMenu1.show(this, evt.getX() + 9, evt.getY() + 396);
             int index = tbBan.getSelectedRow();
             String maBan = lbSoBan.getText();
             BanResponse banResponse = lstBanResponses.get(index);
@@ -1297,6 +1316,12 @@ public class Form_Home extends javax.swing.JPanel {
         viewGopBan.setVisible(true);
 
     }//GEN-LAST:event_GopBanActionPerformed
+
+    private void chuyenBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chuyenBanActionPerformed
+        // TODO add your handling code here:
+        JDialogChuyenBan chuyenBan = new JDialogChuyenBan(null, true, hdTong);
+        chuyenBan.setVisible(true);
+    }//GEN-LAST:event_chuyenBanActionPerformed
 
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");

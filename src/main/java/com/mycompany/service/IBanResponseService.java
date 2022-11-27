@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.mycompany.repository;
+package com.mycompany.service;
 
 import java.util.List;
 
@@ -10,18 +10,10 @@ import java.util.List;
  *
  * @author Admin
  */
-public interface IChiTietBanHoaDonRepository<O, B, O2, O3> {
+public interface IBanResponseService<O, I> {
 
     List<O> getAll();
 
-    B add(O chiTietBanHoaDon);
-
-    B update(O chiTietBanHoaDon, O2 hoaDon, O3 ban);
-
-    B remove(O2 hoaDon);
-
-    List<O> getByHoaDon(O2 hoaDon);
-
-    List<O> getByBan(O3 ban);
-
+    List<O> getByTrangThai(I trangThai);
+    
 }

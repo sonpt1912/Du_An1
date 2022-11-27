@@ -48,6 +48,15 @@ public class ChiTietBanHoaDonService implements IChiTietBanHoaDonService<ChiTiet
         return ctbhdr.getByHoaDon(hoaDon);
     }
 
+    @Override
+    public String remove(HoaDon hoaDon) {
+        if ((Boolean) ctbhdr.remove(hoaDon)) {
+            return "Xoá thành công";
+        } else {
+            return "Xoá thất bại";
+        }
+    }
+
     public static void main(String[] args) {
         HoaDon hd = new HoaDon();
         hd.setId("62EC88A4-C690-4F57-BD61-2885AD03A78D");
@@ -62,4 +71,8 @@ public class ChiTietBanHoaDonService implements IChiTietBanHoaDonService<ChiTiet
         }
     }
 
+    @Override
+    public List<ChiTietBanHoaDon> getByBan(Ban ban) {
+        return ctbhdr.getByBan(ban);
+    }
 }

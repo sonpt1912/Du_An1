@@ -10,18 +10,10 @@ import java.util.List;
  *
  * @author Admin
  */
-public interface IChiTietBanHoaDonRepository<O, B, O2, O3> {
+public interface IBanResponseRepository<O, I> {
 
     List<O> getAll();
 
-    B add(O chiTietBanHoaDon);
-
-    B update(O chiTietBanHoaDon, O2 hoaDon, O3 ban);
-
-    B remove(O2 hoaDon);
-
-    List<O> getByHoaDon(O2 hoaDon);
-
-    List<O> getByBan(O3 ban);
-
+    List<O> getByTrangThai(I trangThai);
+    
 }

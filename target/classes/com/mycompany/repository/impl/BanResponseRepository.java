@@ -5,6 +5,7 @@
 package com.mycompany.repository.impl;
 
 import com.mycompany.hibernateUtil.HibernateUtil;
+import com.mycompany.repository.IBanResponseRepository;
 import com.mycompany.repository.ICommonResponseRepository;
 import java.util.List;
 import javax.persistence.Query;
@@ -14,14 +15,23 @@ import org.hibernate.Session;
  *
  * @author Admin
  */
-public class BanResponseRepository implements ICommonResponseRepository<BanResponseRepository> {
+public class BanResponseRepository implements IBanResponseRepository<BanResponseRepository, Integer> {
 
     private static final Session session = HibernateUtil.getFactory().openSession();
-    private String fromTable = " FROM Ban B";
+    private String fromTable = " FROM Ban B ";
 
     @Override
     public List<BanResponseRepository> getAll() {
         String hql = "SELECT new com.mycompany.customModel.BanResponse(B.maBan,B.soLuongChoNgoi,B.kv.tenKV,B.trangThai)" + fromTable;
+        Query query = session.createQuery(hql);
+        List<BanResponseRepository> banResponses = query.getResultList();
+        return banResponses;
+    }
+
+    @Override
+    public List<BanResponseRepository> getByTrangThai(Integer trangThai) {
+        String hql = "SELECT new com.mycompany.customModel.BanResponse(B.maBan,B.soLuongChoNgoi,B.kv.tenKV,B.trangThai)" + fromTable
+                + "WHERE trangThai = 0";
         Query query = session.createQuery(hql);
         List<BanResponseRepository> banResponses = query.getResultList();
         return banResponses;

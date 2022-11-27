@@ -18,6 +18,10 @@ public interface IChiTietBanHoaDonRepository<O, B, O2, O3> {
 
     B update(O chiTietBanHoaDon, O2 hoaDon, O3 ban);
 
+    B remove(O2 hoaDon);
+
     List<O> getByHoaDon(O2 hoaDon);
-    
+
+    List<O> getByBan(O3 ban);
+
 }

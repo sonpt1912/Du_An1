@@ -75,25 +75,41 @@ public class ChiTietBanHoaDonRepository implements IChiTietBanHoaDonRepository<C
         List<ChiTietBanHoaDon> chiTietBanHoaDons = query.getResultList();
         return chiTietBanHoaDons;
     }
+    
+    @Override
+    public List<ChiTietBanHoaDon> getByBan(Ban ban) {
+        String hql = fromTable + "WHERE CTBHD.hd.trangThai = 0 AND CTBHD.ban = :ban";
+        Query query = session.createQuery(hql);
+        query.setParameter("ban", ban);
+        List<ChiTietBanHoaDon> chiTietBanHoaDons = query.getResultList();
+        return chiTietBanHoaDons;
+    }
+
+    @Override
+    public Boolean remove(HoaDon hoaDon) {
+        String hql = "DELETE" + fromTable + "WHERE CTBHD.hd = :hd";
+        Transaction transaction = null;
+        int check = 0;
+        try {
+            transaction = session.beginTransaction();
+            Query query = session.createQuery(hql);
+            query.setParameter("hd", hoaDon);
+            check = query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+        }
+        return check > 0;
+    }
 
     public static void main(String[] args) {
-//        HoaDon hoaDon = new HoaDon();
-//        hoaDon.setId("75E38A4A-D7E4-4B1F-84D3-A6677696BB83");
-//        Ban b = new Ban();
-//        b.setId("BCD9EBC1-B3B5-480D-9A7B-1B6C2FEAD603");
-//        HoaDon hd = new HoaDon();
-//        hd.setId("75E38A4A-D7E4-4B1F-84D3-A6677696BB83");
-//        Ban ban = new Ban();
-//        ban.setId("00BE29FE-3C01-4C16-B6AE-097DE507C78E");
-//        ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon(null, hd, ban);
-//        Boolean add = new ChiTietBanHoaDonRepository().update(chiTietBanHoaDon,hoaDon,b);
-//        System.out.println(add);
-//        Ban b = new Ban();
-//        b.setId("BCD9EBC1-B3B5-480D-9A7B-1B6C2FEAD603");
-//        List<ChiTietBanHoaDon> chiTietBanHoaDons = new ChiTietBanHoaDonRepository().getByBanAndHoaDon("1");
-//        for (ChiTietBanHoaDon chiTietBanHoaDon : chiTietBanHoaDons) {
-//            System.out.println(chiTietBanHoaDon);
-//        }
+        Ban b = new Ban();
+        b.setId("7A1E2672-47AA-415E-84D5-6D0AB9C42B63");
+        List<ChiTietBanHoaDon> chiTietBanHoaDons = new ChiTietBanHoaDonRepository().getByBan(b);
+        for (ChiTietBanHoaDon chiTietBanHoaDon : chiTietBanHoaDons) {
+            System.out.println(chiTietBanHoaDon.toString());
+        }
     }
 
 }

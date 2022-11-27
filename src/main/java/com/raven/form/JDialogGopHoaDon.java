@@ -5,14 +5,19 @@
 package com.raven.form;
 
 import com.mycompany.customModel.HoaDonChiTietResponse;
+import com.mycompany.domainModel.Ban;
+import com.mycompany.domainModel.ChiTietBanHoaDon;
 import com.mycompany.domainModel.ComBo;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.HoaDonChiTiet;
 import com.mycompany.domainModel.MonAn;
+import com.mycompany.service.IChiTietBanHoaDonService;
 import com.mycompany.service.ICommonService;
 import com.mycompany.service.IHoaDonChiTietResponseService;
 import com.mycompany.service.IHoaDonChiTietService;
 import com.mycompany.service.IHoaDonService;
+import com.mycompany.service.impl.BanService;
+import com.mycompany.service.impl.ChiTietBanHoaDonService;
 import com.mycompany.service.impl.ComBoService;
 import com.mycompany.service.impl.HoaDonChiTietResponseService;
 import com.mycompany.service.impl.HoaDonChiTietService;
@@ -35,10 +40,13 @@ public class JDialogGopHoaDon extends javax.swing.JDialog {
     private DefaultComboBoxModel dcbm = new DefaultComboBoxModel();
     private List<HoaDonChiTietResponse> lstDonChiTietResponsesCu;
     private List<HoaDonChiTietResponse> lstDonChiTietResponsesMoi;
+    private HoaDonService hoaDonService = new HoaDonService();
+    private ICommonService banService = new BanService();
     private IHoaDonChiTietResponseService hdctResponseService = new HoaDonChiTietResponseService();
     private IHoaDonChiTietService hdctService = new HoaDonChiTietService();
     private ICommonService monAnService = new MonAnService();
     private ICommonService comBoService = new ComBoService();
+    private IChiTietBanHoaDonService chiTietBanHoaDonService = new ChiTietBanHoaDonService();
     private List<HoaDon> lstHoaDons;
     private IHoaDonService hds2 = new HoaDonService();
     private ICommonService hds1 = new HoaDonService();
@@ -108,6 +116,7 @@ public class JDialogGopHoaDon extends javax.swing.JDialog {
         tbHDCTMoi = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         btnXacNhan = new javax.swing.JButton();
+        btnGopTatCa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -169,30 +178,38 @@ public class JDialogGopHoaDon extends javax.swing.JDialog {
             }
         });
 
+        btnGopTatCa.setText("Gộp tất cả");
+        btnGopTatCa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGopTatCaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(601, Short.MAX_VALUE)
-                .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(41, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(lbMaHDCu, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(22, 22, 22)
-                        .addComponent(cbbMaHoaDonMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 783, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnGopTatCa, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73)
+                        .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(18, 18, 18)
+                            .addComponent(lbMaHDCu, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addGap(22, 22, 22)
+                            .addComponent(cbbMaHoaDonMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 783, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,11 +226,12 @@ public class JDialogGopHoaDon extends javax.swing.JDialog {
                     .addComponent(jLabel3))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(btnXacNhan))
-                .addContainerGap())
+                    .addComponent(btnXacNhan)
+                    .addComponent(btnGopTatCa))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -280,7 +298,6 @@ public class JDialogGopHoaDon extends javax.swing.JDialog {
 
             }
         }
-
         hoaDon.setTrangThai(0);
         String upDateTrangThaiHDCu = (String) hds1.update(hoaDon, hoaDon.getMaHoaDon());
         JOptionPane.showMessageDialog(this, "Gộp thành công");
@@ -291,8 +308,8 @@ public class JDialogGopHoaDon extends javax.swing.JDialog {
         // TODO add your handling code here:
         int index = tbHDCTCu.getSelectedRow();
         HoaDonChiTietResponse hdctrCu = lstDonChiTietResponsesCu.get(index);
-//        // con vớt thằng cần tách vào thằng mới
-//        
+//         con vớt thằng cần tách vào thằng mới
+
 //        HoaDonChiTietResponse hdctrMoi = hdctrCu;
         // lấy số lượng của thằng cũ
         Integer soLuongMonAnCu = hdctrCu.getSoLuongMonAn();
@@ -390,6 +407,103 @@ public class JDialogGopHoaDon extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tbHDCTCuMouseClicked
 
+    private void btnGopTatCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGopTatCaActionPerformed
+        // TODO add your handling code here:
+
+        for (int i = 0; i < lstDonChiTietResponsesCu.size(); i++) {
+            if (lstDonChiTietResponsesCu.get(i).getTenCombo() == null) {
+                continue;
+            } else {
+                int indexDeUpDate = 0;
+                int dem = 0;
+                for (int j = 0; j < lstDonChiTietResponsesMoi.size(); j++) {
+                    if (null == lstDonChiTietResponsesMoi.get(j).getTenCombo()) {
+                        continue;
+                    }
+                    if (lstDonChiTietResponsesMoi.get(j).getTenCombo().contains(lstDonChiTietResponsesCu.get(i).getTenCombo())) {
+                        indexDeUpDate = i;
+                        dem++;
+                        lstDonChiTietResponsesMoi.get(j).setSoLuongCombo(lstDonChiTietResponsesMoi.get(j).getSoLuongCombo() + lstDonChiTietResponsesCu.get(i).getSoLuongCombo());
+                    }
+                }
+                if (dem == 0) {
+                    lstDonChiTietResponsesMoi.add(lstDonChiTietResponsesCu.get(i));
+                }
+            }
+        }
+        for (int i = 0; i < lstDonChiTietResponsesCu.size(); i++) {
+            if (lstDonChiTietResponsesCu.get(i).getTenMonAn() == null) {
+                continue;
+            } else {
+                int indexDeUpDate = 0;
+                int dem = 0;
+                for (int j = 0; j < lstDonChiTietResponsesMoi.size(); j++) {
+                    if (null == lstDonChiTietResponsesMoi.get(j).getTenMonAn()) {
+                        continue;
+                    }
+                    if (lstDonChiTietResponsesMoi.get(j).getTenMonAn().contains(lstDonChiTietResponsesCu.get(i).getTenMonAn())) {
+                        indexDeUpDate = i;
+                        dem++;
+                        lstDonChiTietResponsesMoi.get(j).setSoLuongMonAn(lstDonChiTietResponsesMoi.get(j).getSoLuongMonAn() + lstDonChiTietResponsesCu.get(i).getSoLuongMonAn());
+                    }
+                }
+                if (dem == 0) {
+                    lstDonChiTietResponsesMoi.add(lstDonChiTietResponsesCu.get(i));
+                }
+            }
+        }
+        lstDonChiTietResponsesCu.clear();
+        showDataHDCTCu(lstDonChiTietResponsesCu);
+        showDataHDCTMoi(lstDonChiTietResponsesMoi);
+        String xoaHDCTCu = (String) hdctService.remove(hoaDon);
+        HoaDon hd = (HoaDon) hds1.getOne(cbbMaHoaDonMoi.getSelectedItem().toString());
+        String xoaHDCTMoi = (String) hdctService.remove(hd);
+        HoaDon hdMoi = (HoaDon) hds1.getOne(cbbMaHoaDonMoi.getSelectedItem().toString());
+        for (HoaDonChiTietResponse hoaDonChiTietResponse : lstDonChiTietResponsesMoi) {
+            HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
+            hoaDonChiTiet.setHoaDon(hdMoi);
+            if (hoaDonChiTietResponse.getMaMonAn() != null) {
+                MonAn monAn = (MonAn) monAnService.getOne(hoaDonChiTietResponse.getMaMonAn());
+                hoaDonChiTiet.setMonAn(monAn);
+                hoaDonChiTiet.setDonGiaMonAn(hoaDonChiTietResponse.getDonGiaMonAn());
+                hoaDonChiTiet.setSoLuongMonAn(hoaDonChiTietResponse.getSoLuongMonAn());
+                hoaDonChiTiet.setDonGiaCombo(BigDecimal.valueOf(0));
+                hoaDonChiTiet.setSoLuongCombo(0);
+                String themHDCT = (String) hdctService.add(hoaDonChiTiet);
+            } else {
+                ComBo comBo = (ComBo) comBoService.getOne(hoaDonChiTietResponse.getMaCombo());
+                hoaDonChiTiet.setComBo(comBo);
+                hoaDonChiTiet.setDonGiaCombo(hoaDonChiTietResponse.getDonGiaCombo());
+                hoaDonChiTiet.setSoLuongCombo(hoaDonChiTietResponse.getSoLuongCombo());
+                hoaDonChiTiet.setDonGiaMonAn(BigDecimal.valueOf(0));
+                hoaDonChiTiet.setSoLuongMonAn(0);
+                String themHDCT = (String) hdctService.add(hoaDonChiTiet);
+
+            }
+        }
+        hoaDon.setTrangThai(2);
+        hoaDon.setGhiChu("Đã gộp vào hoá đơn " + cbbMaHoaDonMoi.getSelectedItem().toString());
+        String upDateTrangThaiHDCu = (String) hds1.update(hoaDon, hoaDon.getMaHoaDon());
+        List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hoaDon);
+        //SET TRẠNG THÁI BÀN
+        //for lấy mã bàn
+        for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
+            Ban ban = (Ban) banService.getOne(lstChiTietBanHoaDon.getBan().getMaBan().toString());
+            //khai báo list để getHD chờ where mã bàn:
+            List<HoaDon> listHDChuaTT = hoaDonService.getHDChoByMaBan(ban.getMaBan());
+            if (listHDChuaTT.size() <= 0) {
+                // set trạng thái = 0 cho bàn đã getone về
+                ban.setTrangThai(0);
+                String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+            } else {
+                ban.setTrangThai(1);
+                String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+            }
+        }
+        JOptionPane.showMessageDialog(this, "Gộp thành công");
+        this.dispose();
+    }//GEN-LAST:event_btnGopTatCaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -433,6 +547,7 @@ public class JDialogGopHoaDon extends javax.swing.JDialog {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGopTatCa;
     private javax.swing.JButton btnXacNhan;
     private javax.swing.JComboBox<String> cbbMaHoaDonMoi;
     private javax.swing.JButton jButton1;

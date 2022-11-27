@@ -19,5 +19,9 @@ public interface IChiTietBanHoaDonService<O, S, O2, O3> {
     S update(O chiTietBanHoaDon, O2 hoaDon, O3 ban);
 
     List<O> getByHoaDon(O2 hoaDon);
-    
+
+    List<O> getByBan(O3 ban);
+
+    S remove(O2 hoaDon);
+
 }
