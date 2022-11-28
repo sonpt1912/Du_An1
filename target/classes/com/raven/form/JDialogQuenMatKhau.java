@@ -66,7 +66,6 @@ public class JDialogQuenMatKhau extends javax.swing.JDialog {
         jLabel2.setText("Vui lòng nhập tên tài khoản của bạn : ");
 
         txtUser.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtUser.setForeground(new java.awt.Color(255, 255, 255));
 
         btnXacNhan.setBackground(new java.awt.Color(153, 153, 153));
         btnXacNhan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
