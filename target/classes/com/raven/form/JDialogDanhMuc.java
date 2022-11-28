@@ -57,6 +57,7 @@ public class JDialogDanhMuc extends javax.swing.JDialog {
             return "tên không đúng định dạng";
         } else {
             DanhMuc danhMuc = newDM();
+            danhMuc.setMaDanhMuc(maTuSinh(listDM = danhMucService.getAll()));
             return danhMucService.add(danhMuc);
         }
     }
@@ -76,7 +77,7 @@ public class JDialogDanhMuc extends javax.swing.JDialog {
 
     private DanhMuc newDM() {
         DanhMuc danhMuc = new DanhMuc();
-        danhMuc.setMaDanhMuc(maTuSinh(listDM = danhMucService.getAll()));
+//        danhMuc.setMaDanhMuc(maTuSinh(listDM = danhMucService.getAll()));
         danhMuc.setTenDanhMuc(txtTenDM.getText());
         if (radioKinhDoanhDM.isSelected()) {
             danhMuc.setTrangThai(0);

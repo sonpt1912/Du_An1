@@ -652,7 +652,7 @@ public class Form_Combo extends javax.swing.JPanel {
                 ComBo comB = new ComBo(null, nhanVien, comBoService.randomMaHoaDon(), txtTen.getText(), hinhAnh, new BigDecimal(txtDonGia.getText()), 2);
                 String addComBo = comBoService.add(comB);
                 JOptionPane.showMessageDialog(this, addComBo);
-                rdoChoApDung.setSelected(true);
+                rdoListChoApDungActionPerformed(evt);
                 showDataComBo(listComBo = comBoService.getAllByTrangThai(2));
             }
         } else {

@@ -112,7 +112,7 @@ public class Form_NhanVien extends javax.swing.JPanel {
             nhanVien.setGioiTinh("Ko xác định");
         }
         nhanVien.setHo(txtHo.getText());
-        nhanVien.setMa(nhanVienUtil.maTuDong(listNhanVien = nhanVienService.getAll()));
+//        nhanVien.setMa(nhanVienUtil.maTuDong(listNhanVien = nhanVienService.getAll()));
         nhanVien.setMatKhau(txtMatKhau.getText());
         nhanVien.setNgaySinh(Date.valueOf(simpleDateFormat.format(txtNgaySinh.getDate())));
         nhanVien.setSoDienThoai(txtSdt.getText());
@@ -126,7 +126,7 @@ public class Form_NhanVien extends javax.swing.JPanel {
         return nhanVien;
     }
 
-    private String check() {
+    private String checkAdd() {
         if (txtDiaChi.getText().isEmpty()) {
             return "không được để trống";
         } else if (txtEmail.getText().isEmpty()) {
@@ -144,23 +144,64 @@ public class Form_NhanVien extends javax.swing.JPanel {
         } else if (txtSdt.getText().isEmpty()) {
             return "không được để trống";
         } else if (!txtHo.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
-            return "không đúng định dạng";
+            return "họ không đúng định dạng";
         } else if (!txtTenDem.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
-            return "không đúng định dạng";
+            return "tên đệm không đúng định dạng";
         } else if (!txtTen.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
-            return "không đúng định dạng";
+            return "tên không đúng định dạng";
         } else if (!txtSdt.getText().matches("(0)((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))[0-9]{7}")) {
-            return "không đúng định dạng";
+            return "sdt không đúng định dạng";
         } else if (!txtEmail.getText().matches("[a-zA-Z0-9]+(@fpt|@gmail)((.com)|(.edu.vn))")) {
-            return "không đúng định dạng";
-        } else if (!txtDiaChi.getText().matches("[a-z A-Z0-9]+")) {
-            return "không đúng định dạng";
+            return "email không đúng định dạng";
+        } else if (!txtDiaChi.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+            return "địa chỉ không đúng định dạng";
         } else if (!txtMatKhau.getText().matches("[a-zA-Z0-9]{8}")) {
-            return "không đúng định dạng";
+            return "mật khẩu không đúng định dạng";
         } else {
             NhanVien nhanVien = newNV();
+            nhanVien.setMa(nhanVienUtil.maTuDong(listNhanVien = nhanVienService.getAll()));
             String add = nhanVienService.add(nhanVien);
             return add;
+        }
+    }
+
+    private String checkUpdate() {
+        if (txtDiaChi.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtEmail.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtHo.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtMatKhau.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtTen.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtTenDem.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtMatKhau.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (txtSdt.getText().isEmpty()) {
+            return "không được để trống";
+        } else if (!txtHo.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+            return "họ không đúng định dạng";
+        } else if (!txtTenDem.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+            return "tên đệm không đúng định dạng";
+        } else if (!txtTen.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+            return "tên không đúng định dạng";
+        } else if (!txtSdt.getText().matches("(0)((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))[0-9]{7}")) {
+            return "sdt không đúng định dạng";
+        } else if (!txtEmail.getText().matches("[a-zA-Z0-9]+(@fpt|@gmail)((.com)|(.edu.vn))")) {
+            return "email không đúng định dạng";
+        } else if (!txtDiaChi.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+            return "địa chỉ không đúng định dạng";
+        } else if (!txtMatKhau.getText().matches("[a-zA-Z0-9]{8}")) {
+            return "mật khẩu không đúng định dạng";
+        } else {
+            NhanVien nhanVien = newNV();
+            String ma = txtMa.getText();
+            nhanVien.setMa(ma);
+            String update = nhanVienService.update(nhanVien, ma);
+            return update;
         }
     }
 
@@ -607,7 +648,7 @@ public class Form_NhanVien extends javax.swing.JPanel {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
 //        ChucVu chucVu = chucVuService.getOne((String) cbbChucVu.getSelectedItem());
         if (txtMa.getText().isEmpty()) {
-            String add = check();
+            String add = checkAdd();
             JOptionPane.showMessageDialog(this, add);
             showData(listNhanVien = nhanVienService.getAll());
         } else {
@@ -625,10 +666,8 @@ public class Form_NhanVien extends javax.swing.JPanel {
 //        ChucVu chucVu = chucVuService.getOne((String) cbbChucVu.getSelectedItem());
 //        String ma = txtMa.getText();
 //        NhanVien nhanVien = new NhanVien(null, chucVu, txtMa.getText(), txtHo.getText(), txtTenDem.getText(), txtTen.getText(), txtGioiTinh.getText(), txtSdt.getText(), txtEmail.getText(), Date.valueOf(simpleDateFormat.format(txtNgaySinh.getDate())), txtDiaChi.getText(), txtMatKhau.getText(), Integer.valueOf(txtTrangThai.getText()));
-        String ma = txtMa.getText();
-        NhanVien nhanVien = newNV();
-        String add = nhanVienService.update(nhanVien, ma);
-        JOptionPane.showMessageDialog(this, add);
+        String update = checkUpdate();
+        JOptionPane.showMessageDialog(this, update);
         showData(listNhanVien = nhanVienService.getAll());
     }//GEN-LAST:event_btnUpdateActionPerformed
 
