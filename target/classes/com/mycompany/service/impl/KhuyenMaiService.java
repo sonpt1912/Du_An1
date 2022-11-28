@@ -7,6 +7,7 @@ package com.mycompany.service.impl;
 import com.mycompany.domainModel.KhuyenMai;
 import com.mycompany.repository.impl.KhuyenMaiRepository;
 import com.mycompany.service.ICommonService;
+import com.mycompany.service.IKhuyenMaiService;
 import com.mycompany.util.ThongBao;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  *
  * @author Duongntt
  */
-public class KhuyenMaiService implements ICommonService<KhuyenMai, String> {
+public class KhuyenMaiService implements ICommonService<KhuyenMai, String>, IKhuyenMaiService {
 
     private KhuyenMaiRepository kmRepo = new KhuyenMaiRepository();
     private ThongBao thongBao = new ThongBao();
@@ -42,6 +43,11 @@ public class KhuyenMaiService implements ICommonService<KhuyenMai, String> {
     @Override
     public String remove(String ma) {
         return thongBao.thongBaoDELETE(kmRepo.remove(ma));
+    }
+
+    @Override
+    public List<KhuyenMai> searchKM(String keyWord) {
+        return kmRepo.searchKM(keyWord);
     }
 
 }

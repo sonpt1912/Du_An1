@@ -42,10 +42,13 @@ public class KhuyenMaiUtil {
 
     public boolean checkValidateKM(KhuyenMai khuyenMai) {
         boolean check = false;
-        if (!(Date.valueOf(dateFormat.format(khuyenMai.getThoiGianBD())).compareTo(today) >= 0)) {
+        String ngayBDString = String.valueOf(khuyenMai.getThoiGianBD());
+        String ngayKTString = String.valueOf(khuyenMai.getThoiGianKT());
+        String todayString = String.valueOf(dateFormat.format(today));
+        if (ngayBDString.compareTo(todayString) < 0) {
             JOptionPane.showMessageDialog(null, "Vui lòng không chọn thời gian bắt đầu là quá khứ!");
             check = false;
-        } else if (Date.valueOf(dateFormat.format(khuyenMai.getThoiGianKT())).compareTo(khuyenMai.getThoiGianBD()) < 0) {
+        } else if (ngayKTString.compareTo(ngayBDString) < 0) {
             JOptionPane.showMessageDialog(null, "Thời gian kết thúc KM không được sớm hơn thời gian bắt đầu!");
             check = false;
         } else if (Double.valueOf(String.valueOf(khuyenMai.getGiaTriKM())) <= Double.valueOf(0)) {
@@ -63,11 +66,19 @@ public class KhuyenMaiUtil {
         return check;
     }
 
-    public int trangThaiKM(KhuyenMai khuyenMai) {
+    public int trangThaiKM(Date tgianBD, Date tgianKT) {
         int trangThai = 0;
-        if (khuyenMai.getThoiGianBD().compareTo(today) <= 0 && khuyenMai.getThoiGianKT().compareTo(today) >= 0) {
+        String ngayBDString = String.valueOf(tgianBD);
+        String ngayKTString = String.valueOf(tgianKT);
+        String todayString = String.valueOf(dateFormat.format(today));
+        if (ngayBDString.compareTo(todayString) == 0 && ngayKTString.compareTo(todayString) >= 0) {
+            //trạng thái = 0: áp dụng
             trangThai = 0;
-        } else if (khuyenMai.getThoiGianBD().compareTo(today) <= 0 && khuyenMai.getThoiGianKT().compareTo(today) <= 0) {
+        } else if (ngayBDString.compareTo(todayString) > 0 && ngayKTString.compareTo(todayString) > 0) {
+            //trạng thái == 2: chờ áp dụng
+            trangThai = 2;
+        } else {
+            //trạng thái = 1: ngừg áp dụng
             trangThai = 1;
         }
         return trangThai;
@@ -75,7 +86,10 @@ public class KhuyenMaiUtil {
 
 //    public static void main(String[] args) {
 //        Date date = Date.valueOf("2022-11-27");
+//        String dateString = "2022-11-29";
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        java.util.Date today = new java.util.Date();
-//        System.out.println(date.compareTo(today));
+//        String todayString = String.valueOf(dateFormat.format(today));
+//        System.out.println(dateString.compareTo(todayString));
 //    }
 }
