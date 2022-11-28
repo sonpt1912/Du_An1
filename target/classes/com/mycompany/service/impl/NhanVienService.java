@@ -69,7 +69,7 @@ public class NhanVienService implements ICommonService<NhanVien, String>, INhanV
     }
 
     @Override
-    public List<NhanVien> getUserAndPass(String user, String pass) {
+    public NhanVien getUserAndPass(String user, String pass) {
         return nvRepo.getUserAndPass(user, pass);
     }
 

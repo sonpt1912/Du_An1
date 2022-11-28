@@ -108,16 +108,15 @@ public class ViewLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         String pass = new String(txtMatKhau.getPassword());
         String user = txtUser.getText();
-        List<NhanVien> login = nhanVienService.getUserAndPass(user, pass);
-        for (NhanVien nv : login) {
-            if (login != null) {
-                Main trangChu = new Main(nv);
-                this.dispose();
-                trangChu.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "tài khoản hoặc mật khẩu không chính xác");
-            }
+        NhanVien login = nhanVienService.getUserAndPass(user, pass);
+        if (login != null) {
+            Main trangChu = new Main(login);
+            this.dispose();
+            trangChu.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "tài khoản hoặc mật khẩu không chính xác");
         }
+
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     /**
