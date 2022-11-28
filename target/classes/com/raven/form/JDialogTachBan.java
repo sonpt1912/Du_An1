@@ -302,6 +302,8 @@ public class JDialogTachBan extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi vượt quá -.-");
                 } else if (Integer.valueOf(soLuongCho) > Integer.valueOf(txtSoLuongChoCoTheTach.getText())) {
                     JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi bàn cũ tối thiểu là 1");
+                } else if (Integer.valueOf(soLuongCho) == 0) {
+                    JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi không được là 0");
                 } else {
                     bans.setKv(khuVuc);
                     bans.setMaBan(Integer.valueOf(maBanMoi));
