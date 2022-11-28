@@ -108,7 +108,8 @@ public class Form_HoaDon extends javax.swing.JPanel {
         HoaDon hoaDon = listHD.get(index);
         lbMaHD.setText(hoaDon.getMaHoaDon());
         listHDCT = hoaDonChiTietService.getHDCTByHD(hoaDon);
-        txtTongTien.setText(String.valueOf(hoaDonChiTietService.tongTienHD(listHDCT)));
+        //txtTongTien.setText(String.valueOf(hoaDonChiTietService.tongTienHD(listHDCT)));
+        txtTongTien.setText(String.valueOf(hoaDonUtil.tinhTongTienHD(listHDCT)));
         txtTongTien.setEditable(false);
         txtGhiChu.setText(hoaDon.getGhiChu());
         int trangThaiHD = hoaDon.getTrangThai();
@@ -546,39 +547,6 @@ public class Form_HoaDon extends javax.swing.JPanel {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         JDialogBan_ThemHD ban_ThemHD = new JDialogBan_ThemHD(null, true);
         ban_ThemHD.setVisible(true);
-        //getAll HD để check mã
-//        listHD = hoaDonService.getAll();
-//        //tạo HD mới
-//        //zen mã
-//        String maHD = hoaDonUtil.zenMaThuyDuong(listHD);
-//        Date ngayTao = (Date.valueOf(dateFormat.format(today)));
-//        HoaDon hoaDon = new HoaDon();
-//        hoaDon.setMaHoaDon(maHD);
-//        hoaDon.setNgayTao(String.valueOf(ngayTao));
-//        hoaDon.setTrangThai(0);
-//        hoaDon.setNhanVien(nhanVienService.getOne("NV1"));
-//        //khai báo hoá đươn bàn-chi tiết
-//        //check bàn có khách hay chưua
-//        ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon();
-//        //lấy bàn đang chọn tại cbb;
-//        Ban ban = banService.getOne(cbbChonBan.getSelectedItem().toString());
-//        if (ban.getTrangThai() == 1) {
-//            JOptionPane.showMessageDialog(this, "Bàn đã có khách, vui lòng chọn bàn khác!");
-//        } else {
-//            //thêm hoá đơn vào database
-//            String themHD = hoaDonService.add(hoaDon);
-//            chiTietBanHoaDon.setBan(ban);
-//            chiTietBanHoaDon.setHd(hoaDon);
-//            String themCTBan_HD = chiTietBanHoaDonService.add(chiTietBanHoaDon);
-//            //set lại trạng thái cho bàn
-//            ban.setTrangThai(1);
-//            String updateban = banService.update(ban, String.valueOf(ban.getMaBan()));
-//            listHD = hoaDonService.getAll();
-//            showData(listHD);
-//            //getAll banf ddang get theo trajng thasi = 0
-//            listBan = banService.getAll();
-//            loadCbb(listBan);
-//        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
