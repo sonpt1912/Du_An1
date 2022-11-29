@@ -86,7 +86,7 @@ public class KhachHangRepository implements ICommonRepository<KhachHang, Boolean
 
     @Override
     public Boolean remove(String ma) {
-        String hql = "UPDATE " + fromTable + "SET trangThai = 1"
+        String hql = "DELETE " + fromTable
                 + "WHERE ma = :ma";
         int check = 0;
         Transaction transaction = null;

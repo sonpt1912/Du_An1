@@ -66,6 +66,6 @@ public class KhachHang {
     private Integer trangThai;
 
     public Object[] toDataRow(int stt) {
-        return new Object[]{stt, ma, ho + " " + tenDem + " " + ten, gioiTinh, ngaySinh, sdt, diaChi, (trangThai == 0 ? "active" : "un active")};
+        return new Object[]{stt, ma, ho + " " + tenDem + " " + ten, gioiTinh, ngaySinh, sdt, diaChi, (trangThai == 0 ? "Khách thường" : "Khách VIP")};
     }
 }
