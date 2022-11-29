@@ -8,6 +8,7 @@ import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.IThongKeRepository;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import javax.persistence.Query;
@@ -44,7 +45,7 @@ public class ThongKeRepository implements IThongKeRepository {
 //        for (HoaDon hoaDon : listHoaDon) {
 //            System.out.println(hoaDon.toString());
 //        }
-        long hoaDon = new ThongKeRepository().getCountAllDay();
+        BigDecimal hoaDon = new ThongKeRepository().getDoanhThuDAY();
         System.out.println(hoaDon);
     }
 
@@ -67,22 +68,6 @@ public class ThongKeRepository implements IThongKeRepository {
     }
 
     @Override
-    public List<HoaDon> getAllDay() {
-        String hql = "FROM HoaDon hd WHERE day(hd.ngayThanhToan) = day(sysdatetime())";
-        Query query = SESSION.createQuery(hql, HoaDon.class);
-        List<HoaDon> hoaDons = query.getResultList();
-        return hoaDons;
-    }
-
-    @Override
-    public List<HoaDon> getAllMonth() {
-        String hql = "FROM HoaDon hd WHERE month(hd.ngayThanhToan) = month(sysdatetime())";
-        Query query = SESSION.createQuery(hql, HoaDon.class);
-        List<HoaDon> hoaDons = query.getResultList();
-        return hoaDons;
-    }
-
-    @Override
     public long getCountAllDay() {
         String hql = "select COUNT(*) FROM HoaDon hd WHERE day(hd.ngayThanhToan) = day(sysdatetime())";
         Query query = SESSION.createQuery(hql);
@@ -95,6 +80,122 @@ public class ThongKeRepository implements IThongKeRepository {
         String hql = "select COUNT(*) FROM HoaDon hd WHERE month(hd.ngayThanhToan) = month(sysdatetime())";
         Query query = SESSION.createQuery(hql);
         long hoaDons = (long) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public long getCountAllWeek() {
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE (day(datediff(d,0,hd.ngayThanhToan)/7*7)-1)/7+1 = (day(datediff(d,0,sysdatetime())/7*7)-1)/7+1";
+        Query query = SESSION.createQuery(hql);
+        long hoaDons = (long) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public long getCountAllYear() {
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE Year(hd.ngayThanhToan) = Year(sysdatetime())";
+        Query query = SESSION.createQuery(hql);
+        long hoaDons = (long) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public long getHoaDonDaTTDAY() {
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE day(hd.ngayThanhToan) = day(sysdatetime()) AND hd.trangThai = 1";
+        Query query = SESSION.createQuery(hql);
+        long hoaDons = (long) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public long getHoaDonDaTTWEEK() {
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE (day(datediff(d,0,hd.ngayThanhToan)/7*7)-1)/7+1 = (day(datediff(d,0,sysdatetime())/7*7)-1)/7+1 AND hd.trangThai = 1";
+        Query query = SESSION.createQuery(hql);
+        long hoaDons = (long) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public long getHoaDonDaTTMONTH() {
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE month(hd.ngayThanhToan) = month(sysdatetime()) AND hd.trangThai = 1";
+        Query query = SESSION.createQuery(hql);
+        long hoaDons = (long) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public long getHoaDonDaTTYEAR() {
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE year(hd.ngayThanhToan) = year(sysdatetime()) AND hd.trangThai = 1";
+        Query query = SESSION.createQuery(hql);
+        long hoaDons = (long) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public long getHoaDonHuyDAY() {
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE day(hd.ngayThanhToan) = day(sysdatetime()) AND hd.trangThai = 3";
+        Query query = SESSION.createQuery(hql);
+        long hoaDons = (long) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public long getHoaDonHuyWEEK() {
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE (day(datediff(d,0,hd.ngayThanhToan)/7*7)-1)/7+1 = (day(datediff(d,0,sysdatetime())/7*7)-1)/7+1 AND hd.trangThai = 3";
+        Query query = SESSION.createQuery(hql);
+        long hoaDons = (long) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public long getHoaDonHuyMONTH() {
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE month(hd.ngayThanhToan) = month(sysdatetime()) AND hd.trangThai = 3";
+        Query query = SESSION.createQuery(hql);
+        long hoaDons = (long) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public long getHoaDonHuyYEAR() {
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE year(hd.ngayThanhToan) = year(sysdatetime()) AND hd.trangThai = 3";
+        Query query = SESSION.createQuery(hql);
+        long hoaDons = (long) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuDAY() {
+        try {
+            String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE DAY(hd.ngayThanhToan) = DAY(sysdatetime()) AND hd.trangThai = 1";
+            Query query = SESSION.createQuery(hql);
+            BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+            return hoaDons;
+        } catch (Exception e) {
+            return BigDecimal.valueOf(0);
+        }
+    }
+
+    @Override
+    public BigDecimal getDoanhThuWEEK() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE (day(datediff(d,0,hd.ngayThanhToan)/7*7)-1)/7+1 = (day(datediff(d,0,sysdatetime())/7*7)-1)/7+1 AND hd.trangThai = 1";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuMONTH() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = MONTH(sysdatetime()) AND hd.trangThai = 1";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuYEAR() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE YEAR(hd.ngayThanhToan) = YEAR(sysdatetime()) AND hd.trangThai = 1";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
         return hoaDons;
     }
 

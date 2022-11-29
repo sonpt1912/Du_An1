@@ -9,6 +9,7 @@ import com.mycompany.domainModel.MonAn;
 import com.mycompany.repository.IThongKeRepository;
 import com.mycompany.repository.impl.ThongKeRepository;
 import com.mycompany.service.IThongKeService;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -40,16 +41,6 @@ public class ThongKeService implements IThongKeService {
     }
 
     @Override
-    public List<HoaDon> getAllDay() {
-        return thongKeRepository.getAllDay();
-    }
-
-    @Override
-    public List<HoaDon> getAllMonth() {
-        return thongKeRepository.getAllMonth();
-    }
-
-    @Override
     public long getCountAllDay() {
         return thongKeRepository.getCountAllDay();
     }
@@ -57,6 +48,76 @@ public class ThongKeService implements IThongKeService {
     @Override
     public long getCountAllMonth() {
         return thongKeRepository.getCountAllMonth();
+    }
+
+    @Override
+    public long getCountAllWeek() {
+        return thongKeRepository.getCountAllWeek();
+    }
+
+    @Override
+    public long getCountAllYear() {
+        return thongKeRepository.getCountAllYear();
+    }
+
+    @Override
+    public long getHoaDonDaTTDAY() {
+        return thongKeRepository.getHoaDonDaTTDAY();
+    }
+
+    @Override
+    public long getHoaDonDaTTWEEK() {
+        return thongKeRepository.getHoaDonDaTTWEEK();
+    }
+
+    @Override
+    public long getHoaDonDaTTMONTH() {
+        return thongKeRepository.getHoaDonDaTTMONTH();
+    }
+
+    @Override
+    public long getHoaDonDaTTYEAR() {
+        return thongKeRepository.getHoaDonDaTTYEAR();
+    }
+
+    @Override
+    public long getHoaDonHuyDAY() {
+        return thongKeRepository.getHoaDonHuyDAY();
+    }
+
+    @Override
+    public long getHoaDonHuyWEEK() {
+        return thongKeRepository.getHoaDonHuyWEEK();
+    }
+
+    @Override
+    public long getHoaDonHuyMONTH() {
+        return thongKeRepository.getHoaDonHuyMONTH();
+    }
+
+    @Override
+    public long getHoaDonHuyYEAR() {
+        return thongKeRepository.getHoaDonHuyYEAR();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuDAY() {
+        return thongKeRepository.getDoanhThuDAY();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuWEEK() {
+        return thongKeRepository.getDoanhThuWEEK();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuMONTH() {
+        return thongKeRepository.getDoanhThuMONTH();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuYEAR() {
+        return thongKeRepository.getDoanhThuYEAR();
     }
 
 }

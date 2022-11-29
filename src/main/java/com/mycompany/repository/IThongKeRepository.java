@@ -6,6 +6,7 @@ package com.mycompany.repository;
 
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.MonAn;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -22,11 +23,36 @@ public interface IThongKeRepository {
 
     List<MonAn> getAllSanPhamTrangThai(int trangThai);
 
-    List<HoaDon> getAllDay();
+    long getHoaDonDaTTDAY();
 
-    List<HoaDon> getAllMonth();
+    long getHoaDonDaTTWEEK();
+
+    long getHoaDonDaTTMONTH();
+
+    long getHoaDonDaTTYEAR();
 
     long getCountAllDay();
 
     long getCountAllMonth();
+
+    long getCountAllWeek();
+
+    long getCountAllYear();
+
+    long getHoaDonHuyDAY();
+
+    long getHoaDonHuyWEEK();
+
+    long getHoaDonHuyMONTH();
+
+    long getHoaDonHuyYEAR();
+
+    BigDecimal getDoanhThuDAY();
+
+    BigDecimal getDoanhThuWEEK();
+
+    BigDecimal getDoanhThuMONTH();
+
+    BigDecimal getDoanhThuYEAR();
+    
 }
