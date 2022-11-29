@@ -15,7 +15,7 @@ public interface INhanVienRepository {
 
     NhanVien getUserAndPass(String user, String pass);
 
-    List<NhanVien> getMaLogin(String user);
+    NhanVien getMaLogin(String user);
 
     List<NhanVien> searchByNameAndMa(String name, String ma);
 }

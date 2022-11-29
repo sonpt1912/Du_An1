@@ -25,15 +25,12 @@ public class LoginUtil {
     private NhanVienService nhanVienService = new NhanVienService();
 
     public String checkMail(String ma) {
-        List<NhanVien> logGin = nhanVienService.getMaLogin(ma);
-        for (NhanVien nv : nhanVienService.getMaLogin(ma)) {
-            if (logGin != null) {
-                return guiEmail(nv.getEmail(), nv.getMatKhau());
-            } else {
-                return "mã không tồn tại";
-            }
+        NhanVien logGin = nhanVienService.getMaLogin(ma);
+        if (logGin != null) {
+            return guiEmail(logGin.getEmail(), logGin.getMatKhau());
+        } else {
+            return "mã không tồn tại";
         }
-        return "";
     }
 
     private String guiEmail(String email, String pass) {
