@@ -159,6 +159,8 @@ public class Form_NhanVien extends javax.swing.JPanel {
             return "không được để trống";
         } else if (simpleDateFormat.format(txtNgaySinh.getDate()).isEmpty()) {
             return "không được để trống";
+        } else if (!simpleDateFormat.format(txtNgaySinh.getDate()).matches("")) {
+            return "không được để trống";
         } else if (!txtHo.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
             return "họ không đúng định dạng";
         } else if (!txtTenDem.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
