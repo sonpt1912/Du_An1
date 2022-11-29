@@ -67,8 +67,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
     @Override
     public Boolean update(MonAn kh, String ma) {
         String hql = "UPDATE " + fromTable + "SET tenMonAn = :ten, hinhAnh = :hinhAnh, donGia = :donGia, donViTinh = :donViTinh,"
-                + "loai = :loaiMA, trangThai = :TrangThai, khuyenMai = :KM "
-                + "WHERE maMonAn =:ma";
+                + "loai = :loaiMA, trangThai = :TrangThai WHERE maMonAn =:maMon";
         Transaction transaction = null;
         int check = 0;
         try {
@@ -83,7 +82,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
             query.setParameter("TrangThai", kh.getTrangThai());
             //bỏ KM
             // query.setParameter("KM", kh.getKhuyenMai());
-            query.setParameter("ma", ma);
+            query.setParameter("maMon", ma);
             check = query.executeUpdate();
             transaction.commit();
         } catch (Exception e) {

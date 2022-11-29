@@ -543,14 +543,34 @@ public class Form_SanPham extends javax.swing.JPanel {
         // TODO add your handling code here:
         String hinhAnh = selectedImagePath;
         if (txtMa.getText().isEmpty()) {
-            Loai loai = loaiService.getOne((String) cbbLoai.getSelectedItem());
-            // bỏ KM khỏi món ăn
+            if (txtTen.getText().isEmpty() || txtTen.getText().matches("\\s+")) {
+                JOptionPane.showMessageDialog(this, "Không được để trống tên");
+            } else if (txtDonGia.getText().isEmpty() || txtDonGia.getText().matches("\\s+")) {
+                JOptionPane.showMessageDialog(this, "Không được để trống đơn giá");
+            } else if (txtDonViTinh.getText().isEmpty() || txtDonViTinh.getText().matches("\\s+")) {
+                JOptionPane.showMessageDialog(this, "Không được để trống đơn vị tính");
+            } else if (txtTen.getText().matches("[0-9]+")) {
+                JOptionPane.showMessageDialog(this, "Không đúng định dạng tên");
+            } else if (!txtTen.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+                JOptionPane.showMessageDialog(this, "Tên không được để kí tự đặc biệt!");
+            } else if (!txtDonGia.getText().matches("[0-9]+")) {
+                JOptionPane.showMessageDialog(this, "Không đúng định dạng đơn giá");
+            } else if (txtDonViTinh.getText().matches("[0-9]+")) {
+                JOptionPane.showMessageDialog(this, "Không đúng định dạng đơn vị tính");
+            } else if (!txtDonViTinh.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+                JOptionPane.showMessageDialog(this, "Đơn vị tính không được để kí tự đặc biệt!");
+            } else {
+                Loai loai = loaiService.getOne((String) cbbLoai.getSelectedItem());
+                // bỏ KM khỏi món ăn
 //            MonAn ma = new MonAn(null, loai, null, monAnService.maTuDong(), txtTen.getText(), null, new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), 0);
-            MonAn ma = new MonAn(null, loai, monAnService.maTuDong(), txtTen.getText(), hinhAnh, new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), 0);
-
-            String add = monAnService.add(ma);
-            JOptionPane.showMessageDialog(this, add);
-            rdoListApDungActionPerformed(evt);
+                MonAn ma = new MonAn(null, loai, monAnService.maTuDong(), txtTen.getText(), hinhAnh, new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), 0);
+                int checkConfirm = JOptionPane.showConfirmDialog(this, "Xác nhận thêm!");
+                if (checkConfirm == 0) {
+                    String add = monAnService.add(ma);
+                    JOptionPane.showMessageDialog(this, add);
+                    rdoListApDungActionPerformed(evt);
+                }
+            }
         } else {
             JOptionPane.showMessageDialog(this, "vui lòng clear trước khi add");
         }
@@ -594,16 +614,25 @@ public class Form_SanPham extends javax.swing.JPanel {
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         // TODO add your handling code here:
-        String xoa = monAnService.remove(txtMa.getText());
-        JOptionPane.showMessageDialog(this, xoa);
-        rdoListNgungApDung.setSelected(true);
-        rdoListNgungApDungActionPerformed(evt);
+        int index = tbMonAn.getSelectedRow();
+        if (index < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn món cần xóa");
+        } else {
+            int checkConfirm = JOptionPane.showConfirmDialog(this, "Xác nhận xóa!");
+            if (checkConfirm == 0) {
+                String xoa = monAnService.remove(txtMa.getText());
+                JOptionPane.showMessageDialog(this, xoa);
+                rdoListNgungApDung.setSelected(true);
+                rdoListNgungApDungActionPerformed(evt);
+            }
+        }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         //t
-        int trangThai = -1;
+        String hinhAnh = selectedImagePath;
+        int trangThai;
         if (rdoApDung.isSelected()) {
             trangThai = 0;
         } else {
@@ -611,15 +640,36 @@ public class Form_SanPham extends javax.swing.JPanel {
         }
         //
         if (monAn != null) {
-            Loai loai = loaiService.getOne((String) cbbLoai.getSelectedItem());
-            //bỏ KM
+            if (txtTen.getText().isEmpty() || txtTen.getText().matches("\\s+")) {
+                JOptionPane.showMessageDialog(this, "Không được để trống tên");
+            } else if (txtDonGia.getText().isEmpty() || txtDonGia.getText().matches("\\s+")) {
+                JOptionPane.showMessageDialog(this, "Không được để trống đơn giá");
+            } else if (txtDonViTinh.getText().isEmpty() || txtDonViTinh.getText().matches("\\s+")) {
+                JOptionPane.showMessageDialog(this, "Không được để trống đơn vị tính");
+            } else if (txtTen.getText().matches("[0-9]+")) {
+                JOptionPane.showMessageDialog(this, "Không đúng định dạng tên");
+            } else if (!txtTen.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+                JOptionPane.showMessageDialog(this, "Tên không được để kí tự đặc biệt!");
+            } else if (!txtDonGia.getText().matches("[0-9]+")) {
+                JOptionPane.showMessageDialog(this, "Không đúng định dạng đơn giá");
+            } else if (txtDonViTinh.getText().matches("[0-9]+")) {
+                JOptionPane.showMessageDialog(this, "Không đúng định dạng đơn vị tính");
+            } else if (!txtDonViTinh.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+                JOptionPane.showMessageDialog(this, "Đơn vị tính không được để kí tự đặc biệt!");
+            } else {
+                Loai loai = loaiService.getOne((String) cbbLoai.getSelectedItem());
+                //bỏ KM
 //            MonAn ma = new MonAn(monAn.getId(), loai, monAn.getKhuyenMai(), monAn.getMaMonAn(), txtTen.getText(), monAn.getHinhAnh(), new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), trangThai);
-            MonAn ma = new MonAn(monAn.getId(), loai, monAn.getMaMonAn(), txtTen.getText(),
-                    monAn.getHinhAnh(), new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), trangThai);
-            String update = monAnService.update(ma, monAn.getMaMonAn());
-            JOptionPane.showMessageDialog(this, update);
-            rdoApDung.setSelected(true);
-            rdoListApDungActionPerformed(evt);
+                MonAn ma = new MonAn(monAn.getId(), loai, monAn.getMaMonAn(), txtTen.getText(),
+                        hinhAnh, new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), trangThai);
+                int checkConfirm = JOptionPane.showConfirmDialog(this, "Xác nhận update!");
+                if (checkConfirm == 0) {
+                    String update = monAnService.update(ma, monAn.getMaMonAn());
+                    JOptionPane.showMessageDialog(this, update);
+                    rdoApDung.setSelected(true);
+                    rdoListApDungActionPerformed(evt);
+                }
+            }
         } else {
             JOptionPane.showMessageDialog(this, "vui lòng chọn sản phẩm");
         }
