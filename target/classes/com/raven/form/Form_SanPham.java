@@ -101,6 +101,7 @@ public class Form_SanPham extends javax.swing.JPanel {
         txtMa.setText("");
         txtTen.setText("");
         rdoApDung.setSelected(true);
+        jLabelImage.setIcon(null);
     }
 
     private void showData(List<MonAn> listMonAn) {
@@ -193,6 +194,12 @@ public class Form_SanPham extends javax.swing.JPanel {
         rdoListApDung = new javax.swing.JRadioButton();
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
+
+        searchText1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchText1ActionPerformed(evt);
+            }
+        });
 
         jButton9.setBackground(new java.awt.Color(204, 204, 204));
         jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -699,6 +706,11 @@ public class Form_SanPham extends javax.swing.JPanel {
             jLabelImage.setIcon(new ImageIcon(image));
         }
     }//GEN-LAST:event_btnChonAnhActionPerformed
+
+    private void searchText1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchText1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_searchText1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

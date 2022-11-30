@@ -202,7 +202,7 @@ public class Form_Combo extends javax.swing.JPanel {
         txtTen.setText("");
         cbbMaNhanVien.setSelectedIndex(0);
         cbbLoaiMonAn.setSelectedIndex(0);
-        jLabelImage.setText(null);
+        jLabelImage.setIcon(null);
     }
 
     @SuppressWarnings("unchecked")
