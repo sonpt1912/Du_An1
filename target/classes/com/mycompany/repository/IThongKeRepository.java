@@ -4,9 +4,11 @@
  */
 package com.mycompany.repository;
 
+import com.mycompany.customModel.SanPhamRepose;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.MonAn;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -54,5 +56,4 @@ public interface IThongKeRepository {
     BigDecimal getDoanhThuMONTH();
 
     BigDecimal getDoanhThuYEAR();
-    
 }

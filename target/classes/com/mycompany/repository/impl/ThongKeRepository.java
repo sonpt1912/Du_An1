@@ -4,6 +4,7 @@
  */
 package com.mycompany.repository.impl;
 
+import com.mycompany.customModel.SanPhamRepose;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.hibernateUtil.HibernateUtil;

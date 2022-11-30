@@ -5,9 +5,12 @@
  */
 package com.raven.form;
 
+import com.mycompany.customModel.SanPhamRepose;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.impl.ThongKeService;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -17,18 +20,25 @@ public class Form_ThongKe extends javax.swing.JPanel {
 
     private DefaultTableModel dtmSP = new DefaultTableModel();
     private ThongKeService thongKeService = new ThongKeService();
-    private List<MonAn> listMonAn = thongKeService.getAllSanPham();
+    private List<SanPhamRepose> listSanPham = new ArrayList<>();
     private DefaultComboBoxModel dcbmNgayThang = new DefaultComboBoxModel();
     private List<String> listTenNgayThang = new ArrayList<>();
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private java.util.Date today = new java.util.Date();
 
     public Form_ThongKe(NhanVien nv) {
         initComponents();
         String headerSP[] = {"STT", "MaSP", "Tên SP", "Đơn giá", "Trạng thái"};
         tbSanPham.setModel(dtmSP);
+        txtNgayBatDau.setDate(Date.valueOf("2022-11-01"));
+        txtNgayKetThuc.setDate(today);
         dtmSP.setColumnIdentifiers(headerSP);
         cbbNgayThang.setModel(dcbmNgayThang);
         cbbDate();
-        showDataSanPham(listMonAn, 1);
+        String ngayBatDau = dateFormat.format(txtNgayBatDau.getDate());
+        String ngayKetThuc = dateFormat.format(txtNgayKetThuc.getDate());
+        listSanPham = thongKeService.getAllSanPham(Date.valueOf(ngayBatDau), Date.valueOf(ngayKetThuc));
+        showDataSanPham(listSanPham, 1);
         showSoLuongDon();
     }
 
@@ -41,9 +51,9 @@ public class Form_ThongKe extends javax.swing.JPanel {
         scrollBar1 = new com.raven.swing.ScrollBar();
         panelBorder1 = new com.raven.swing.PanelBorder();
         jLabel1 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        txtNgayBatDau = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        txtNgayKetThuc = new com.toedter.calendar.JDateChooser();
         jPanel5 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         lbDonHangHomNay1 = new javax.swing.JLabel();
@@ -114,13 +124,13 @@ public class Form_ThongKe extends javax.swing.JPanel {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(57, Short.MAX_VALUE)
+                .addContainerGap(55, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(58, 58, 58)
                         .addComponent(lbDonHangHomNay1)
-                        .addContainerGap(142, Short.MAX_VALUE))
+                        .addContainerGap(140, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(82, 82, 82))))
@@ -167,7 +177,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                         .addComponent(jLabel12)
                         .addGap(76, 76, 76)
                         .addComponent(lbDonHangHomNay2)
-                        .addGap(0, 30, Short.MAX_VALUE)))
+                        .addGap(0, 26, Short.MAX_VALUE)))
                 .addGap(68, 68, 68))
         );
         jPanel6Layout.setVerticalGroup(
@@ -194,11 +204,11 @@ public class Form_ThongKe extends javax.swing.JPanel {
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBorder1Layout.setVerticalGroup(
@@ -206,9 +216,9 @@ public class Form_ThongKe extends javax.swing.JPanel {
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -261,7 +271,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addComponent(lbHoaDonHuyWEEK)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -427,7 +437,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(27, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(lbHoaDonHuyDAY)
@@ -612,10 +622,10 @@ public class Form_ThongKe extends javax.swing.JPanel {
 //        }
     }//GEN-LAST:event_cbbNgayThangActionPerformed
 
-    private void showDataSanPham(List<MonAn> listMonAn, int stt) {
+    private void showDataSanPham(List<SanPhamRepose> listSanPham, int stt) {
         dtmSP.setRowCount(0);
-        for (MonAn monAn : listMonAn) {
-            dtmSP.addRow(monAn.toDataRowThongKe(stt));
+        for (SanPhamRepose monAn : listSanPham) {
+            dtmSP.addRow(monAn.toShowData(stt));
             stt++;
         }
     }
@@ -664,8 +674,6 @@ public class Form_ThongKe extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cbbNgayThang;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -709,5 +717,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
     private javax.swing.JRadioButton rdTatCaHoaDon;
     private com.raven.swing.ScrollBar scrollBar1;
     private javax.swing.JTable tbSanPham;
+    private com.toedter.calendar.JDateChooser txtNgayBatDau;
+    private com.toedter.calendar.JDateChooser txtNgayKetThuc;
     // End of variables declaration//GEN-END:variables
 }

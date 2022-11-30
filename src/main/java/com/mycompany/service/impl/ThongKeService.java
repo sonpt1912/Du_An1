@@ -4,12 +4,15 @@
  */
 package com.mycompany.service.impl;
 
+import com.mycompany.customModel.SanPhamRepose;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.repository.IThongKeRepository;
+import com.mycompany.repository.impl.CalledStoreProceducreThongKe;
 import com.mycompany.repository.impl.ThongKeRepository;
 import com.mycompany.service.IThongKeService;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -17,6 +20,8 @@ import java.util.List;
  * @author PTS
  */
 public class ThongKeService implements IThongKeService {
+
+    private CalledStoreProceducreThongKe calledStoreProceducre = new CalledStoreProceducreThongKe();
 
     private ThongKeRepository thongKeRepository = new ThongKeRepository();
 
@@ -118,6 +123,19 @@ public class ThongKeService implements IThongKeService {
     @Override
     public BigDecimal getDoanhThuYEAR() {
         return thongKeRepository.getDoanhThuYEAR();
+    }
+
+    public List<SanPhamRepose> getAllSanPham(Date ngaBatDau, Date ngayKetThuc) {
+        List<SanPhamRepose> list = calledStoreProceducre.calledStore(ngaBatDau, ngayKetThuc);
+        list.sort((o1, o2) -> {
+            if (o1.getMa().equals(o2.getMa())) {
+                return o1.getMa().compareTo(o2.getMa());
+            } else {
+                return o2.getSoLuong() - o1.getSoLuong();
+            }
+        });
+
+        return list;
     }
 
 }

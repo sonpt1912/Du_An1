@@ -4,9 +4,11 @@
  */
 package com.mycompany.service;
 
+import com.mycompany.customModel.SanPhamRepose;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.MonAn;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -54,4 +56,7 @@ public interface IThongKeService {
     BigDecimal getDoanhThuMONTH();
 
     BigDecimal getDoanhThuYEAR();
+
+    List<SanPhamRepose> getAllSanPham(Date ngaBatDau, Date ngayKetThuc);
+
 }
