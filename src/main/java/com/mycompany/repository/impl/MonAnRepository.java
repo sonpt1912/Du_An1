@@ -136,6 +136,15 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
         }
     }
 
+    // searchMonAnTheoTen
+    public List<MonAn> searchMonAnTheoTen(String ten) {
+        String hql = fromTable + "WHERE tenMonAn like :tenMonAnMoi";
+        Query query = session.createQuery(hql);
+        query.setParameter("tenMonAnMoi", "%" + ten + "%");
+        List<MonAn> monAns = query.getResultList();
+        return monAns;
+    }
+
     public List<MonAn> getAllMonAnByTrangThai(int trangThai) {
         String hql = fromTable + "WHERE trangThai = :TrangThai ORDER BY maMonAn";
         Query query = session.createQuery(hql);
@@ -175,5 +184,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
             return listMA;
         }
     }
-
+//    public static void main(String[] args) {
+//        new MonAnRepository().searchMonAnTheoTen("C").forEach(s -> System.out.println(s.toString()));
+//    }
 }

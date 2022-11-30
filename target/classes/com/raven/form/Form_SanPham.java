@@ -160,7 +160,6 @@ public class Form_SanPham extends javax.swing.JPanel {
         panelBorder1 = new com.raven.swing.PanelBorder();
         searchText1 = new com.raven.swing.SearchText();
         jLabel1 = new javax.swing.JLabel();
-        jButton9 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -195,15 +194,16 @@ public class Form_SanPham extends javax.swing.JPanel {
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
 
+        searchText1.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                searchText1CaretUpdate(evt);
+            }
+        });
         searchText1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchText1ActionPerformed(evt);
             }
         });
-
-        jButton9.setBackground(new java.awt.Color(204, 204, 204));
-        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton9.setText("Search");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -470,10 +470,8 @@ public class Form_SanPham extends javax.swing.JPanel {
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27)
-                                .addComponent(jButton9)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 636, Short.MAX_VALUE))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane5)
@@ -500,9 +498,7 @@ public class Form_SanPham extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton9)))
+                    .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addComponent(jLabel2)
                 .addGap(8, 8, 8)
@@ -709,8 +705,19 @@ public class Form_SanPham extends javax.swing.JPanel {
 
     private void searchText1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchText1ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_searchText1ActionPerformed
+
+    private void searchText1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_searchText1CaretUpdate
+        // TODO add your handling code here:
+        String ten = searchText1.getText();
+        if (ten.isEmpty() || ten.matches("\\s+")) {
+            JOptionPane.showMessageDialog(this, "Không được để trống thông tin");
+        } else {
+            listMonAn = monAnService.getMonAnTheoTen(ten);
+            showData(listMonAn);
+        }
+    }//GEN-LAST:event_searchText1CaretUpdate
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -724,7 +731,6 @@ public class Form_SanPham extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cbbLoai;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
