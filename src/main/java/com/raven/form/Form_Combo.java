@@ -135,8 +135,8 @@ public class Form_Combo extends javax.swing.JPanel {
                 int row,
                 int column) {
             TableColumn tbComBos = tbComBo.getColumn("HÌNH ẢNH");
-            tbComBos.setMaxWidth(100);
-            tbComBos.setMinWidth(100);
+            tbComBos.setMaxWidth(60);
+            tbComBos.setMinWidth(60);
             tbComBo.setRowHeight(60);
 
             return (Component) value;
@@ -202,7 +202,7 @@ public class Form_Combo extends javax.swing.JPanel {
         txtTen.setText("");
         cbbMaNhanVien.setSelectedIndex(0);
         cbbLoaiMonAn.setSelectedIndex(0);
-        jLabelImage.setIcon(null);
+        jLabelImage1.setIcon(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -231,8 +231,8 @@ public class Form_Combo extends javax.swing.JPanel {
         rdoApDung = new javax.swing.JRadioButton();
         rdoChoApDung = new javax.swing.JRadioButton();
         rdoNgungApDung = new javax.swing.JRadioButton();
-        jLabelImage = new javax.swing.JLabel();
         btnChonAnh = new javax.swing.JButton();
+        jLabelImage1 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbChonMon = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -327,8 +327,6 @@ public class Form_Combo extends javax.swing.JPanel {
         buttonGroup1.add(rdoNgungApDung);
         rdoNgungApDung.setText("Ngừng áp dụng");
 
-        jLabelImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         btnChonAnh.setBackground(new java.awt.Color(204, 204, 204));
         btnChonAnh.setText("Chọn Ảnh:");
         btnChonAnh.addActionListener(new java.awt.event.ActionListener() {
@@ -336,6 +334,8 @@ public class Form_Combo extends javax.swing.JPanel {
                 btnChonAnhActionPerformed(evt);
             }
         });
+
+        jLabelImage1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -379,15 +379,15 @@ public class Form_Combo extends javax.swing.JPanel {
                                         .addGap(17, 17, 17)))))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(rdoNgungApDung)
-                            .addComponent(btnClear)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbbMaNhanVien, 0, 119, Short.MAX_VALUE)
-                            .addComponent(jLabelImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(cbbMaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(rdoNgungApDung)
+                                .addComponent(btnClear)))))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -417,8 +417,8 @@ public class Form_Combo extends javax.swing.JPanel {
                             .addComponent(jLabel8))
                         .addGap(14, 14, 14))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -615,7 +615,7 @@ public class Form_Combo extends javax.swing.JPanel {
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(26, Short.MAX_VALUE))
+                        .addContainerGap(21, Short.MAX_VALUE))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -675,6 +675,16 @@ public class Form_Combo extends javax.swing.JPanel {
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         clear();
     }//GEN-LAST:event_btnClearActionPerformed
+    private void fill() {
+        txtMa.setText(comBo.getMaCB());
+        txtTen.setText(comBo.getTenCB());
+        txtDonGia.setText(comBo.getDonGia().toString());
+        cbbMaNhanVien.setSelectedItem(comBo.getNhanVien().getMa());
+        ImageIcon imageicon = new ImageIcon(comBo.getHinhAnh());
+        Image img = imageicon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        jLabelImage1.setIcon(new ImageIcon(img));
+        jLabelImage1.setIcon(imageicon);
+    }
 
     private void tbComBoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbComBoMouseClicked
         // TODO add your handling code here:
@@ -684,16 +694,16 @@ public class Form_Combo extends javax.swing.JPanel {
         // lấy danh sách ct combo
         listCTComBo = chiTietComBoService.getAllByComBo(comBo);
         showDataCTComBo(listCTComBo);
-
+        fill();
         // set combo ở ô text field
-        txtMa.setText(comBo.getMaCB());
-        txtTen.setText(comBo.getTenCB());
-        txtDonGia.setText(comBo.getDonGia().toString());
-        cbbMaNhanVien.setSelectedItem(comBo.getNhanVien().getMa());
-        ImageIcon imageicon = new ImageIcon(comBo.getHinhAnh());
-        Image img = imageicon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        jLabelImage.setIcon(new ImageIcon(img));
-        jLabelImage.setIcon(imageicon);
+//        txtMa.setText(comBo.getMaCB());
+//        txtTen.setText(comBo.getTenCB());
+//        txtDonGia.setText(comBo.getDonGia().toString());
+//        cbbMaNhanVien.setSelectedItem(comBo.getNhanVien().getMa());
+//        ImageIcon imageicon = new ImageIcon(comBo.getHinhAnh());
+//        Image img = imageicon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+//        jLabelImage.setIcon(new ImageIcon(img));
+//        jLabelImage.setIcon(imageicon);
     }//GEN-LAST:event_tbComBoMouseClicked
 
     private void tbChonMonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbChonMonMouseClicked
@@ -867,9 +877,9 @@ public class Form_Combo extends javax.swing.JPanel {
             //Display image on jlable
             ImageIcon ii = new ImageIcon(selectedImagePath);
 //            Resize image to fit jlabel
-            Image image = ii.getImage().getScaledInstance(jLabelImage.getWidth(), jLabelImage.getHeight(), Image.SCALE_SMOOTH);
+            Image image = ii.getImage().getScaledInstance(jLabelImage1.getWidth(), jLabelImage1.getHeight(), Image.SCALE_SMOOTH);
 //
-            jLabelImage.setIcon(new ImageIcon(image));
+            jLabelImage1.setIcon(new ImageIcon(image));
         }
     }//GEN-LAST:event_btnChonAnhActionPerformed
 
@@ -895,7 +905,7 @@ public class Form_Combo extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelImage;
+    private javax.swing.JLabel jLabelImage1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
