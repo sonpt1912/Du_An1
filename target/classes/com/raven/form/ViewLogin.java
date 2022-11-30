@@ -37,31 +37,16 @@ public class ViewLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtUser = new javax.swing.JTextField();
-        txtMatKhau = new javax.swing.JPasswordField();
         btnDangNhap = new javax.swing.JButton();
         btnQuenMatKhau = new javax.swing.JButton();
-        cbHienThiMatKhau = new javax.swing.JCheckBox();
+        txtUser = new com.raven.swing.textfield.TextField();
+        txtMatKhau = new com.raven.swing.textfield.PasswordField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOGIN");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 153, 153));
-        jLabel2.setText("Tài Khoản :");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, -1, -1));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 153, 153));
-        jLabel3.setText("Mật Khẩu :");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, -1, -1));
-        getContentPane().add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 200, -1));
-        getContentPane().add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 200, -1));
 
         btnDangNhap.setBackground(new java.awt.Color(204, 204, 255));
         btnDangNhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -83,10 +68,12 @@ public class ViewLogin extends javax.swing.JFrame {
         });
         getContentPane().add(btnQuenMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, -1, 40));
 
-        cbHienThiMatKhau.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cbHienThiMatKhau.setForeground(new java.awt.Color(255, 51, 51));
-        cbHienThiMatKhau.setText("Hiển Thị Mật Khẩu");
-        getContentPane().add(cbHienThiMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, -1, -1));
+        txtUser.setForeground(new java.awt.Color(51, 51, 51));
+        getContentPane().add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 300, 40));
+
+        txtMatKhau.setForeground(new java.awt.Color(51, 51, 51));
+        txtMatKhau.setShowAndHide(true);
+        getContentPane().add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 300, 40));
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/rsz_doremon.jpg"))); // NOI18N
@@ -158,11 +145,8 @@ public class ViewLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangNhap;
     private javax.swing.JButton btnQuenMatKhau;
-    private javax.swing.JCheckBox cbHienThiMatKhau;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField txtMatKhau;
-    private javax.swing.JTextField txtUser;
+    private com.raven.swing.textfield.PasswordField txtMatKhau;
+    private com.raven.swing.textfield.TextField txtUser;
     // End of variables declaration//GEN-END:variables
 }
