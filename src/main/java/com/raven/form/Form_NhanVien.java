@@ -135,32 +135,30 @@ public class Form_NhanVien extends javax.swing.JPanel {
         int monh = 0;
         int year = 0;
         for (int i = 0; i < 2; i++) {
-            day = Integer.valueOf(birday[0]);
-            monh = Integer.valueOf(birday[2]);
-            year = Integer.valueOf(birday[1]);
+            day = Integer.valueOf(birday[2]);
+            monh = Integer.valueOf(birday[1]);
+            year = Integer.valueOf(birday[0]);
         }
+       
         LocalDate ngaySinh = LocalDate.of(year, monh, day);
         LocalDate ngayHienTai = LocalDate.now();
+         JOptionPane.showConfirmDialog(this, Period.between(ngaySinh, ngayHienTai).getYears());
         if (txtDiaChi.getText().isEmpty()) {
-            return "không được để trống";
+            return "địa chỉ không được để trống";
         } else if (txtEmail.getText().isEmpty()) {
-            return "không được để trống";
+            return "email không được để trống";
         } else if (txtHo.getText().isEmpty()) {
-            return "không được để trống";
-        } else if (txtMatKhau.getText().isEmpty()) {
-            return "không được để trống";
+            return "họ không được để trống";
         } else if (txtTen.getText().isEmpty()) {
-            return "không được để trống";
+            return "tên không được để trống";
         } else if (txtTenDem.getText().isEmpty()) {
-            return "không được để trống";
+            return "tên đệm không được để trống";
         } else if (txtMatKhau.getText().isEmpty()) {
-            return "không được để trống";
+            return "mật khẩu không được để trống";
         } else if (txtSdt.getText().isEmpty()) {
-            return "không được để trống";
+            return "sdt không được để trống";
         } else if (simpleDateFormat.format(txtNgaySinh.getDate()).isEmpty()) {
-            return "không được để trống";
-        } else if (!simpleDateFormat.format(txtNgaySinh.getDate()).matches("")) {
-            return "không được để trống";
+            return "ngày không được để trống";
         } else if (!txtHo.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
             return "họ không đúng định dạng";
         } else if (!txtTenDem.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
