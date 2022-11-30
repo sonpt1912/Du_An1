@@ -33,20 +33,20 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @ToString
 public class KhuyenMai {
-    
+
     @Id
     @GenericGenerator(name = "generator", strategy = "guid", parameters = {})
     @GeneratedValue(generator = "generator")
     @Column(name = "IdKM", columnDefinition = "uniqueidentifier", nullable = false)
     private String id;
-    
+
     @ManyToOne
     @JoinColumn(name = "IdNV", nullable = false)
     private NhanVien nhanVien;
-    
+
     @Column(name = "MaKM", nullable = false)
     private String maKhuyenMai;
-    
+
     @Column(name = "TenKM", nullable = false)
     private String tenKhuyenMai;
 
@@ -54,22 +54,22 @@ public class KhuyenMai {
 //    private Date thoiGianBD;
     @Column(name = "ThoiGianBD", nullable = false)
     private Date thoiGianBD;
-    
+
     @Column(name = "ThoiGianKT", nullable = false)
     private Date thoiGianKT;
-    
+
     @Column(name = "LoaiKM", nullable = false)
     private String loaiKhuyenMai;
-    
+
     @Column(name = "GtriKM", nullable = false)
     private BigDecimal giaTriKM;
-    
+
     @Column(name = "GhiChu")
     private String ghiChu;
-    
+
     @Column(name = "TrangThai")
     private Integer trangThai;
-    
+
     private String trangThaiKM(int trangThai) {
         if (trangThai == 0) {
             return "Áp dụng";
@@ -79,9 +79,9 @@ public class KhuyenMai {
             return "Không trong thời gian áp dụng thời gian áp dụng";
         }
     }
-    
+
     public Object[] toDataRowViewKM(int stt) {
-        return new Object[]{stt, maKhuyenMai, tenKhuyenMai, trangThaiKM(this.trangThai)};
+        return new Object[]{stt, maKhuyenMai, tenKhuyenMai, trangThaiKM(this.trangThai), (ghiChu.isEmpty() ? "" : ghiChu)};
     }
-    
+
 }
