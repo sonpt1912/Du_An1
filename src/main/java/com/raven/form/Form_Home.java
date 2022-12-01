@@ -178,7 +178,7 @@ public class Form_Home extends javax.swing.JPanel {
         jScrollPane7 = new javax.swing.JScrollPane();
         tbBan = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        btnTachBan = new javax.swing.JButton();
+        btnThemBan = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
         btnThanhToan = new javax.swing.JButton();
         btnHuy = new javax.swing.JButton();
@@ -411,11 +411,11 @@ public class Form_Home extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Bàn");
 
-        btnTachBan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnTachBan.setText("Tách Bàn");
-        btnTachBan.addActionListener(new java.awt.event.ActionListener() {
+        btnThemBan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnThemBan.setText("Thêm bàn");
+        btnThemBan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTachBanActionPerformed(evt);
+                btnThemBanActionPerformed(evt);
             }
         });
 
@@ -528,7 +528,7 @@ public class Form_Home extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnTachBan)
+                                .addComponent(btnThemBan)
                                 .addGap(32, 32, 32)
                                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelBorder1Layout.createSequentialGroup()
@@ -656,7 +656,7 @@ public class Form_Home extends javax.swing.JPanel {
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnTachBan)
+                            .addComponent(btnThemBan)
                             .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -747,6 +747,13 @@ public class Form_Home extends javax.swing.JPanel {
         // TODO add your handling code here:
         int index = tbHoaDon.getSelectedRow();
         HoaDonResponse hdr = lstHoaDonResponses.get(index);
+        if (hdr.getTrangThai() != 0) {
+            cbChuyenKhoan.setEnabled(false);
+            cbTienMat.setEnabled(false);
+        } else {
+            cbChuyenKhoan.setEnabled(true);
+            cbTienMat.setEnabled(true);
+        }
         if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
             if ("".equals(lbMaHDThanhToan.getText())) {
                 return;
@@ -767,9 +774,6 @@ public class Form_Home extends javax.swing.JPanel {
             // set lại tiền thừa với tổng tiền  = 0.0 để cho dữ liệu được chính xác hơn
             txtTienThua.setText("0");
             txtTongTien.setText("0");
-            // gọi lại hàm để dữ liệu được cập nhập
-            fillTienThuaChuyenKhoan();
-            fillTienThuaTienMat();
             // lấy ra hoá đơn response đang chọn
             lbMaHDThanhToan.setText(hdr.getMaHoaDon());
             lbMaHD.setText(hdr.getMaHoaDon());
@@ -822,6 +826,9 @@ public class Form_Home extends javax.swing.JPanel {
             lstHDCTResponses = hdctResponseService.getAll(hd);
             showDataHDCT(lstHDCTResponses);
             fillTongTien();
+            // gọi lại hàm để dữ liệu được cập nhập
+            fillTienThuaChuyenKhoan();
+            fillTienThuaTienMat();
         }
     }//GEN-LAST:event_tbHoaDonMouseClicked
 
@@ -877,23 +884,30 @@ public class Form_Home extends javax.swing.JPanel {
         // lếu ô tếch phiuu rỗng thì set dữ liệu được lấy về = 0
         String tienMat = txtTienMat.getText();
         String chuyenKhoan = txtChuyenKhoan.getText();
+
         if ("".equals(tienMat)) {
             tienMat = "0";
         }
         if ("".equals(chuyenKhoan)) {
             chuyenKhoan = "0";
         }
+        BigDecimal tienMatBig = new BigDecimal(tienMat);
+        BigDecimal chuyenKhoanBig = new BigDecimal(chuyenKhoan);
+        BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
+        int check = (tienMatBig.add(chuyenKhoanBig)).compareTo(tongTien);
+        System.out.println(tongTien);
+        System.out.println(tienMatBig.add(chuyenKhoanBig));
+        System.out.println(check);
         //check trường hợp
         if ("".equals(lbMaHDThanhToan.getText())) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn chưa thanh toán");
         } else if (cbChuyenKhoan.isSelected() == false && cbTienMat.isSelected() == false) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hình thức thanh toán");
-        } else if (Double.valueOf(txtTongTien.getText()) > (Double.valueOf(tienMat) + Double.valueOf(chuyenKhoan))) {
+        } else if (check != 1) {
             JOptionPane.showMessageDialog(this, "Chưa đủ tiền");
         } else {
             String hinhThucThanhToan = "";
             // lấy tổng tiền từ ô tếch phiu và ép kiểu
-            Double tongTien = Double.valueOf(txtTongTien.getText());
             // gọi hàm lấy ngày từ máy tính
             String ngayThanhToan = new HoaDonUtil().layNgay();
 
@@ -906,7 +920,7 @@ public class Form_Home extends javax.swing.JPanel {
             hd.setTrangThai(1);
 //            hd.setBan(ban);
             hd.setNhanVien(nv);
-            hd.setTongTien(BigDecimal.valueOf(tongTien));
+            hd.setTongTien(tongTien);
             hd.setNgayThanhToan(Date.valueOf(ngayThanhToan));
 
             // check trường hợp ô checkBox
@@ -1263,10 +1277,11 @@ public class Form_Home extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtSearchCaretUpdate
 
-    private void btnTachBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTachBanActionPerformed
+    private void btnThemBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemBanActionPerformed
         // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnTachBanActionPerformed
+//        Form_Ban viewBan = new Form_Ban(nhanV);
+//        viewBan.
+    }//GEN-LAST:event_btnThemBanActionPerformed
 // sự kiện của chuột phải vào hoá đơn
     private void gopHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gopHDActionPerformed
         // TODO add your handling code here:
@@ -1325,7 +1340,22 @@ public class Form_Home extends javax.swing.JPanel {
 
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
-        // lấy dữ liệut ừ ô tếch phiu
+//        String tienMat = txtTienMat.getText();
+//        String chuyenKhoan = txtChuyenKhoan.getText();
+//        // nếu dữ liệu rỗng thì set ngầm dữ liệu lấy về bằng = 0
+//        if ("".equals(tienMat)) {
+//            tienMat = "0";
+//        }
+//        if ("".equals(chuyenKhoan)) {
+//            chuyenKhoan = "0";
+//        }
+//        try {
+//            Double tienThua = Double.valueOf(txtTienThua.getText());
+//            tienThua = (Double.valueOf(tienMat) + (Double.valueOf(chuyenKhoan))) - Double.valueOf(txtTongTien.getText());
+//            txtTienThua.setText(tienThua.toString());
+//        } catch (Exception e) {
+//        }
+//        txtTienMat.setText("0");
         String tienMat = txtTienMat.getText();
         String chuyenKhoan = txtChuyenKhoan.getText();
         // nếu dữ liệu rỗng thì set ngầm dữ liệu lấy về bằng = 0
@@ -1336,8 +1366,12 @@ public class Form_Home extends javax.swing.JPanel {
             chuyenKhoan = "0";
         }
         try {
-            Double tienThua = Double.valueOf(txtTienThua.getText());
-            tienThua = (Double.valueOf(tienMat) + (Double.valueOf(chuyenKhoan))) - Double.valueOf(txtTongTien.getText());
+            BigDecimal tienMatB = new BigDecimal(tienMat);
+            BigDecimal tienCK = new BigDecimal(chuyenKhoan);
+            BigDecimal tienThua = new BigDecimal(txtTienThua.getText());
+            BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
+            tienMatB.add(tienCK);
+            tienThua = tienMatB.subtract(tongTien);
             txtTienThua.setText(tienThua.toString());
         } catch (Exception e) {
         }
@@ -1346,8 +1380,24 @@ public class Form_Home extends javax.swing.JPanel {
 
     private void fillTienThuaTienMat() {
 //        txtChuyenKhoan.setText("0");
+//        String chuyenKhoan = txtChuyenKhoan.getText();
+//        String tienMat = txtTienMat.getText();
+//        if ("".equals(chuyenKhoan)) {
+//            chuyenKhoan = "0";
+//        }
+//        if ("".equals(tienMat)) {
+//            tienMat = "0";
+//        }
+//        try {
+//            Double tienThua = Double.valueOf(txtTienThua.getText());
+//            tienThua = (Double.valueOf(tienMat) + Double.valueOf(chuyenKhoan)) - Double.valueOf(txtTongTien.getText());
+//            txtTienThua.setText(tienThua.toString());
+//        } catch (Exception e) {
+//        }
+//        fillTongTien();
+        txtChuyenKhoan.setText("0");
         String chuyenKhoan = txtChuyenKhoan.getText();
-        String tienMat = txtTienMat.getText();
+        String tienMat = txtTienMat.getText();//500
         if ("".equals(chuyenKhoan)) {
             chuyenKhoan = "0";
         }
@@ -1355,21 +1405,37 @@ public class Form_Home extends javax.swing.JPanel {
             tienMat = "0";
         }
         try {
-            Double tienThua = Double.valueOf(txtTienThua.getText());
-            tienThua = (Double.valueOf(tienMat) + Double.valueOf(chuyenKhoan)) - Double.valueOf(txtTongTien.getText());
+            BigDecimal tienMatB = new BigDecimal(tienMat);
+            BigDecimal tienCK = new BigDecimal(chuyenKhoan);
+            BigDecimal tienThua = new BigDecimal(txtTienThua.getText());
+            BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
+            tienMatB.add(tienCK);
+            tienThua = tienMatB.subtract(tongTien);
+//            System.out.println("Tiền mặt-" + tienMatB);
+//            System.out.println("Tổng tiền-" + tongTien);
             txtTienThua.setText(tienThua.toString());
         } catch (Exception e) {
         }
     }
 
     private void fillTongTien() {
-        Double tongTien = Double.valueOf(0);
+//        Double tongTien = Double.valueOf(0);
+//        for (HoaDonChiTietResponse lstHDCTResponse : lstHDCTResponses) {
+//            String giaCB = lstHDCTResponse.getDonGiaCombo().toString();
+//            String giaMA = lstHDCTResponse.getDonGiaMonAn().toString();
+//            tongTien += (Double.valueOf(giaCB) * lstHDCTResponse.getSoLuongCombo()) + (Double.valueOf(giaMA) * lstHDCTResponse.getSoLuongMonAn());
+//        }
+//        txtTongTien.setText(tongTien.toString());
+        BigDecimal tongTien = BigDecimal.valueOf(0);
+        BigDecimal tienMA = BigDecimal.valueOf(0);
+        BigDecimal tienCB = BigDecimal.valueOf(0);
         for (HoaDonChiTietResponse lstHDCTResponse : lstHDCTResponses) {
-            String giaCB = lstHDCTResponse.getDonGiaCombo().toString();
-            String giaMA = lstHDCTResponse.getDonGiaMonAn().toString();
-            tongTien += (Double.valueOf(giaCB) * lstHDCTResponse.getSoLuongCombo()) + (Double.valueOf(giaMA) * lstHDCTResponse.getSoLuongMonAn());
+            BigDecimal soLuongMA = new BigDecimal(lstHDCTResponse.getSoLuongMonAn());
+            BigDecimal soLuongCB = new BigDecimal(lstHDCTResponse.getSoLuongCombo());
+            tienMA = tienMA.add(lstHDCTResponse.getDonGiaMonAn().multiply(soLuongMA));
+            tienCB = tienCB.add(lstHDCTResponse.getDonGiaCombo().multiply(soLuongCB));
         }
-        txtTongTien.setText(tongTien.toString());
+        txtTongTien.setText(String.valueOf(tienCB.add(tienMA)));
     }
 
     private void loadTableCombo() {
@@ -1438,6 +1504,7 @@ public class Form_Home extends javax.swing.JPanel {
             dtmCombo.addRow(comboResponse.toDataRow(stt));
         }
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem GopBan;
@@ -1446,9 +1513,9 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSearchKH;
-    private javax.swing.JButton btnTachBan;
     private javax.swing.JButton btnTaoHoaDon;
     private javax.swing.JButton btnThanhToan;
+    private javax.swing.JButton btnThemBan;
     private javax.swing.JButton btnThemKH;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox cbChuyenKhoan;

@@ -72,8 +72,11 @@ public class Form_Ban extends javax.swing.JPanel {
         KhuVuc khuVuc = khuVucService.getOne(cbbMaKhuVuc.getSelectedItem().toString());
         ban.setKv(khuVuc);
         ban.setMaBan(Integer.valueOf(txtMa.getText()));
-        ban.setSoLuongChoNgoi(Integer.valueOf(txtSoLuong.getText()));
-
+        String soLuong = txtSoLuong.getText();
+        if ("".equals(soLuong)) {
+            soLuong = "0";
+        }
+        ban.setSoLuongChoNgoi(Integer.valueOf(soLuong));
         if (radioCoNguoi.isSelected()) {
             ban.setTrangThai(1);
         } else {
@@ -382,10 +385,56 @@ public class Form_Ban extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        Ban ban = banNew();
-        JOptionPane.showMessageDialog(this, banService.add(ban));
-        listBan = banService.getAll();
-        showData(listBan);
+        if ("".equals(txtMa.getText())) {
+            JOptionPane.showMessageDialog(this, "Mã không được trống");
+            return;
+        }
+        if (!txtMa.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Mã phải là số");
+            return;
+        }
+        if (null != banService.getOne(txtMa.getText())) {
+            JOptionPane.showMessageDialog(this, "Mã trùng");
+            return;
+        }
+        if ("".equals(txtSoLuong.getText())) {
+            JOptionPane.showMessageDialog(this, "Số lượng không được trống");
+            return;
+        }
+        if (!txtSoLuong.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải là số");
+            return;
+        }
+        if (Integer.valueOf(txtSoLuong.getText()) < 1) {
+            JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi không được dưới 1");
+            return;
+        }
+        if ("".equals(txtTenKhuVuc.getText())) {
+            JOptionPane.showMessageDialog(this, "Tên khu vực không được trống");
+            return;
+        }
+        int check = JOptionPane.showConfirmDialog(this, "Bạn có muốn thêm không?");
+        if (JOptionPane.NO_OPTION == check) {
+            return;
+        } else if (check == JOptionPane.CLOSED_OPTION) {
+            return;
+        } else if (check == JOptionPane.CANCEL_OPTION) {
+            return;
+        } else {
+            Ban ban = new Ban();
+            KhuVuc khuVuc = khuVucService.getOne(cbbMaKhuVuc.getSelectedItem().toString());
+            ban.setKv(khuVuc);
+            ban.setMaBan(Integer.valueOf(txtMa.getText()));
+            ban.setSoLuongChoNgoi(Integer.valueOf(txtSoLuong.getText()));
+            if (radioCoNguoi.isSelected()) {
+                ban.setTrangThai(1);
+            } else {
+                ban.setTrangThai(0);
+            }
+            JOptionPane.showMessageDialog(this, banService.add(ban));
+            listBan = banService.getAll();
+            showData(listBan);
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnLamMoiKhuVucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiKhuVucActionPerformed
@@ -421,10 +470,48 @@ public class Form_Ban extends javax.swing.JPanel {
         if (index < 0) {
             JOptionPane.showMessageDialog(this, "Chọn data cần sửa!");
         } else {
-            Ban ban = banNew();
-            JOptionPane.showMessageDialog(this, banService.update(ban, txtMa.getText()));
-            listBan = banService.getAll();
-            showData(listBan);
+            if (null != banService.getOne(txtMa.getText())) {
+                JOptionPane.showMessageDialog(this, "Mã trùng");
+                return;
+            }
+            if ("".equals(txtSoLuong.getText())) {
+                JOptionPane.showMessageDialog(this, "Số lượng không được trống");
+                return;
+            }
+            if (!txtSoLuong.getText().matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Số lượng phải là số");
+                return;
+            }
+            if (Integer.valueOf(txtSoLuong.getText()) < 1) {
+                JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi không được dưới 1");
+                return;
+            }
+            if ("".equals(txtTenKhuVuc.getText())) {
+                JOptionPane.showMessageDialog(this, "Tên khu vực không được trống");
+                return;
+            }
+            int check = JOptionPane.showConfirmDialog(this, "Bạn có sửa không?");
+            if (JOptionPane.NO_OPTION == check) {
+                return;
+            } else if (check == JOptionPane.CLOSED_OPTION) {
+                return;
+            } else if (check == JOptionPane.CANCEL_OPTION) {
+                return;
+            } else {
+                Ban ban = new Ban();
+                KhuVuc khuVuc = khuVucService.getOne(cbbMaKhuVuc.getSelectedItem().toString());
+                ban.setKv(khuVuc);
+                ban.setMaBan(Integer.valueOf(txtMa.getText()));
+                ban.setSoLuongChoNgoi(Integer.valueOf(txtSoLuong.getText()));
+                if (radioCoNguoi.isSelected()) {
+                    ban.setTrangThai(1);
+                } else {
+                    ban.setTrangThai(0);
+                }
+                JOptionPane.showMessageDialog(this, banService.update(ban, txtMa.getText()));
+                listBan = banService.getAll();
+                showData(listBan);
+            }
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
@@ -433,9 +520,36 @@ public class Form_Ban extends javax.swing.JPanel {
         if (index < 0) {
             JOptionPane.showMessageDialog(this, "Chọn data cần xoá!");
         } else {
-            JOptionPane.showMessageDialog(this, banService.remove(txtMa.getText()));
-            listBan = banService.getAll();
-            showData(listBan);
+            if ("".equals(txtMa.getText())) {
+                JOptionPane.showMessageDialog(this, "Mã không được trống");
+                return;
+            }
+            if (!txtMa.getText().matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Mã phải là số");
+                return;
+            }
+            int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?");
+            if (JOptionPane.NO_OPTION == check) {
+                return;
+            } else if (check == JOptionPane.CLOSED_OPTION) {
+                return;
+            } else if (check == JOptionPane.CANCEL_OPTION) {
+                return;
+            } else {
+                Ban ban = new Ban();
+                KhuVuc khuVuc = khuVucService.getOne(cbbMaKhuVuc.getSelectedItem().toString());
+                ban.setKv(khuVuc);
+                ban.setMaBan(Integer.valueOf(txtMa.getText()));
+                ban.setSoLuongChoNgoi(Integer.valueOf(txtSoLuong.getText()));
+                if (radioCoNguoi.isSelected()) {
+                    ban.setTrangThai(1);
+                } else {
+                    ban.setTrangThai(0);
+                }
+                JOptionPane.showMessageDialog(this, banService.remove(txtMa.getText()));
+                listBan = banService.getAll();
+                showData(listBan);
+            }
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
