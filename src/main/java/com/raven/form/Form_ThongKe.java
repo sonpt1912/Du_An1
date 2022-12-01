@@ -28,7 +28,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
 
     public Form_ThongKe(NhanVien nv) {
         initComponents();
-        String headerSP[] = {"STT", "MaSP", "Tên SP", "Đơn giá", "Trạng thái"};
+        String headerSP[] = {"STT", "MaSP", "Tên SP", "Số Lượng"};
         tbSanPham.setModel(dtmSP);
         txtNgayBatDau.setDate(Date.valueOf("2022-11-01"));
         txtNgayKetThuc.setDate(today);
@@ -607,6 +607,10 @@ public class Form_ThongKe extends javax.swing.JPanel {
     }
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
+        String ngayBatDau = dateFormat.format(txtNgayBatDau.getDate());
+        String ngayKetThuc = dateFormat.format(txtNgayKetThuc.getDate());
+        listSanPham = thongKeService.getAllSanPham(Date.valueOf(ngayBatDau), Date.valueOf(ngayKetThuc));
+        showDataSanPham(listSanPham, 1);
         showSoLuongDon();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
