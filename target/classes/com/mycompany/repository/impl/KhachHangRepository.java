@@ -12,12 +12,14 @@ import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import com.mycompany.repository.ICommonRepository;
+import com.mycompany.repository.IKhachHangRepository;
+import java.util.ArrayList;
 
 /**
  *
  * @author Admin
  */
-public class KhachHangRepository implements ICommonRepository<KhachHang, Boolean, String> {
+public class KhachHangRepository implements ICommonRepository<KhachHang, Boolean, String>, IKhachHangRepository {
 
     private static final Session session = HibernateUtil.getFactory().openSession();
     private String fromTable = "FROM KhachHang ";
@@ -101,6 +103,17 @@ public class KhachHangRepository implements ICommonRepository<KhachHang, Boolean
             e.printStackTrace();
         }
         return check > 0;
+    }
+
+    @Override
+    public List<KhachHang> searchBySDTOrTen(String txtTimKiem) {
+        List<KhachHang> listKH = new ArrayList<>();
+        String hql = fromTable + " WHERE ten LIKE :tenKH OR sdt LIKE :sdtKH";
+        Query query = session.createQuery(hql);
+        query.setParameter("tenKH", "%" + txtTimKiem + "%");
+        query.setParameter("sdtKH", "%" + txtTimKiem + "%");
+        listKH = query.getResultList();
+        return listKH;
     }
 
 }

@@ -517,7 +517,13 @@ public class Form_KhachHang extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
-        // TODO add your handling code here:
+        if (txtSearch.getText().isEmpty()) {
+            listKH = khachHangService.getAll();
+            showData(listKH, 1);
+        } else {
+            listKH = khachHangService.searchBySDTOrTen(txtSearch.getText());
+            showData(listKH, 1);
+        }
     }//GEN-LAST:event_txtSearchCaretUpdate
 
 

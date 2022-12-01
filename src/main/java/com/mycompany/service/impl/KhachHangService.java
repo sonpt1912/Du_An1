@@ -8,14 +8,15 @@ import com.mycompany.domainModel.KhachHang;
 import com.mycompany.repository.impl.KhachHangRepository;
 import java.util.List;
 import com.mycompany.repository.ICommonRepository;
+import com.mycompany.service.IKhachHangService;
 
 /**
  *
  * @author Admin
  */
-public class KhachHangService implements com.mycompany.service.ICommonService<KhachHang,String> {
+public class KhachHangService implements com.mycompany.service.ICommonService<KhachHang, String>, IKhachHangService {
 
-    private final ICommonRepository khr = new KhachHangRepository();
+    private final KhachHangRepository khr = new KhachHangRepository();
 
     @Override
     public List<KhachHang> getAll() {
@@ -53,5 +54,10 @@ public class KhachHangService implements com.mycompany.service.ICommonService<Kh
         } else {
             return "Xoá thất bại";
         }
+    }
+
+    @Override
+    public List<KhachHang> searchBySDTOrTen(String txtTimKiem) {
+        return khr.searchBySDTOrTen(txtTimKiem);
     }
 }
