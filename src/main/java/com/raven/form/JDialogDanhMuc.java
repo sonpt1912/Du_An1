@@ -6,6 +6,7 @@ package com.raven.form;
 
 import com.mycompany.domainModel.DanhMuc;
 import com.mycompany.domainModel.Loai;
+import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.impl.DanhMucService;
 import com.mycompany.service.impl.LoaiService;
 import java.util.ArrayList;
@@ -56,22 +57,36 @@ public class JDialogDanhMuc extends javax.swing.JDialog {
         } else if (!txtTenDM.getText().matches("[^\\s][a-z A-Z]+")) {
             return "tên không đúng định dạng";
         } else {
-            DanhMuc danhMuc = newDM();
-            danhMuc.setMaDanhMuc(maTuSinh(listDM = danhMucService.getAll()));
-            return danhMucService.add(danhMuc);
+            int result = JOptionPane.showConfirmDialog(this, "bạn có muốn thêm danh mục này không", "xác nhận", JOptionPane.YES_OPTION, JOptionPane.NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                DanhMuc danhMuc = newDM();
+                danhMuc.setMaDanhMuc(maTuSinh(listDM = danhMucService.getAll()));
+                return danhMucService.add(danhMuc);
+            } else {
+                return "hủy thêm";
+            }
+
         }
     }
 
     private String checkUpdate(int index) {
-
-        if (txtTenDM.getText().isEmpty()) {
-            return "không được để trống tên";
-        } else if (!txtTenDM.getText().matches("[^\\s][a-z A-Z]+")) {
-            return "tên không đúng định dạng";
-        } else {
-            DanhMuc danhMuc = newDM();
-            String ma = listDM.get(index).getMaDanhMuc();
-            return danhMucService.update(danhMuc, ma);
+        if (txtMaDM.getText().isEmpty()) {
+            if (txtTenDM.getText().isEmpty()) {
+                return "không được để trống tên";
+            } else if (!txtTenDM.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+                return "tên không đúng định dạng";
+            } else {
+                int result = JOptionPane.showConfirmDialog(this, "bạn có muốn sửa danh mục này không", "xác nhận", JOptionPane.YES_OPTION, JOptionPane.NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    DanhMuc danhMuc = newDM();
+                    String ma = listDM.get(index).getMaDanhMuc();
+                    return danhMucService.update(danhMuc, ma);
+                } else {
+                    return "hủy sửa";
+                }
+            }
+        }else{
+            return "vui lòng chọn dữu liệu cần sửa";
         }
     }
 
@@ -96,6 +111,13 @@ public class JDialogDanhMuc extends javax.swing.JDialog {
         } else {
             radioNgungKDDM.setSelected(true);
         }
+    }
+
+    private void clear() {
+        txtMaDM.setText("");
+        txtMaDM.setEnabled(true);
+        txtTenDM.setText("");
+        radioKinhDoanhDM.setSelected(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -314,10 +336,7 @@ public class JDialogDanhMuc extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClearDMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearDMActionPerformed
-        txtMaDM.setText("");
-        txtMaDM.setEditable(true);
-        txtMaDM.setEditable(true);
-        radioKinhDoanhDM.setSelected(true);
+        clear();
     }//GEN-LAST:event_btnClearDMActionPerformed
 
     private void btnUpdateDMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDMActionPerformed
@@ -332,7 +351,7 @@ public class JDialogDanhMuc extends javax.swing.JDialog {
     }//GEN-LAST:event_btnUpdateDMActionPerformed
 
     private void btnAddDMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDMActionPerformed
-        if (!txtMaDM.getText().isEmpty()) {
+        if (txtMaDM.getText().isEmpty()) {
             String check = checkAdd();
             JOptionPane.showMessageDialog(this, check);
             listDM = danhMucService.getAll();

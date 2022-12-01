@@ -45,7 +45,7 @@ public class HibernateUtil {
         properties.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
         properties.put(Environment.URL, "jdbc:sqlserver://localhost:1433;databaseName=DuAn1Nhom102_LuongKM");
         properties.put(Environment.USER, "sa");
-        properties.put(Environment.PASS, "123123");
+        properties.put(Environment.PASS, "Son191203");
         properties.put(Environment.SHOW_SQL, "true");
 //        properties.put(Environment.HBM2DDL_AUTO, "create"); // tu dong tao ra cac truong trong sql
 
