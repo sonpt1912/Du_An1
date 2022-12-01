@@ -189,63 +189,64 @@ public class Form_NhanVien extends javax.swing.JPanel {
         }
     }
 
-    private String checkUpdate() {
-        String ngay = simpleDateFormat.format(txtNgaySinh.getDate());
-        String[] birday = ngay.split("-");
-        int day = 0;
-        int monh = 0;
-        int year = 0;
-        for (int i = 0; i < 2; i++) {
-            day = Integer.valueOf(birday[0]);
-            monh = Integer.valueOf(birday[2]);
-            year = Integer.valueOf(birday[1]);
-        }
-        LocalDate ngaySinh = LocalDate.of(year, monh, day);
-        LocalDate ngayHienTai = LocalDate.now();
-        if (txtDiaChi.getText().isEmpty()) {
-            return "không được để trống";
-        } else if (txtEmail.getText().isEmpty()) {
-            return "không được để trống";
-        } else if (txtHo.getText().isEmpty()) {
-            return "không được để trống";
-        } else if (txtMatKhau.getText().isEmpty()) {
-            return "không được để trống";
-        } else if (txtTen.getText().isEmpty()) {
-            return "không được để trống";
-        } else if (txtTenDem.getText().isEmpty()) {
-            return "không được để trống";
-        } else if (txtMatKhau.getText().isEmpty()) {
-            return "không được để trống";
-        } else if (txtSdt.getText().isEmpty()) {
-            return "không được để trống";
-        } else if (simpleDateFormat.format(txtNgaySinh.getDate()).isEmpty()) {
-            return "không được để trống";
-        } else if (!txtHo.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
-            return "họ không đúng định dạng";
-        } else if (!txtTenDem.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
-            return "tên đệm không đúng định dạng";
-        } else if (!txtTen.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
-            return "tên không đúng định dạng";
-        } else if (Period.between(ngaySinh, ngayHienTai).getYears() < 18 && Period.between(ngaySinh, ngayHienTai).getYears() > 64) {
-            return "nhân viên có tuổi nhỏ hơn 18 hoặc lớn hơn 64";
-        } else if (!txtSdt.getText().matches("(0)((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))[0-9]{7}")) {
-            return "sdt không đúng định dạng";
-        } else if (!txtEmail.getText().matches("[a-zA-Z0-9]+(@fpt|@gmail)((.com)|(.edu.vn))")) {
-            return "email không đúng định dạng";
-        } else if (!txtDiaChi.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
-            return "địa chỉ không đúng định dạng";
-        } else if (!txtMatKhau.getText().matches("[a-zA-Z0-9]{8}")) {
-            return "mật khẩu không đúng định dạng";
+    private String Checkupdate() {
+        if (txtNgaySinh.getDate() == null) {
+            return "không được để trống ngày";
         } else {
-            int result = JOptionPane.showConfirmDialog(this, "bạn có muốn sửa nhân viên này không", "xác nhận", JOptionPane.YES_OPTION, JOptionPane.NO_OPTION);
-            if (result == JOptionPane.YES_OPTION) {
-                NhanVien nhanVien = newNV();
-                String ma = txtMa.getText();
-                nhanVien.setMa(ma);
-                String update = nhanVienService.update(nhanVien, ma);
-                return update;
+            String ngay = simpleDateFormat.format(txtNgaySinh.getDate());
+            String[] birday = ngay.split("-");
+            int day = 0;
+            int monh = 0;
+            int year = 0;
+            for (int i = 0; i < 2; i++) {
+                day = Integer.valueOf(birday[2]);
+                monh = Integer.valueOf(birday[1]);
+                year = Integer.valueOf(birday[0]);
+            }
+            LocalDate ngaySinh = LocalDate.of(year, monh, day);
+            LocalDate ngayHienTai = LocalDate.now();
+            JOptionPane.showConfirmDialog(this, Period.between(ngaySinh, ngayHienTai).getYears());
+            if (txtDiaChi.getText().isEmpty()) {
+                return "địa chỉ không được để trống";
+            } else if (txtEmail.getText().isEmpty()) {
+                return "email không được để trống";
+            } else if (txtHo.getText().isEmpty()) {
+                return "họ không được để trống";
+            } else if (txtTen.getText().isEmpty()) {
+                return "tên không được để trống";
+            } else if (txtTenDem.getText().isEmpty()) {
+                return "tên đệm không được để trống";
+            } else if (txtMatKhau.getText().isEmpty()) {
+                return "mật khẩu không được để trống";
+            } else if (txtSdt.getText().isEmpty()) {
+                return "sdt không được để trống";
+            } else if (!txtHo.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+                return "họ không đúng định dạng";
+            } else if (!txtTenDem.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+                return "tên đệm không đúng định dạng";
+            } else if (!txtTen.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+                return "tên không đúng định dạng";
+            } else if (Period.between(ngaySinh, ngayHienTai).getYears() < 18 || Period.between(ngaySinh, ngayHienTai).getYears() > 64) {
+                return "nhân viên có tuổi nhỏ hơn 18 hoặc lớn hơn 64";
+            } else if (!txtSdt.getText().matches("(0)((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))[0-9]{7}")) {
+                return "sdt không đúng định dạng";
+            } else if (!txtEmail.getText().matches("[a-zA-Z0-9]+(@fpt|@gmail)((.com)|(.edu.vn))")) {
+                return "email không đúng định dạng";
+            } else if (!txtDiaChi.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+                return "địa chỉ không đúng định dạng";
+            } else if (!txtMatKhau.getText().matches("[a-zA-Z0-9]{8}")) {
+                return "mật khẩu không đúng định dạng";
             } else {
-                return "hủy sửa";
+                int result = JOptionPane.showConfirmDialog(this, "bạn có muốn sửa nhân viên này không", "xác nhận", JOptionPane.YES_OPTION, JOptionPane.NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    NhanVien nhanVien = newNV();
+                    String ma = txtMa.getText();
+                    nhanVien.setMa(ma);
+                    String update = nhanVienService.update(nhanVien, ma);
+                    return update;
+                } else {
+                    return "hủy sửa";
+                }
             }
         }
     }
@@ -708,19 +709,22 @@ public class Form_NhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAddChucVuActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-//        ChucVu chucVu = chucVuService.getOne((String) cbbChucVu.getSelectedItem());
-//        String ma = txtMa.getText();
-//        NhanVien nhanVien = new NhanVien(null, chucVu, txtMa.getText(), txtHo.getText(), txtTenDem.getText(), txtTen.getText(), txtGioiTinh.getText(), txtSdt.getText(), txtEmail.getText(), Date.valueOf(simpleDateFormat.format(txtNgaySinh.getDate())), txtDiaChi.getText(), txtMatKhau.getText(), Integer.valueOf(txtTrangThai.getText()));
-        String update = checkUpdate();
-        JOptionPane.showMessageDialog(this, update);
-        showData(listNhanVien = nhanVienService.getAll());
+        if (!txtMa.getText().isEmpty()) {
+            String update = Checkupdate();
+            JOptionPane.showMessageDialog(this, update);
+            btnClearActionPerformed(evt);
+            showData(listNhanVien = nhanVienService.getAll());
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        String xoa = nhanVienService.remove(txtMa.getText());
-        showData(listNhanVien = nhanVienService.getAllByTrangThai(0));
-        radioListActiveActionPerformed(evt);
-        JOptionPane.showMessageDialog(this, xoa);
+       if (!txtMa.getText().isEmpty()) {
+            String xoa = nhanVienService.remove(txtMa.getText());
+            showData(listNhanVien = nhanVienService.getAllByTrangThai(0));
+            radioListActiveActionPerformed(evt);
+            btnClearActionPerformed(evt);
+            JOptionPane.showMessageDialog(this, xoa);
+        }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void tbNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbNhanVienMouseClicked
