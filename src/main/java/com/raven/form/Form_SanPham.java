@@ -711,12 +711,8 @@ public class Form_SanPham extends javax.swing.JPanel {
     private void searchText1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_searchText1CaretUpdate
         // TODO add your handling code here:
         String ten = searchText1.getText();
-        if (ten.isEmpty() || ten.matches("\\s+")) {
-            JOptionPane.showMessageDialog(this, "Không được để trống thông tin");
-        } else {
-            listMonAn = monAnService.getMonAnTheoTen(ten);
-            showData(listMonAn);
-        }
+        listMonAn = monAnService.getMonAnTheoTen(ten);
+        showData(listMonAn);
     }//GEN-LAST:event_searchText1CaretUpdate
 
 

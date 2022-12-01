@@ -62,26 +62,26 @@ public class ComBoRepository implements ICommonRepository<ComBo, Boolean, String
 
     @Override
     public Boolean update(ComBo kh, String ma) {
-        try ( Session ss = HibernateUtil.getFactory().openSession()) {
-            String hql = "UPDATE " + fromTable + "SET nhanVien = :nhanVien, tenCB = :ten, hinhAnh = :hinhAnh, donGia = :donGia,"
-                    + " trangThai = :TrangThai WHERE maCB = :ma";
-            int check = 0;
-            try {
-                Transaction transaction = ss.beginTransaction();
-                Query query = ss.createQuery(hql);
-                query.setParameter("nhanVien", kh.getNhanVien());
-                query.setParameter("ten", kh.getTenCB());
-                query.setParameter("hinhAnh", kh.getHinhAnh());
-                query.setParameter("donGia", kh.getDonGia());
-                query.setParameter("TrangThai", kh.getTrangThai());
-                query.setParameter("ma", ma);
-                check = query.executeUpdate();
-                transaction.commit();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return check > 0;
+        String hql = "UPDATE " + fromTable + "SET nhanVien = :nhanVien, tenCB = :ten, hinhAnh = :hinhAnh, donGia = :donGia,"
+                + " trangThai = :TrangThai WHERE maCB = :ma";
+        int check = 0;
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.clear();
+            Query query = session.createQuery(hql);
+            query.setParameter("nhanVien", kh.getNhanVien());
+            query.setParameter("ten", kh.getTenCB());
+            query.setParameter("hinhAnh", kh.getHinhAnh());
+            query.setParameter("donGia", kh.getDonGia());
+            query.setParameter("TrangThai", kh.getTrangThai());
+            query.setParameter("ma", ma);
+            check = query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return check > 0;
     }
 
     @Override
