@@ -65,7 +65,20 @@ public class KhachHang {
     @Column(name = "TrangThai")
     private Integer trangThai;
 
+    public String hoTenKH(String ho, String tenDem, String ten) {
+        if (ho == null && tenDem == null) {
+            return ten;
+        } else if (ho == null && tenDem != null) {
+            return tenDem + " " + ten;
+        } else if (ho != null && tenDem == null) {
+            return ho + " " + ten;
+        } else {
+            return ho + " " + tenDem + " " + ten;
+        }
+    }
+
     public Object[] toDataRow(int stt) {
-        return new Object[]{stt, ma, ho + " " + tenDem + " " + ten, gioiTinh, ngaySinh, sdt, diaChi, (trangThai == 0 ? "Khách thường" : "Khách VIP")};
+        // return new Object[]{stt, ma, ho + " " + tenDem + " " + ten, gioiTinh, ngaySinh, sdt, diaChi, (trangThai == 0 ? "Khách thường" : "Khách VIP")};
+        return new Object[]{stt, ma, hoTenKH(ho, tenDem, ten), gioiTinh, ngaySinh, sdt, diaChi, (trangThai == 0 ? "Khách thường" : "Khách VIP")};
     }
 }

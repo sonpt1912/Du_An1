@@ -84,6 +84,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         radioDangApDung.setEnabled(false);
         radioKoTrongTgApDung.setEnabled(false);
         radioNgungApDung.setEnabled(false);
+        txtThoiGianBatDau.getJCalendar().setMinSelectableDate(today);
     }
 //show mặc định tất cả check box ko được chọn
 

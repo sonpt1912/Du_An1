@@ -14,6 +14,7 @@ import com.mycompany.domainModel.KhachHang;
 import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.impl.KhachHangService;
 import com.mycompany.util.KhachHangUtil;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class Form_KhachHang extends javax.swing.JPanel {
     private KhachHangUtil khachHangUtil = new KhachHangUtil();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private NhanVien nhanV;
+    private java.util.Date today = new java.util.Date();
 
     public Form_KhachHang(NhanVien nv) {
         initComponents();
@@ -43,7 +45,7 @@ public class Form_KhachHang extends javax.swing.JPanel {
         listKH = khachHangService.getAll();
         showData(listKH, 1);
         radioNam.setSelected(true);
-        java.util.Date today = new java.util.Date();
+        dateNgaySinh.getJCalendar().setMaxSelectableDate(today);
         dateNgaySinh.setDate(today);
         radioKhachThuong.setSelected(true);
         txtMa.setEditable(false);
@@ -68,17 +70,20 @@ public class Form_KhachHang extends javax.swing.JPanel {
         txtTen.setText(khachHang.getTen());
         txtTenDem.setText(khachHang.getTenDem());
         txtThanhPho.setText(khachHang.getThanhPho());
+        dateNgaySinh.setDate(khachHang.getNgaySinh());
         if (khachHang.getTrangThai() == 0) {
             radioKhachThuong.setSelected(true);
         } else {
             radioKhachVip.setSelected(true);
         }
-        if (khachHang.getGioiTinh().equals("Nữ")) {
-            radioNu.setSelected(true);
-        } else if (khachHang.getGioiTinh().equals("Nam")) {
-            radioNam.setSelected(true);
-        } else {
-            radioKhongXacDinh.setSelected(true);
+        if (khachHang.getGioiTinh() != null) {
+            if (khachHang.getGioiTinh().equals("Nữ")) {
+                radioNu.setSelected(true);
+            } else if (khachHang.getGioiTinh().equals("Nam")) {
+                radioNam.setSelected(true);
+            } else {
+                radioKhongXacDinh.setSelected(true);
+            }
         }
     }
 
@@ -93,8 +98,11 @@ public class Form_KhachHang extends javax.swing.JPanel {
             khachHang.setGioiTinh("Không xác định");
         }
         khachHang.setHo(txtHo.getText());
-        Date ngaySinh = (Date.valueOf(dateFormat.format(dateNgaySinh.getDate())));
-        khachHang.setNgaySinh(ngaySinh);
+        try {
+            Date ngaySinh = (Date.valueOf(dateFormat.format(dateNgaySinh.getDate())));
+            khachHang.setNgaySinh(ngaySinh);
+        } catch (Exception e) {
+        }
         khachHang.setQuocGia(txtQuocGia.getText());
         khachHang.setSdt(txtSdt.getText());
         khachHang.setTen(txtTen.getText());
@@ -480,6 +488,7 @@ public class Form_KhachHang extends javax.swing.JPanel {
         txtTenDem.setText("");
         txtThanhPho.setText("");
         radioKhachThuong.setSelected(true);
+        dateNgaySinh.setDate(today);
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
