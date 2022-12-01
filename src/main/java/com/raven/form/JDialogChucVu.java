@@ -299,25 +299,29 @@ public class JDialogChucVu extends javax.swing.JDialog {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        ChucVu chucVu = newCV();
-        if (!(kiemTraTrungMaCV())) {
-            JOptionPane.showMessageDialog(this, "Mã đã tồn tại");
-            return;
-        }
         if (txtMaChucVu.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã không được để trống");
-            return;
-        }
-        if (txtTenChucVu.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Tên không được để trống");
-            return;
-        }
-        if (!txtTenChucVu.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
-            JOptionPane.showMessageDialog(this, "Tên phải là tiếng việt có dấu");
+            ChucVu chucVu = newCV();
+            if (!(kiemTraTrungMaCV())) {
+                JOptionPane.showMessageDialog(this, "Mã đã tồn tại");
+                return;
+            }
+            if (txtMaChucVu.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Mã không được để trống");
+                return;
+            }
+            if (txtTenChucVu.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Tên không được để trống");
+                return;
+            }
+            if (!txtTenChucVu.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+                JOptionPane.showMessageDialog(this, "Tên không đúng định dạng");
+            } else {
+                JOptionPane.showMessageDialog(this, chucVuService.add(chucVu));
+                listCV = chucVuService.getAll();
+                showData(listCV, 1);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, chucVuService.add(chucVu));
-            listCV = chucVuService.getAll();
-            showData(listCV, 1);
+            JOptionPane.showMessageDialog(this, "clear trước khi add");
         }
     }//GEN-LAST:event_btnAddActionPerformed
     private boolean kiemTraTrungMaCV() {
@@ -334,10 +338,22 @@ public class JDialogChucVu extends javax.swing.JDialog {
         if (index < 0) {
             JOptionPane.showMessageDialog(this, "?");
         } else {
-            ChucVu chucVu = newCV();
-            JOptionPane.showMessageDialog(this, chucVuService.update(chucVu, txtMaChucVu.getText()));
-            listCV = chucVuService.getAll();
-            showData(listCV, 1);
+            if (txtMaChucVu.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Mã không được để trống");
+                return;
+            }
+            if (txtTenChucVu.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Tên không được để trống");
+                return;
+            }
+            if (!txtTenChucVu.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+                JOptionPane.showMessageDialog(this, "Tên không đúng định dạng");
+            } else {
+                ChucVu chucVu = newCV();
+                JOptionPane.showMessageDialog(this, chucVuService.update(chucVu, txtMaChucVu.getText()));
+                listCV = chucVuService.getAll();
+                showData(listCV, 1);
+            }
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 

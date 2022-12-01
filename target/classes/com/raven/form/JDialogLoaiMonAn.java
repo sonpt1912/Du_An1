@@ -359,29 +359,32 @@ public class JDialogLoaiMonAn extends javax.swing.JDialog {
     }//GEN-LAST:event_tbLoaiMAMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-
-        Loai loai = newLoai();
-        if (!(kiemTraTrungMaLoai())) {
-            JOptionPane.showMessageDialog(this, "Mã đã tồn tại");
-            return;
-
-        }
         if (txtMa.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã không được để trống");
-            return;
-        }
-        if (txtTen.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã không được để trống");
-            return;
-        }
-        if (!txtTen.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
-            JOptionPane.showMessageDialog(this, "Tên phải là tiếng việt có dấu");
-            return;
+            Loai loai = newLoai();
+            if (!(kiemTraTrungMaLoai())) {
+                JOptionPane.showMessageDialog(this, "Mã đã tồn tại");
+                return;
+
+            }
+            if (txtMa.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Mã không được để trống");
+                return;
+            }
+            if (txtTen.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Mã không được để trống");
+                return;
+            }
+            if (!txtTen.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+                JOptionPane.showMessageDialog(this, "Tên không đúng định dạng");
+                return;
+            } else {
+                JOptionPane.showMessageDialog(this, loaiService.add(loai));
+                listLoai = loaiService.getAll();
+                showData(listLoai);
+                btnClearActionPerformed(evt);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, loaiService.add(loai));
-            listLoai = loaiService.getAll();
-            showData(listLoai);
-            btnClearActionPerformed(evt);
+            JOptionPane.showMessageDialog(this, "clear trước khi add");
         }
     }//GEN-LAST:event_btnAddActionPerformed
     public boolean kiemTraTrungMaLoai() {
@@ -407,12 +410,25 @@ public class JDialogLoaiMonAn extends javax.swing.JDialog {
         if (index < 0) {
             JOptionPane.showMessageDialog(this, "?");
         } else {
-            String ma = txtMa.getText();
-            Loai loai = newLoai();
-            JOptionPane.showMessageDialog(this, loaiService.update(loai, ma));
-            listLoai = loaiService.getAll();
-            showData(listLoai);
-            btnClearActionPerformed(evt);
+            if (txtMa.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Mã không được để trống");
+                return;
+            }
+            if (txtTen.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Mã không được để trống");
+                return;
+            }
+            if (!txtTen.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+                JOptionPane.showMessageDialog(this, "Tên không đúng định dạng");
+                return;
+            } else {
+                String ma = txtMa.getText();
+                Loai loai = newLoai();
+                JOptionPane.showMessageDialog(this, loaiService.update(loai, ma));
+                listLoai = loaiService.getAll();
+                showData(listLoai);
+                btnClearActionPerformed(evt);
+            }
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 

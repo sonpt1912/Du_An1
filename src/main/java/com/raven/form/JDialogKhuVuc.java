@@ -299,25 +299,29 @@ public class JDialogKhuVuc extends javax.swing.JDialog {
     }//GEN-LAST:event_tbKhuVucMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        KhuVuc khuVuc = newKV();
-        if (!(kiemTraTrungMaKV())) {
-            JOptionPane.showMessageDialog(this, "Mã đã tồn tại");
-            return;
-        }
         if (txtMaKhuVuc.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã không được để trống");
-            return;
-        }
-        if (txtTenKhuVuc.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã không được để trống");
-            return;
-        }
-        if (!txtTenKhuVuc.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
-            JOptionPane.showMessageDialog(this, "Tên phải là tiếng việt có dấu");
+            KhuVuc khuVuc = newKV();
+            if (!(kiemTraTrungMaKV())) {
+                JOptionPane.showMessageDialog(this, "Mã đã tồn tại");
+                return;
+            }
+            if (txtMaKhuVuc.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Mã không được để trống");
+                return;
+            }
+            if (txtTenKhuVuc.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Mã không được để trống");
+                return;
+            }
+            if (!txtTenKhuVuc.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+                JOptionPane.showMessageDialog(this, "Tên không đúng định dạng");
+            } else {
+                JOptionPane.showMessageDialog(this, khuVucService.add(khuVuc));
+                listKV = khuVucService.getAll();
+                showData(listKV, 1);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, khuVucService.add(khuVuc));
-            listKV = khuVucService.getAll();
-            showData(listKV, 1);
+            JOptionPane.showMessageDialog(this, "clear trước khi add");
         }
     }//GEN-LAST:event_btnAddActionPerformed
     public boolean kiemTraTrungMaKV() {
@@ -334,11 +338,23 @@ public class JDialogKhuVuc extends javax.swing.JDialog {
         if (index < 0) {
             JOptionPane.showMessageDialog(this, "?");
         } else {
-            String maKV = txtMaKhuVuc.getText();
-            KhuVuc khuVuc = newKV();
-            JOptionPane.showMessageDialog(this, khuVucService.update(khuVuc, maKV));
-            listKV = khuVucService.getAll();
-            showData(listKV, 1);
+            if (txtMaKhuVuc.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Mã không được để trống");
+                return;
+            }
+            if (txtTenKhuVuc.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Mã không được để trống");
+                return;
+            }
+            if (!txtTenKhuVuc.getText().matches("[^\\s][A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+[^\\s]")) {
+                JOptionPane.showMessageDialog(this, "Tên không đúng định dạng");
+            } else {
+                String maKV = txtMaKhuVuc.getText();
+                KhuVuc khuVuc = newKV();
+                JOptionPane.showMessageDialog(this, khuVucService.update(khuVuc, maKV));
+                listKV = khuVucService.getAll();
+                showData(listKV, 1);
+            }
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
