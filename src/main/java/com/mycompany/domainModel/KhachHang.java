@@ -62,7 +62,7 @@ public class KhachHang {
     @Column(name = "QuocGia")
     private String quocGia;
 
-    @Column(name = "TrangThai")
+    @Column(name = "Loai")
     private Integer trangThai;
 
     public String hoTenKH(String ho, String tenDem, String ten) {
