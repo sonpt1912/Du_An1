@@ -7,6 +7,7 @@ package com.raven.form;
 import com.mycompany.domainModel.Ban;
 import com.mycompany.domainModel.ChiTietBanHoaDon;
 import com.mycompany.domainModel.HoaDon;
+import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.impl.BanService;
 import com.mycompany.service.impl.ChiTietBanHoaDonService;
 import com.mycompany.service.impl.HoaDonService;
@@ -38,10 +39,12 @@ public class JDialogBan_ThemHD extends javax.swing.JDialog {
     private NhanVienService nhanVienService = new NhanVienService();
     private List<ChiTietBanHoaDon> listCTBan_HD = new ArrayList<>();
     private ChiTietBanHoaDonService chiTietBanHoaDonService = new ChiTietBanHoaDonService();
+    private NhanVien nhanVien;
 
-    public JDialogBan_ThemHD(java.awt.Frame parent, boolean modal) {
+    public JDialogBan_ThemHD(java.awt.Frame parent, boolean modal, NhanVien nv) {
         super(parent, modal);
         initComponents();
+        this.nhanVien = nv;
         tbBan.setModel(dtmBan);
         tblBanDangChon.setModel(dtmBanDangChon);
         String headersBan[] = {"Mã bàn", "Khu vực", "Số lượng chỗ ngồi", "Trạng thái"};
@@ -204,7 +207,7 @@ public class JDialogBan_ThemHD extends javax.swing.JDialog {
                 hoaDon.setMaHoaDon(maHD);
                 hoaDon.setNgayTao(String.valueOf(ngayTao));
                 hoaDon.setTrangThai(0);
-                hoaDon.setNhanVien(nhanVienService.getOne("KH1"));
+                hoaDon.setNhanVien(nhanVien);
                 //thêm hd vào db
                 String themHD = hoaDonService.add(hoaDon);
                 //khai báo ChiTietBan_HoaDon, thêm bàn
@@ -222,9 +225,11 @@ public class JDialogBan_ThemHD extends javax.swing.JDialog {
                 listBanDangChon.removeAll(listBanDangChon);
                 dtmBanDangChon.setRowCount(0);
                 JOptionPane.showMessageDialog(this, themHD);
+                JOptionPane.showMessageDialog(new Form_HoaDon(nhanVien), "Vui lòng refresh để kiểm tra thay đổi!");
                 //thoát form
                 this.dispose();
             } catch (Exception e) {
+                e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Không thành công");
                 if (listBanDangChon.size() > 0) {
                     for (Ban ban : listBanDangChon) {
@@ -259,47 +264,47 @@ public class JDialogBan_ThemHD extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JDialogBan_ThemHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JDialogBan_ThemHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JDialogBan_ThemHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDialogBan_ThemHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JDialogBan_ThemHD dialog = new JDialogBan_ThemHD(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(JDialogBan_ThemHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(JDialogBan_ThemHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(JDialogBan_ThemHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(JDialogBan_ThemHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                JDialogBan_ThemHD dialog = new JDialogBan_ThemHD(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
