@@ -44,6 +44,7 @@ import javax.swing.table.DefaultTableModel;
 import com.mycompany.service.IHoaDonChiTietService;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
+import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -105,7 +106,7 @@ public class Form_Home extends javax.swing.JPanel {
         tbHoaDonCT.setModel(dtmHoaDonCT);
         tbBan.setModel(dtmBan);
         String headerHoaDon[] = {"STT", "MÃ HĐ", "MÃ KH", "Ngày Tạo", "Trạng Thái", "Ghi Chú"};
-        String headerHoaDonCT[] = {"STT", "Tên món ăn", "Giá món ăn", "Số lượng món ăn", "Tên combo", "Giá combo", "Số lượng combo", "Ghi chú"};
+        String headerHoaDonCT[] = {"STT", "Tên món ăn", "Giá món ăn", "Số lượng món ăn", "Tên combo", "Giá combo", "Số lượng combo", "Tổng tiền", "Ghi chú"};
         String headerBan[] = {"STT", "Mã Bàn", "Số lượng chỗ ngồi", "Khu vực", "Trạng thái"};
         loadTableMonAn();
         dtmHoaDon.setColumnIdentifiers(headerHoaDon);
@@ -1504,7 +1505,7 @@ public class Form_Home extends javax.swing.JPanel {
             dtmCombo.addRow(comboResponse.toDataRow(stt));
         }
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem GopBan;

@@ -5,6 +5,7 @@
 package com.mycompany.customModel;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,15 @@ public class HoaDonChiTietResponse {
     public Object[] toDataRow(int stt) {
 //        return new Object[]{stt, maMonAn, tenMonAn, donGiaMonAn,
 //            maCombo != null ? maCombo : "", tenCombo != null ? tenCombo : "", donGiaCombo != null ? donGiaCombo : ""};
-        return new Object[]{stt, tenMonAn, donGiaMonAn, soLuongMonAn, tenCombo == null ? "" : tenCombo, donGiaCombo == null ? "" : donGiaCombo, soLuongCombo,ghiChu};
+        return new Object[]{stt, tenMonAn, donGiaMonAn, soLuongMonAn, tenCombo == null ? "" : tenCombo, donGiaCombo == null ? "" : donGiaCombo, soLuongCombo,tongTien(),ghiChu};
+    }
+    private BigDecimal tongTien(){
+        if (null==tenCombo) {
+            BigDecimal soLuong = new BigDecimal(soLuongMonAn);
+            return donGiaMonAn.multiply(soLuong);
+        }else{
+            BigDecimal soLuong = new BigDecimal(soLuongCombo);
+            return donGiaCombo.multiply(soLuong);
+        }
     }
 }
