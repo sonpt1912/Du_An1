@@ -54,7 +54,7 @@ public class JDialogDanhMuc extends javax.swing.JDialog {
 
         if (txtTenDM.getText().isEmpty()) {
             return "không được để trống tên";
-        } else if (!txtTenDM.getText().matches("[^\\s][a-z A-Z]+")) {
+        } else if (!txtTenDM.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
             return "tên không đúng định dạng";
         } else {
             int result = JOptionPane.showConfirmDialog(this, "bạn có muốn thêm danh mục này không", "xác nhận", JOptionPane.YES_OPTION, JOptionPane.NO_OPTION);
@@ -115,7 +115,7 @@ public class JDialogDanhMuc extends javax.swing.JDialog {
 
     private void clear() {
         txtMaDM.setText("");
-        txtMaDM.setEnabled(true);
+        txtMaDM.setEnabled(false);
         txtTenDM.setText("");
         radioKinhDoanhDM.setSelected(true);
     }
@@ -346,6 +346,7 @@ public class JDialogDanhMuc extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, update);
             listDM = danhMucService.getAll();
             showData(listDM);
+            clear();
             btnClearDMActionPerformed(evt);
         }
     }//GEN-LAST:event_btnUpdateDMActionPerformed
