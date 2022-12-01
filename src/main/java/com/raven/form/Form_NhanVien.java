@@ -129,61 +129,62 @@ public class Form_NhanVien extends javax.swing.JPanel {
     }
 
     private String checkAdd() {
-        String ngay = simpleDateFormat.format(txtNgaySinh.getDate());
-        String[] birday = ngay.split("-");
-        int day = 0;
-        int monh = 0;
-        int year = 0;
-        for (int i = 0; i < 2; i++) {
-            day = Integer.valueOf(birday[2]);
-            monh = Integer.valueOf(birday[1]);
-            year = Integer.valueOf(birday[0]);
-        }
-       
-        LocalDate ngaySinh = LocalDate.of(year, monh, day);
-        LocalDate ngayHienTai = LocalDate.now();
-         JOptionPane.showConfirmDialog(this, Period.between(ngaySinh, ngayHienTai).getYears());
-        if (txtDiaChi.getText().isEmpty()) {
-            return "địa chỉ không được để trống";
-        } else if (txtEmail.getText().isEmpty()) {
-            return "email không được để trống";
-        } else if (txtHo.getText().isEmpty()) {
-            return "họ không được để trống";
-        } else if (txtTen.getText().isEmpty()) {
-            return "tên không được để trống";
-        } else if (txtTenDem.getText().isEmpty()) {
-            return "tên đệm không được để trống";
-        } else if (txtMatKhau.getText().isEmpty()) {
-            return "mật khẩu không được để trống";
-        } else if (txtSdt.getText().isEmpty()) {
-            return "sdt không được để trống";
-        } else if (simpleDateFormat.format(txtNgaySinh.getDate()).isEmpty()) {
-            return "ngày không được để trống";
-        } else if (!txtHo.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
-            return "họ không đúng định dạng";
-        } else if (!txtTenDem.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
-            return "tên đệm không đúng định dạng";
-        } else if (!txtTen.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
-            return "tên không đúng định dạng";
-        } else if (Period.between(ngaySinh, ngayHienTai).getYears() < 18 && Period.between(ngaySinh, ngayHienTai).getYears() > 64) {
-            return "nhân viên có tuổi nhỏ hơn 18 hoặc lớn hơn 64";
-        } else if (!txtSdt.getText().matches("(0)((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))[0-9]{7}")) {
-            return "sdt không đúng định dạng";
-        } else if (!txtEmail.getText().matches("[a-zA-Z0-9]+(@fpt|@gmail)((.com)|(.edu.vn))")) {
-            return "email không đúng định dạng";
-        } else if (!txtDiaChi.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
-            return "địa chỉ không đúng định dạng";
-        } else if (!txtMatKhau.getText().matches("[a-zA-Z0-9]{8}")) {
-            return "mật khẩu không đúng định dạng";
+        if (txtNgaySinh.getDate() == null) {
+            return "không được để trống ngày";
         } else {
-            int result = JOptionPane.showConfirmDialog(this, "bạn có muốn thêm nhân viên này không", "xác nhận", JOptionPane.YES_OPTION, JOptionPane.NO_OPTION);
-            if (result == JOptionPane.YES_OPTION) {
-                NhanVien nhanVien = newNV();
-                nhanVien.setMa(nhanVienUtil.maTuDong(listNhanVien = nhanVienService.getAll()));
-                String add = nhanVienService.add(nhanVien);
-                return add;
+            String ngay = simpleDateFormat.format(txtNgaySinh.getDate());
+            String[] birday = ngay.split("-");
+            int day = 0;
+            int monh = 0;
+            int year = 0;
+            for (int i = 0; i < 2; i++) {
+                day = Integer.valueOf(birday[2]);
+                monh = Integer.valueOf(birday[1]);
+                year = Integer.valueOf(birday[0]);
+            }
+            LocalDate ngaySinh = LocalDate.of(year, monh, day);
+            LocalDate ngayHienTai = LocalDate.now();
+            JOptionPane.showConfirmDialog(this, Period.between(ngaySinh, ngayHienTai).getYears());
+            if (txtDiaChi.getText().isEmpty()) {
+                return "địa chỉ không được để trống";
+            } else if (txtEmail.getText().isEmpty()) {
+                return "email không được để trống";
+            } else if (txtHo.getText().isEmpty()) {
+                return "họ không được để trống";
+            } else if (txtTen.getText().isEmpty()) {
+                return "tên không được để trống";
+            } else if (txtTenDem.getText().isEmpty()) {
+                return "tên đệm không được để trống";
+            } else if (txtMatKhau.getText().isEmpty()) {
+                return "mật khẩu không được để trống";
+            } else if (txtSdt.getText().isEmpty()) {
+                return "sdt không được để trống";
+            } else if (!txtHo.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+                return "họ không đúng định dạng";
+            } else if (!txtTenDem.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+                return "tên đệm không đúng định dạng";
+            } else if (!txtTen.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+                return "tên không đúng định dạng";
+            } else if (Period.between(ngaySinh, ngayHienTai).getYears() < 18 || Period.between(ngaySinh, ngayHienTai).getYears() > 64) {
+                return "nhân viên có tuổi nhỏ hơn 18 hoặc lớn hơn 64";
+            } else if (!txtSdt.getText().matches("(0)((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))[0-9]{7}")) {
+                return "sdt không đúng định dạng";
+            } else if (!txtEmail.getText().matches("[a-zA-Z0-9]+(@fpt|@gmail)((.com)|(.edu.vn))")) {
+                return "email không đúng định dạng";
+            } else if (!txtDiaChi.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+                return "địa chỉ không đúng định dạng";
+            } else if (!txtMatKhau.getText().matches("[a-zA-Z0-9]{8}")) {
+                return "mật khẩu không đúng định dạng";
             } else {
-                return "hủy thêm";
+                int result = JOptionPane.showConfirmDialog(this, "bạn có muốn thêm nhân viên này không", "xác nhận", JOptionPane.YES_OPTION, JOptionPane.NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    NhanVien nhanVien = newNV();
+                    nhanVien.setMa(nhanVienUtil.maTuDong(listNhanVien = nhanVienService.getAll()));
+                    String add = nhanVienService.add(nhanVien);
+                    return add;
+                } else {
+                    return "hủy thêm";
+                }
             }
         }
     }
