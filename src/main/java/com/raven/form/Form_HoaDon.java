@@ -56,7 +56,8 @@ public class Form_HoaDon extends javax.swing.JPanel {
     public Form_HoaDon(NhanVien nv) {
         initComponents();
         this.nhanV = nv;
-        //lấy ngày giờ hnay:
+        dateNgay1.setDate(today);
+        dateNgay2.setDate(today);
         radioChoTT.setSelected(true);
         tbHoaDon.setModel(dtmHoaDon);
         String header[] = {"Mã HĐ", "Người tạo", "Khách hàng", "Ngày Tạo", "Ngày TT", "Ghi chú", "Trạng thái"};
@@ -64,8 +65,8 @@ public class Form_HoaDon extends javax.swing.JPanel {
         //thêm hàm tính tổng tiền ở class HoaDonChiTietRepository và hdctService
         //getAll hoá đơn sao lại chỉ lấy trạng thái = 0?
         //thêm hàm getAll hdct theo 1 hoá đơn domain ở class hdct repo và service 
-        listHD = hoaDonService.getAll();
-        showData(listHD);
+//        listHD = hoaDonService.getAll();
+//        showData(listHD);
         txtNgayTao.setDate(today);
         // hàm getAll bàn where trạng thái =  còn trống = 0
         //lbNgayGio.setText(String.valueOf(today));
@@ -74,6 +75,14 @@ public class Form_HoaDon extends javax.swing.JPanel {
         String headersHDCT[] = {"Mã HD", "Mã MA", "Sl món", "Đơn giá", "Combo", "SL combo", "Đơn giá", "Ghi chú"};
         tbHoaDonChiTiet.setModel(dtmHDCT);
         dtmHDCT.setColumnIdentifiers(headersHDCT);
+        txtTongTien.setEditable(false);
+        txtBan.setEditable(false);
+        rdoHomNay.setSelected(true);
+        btnLoc.setEnabled(false);
+        dateNgay1.setEnabled(false);
+        dateNgay2.setEnabled(false);
+        listHD = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
+        showData(listHD);
     }
 
     private void showData(List<HoaDon> listHD) {
@@ -104,8 +113,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
         }
     }
 
-    private void fillHD(int index, List<HoaDon> listHD) {
-        HoaDon hoaDon = listHD.get(index);
+    private void fillHD(HoaDon hoaDon) {
         lbMaHD.setText(hoaDon.getMaHoaDon());
         listHDCT = hoaDonChiTietService.getHDCTByHD(hoaDon);
         //txtTongTien.setText(String.valueOf(hoaDonChiTietService.tongTienHD(listHDCT)));
@@ -154,6 +162,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
     private void initComponents() {
 
         radioTrangThaiHD = new javax.swing.ButtonGroup();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         panelBorder1 = new com.raven.swing.PanelBorder();
         searchText1 = new com.raven.swing.SearchText();
         jLabel1 = new javax.swing.JLabel();
@@ -184,6 +193,13 @@ public class Form_HoaDon extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cbbTrangThaiHoaDon = new javax.swing.JComboBox<>();
+        rdoHomNay = new javax.swing.JRadioButton();
+        dateNgay2 = new com.toedter.calendar.JDateChooser();
+        dateNgay1 = new com.toedter.calendar.JDateChooser();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        btnLoc = new javax.swing.JButton();
+        rdoKhoangNgay = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
@@ -363,6 +379,33 @@ public class Form_HoaDon extends javax.swing.JPanel {
             }
         });
 
+        buttonGroup1.add(rdoHomNay);
+        rdoHomNay.setText("Hôm nay");
+        rdoHomNay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoHomNayActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setText("From:");
+
+        jLabel13.setText("To:");
+
+        btnLoc.setText("Lọc");
+        btnLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(rdoKhoangNgay);
+        rdoKhoangNgay.setText("Khoảng ngày");
+        rdoKhoangNgay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoKhoangNgayActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -370,31 +413,57 @@ public class Form_HoaDon extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(42, 42, 42)
-                                .addComponent(cbbTrangThaiHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 120, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(rdoHomNay)
+                        .addGap(18, 18, 18)
+                        .addComponent(rdoKhoangNgay))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(cbbTrangThaiHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dateNgay1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dateNgay2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnLoc)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(2, 2, 2)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cbbTrangThaiHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rdoHomNay)
+                    .addComponent(rdoKhoangNgay))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(dateNgay2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel13)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dateNgay1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12)))
+                    .addComponent(btnLoc))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(cbbTrangThaiHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel3)
                 .addGap(12, 12, 12)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -529,6 +598,8 @@ public class Form_HoaDon extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        dateNgay1.setDate(today);
+        dateNgay2.setDate(today);
         lbMaHD.setText("");
         // listHDCT = hoaDonChiTietService.getHDCTByHD(hoaDon);
         txtTongTien.setText("");
@@ -544,12 +615,16 @@ public class Form_HoaDon extends javax.swing.JPanel {
         radioDaTT.setEnabled(true);
         txtNgayTao.setEnabled(true);
         dtmHDCT.setRowCount(0);
+        txtTongTien.setEditable(false);
+        txtBan.setEditable(false);
+        listHD = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
+        showData(listHD);
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void tbHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoaDonMouseClicked
         int index = tbHoaDon.getSelectedRow();
-        fillHD(index, listHD);
-        HoaDon hoaDon = listHD.get(index);
+        HoaDon hoaDon = hoaDonService.getOne((String) tbHoaDon.getValueAt(index, 0));
+        fillHD(hoaDon);
         listHDCT = hoaDonChiTietService.getHDCTByHD(hoaDon);
         showDataHDCT(listHDCT);
     }//GEN-LAST:event_tbHoaDonMouseClicked
@@ -565,7 +640,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
         if (index < 0) {
             JOptionPane.showMessageDialog(this, "Chọn data để sửa!");
         } else {
-            HoaDon hoaDon = listHD.get(index);
+            HoaDon hoaDon = hoaDonService.getOne((String) tbHoaDon.getValueAt(index, 0));
             if (radioChoTT.isSelected()) {
                 hoaDon.setTrangThai(0);
             } else if (radioDaTT.isSelected()) {
@@ -586,16 +661,16 @@ public class Form_HoaDon extends javax.swing.JPanel {
                         }
                         JOptionPane.showMessageDialog(this, hoaDonService.update(hoaDon, hoaDon.getMaHoaDon()));
                         dcbmTrangThaiHD.setSelectedItem("Tất cả");
-                        listHD = hoaDonService.getAll();
-                        showData(listHD);
+                        btnClearActionPerformed(evt);
                     }
                 }
             } else {
                 hoaDon.setTrangThai(hoaDon.getTrangThai());
                 JOptionPane.showMessageDialog(this, hoaDonService.update(hoaDon, hoaDon.getMaHoaDon()));
                 dcbmTrangThaiHD.setSelectedItem("Tất cả");
-                listHD = hoaDonService.getAll();
-                showData(listHD);
+//                listHD = hoaDonService.getAll();
+//                showData(listHD);
+                btnClearActionPerformed(evt);
             }
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
@@ -606,7 +681,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
         if (index < 0) {
             JOptionPane.showMessageDialog(this, "?");
         } else {
-            HoaDon hoaDon = listHD.get(index);
+            HoaDon hoaDon = hoaDonService.getOne((String) tbHoaDon.getValueAt(index, 0));
             if (txtGhiChu.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Ghi chú ko được trống!");
             } else {
@@ -623,32 +698,10 @@ public class Form_HoaDon extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void cbbTrangThaiHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbTrangThaiHoaDonActionPerformed
-        //mặc định cbb chọn tất cả => trạng thái = -1 và showList getAll;
-        //ktra gtri chọin của cbb để set trạng thái hoá đơn cần tìm
-        int trangThaiHD = 0;
-        if (cbbTrangThaiHoaDon.getSelectedItem().toString().equals("Tất cả")) {
-            trangThaiHD = -1;
-        } else if (cbbTrangThaiHoaDon.getSelectedItem().toString().equals("Chờ thanh toán")) {
-            trangThaiHD = 0;
-        } else if (cbbTrangThaiHoaDon.getSelectedItem().toString().equals("Đã thanh toán")) {
-            trangThaiHD = 1;
-        } else if (cbbTrangThaiHoaDon.getSelectedItem().toString().equals("Đã huỷ")) {
-            trangThaiHD = 3;
+        if (rdoHomNay.isSelected()) {
+            rdoHomNayActionPerformed(evt);
         } else {
-            //ko biết để gì
-        }
-        if (trangThaiHD == -1) {
-            listHD = hoaDonService.getAll();
-            showData(listHD);
-        } else {
-            listHD = hoaDonService.getHDByTrangThai(trangThaiHD);
-            //nếu list có phần tử=> show
-            //ko có phần tử => table setRowCount = 0 
-            if (listHD.size() > 0) {
-                showData(listHD);
-            } else {
-                dtmHoaDon.setRowCount(0);
-            }
+            btnLocActionPerformed(evt);
         }
     }//GEN-LAST:event_cbbTrangThaiHoaDonActionPerformed
 
@@ -659,17 +712,136 @@ public class Form_HoaDon extends javax.swing.JPanel {
         showData(listHD);
     }//GEN-LAST:event_btnRefreshActionPerformed
 
+    private void rdoHomNayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoHomNayActionPerformed
+        btnLoc.setEnabled(false);
+        List<HoaDon> listHDShow = new ArrayList<>();
+//if rdoHnay được chọn: 
+        //lấy 1 list HNay để lọc trạng thái = for=)))))
+        listHD = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
+        //ko cho chọn ngày
+        dateNgay1.setEnabled(false);
+        dateNgay2.setEnabled(false);
+        //lọc hoá đơn theo trjang thái: DÙNG FOR =))))
+        if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
+            listHDShow = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
+        } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Chờ thanh toán")) {
+            for (HoaDon hoaDon : listHD) {
+                if (hoaDon.getTrangThai() == 0) {
+                    listHDShow.add(hoaDon);
+                }
+            }
+        } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Đã thanh toán")) {
+            for (HoaDon hoaDon : listHD) {
+                if (hoaDon.getTrangThai() == 1) {
+                    listHDShow.add(hoaDon);
+                }
+            }
+        } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Đã huỷ")) {
+            for (HoaDon hoaDon : listHD) {
+                if (hoaDon.getTrangThai() == 3) {
+                    listHDShow.add(hoaDon);
+                }
+            }
+        } else {
+            //
+        }
+
+        showData(listHDShow);
+    }//GEN-LAST:event_rdoHomNayActionPerformed
+
+    private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
+        String date1 = dateFormat.format(dateNgay1.getDate());
+        String date2 = dateFormat.format(dateNgay2.getDate());
+        List<HoaDon> listHDShow = new ArrayList<>();
+        if (date1.compareTo(date2) > 0) {
+            JOptionPane.showMessageDialog(this, "thời gian không xác định");
+            dtmHoaDon.setRowCount(0);
+        } else if (date1.compareTo(dateFormat.format(today)) > 0) {
+            JOptionPane.showMessageDialog(this, "thời gian không xác định");
+            dtmHoaDon.setRowCount(0);
+        } else {
+            dateNgay1.setEnabled(true);
+            dateNgay2.setEnabled(true);
+            listHDShow.clear();
+            if (dateFormat.format(dateNgay1.getDate()).compareTo(dateFormat.format(today)) > 0) {
+                JOptionPane.showMessageDialog(this, "Thời gian không xác định");
+                dtmHoaDon.setRowCount(0);
+            } else if (dateFormat.format(dateNgay1.getDate()).compareTo(dateFormat.format(dateNgay2.getDate())) > 0) {
+                JOptionPane.showMessageDialog(this, "Thời gian không xác định!");
+                dtmHoaDon.setRowCount(0);
+            } else {
+                listHD = hoaDonService.getHoaDonsKhoangNgay(dateFormat.format(dateNgay1.getDate()), dateFormat.format(dateNgay2.getDate()));
+                if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
+                    for (HoaDon hoaDon : listHD) {
+                        listHDShow.add(hoaDon);
+                    }
+                    if (listHDShow.size() <= 0) {
+                        dtmHoaDon.setRowCount(0);
+                    } else {
+                        showData(listHDShow);
+                    }
+                } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Chờ thanh toán")) {
+                    for (HoaDon hoaDon : listHD) {
+                        if (hoaDon.getTrangThai() == 0) {
+                            listHDShow.add(hoaDon);
+                        }
+                    }
+                    if (listHDShow.size() <= 0) {
+                        dtmHoaDon.setRowCount(0);
+                    } else {
+                        showData(listHDShow);
+                    }
+                } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Đã thanh toán")) {
+                    for (HoaDon hoaDon : listHD) {
+                        if (hoaDon.getTrangThai() == 1) {
+                            listHDShow.add(hoaDon);
+                        }
+                    }
+                    if (listHDShow.size() <= 0) {
+                        dtmHoaDon.setRowCount(0);
+                    } else {
+                        showData(listHDShow);
+                    }
+                } else {
+                    for (HoaDon hoaDon : listHD) {
+                        if (hoaDon.getTrangThai() == 3) {
+                            listHDShow.add(hoaDon);
+                        }
+                    }
+                    if (listHDShow.size() <= 0) {
+                        dtmHoaDon.setRowCount(0);
+                    } else {
+                        showData(listHDShow);
+                    }
+                }
+            }
+            //showData(listHDShow);
+        }
+    }//GEN-LAST:event_btnLocActionPerformed
+
+    private void rdoKhoangNgayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoKhoangNgayActionPerformed
+        dateNgay1.setEnabled(true);
+        dateNgay2.setEnabled(true);
+        btnLoc.setEnabled(true);
+    }//GEN-LAST:event_rdoKhoangNgayActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnLoc;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbTrangThaiHoaDon;
+    private com.toedter.calendar.JDateChooser dateNgay1;
+    private com.toedter.calendar.JDateChooser dateNgay2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -690,6 +862,8 @@ public class Form_HoaDon extends javax.swing.JPanel {
     private javax.swing.JRadioButton radioDaHuy;
     private javax.swing.JRadioButton radioDaTT;
     private javax.swing.ButtonGroup radioTrangThaiHD;
+    private javax.swing.JRadioButton rdoHomNay;
+    private javax.swing.JRadioButton rdoKhoangNgay;
     private com.raven.swing.SearchText searchText1;
     private javax.swing.JTable tbHoaDon;
     private javax.swing.JTable tbHoaDonChiTiet;

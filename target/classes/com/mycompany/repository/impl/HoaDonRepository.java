@@ -8,6 +8,8 @@ import com.mycompany.domainModel.HoaDon;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.ICommonRepository;
 import com.mycompany.repository.IHoaDonRepository;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
@@ -116,24 +118,7 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
 //            return tongHD;
 //        }
 //    }
-    public static void main(String[] args) {
-//        NhanVien nv = new NhanVien();
-//        nv.setId("E26EFCD1-8F31-446A-B791-5A11F3ED0C2A");
-////        KhachHang kh = new KhachHang();
-////        kh.setId("09D9DF89-6F3E-4DD1-8B1E-55E1835F3CEC");
-//        // HoaDon hd = new  HoaDon(null, "HD02", nv, kh, Date.valueOf("2022-11-11"),Date.valueOf("2022-11-11"), BigDecimal.valueOf(300000), "Tiền mặt", BigDecimal.valueOf(500000), "HIiii", 0);
-//
-//        HoaDon hoaDon = new HoaDonRepository().getOne("HD5");
-//        hoaDon.setTrangThai(3);
-//        Boolean test = new HoaDonRepository().update(hoaDon, "HD5");
-//        System.out.println(test);
-//        List<HoaDon> list = new HoaDonRepository().getHDByTrangThai(0);
-//        for (HoaDon hoaDon : list) {
-//            System.out.println(hoaDon.toString());
-//        }
-    }
     // hàm để check bàn đã có hoá đơn chờ hay chưa
-
     @Override
     public List<HoaDon> getHDByTrangThai(int trangThaiHD) {
         String hql = fromTable + " WHERE trangThai = :trangThaiHD";
@@ -153,5 +138,32 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
         query.setParameter("maBan", maBan);
         listHD = query.getResultList();
         return listHD;
+    }
+
+    public List<HoaDon> getHoaDonsHomNay(String today) {
+        String hql = fromTable + " WHERE ngayTao = :ngayTaoHD";
+        Query query = session.createQuery(hql);
+        query.setParameter("ngayTaoHD", today);
+        List<HoaDon> hoaDons = query.getResultList();
+        return hoaDons;
+    }
+
+    @Override
+    public List<HoaDon> getHoaDonsKhoangNgay(String today1, String today2) {
+        String hql = fromTable + " WHERE ngayTao >= :ngayTao1 AND ngayTao <= :ngayTao2";
+        Query query = session.createQuery(hql);
+        query.setParameter("ngayTao1", today1);
+        query.setParameter("ngayTao2", today2);
+        List<HoaDon> hoaDons = query.getResultList();
+        return hoaDons;
+    }
+
+    public static void main(String[] args) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date today = new java.util.Date();
+        List<HoaDon> list = new HoaDonRepository().getHoaDonsHomNay("2022-12-01");
+        for (HoaDon hoaDon : list) {
+            System.out.println(hoaDon.toString());
+        }
     }
 }

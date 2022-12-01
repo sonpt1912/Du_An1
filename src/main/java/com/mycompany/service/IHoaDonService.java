@@ -5,6 +5,7 @@
 package com.mycompany.service;
 
 import com.mycompany.domainModel.HoaDon;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -16,5 +17,9 @@ public interface IHoaDonService {
     List<HoaDon> getHDByTrangThai(int trangThai);
 
     List<HoaDon> getHDChoByMaBan(int maBan);
+
+    List<HoaDon> getHoaDonsHomNay(String today);
+
+    List<HoaDon> getHoaDonsKhoangNgay(String today1, String today2);
 
 }
