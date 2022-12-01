@@ -10,6 +10,7 @@ import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.impl.ChucVuService;
 import com.mycompany.service.impl.NhanVienService;
 import com.mycompany.util.NhanVienUtil;
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -56,6 +57,8 @@ public class Form_NhanVien extends javax.swing.JPanel {
         loadCBB(listChucVu = chucVuService.getChucVuActive());
         txtNgaySinh.setDate(today);
         txtMa.setEnabled(false);
+        JTextFieldDateEditor ngaySinh = (JTextFieldDateEditor) txtNgaySinh.getDateEditor();
+        ngaySinh.setEnabled(false);
     }
 
     public void showData(List<NhanVien> list) {
@@ -718,7 +721,7 @@ public class Form_NhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-       if (!txtMa.getText().isEmpty()) {
+        if (!txtMa.getText().isEmpty()) {
             String xoa = nhanVienService.remove(txtMa.getText());
             showData(listNhanVien = nhanVienService.getAllByTrangThai(0));
             radioListActiveActionPerformed(evt);
