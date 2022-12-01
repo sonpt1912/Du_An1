@@ -115,9 +115,8 @@ public class Form_KhachHang extends javax.swing.JPanel {
         buttonGroup1 = new javax.swing.ButtonGroup();
         radioLoaiKhach = new javax.swing.ButtonGroup();
         panelBorder1 = new com.raven.swing.PanelBorder();
-        searchText1 = new com.raven.swing.SearchText();
+        txtSearch = new com.raven.swing.SearchText();
         jLabel1 = new javax.swing.JLabel();
-        jButton9 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -155,9 +154,11 @@ public class Form_KhachHang extends javax.swing.JPanel {
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
 
-        jButton9.setBackground(new java.awt.Color(204, 204, 204));
-        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton9.setText("Search");
+        txtSearch.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtSearchCaretUpdate(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -393,10 +394,8 @@ public class Form_KhachHang extends javax.swing.JPanel {
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27)
-                                .addComponent(jButton9)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 688, Short.MAX_VALUE))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -419,9 +418,7 @@ public class Form_KhachHang extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton9)))
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addComponent(jLabel2)
                 .addGap(8, 8, 8)
@@ -519,6 +516,10 @@ public class Form_KhachHang extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
+    private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchCaretUpdate
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -527,7 +528,6 @@ public class Form_KhachHang extends javax.swing.JPanel {
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private com.toedter.calendar.JDateChooser dateNgaySinh;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -551,13 +551,13 @@ public class Form_KhachHang extends javax.swing.JPanel {
     private javax.swing.ButtonGroup radioLoaiKhach;
     private javax.swing.JRadioButton radioNam;
     private javax.swing.JRadioButton radioNu;
-    private com.raven.swing.SearchText searchText1;
     private javax.swing.JTable tbKhachHang;
     private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtHo;
     private javax.swing.JTextField txtMa;
     private javax.swing.JTextField txtQuocGia;
     private javax.swing.JTextField txtSdt;
+    private com.raven.swing.SearchText txtSearch;
     private javax.swing.JTextField txtTen;
     private javax.swing.JTextField txtTenDem;
     private javax.swing.JTextField txtThanhPho;
