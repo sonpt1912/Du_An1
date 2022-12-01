@@ -224,10 +224,13 @@ public class JDialogBan_ThemHD extends javax.swing.JDialog {
                 //thêm xong clear list bàn đang chọn, clear drtm bàn đang chọn
                 listBanDangChon.removeAll(listBanDangChon);
                 dtmBanDangChon.setRowCount(0);
-                JOptionPane.showMessageDialog(this, themHD);
-                JOptionPane.showMessageDialog(new Form_HoaDon(nhanVien), "Vui lòng refresh để kiểm tra thay đổi!");
-                //thoát form
-                this.dispose();
+                int checkConfirm = JOptionPane.showConfirmDialog(null, "Xác nhận thêm!");
+                if (checkConfirm == 0) {
+                    JOptionPane.showMessageDialog(this, themHD);
+                    JOptionPane.showMessageDialog(new Form_HoaDon(nhanVien), "Vui lòng refresh để kiểm tra thay đổi!");
+                    //thoát form
+                    this.dispose();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Không thành công");

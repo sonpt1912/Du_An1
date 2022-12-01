@@ -83,6 +83,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
         dateNgay2.setEnabled(false);
         listHD = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
         showData(listHD);
+        dateNgay1.getJCalendar().setMaxSelectableDate(today);
     }
 
     private void showData(List<HoaDon> listHD) {
@@ -617,8 +618,10 @@ public class Form_HoaDon extends javax.swing.JPanel {
         dtmHDCT.setRowCount(0);
         txtTongTien.setEditable(false);
         txtBan.setEditable(false);
-        listHD = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
-        showData(listHD);
+        rdoHomNayActionPerformed(evt);
+        //listHD = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
+        rdoHomNay.setSelected(true);
+        //showData(listHD);
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void tbHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoaDonMouseClicked
@@ -690,9 +693,11 @@ public class Form_HoaDon extends javax.swing.JPanel {
                 // Ban ban = hoaDon.getBan();
                 // ban.setTrangThai(0);
                 //String updateBan = banService.update(ban, String.valueOf(ban.getMaBan()));
-                JOptionPane.showMessageDialog(this, hoaDonService.update(hoaDon, hoaDon.getMaHoaDon()));
-                listHD = hoaDonService.getAll();
-                showData(listHD);
+                if (JOptionPane.showConfirmDialog(this, "Xac nhận remove!") == 0) {
+                    JOptionPane.showMessageDialog(this, hoaDonService.update(hoaDon, hoaDon.getMaHoaDon()));
+                    listHD = hoaDonService.getAll();
+                    showData(listHD);
+                }
             }
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
@@ -718,35 +723,54 @@ public class Form_HoaDon extends javax.swing.JPanel {
 //if rdoHnay được chọn: 
         //lấy 1 list HNay để lọc trạng thái = for=)))))
         listHD = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
-        //ko cho chọn ngày
-        dateNgay1.setEnabled(false);
-        dateNgay2.setEnabled(false);
-        //lọc hoá đơn theo trjang thái: DÙNG FOR =))))
-        if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
-            listHDShow = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
-        } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Chờ thanh toán")) {
-            for (HoaDon hoaDon : listHD) {
-                if (hoaDon.getTrangThai() == 0) {
-                    listHDShow.add(hoaDon);
-                }
-            }
-        } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Đã thanh toán")) {
-            for (HoaDon hoaDon : listHD) {
-                if (hoaDon.getTrangThai() == 1) {
-                    listHDShow.add(hoaDon);
-                }
-            }
-        } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Đã huỷ")) {
-            for (HoaDon hoaDon : listHD) {
-                if (hoaDon.getTrangThai() == 3) {
-                    listHDShow.add(hoaDon);
-                }
-            }
+        if (listHD.size() <= 0) {
+            dtmHoaDon.setRowCount(0);
         } else {
-            //
+            //ko cho chọn ngày
+            dateNgay1.setEnabled(false);
+            dateNgay2.setEnabled(false);
+            //lọc hoá đơn theo trjang thái: DÙNG FOR =))))
+            if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
+                listHDShow = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
+                showData(listHDShow);
+            } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Chờ thanh toán")) {
+                for (HoaDon hoaDon : listHD) {
+                    if (hoaDon.getTrangThai() == 0) {
+                        listHDShow.add(hoaDon);
+                    }
+                }
+                if (listHDShow.size() <= 0) {
+                    dtmHoaDon.setRowCount(0);
+                } else {
+                    showData(listHDShow);
+                }
+            } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Đã thanh toán")) {
+                for (HoaDon hoaDon : listHD) {
+                    if (hoaDon.getTrangThai() == 1) {
+                        listHDShow.add(hoaDon);
+                    }
+                }
+                if (listHDShow.size() <= 0) {
+                    dtmHoaDon.setRowCount(0);
+                } else {
+                    showData(listHDShow);
+                }
+            } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Đã huỷ")) {
+                for (HoaDon hoaDon : listHD) {
+                    if (hoaDon.getTrangThai() == 3) {
+                        listHDShow.add(hoaDon);
+                    }
+                }
+                if (listHDShow.size() <= 0) {
+                    dtmHoaDon.setRowCount(0);
+                } else {
+                    showData(listHDShow);
+                }
+            } else {
+                //
+            }
         }
-
-        showData(listHDShow);
+        // showData(listHDShow);
     }//GEN-LAST:event_rdoHomNayActionPerformed
 
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
