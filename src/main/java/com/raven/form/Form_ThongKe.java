@@ -25,6 +25,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
     private DefaultComboBoxModel dcbmNgayThang = new DefaultComboBoxModel();
     private List<String> listTenNgayThang = new ArrayList<>();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM, yyyy");
     private java.util.Date today = new java.util.Date();
 
     public Form_ThongKe(NhanVien nv) {
@@ -684,8 +685,12 @@ public class Form_ThongKe extends javax.swing.JPanel {
             dtmSP.addRow(monAn.toShowData(stt));
             stt++;
         }
-        lbDonHangHomNay1.setText(listSanPham.get(0).getTen());
-        lbDonHangHomNay2.setText(listSanPham.get(listSanPham.size()-1).getTen());
+        if (listSanPham.size() > 0) {
+            lbDonHangHomNay1.setText(listSanPham.get(0).getTen());
+            if (listSanPham.size() > 1) {
+                lbDonHangHomNay2.setText(listSanPham.get(listSanPham.size() - 1).getTen());
+            }
+        }
     }
 
     private void showSoLuongDon() {
