@@ -9,12 +9,13 @@ import com.mycompany.domainModel.KhuVuc;
 import com.mycompany.repository.impl.BanRepository;
 import java.util.List;
 import com.mycompany.repository.ICommonRepository;
+import com.mycompany.service.IBanService;
 
 /**
  *
  * @author Admin
  */
-public class BanService implements com.mycompany.service.ICommonService<Ban, String> {
+public class BanService implements IBanService, com.mycompany.service.ICommonService<Ban, String> {
 
     private final ICommonRepository br = new BanRepository();
     private BanRepository banRep = new BanRepository();
@@ -78,6 +79,16 @@ public class BanService implements com.mycompany.service.ICommonService<Ban, Str
         for (Ban ban : bans) {
             System.out.println(ban.toString());
         }
+    }
+
+    @Override
+    public List<Ban> searchByString(String search) {
+        return banRep.searchByString(search);
+    }
+
+    @Override
+    public List<Ban> searchByInteger(Integer search) {
+        return banRep.searchByInteger(search);
     }
 
 }

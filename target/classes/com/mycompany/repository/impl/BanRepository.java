@@ -7,6 +7,7 @@ package com.mycompany.repository.impl;
 import com.mycompany.domainModel.Ban;
 import com.mycompany.domainModel.KhuVuc;
 import com.mycompany.hibernateUtil.HibernateUtil;
+import com.mycompany.repository.IBanRepository;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -17,7 +18,7 @@ import com.mycompany.repository.ICommonRepository;
  *
  * @author Admin
  */
-public class BanRepository implements ICommonRepository<Ban, Boolean, String> {
+public class BanRepository implements IBanRepository, ICommonRepository<Ban, Boolean, String> {
 
     private static final Session session = HibernateUtil.getFactory().openSession();
     private String fromTable = "FROM Ban ";
@@ -102,7 +103,7 @@ public class BanRepository implements ICommonRepository<Ban, Boolean, String> {
         List<Ban> bans = query.getResultList();
         return bans;
     }
-    
+
     public Boolean delete(String ma) {
         String hql = "DELETE " + fromTable
                 + "WHERE maBan = :ma";
@@ -120,6 +121,7 @@ public class BanRepository implements ICommonRepository<Ban, Boolean, String> {
         }
         return check > 0;
     }
+
     public static void main(String[] args) {
         KhuVuc kv = new KhuVuc();
         kv.setIdKV("8E04689D-D3BD-42D9-82F6-71C99A4AF932");
@@ -128,6 +130,26 @@ public class BanRepository implements ICommonRepository<Ban, Boolean, String> {
 //        ban.setKv(kv);
         Boolean test = new BanRepository().update(ban, ban.getMaBan().toString());
         System.out.println(test);
+    }
+
+    @Override
+    public List<Ban> searchByString(String search) {
+        String hql = "FROM Ban B WHERE B.kv.tenKV LIKE :tenKV ";
+        Query query = session.createQuery(hql);
+        query.setParameter("tenKV", "%" + search + "%");
+        List<Ban> search2 = query.getResultList();
+        return search2;
+    }
+
+    @Override
+    public List<Ban> searchByInteger(Integer search) {
+        String hql = "FROM Ban B WHERE B.maBan = :maBan "
+                + "OR B.soLuongChoNgoi = :soLuongChoNgoi";
+        Query query = session.createQuery(hql);
+        query.setParameter("maBan", Integer.valueOf(search));
+        query.setParameter("soLuongChoNgoi", Integer.valueOf(search));
+        List<Ban> search2 = query.getResultList();
+        return search2;
     }
 
 }

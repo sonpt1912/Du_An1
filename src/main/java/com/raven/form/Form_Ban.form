@@ -52,7 +52,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="searchText1" min="-2" pref="262" max="-2" attributes="0"/>
+                                  <Component id="txtSearch" min="-2" pref="262" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                                   <Component id="jButton9" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -88,7 +88,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="searchText1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton9" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -114,7 +114,10 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="com.raven.swing.SearchText" name="searchText1">
+        <Component class="com.raven.swing.SearchText" name="txtSearch">
+          <Events>
+            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="txtSearchCaretUpdate"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
         </Component>

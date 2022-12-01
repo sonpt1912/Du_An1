@@ -73,7 +73,7 @@ public class Form_Ban extends javax.swing.JPanel {
         ban.setKv(khuVuc);
         ban.setMaBan(Integer.valueOf(txtMa.getText()));
         ban.setSoLuongChoNgoi(Integer.valueOf(txtSoLuong.getText()));
-        
+
         if (radioCoNguoi.isSelected()) {
             ban.setTrangThai(1);
         } else {
@@ -101,7 +101,7 @@ public class Form_Ban extends javax.swing.JPanel {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         panelBorder1 = new com.raven.swing.PanelBorder();
-        searchText1 = new com.raven.swing.SearchText();
+        txtSearch = new com.raven.swing.SearchText();
         jLabel1 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -128,6 +128,12 @@ public class Form_Ban extends javax.swing.JPanel {
         btnClear = new javax.swing.JButton();
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
+
+        txtSearch.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtSearchCaretUpdate(evt);
+            }
+        });
 
         jButton9.setBackground(new java.awt.Color(204, 204, 204));
         jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -315,7 +321,7 @@ public class Form_Ban extends javax.swing.JPanel {
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27)
                                 .addComponent(jButton9)))
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -342,7 +348,7 @@ public class Form_Ban extends javax.swing.JPanel {
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton9)))
                 .addGap(10, 10, 10)
                 .addComponent(jLabel2)
@@ -433,6 +439,30 @@ public class Form_Ban extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
+    private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
+        // TODO add your handling code here:
+        String search = txtSearch.getText();
+        if ("".equals(search)) {
+            listBan = banService.getFull();
+            showData(listBan);
+            return;
+        }
+        if (!search.matches("\\d+")) {
+            listBan = banService.searchByString(search);
+            showData(listBan);
+            for (Ban ban : listBan) {
+                System.out.println(ban.getMaBan());
+            }
+        } else {
+            listBan = banService.searchByInteger(Integer.valueOf(search));
+            showData(listBan);
+            for (Ban ban : listBan) {
+                System.out.println(ban.getMaBan());
+            }
+        }
+        showData(listBan);
+    }//GEN-LAST:event_txtSearchCaretUpdate
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -457,9 +487,9 @@ public class Form_Ban extends javax.swing.JPanel {
     private com.raven.swing.PanelBorder panelBorder1;
     private javax.swing.JRadioButton radioCoNguoi;
     private javax.swing.JRadioButton radioControng;
-    private com.raven.swing.SearchText searchText1;
     private javax.swing.JTable tbBan;
     private javax.swing.JTextField txtMa;
+    private com.raven.swing.SearchText txtSearch;
     private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtTenKhuVuc;
     // End of variables declaration//GEN-END:variables
