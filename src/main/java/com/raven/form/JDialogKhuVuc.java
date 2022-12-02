@@ -46,7 +46,6 @@ public class JDialogKhuVuc extends javax.swing.JDialog {
 
     private void fill(int index, List<KhuVuc> listKV) {
         KhuVuc khuVuc = listKV.get(index);
-        lbid.setText(khuVuc.getIdKV());
         txtMaKhuVuc.setEnabled(false);
         txtMaKhuVuc.setText(khuVuc.getMaKV());
         txtTenKhuVuc.setText(khuVuc.getTenKV());
@@ -362,7 +361,7 @@ public class JDialogKhuVuc extends javax.swing.JDialog {
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        lbid.setText("");
+
         txtMaKhuVuc.setEnabled(true);
         txtMaKhuVuc.setText("");
         txtTenKhuVuc.setText("");
