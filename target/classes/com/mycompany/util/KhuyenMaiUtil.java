@@ -63,7 +63,7 @@ public class KhuyenMaiUtil {
         } else if (khuyenMai.getTenKhuyenMai().matches(" r'^[a-zA-Z0-9\\+]*$'")) {
             JOptionPane.showMessageDialog(null, "tên KM không được chứa kí tự đặc biệt");
             check = false;
-        } else if (String.valueOf(khuyenMai.getGiaTriKM()).matches("[0-9]+")) {
+        } else if (!String.valueOf(khuyenMai.getGiaTriKM()).matches("[0-9]+")) {
             JOptionPane.showMessageDialog(null, "Giá trị khuyến mãi phải là số");
             check = false;
         } else {
