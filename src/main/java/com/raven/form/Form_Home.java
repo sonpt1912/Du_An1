@@ -896,9 +896,9 @@ public class Form_Home extends javax.swing.JPanel {
         BigDecimal chuyenKhoanBig = new BigDecimal(chuyenKhoan);
         BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
         int check = (tienMatBig.add(chuyenKhoanBig)).compareTo(tongTien);
-        System.out.println(tongTien);
-        System.out.println(tienMatBig.add(chuyenKhoanBig));
-        System.out.println(check);
+//        System.out.println(tongTien);
+//        System.out.println(tienMatBig.add(chuyenKhoanBig));
+//        System.out.println(check);
         //check trường hợp
         if ("".equals(lbMaHDThanhToan.getText())) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn chưa thanh toán");
@@ -923,7 +923,12 @@ public class Form_Home extends javax.swing.JPanel {
             hd.setNhanVien(nv);
             hd.setTongTien(tongTien);
             hd.setNgayThanhToan(Date.valueOf(ngayThanhToan));
-
+            // check trường hợp chưa có món ăn
+            lstHDCTResponses = hdctResponseService.getAll(hd);
+            if (lstHDCTResponses.size()<=0) {
+                JOptionPane.showMessageDialog(this, "Hoá đơn chưa có gì");
+                return;
+            }
             // check trường hợp ô checkBox
             if (cbTienMat.isSelected() && cbChuyenKhoan.isSelected()) {
                 // nếu cả 2 check box cùng chọn thì add 2 dữ liệu vào bảng giao dịch
