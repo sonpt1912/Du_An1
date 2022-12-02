@@ -91,9 +91,10 @@ public class Form_Ban extends javax.swing.JPanel {
         txtMa.setEnabled(false);
         txtSoLuong.setText(String.valueOf(ban.getSoLuongChoNgoi()));
         if (ban.getTrangThai() == 0) {
-            radioCoNguoi.setSelected(true);
-        } else {
             radioControng.setSelected(true);
+            cbbMaKhuVuc.setSelectedItem(ban.getKv().getMaKV());
+        } else {
+            radioCoNguoi.setSelected(true);
             cbbMaKhuVuc.setSelectedItem(ban.getKv().getMaKV());
         }
     }
