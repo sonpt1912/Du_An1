@@ -138,9 +138,18 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
 
     // searchMonAnTheoTen
     public List<MonAn> searchMonAnTheoTen(String ten) {
-        String hql = fromTable + "WHERE tenMonAn like :tenMonAnMoi";
+        String hql = fromTable + "WHERE tenMonAn like :tenMonAnMoi AND trangThai = 0";
         Query query = session.createQuery(hql);
         query.setParameter("tenMonAnMoi", "%" + ten + "%");
+        List<MonAn> monAns = query.getResultList();
+        return monAns;
+    }
+    //
+    public List<MonAn> searchMonAnTheoTenLoai(String ten, DanhMuc danhMuc) {
+        String hql = fromTable + "WHERE tenMonAn like :tenMonAnMoi AND loai.danhMuc = :danhMuc AND trangThai = 0";
+        Query query = session.createQuery(hql);
+        query.setParameter("tenMonAnMoi", "%" + ten + "%");
+        query.setParameter("danhMuc", danhMuc);
         List<MonAn> monAns = query.getResultList();
         return monAns;
     }

@@ -54,6 +54,8 @@
                           <Component id="cbbLoaiMonAn" min="-2" pref="152" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="lbLoaiMon" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="txtSearch1" min="-2" pref="225" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
@@ -123,12 +125,13 @@
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cbbLoaiMonAn" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lbLoaiMon" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtSearch1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jScrollPane5" min="-2" pref="177" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" pref="21" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" pref="19" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jScrollPane3" min="-2" pref="148" max="-2" attributes="0"/>
@@ -630,6 +633,11 @@
             </Property>
             <Property name="text" type="java.lang.String" value="loaiMon"/>
           </Properties>
+        </Component>
+        <Component class="com.raven.swing.SearchText" name="txtSearch1">
+          <Events>
+            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="txtSearch1CaretUpdate"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

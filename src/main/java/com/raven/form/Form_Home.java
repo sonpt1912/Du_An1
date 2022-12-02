@@ -8,9 +8,11 @@ import com.mycompany.customModel.MonAnResponse;
 import com.mycompany.domainModel.Ban;
 import com.mycompany.domainModel.ChiTietBanHoaDon;
 import com.mycompany.domainModel.ComBo;
+import com.mycompany.domainModel.DanhMuc;
 import com.mycompany.domainModel.GiaoDich;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.HoaDonChiTiet;
+import com.mycompany.domainModel.Loai;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.IBanResponseService;
@@ -34,7 +36,7 @@ import com.mycompany.service.impl.MonAnResponseService;
 import com.mycompany.service.impl.MonAnService;
 import com.mycompany.service.impl.NhanVienService;
 import com.mycompany.util.HoaDonUtil;
-import java.awt.Color;
+//import java.awt.Color;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -42,13 +44,16 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import com.mycompany.service.IHoaDonChiTietService;
+import com.mycompany.service.impl.DanhMucService;
+import com.mycompany.service.impl.LoaiService;
 import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JTable;
+import javax.swing.DefaultComboBoxModel;
+//import java.awt.event.MouseEvent;
+//import javax.swing.JComponent;
+//import javax.swing.JMenu;
+//import javax.swing.JMenuItem;
+//import javax.swing.JPopupMenu;
+//import javax.swing.JTable;
 
 public class Form_Home extends javax.swing.JPanel {
 
@@ -98,6 +103,11 @@ public class Form_Home extends javax.swing.JPanel {
     private NhanVien nhanV;
     private HoaDon hdTong;
     private Ban ban;
+    private List<Loai> listLoai = new ArrayList<>();
+    private LoaiService loaiService = new LoaiService();
+    private DefaultComboBoxModel dcbmLoaiSP = new DefaultComboBoxModel();
+    private List<DanhMuc> listDanhMuc = new ArrayList<>();
+    private DanhMucService danhMucService = new DanhMucService();
 
     public Form_Home(NhanVien nv) {
         initComponents();
@@ -109,9 +119,11 @@ public class Form_Home extends javax.swing.JPanel {
         String headerHoaDonCT[] = {"STT", "Tên món ăn", "Giá món ăn", "Số lượng món ăn", "Tên combo", "Giá combo", "Số lượng combo", "Tổng tiền", "Ghi chú"};
         String headerBan[] = {"STT", "Mã Bàn", "Số lượng chỗ ngồi", "Khu vực", "Trạng thái"};
         loadTableMonAn();
+        loadCbbLoaiSP();
         dtmHoaDon.setColumnIdentifiers(headerHoaDon);
         dtmHoaDonCT.setColumnIdentifiers(headerHoaDonCT);
         dtmBan.setColumnIdentifiers(headerBan);
+        cbbSanPham.setModel(dcbmLoaiSP);
         lstBanResponses = banResponseService.getAll();
         lstHoaDonResponses = hoaDonResponseService.getAll();
         lstMonAnResponses = monAnResponseService.getByDanhMuc("Đồ ăn");
@@ -141,6 +153,13 @@ public class Form_Home extends javax.swing.JPanel {
         cbTienMat.setSelected(false);
         txtChuyenKhoan.setEnabled(false);
         txtTienMat.setEnabled(false);
+    }
+
+    private void loadCbbLoaiSP() {
+        listLoai = loaiService.getAllByTrangThai(0);
+        for (Loai loai : listLoai) {
+            dcbmLoaiSP.addElement(loai.getTenLoai());
+        }
     }
 
     @SuppressWarnings("unchecked")

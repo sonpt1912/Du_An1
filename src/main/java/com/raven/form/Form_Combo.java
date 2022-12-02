@@ -68,7 +68,7 @@ public class Form_Combo extends javax.swing.JPanel {
     private ChiTietComBo chiTietComBo;
     //đường dẫn
     private String selectedImagePath = "";
-
+    
     public Form_Combo(NhanVien nv) {
         initComponents();
         tbComBo.setModel(dtComBo);
@@ -100,11 +100,11 @@ public class Form_Combo extends javax.swing.JPanel {
 //        showDataSanPham(listMonAn = monAnService.getAll());
         txtMa.setEnabled(false);
         setCbb();
-
+        
     }
-
+    
     class CellRenderer implements TableCellRenderer {
-
+        
         @Override
         public Component getTableCellRendererComponent(JTable table,
                 Object value,
@@ -116,17 +116,16 @@ public class Form_Combo extends javax.swing.JPanel {
             TableColumn tb = tbChonMon.getColumn("ẢNH");
             tb.setMaxWidth(100);
             tb.setMinWidth(100);
-
             tbChonMon.setRowHeight(60);
-
+            
             return (Component) value;
         }
-
+        
     }
 
     //
     class CellRenderers implements TableCellRenderer {
-
+        
         @Override
         public Component getTableCellRendererComponent(JTable table,
                 Object value,
@@ -135,15 +134,15 @@ public class Form_Combo extends javax.swing.JPanel {
                 int row,
                 int column) {
             TableColumn tbComBos = tbComBo.getColumn("HÌNH ẢNH");
-            tbComBos.setMaxWidth(60);
-            tbComBos.setMinWidth(60);
+            tbComBos.setMaxWidth(100);
+            tbComBos.setMinWidth(100);
             tbComBo.setRowHeight(60);
-
+            
             return (Component) value;
         }
-
+        
     }
-
+    
     private void showDataComBo(List<ComBo> listComBo) {
         dtComBo.setRowCount(0);
         for (int i = 0; i < listComBo.size(); i++) {
@@ -159,7 +158,7 @@ public class Form_Combo extends javax.swing.JPanel {
             }
         }
     }
-
+    
     private void showDataCTComBo(List<ChiTietComBo> list) {
         dtCTComBo.setRowCount(0);
         int i = 1;
@@ -167,7 +166,7 @@ public class Form_Combo extends javax.swing.JPanel {
             dtCTComBo.addRow(cb.toShowData(i++));
         }
     }
-
+    
     private void showDataSanPham(List<MonAn> listMonAn) {
         dtSanPham.setRowCount(0);
         for (int i = 0; i < listMonAn.size(); i++) {
@@ -183,19 +182,19 @@ public class Form_Combo extends javax.swing.JPanel {
             }
         }
     }
-
+    
     private void setCbb() {
         List<NhanVien> listNhanVien = nhanVienService.getAll();
         for (NhanVien nv : listNhanVien) {
             dcbNhanVien.addElement(nv.getMa());
         }
-
+        
         List<DanhMuc> listDanhMuc = danhMucService.getAll();
         for (DanhMuc dv : listDanhMuc) {
             dcbLoai.addElement(dv.getMaDanhMuc());
         }
     }
-
+    
     private void clear() {
         txtDonGia.setText("");
         txtMa.setText("");
@@ -204,7 +203,7 @@ public class Form_Combo extends javax.swing.JPanel {
         cbbLoaiMonAn.setSelectedIndex(0);
         jLabelImage1.setIcon(null);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -249,6 +248,7 @@ public class Form_Combo extends javax.swing.JPanel {
         rdoListApDung = new javax.swing.JRadioButton();
         rdoListNgungApDung = new javax.swing.JRadioButton();
         lbLoaiMon = new javax.swing.JLabel();
+        txtSearch1 = new com.raven.swing.SearchText();
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -544,6 +544,12 @@ public class Form_Combo extends javax.swing.JPanel {
         lbLoaiMon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbLoaiMon.setText("loaiMon");
 
+        txtSearch1.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtSearch1CaretUpdate(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -556,7 +562,9 @@ public class Form_Combo extends javax.swing.JPanel {
                         .addGap(24, 24, 24)
                         .addComponent(cbbLoaiMonAn, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbLoaiMon))
+                        .addComponent(lbLoaiMon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -610,12 +618,13 @@ public class Form_Combo extends javax.swing.JPanel {
                     .addComponent(jLabel10)
                     .addComponent(jLabel3)
                     .addComponent(cbbLoaiMonAn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbLoaiMon))
-                .addGap(3, 3, 3)
+                    .addComponent(lbLoaiMon)
+                    .addComponent(txtSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(21, Short.MAX_VALUE))
+                        .addContainerGap(19, Short.MAX_VALUE))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -895,7 +904,7 @@ public class Form_Combo extends javax.swing.JPanel {
         FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpg", "jpeg");
         browseImageFile.addChoosableFileFilter(fnef);
         int showOpenDialogue = browseImageFile.showOpenDialog(null);
-
+        
         if (showOpenDialogue == JFileChooser.APPROVE_OPTION) {
             File selectedImageFile = browseImageFile.getSelectedFile();
             selectedImagePath = selectedImageFile.getAbsolutePath();
@@ -908,6 +917,16 @@ public class Form_Combo extends javax.swing.JPanel {
             jLabelImage1.setIcon(new ImageIcon(image));
         }
     }//GEN-LAST:event_btnChonAnhActionPerformed
+
+    private void txtSearch1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearch1CaretUpdate
+        // TODO add your handling code here:
+        String loaiDanhMuc = (String) cbbLoaiMonAn.getSelectedItem();
+        DanhMuc danhMuc = danhMucService.getOne(loaiDanhMuc);
+        lbLoaiMon.setText(danhMuc.getTenDanhMuc());
+        String ten = txtSearch1.getText();
+        listMonAn = monAnService.getMonAnTheoTenLoai(ten, danhMuc);
+        showDataSanPham(listMonAn);
+    }//GEN-LAST:event_txtSearch1CaretUpdate
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -950,6 +969,7 @@ public class Form_Combo extends javax.swing.JPanel {
     private javax.swing.JTextField txtDonGia;
     private javax.swing.JTextField txtMa;
     private com.raven.swing.SearchText txtSearch;
+    private com.raven.swing.SearchText txtSearch1;
     private javax.swing.JTextField txtTen;
     // End of variables declaration//GEN-END:variables
 }
