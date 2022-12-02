@@ -359,7 +359,7 @@ public class JDialogLoaiMonAn extends javax.swing.JDialog {
     }//GEN-LAST:event_tbLoaiMAMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        if (txtMa.getText().isEmpty()) {
+        if (!txtMa.getText().isEmpty()) {
             Loai loai = newLoai();
             if (!(kiemTraTrungMaLoai())) {
                 JOptionPane.showMessageDialog(this, "Mã đã tồn tại");
