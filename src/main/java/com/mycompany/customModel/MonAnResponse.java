@@ -24,6 +24,8 @@ public class MonAnResponse {
 
     private BigDecimal donGia;
 
+//    private BigDecimal donGiaSauKM;
+
     private String donViTinh;
 
     private String loaiMonAn;

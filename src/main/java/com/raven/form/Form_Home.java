@@ -925,7 +925,7 @@ public class Form_Home extends javax.swing.JPanel {
             hd.setNgayThanhToan(Date.valueOf(ngayThanhToan));
             // check trường hợp chưa có món ăn
             lstHDCTResponses = hdctResponseService.getAll(hd);
-            if (lstHDCTResponses.size()<=0) {
+            if (lstHDCTResponses.size() <= 0) {
                 JOptionPane.showMessageDialog(this, "Hoá đơn chưa có gì");
                 return;
             }
@@ -1451,13 +1451,13 @@ public class Form_Home extends javax.swing.JPanel {
     }
 
     private void loadTableMonAn() {
-        String headerMonAn[] = {"STT", "Loại món ăn", "Mã món ăn", "Tên món ăn", "Đơn giá", "Đơn vị tính"};
+        String headerMonAn[] = {"STT", "Loại món ăn", "Mã món ăn", "Tên món ăn", "Đơn giá", "Đơn giá sau KM", "Đơn vị tính"};
         tbMonAn.setModel(dtmMonAn);
         dtmMonAn.setColumnIdentifiers(headerMonAn);
     }
 
     private void loadTableDoUong() {
-        String headersDoUong[] = {"STT", "Loại đồ uống", "Mã đồ uống", "Tên đồ uống", "Đơn giá", "Đơn vị tính"};
+        String headersDoUong[] = {"STT", "Loại đồ uống", "Mã đồ uống", "Tên đồ uống", "Đơn giá", "Đơn giá sau KM", "Đơn vị tính"};
         tbMonAn.setModel(dtmDoUong);
         dtmDoUong.setColumnIdentifiers(headersDoUong);
     }

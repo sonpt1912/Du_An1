@@ -184,7 +184,11 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
             return listMA;
         }
     }
-//    public static void main(String[] args) {
-//        new MonAnRepository().searchMonAnTheoTen("C").forEach(s -> System.out.println(s.toString()));
-//    }
+
+    public static void main(String[] args) {
+        List<MonAn> lsList = new MonAnRepository().getAll();
+        for (MonAn monAn : lsList) {
+            System.out.println(monAn.getMaMonAn());
+        }
+    }
 }

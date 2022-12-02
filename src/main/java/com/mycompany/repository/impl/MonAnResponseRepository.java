@@ -30,10 +30,10 @@ public class MonAnResponseRepository implements IMonAnResponseRepository<MonAnRe
     }
 
     public static void main(String[] args) {
-//        List<MonAnResponse> test = new MonAnResponseRepository().getByDanhMucAndTenMonAn("Đồ uống");
-//        for (MonAnResponse monAnResponse : test) {
-//            System.out.println(test);
-//        }
+        List<MonAnResponse> test = new MonAnResponseRepository().getAllTest();
+        for (MonAnResponse monAnResponse : test) {
+            System.out.println(test.toString());
+        }
     }
 
     @Override
@@ -53,6 +53,14 @@ public class MonAnResponseRepository implements IMonAnResponseRepository<MonAnRe
         Query query = session.createQuery(hql);
         query.setParameter("tenDanhMuc", tenDanhMuc);
         query.setParameter("tenMonAn", "%" + tenMonAn + "%");
+        List<MonAnResponse> monAnResponses = query.getResultList();
+        return monAnResponses;
+    }
+
+    public List<MonAnResponse> getAllTest() {
+        String hql = "SELECT new com.mycompany.customModel.MonAnResponse(MA.maMonAn,MA.tenMonAn,MA.donGia,KMCT.donGiaSauKM,MA.donViTinh,MA.loai.tenLoai) "
+                + "FROM MonAn MA LEFT JOIN KhuyenMaiChiTiet KMCT ON MA.id=KMCT.monAn.id LEFT JOIN KhuyenMai KM ON KM.id = KMCT.khuyenMai.id ";
+        Query query = session.createQuery(hql);
         List<MonAnResponse> monAnResponses = query.getResultList();
         return monAnResponses;
     }
