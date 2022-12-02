@@ -554,8 +554,6 @@ public class Form_SanPham extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Tên không được để kí tự đặc biệt!");
             } else if (!txtDonGia.getText().matches("[0-9]+")) {
                 JOptionPane.showMessageDialog(this, "Không đúng định dạng đơn giá");
-            } else if (txtDonViTinh.getText().matches("[0-9]+")) {
-                JOptionPane.showMessageDialog(this, "Không đúng định dạng đơn vị tính");
             } else if (!txtDonViTinh.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
                 JOptionPane.showMessageDialog(this, "Đơn vị tính không được để kí tự đặc biệt!");
             } else {
