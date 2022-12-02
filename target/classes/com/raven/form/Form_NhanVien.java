@@ -55,6 +55,7 @@ public class Form_NhanVien extends javax.swing.JPanel {
         dtmNhanVien.setColumnIdentifiers(header);
         showData(listNhanVien = nhanVienService.getAllByTrangThai(0));
         loadCBB(listChucVu = chucVuService.getChucVuActive());
+        txtNgaySinh.getJCalendar().setMaxSelectableDate(today);
         txtNgaySinh.setDate(today);
         txtMa.setEnabled(false);
         JTextFieldDateEditor ngaySinh = (JTextFieldDateEditor) txtNgaySinh.getDateEditor();
