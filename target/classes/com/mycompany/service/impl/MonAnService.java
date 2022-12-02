@@ -67,16 +67,23 @@ public class MonAnService implements com.mycompany.service.ICommonService<MonAn,
     public String maTuDong() {
         List<MonAn> listMon = new MonAnService().getAllMonAn();
         int index = listMon.size();
+        String maMA = "MA";
         if (index <= 0) {
             return "MA1";
         } else {
-            String viTri = "";
-            String maMon = "";
-            viTri += listMon.get(index - 1).getMaMonAn();
-            int soMa = Integer.valueOf(viTri.substring(2)) + 1;
-            maMon = "MA" + soMa;
-            return maMon;
+//            String viTri = "";
+//            String maMon = "";
+//            viTri += listMon.get(index - 1).getMaMonAn();
+//            int soMa = Integer.valueOf(viTri.substring(2)) + 1;
+//            maMon = "MA" + soMa;
+//            return maMon;
+
+            maMA = maMA + index;
+            if (monAnRepo.getOne(maMA) != null) {
+                maMA = "MA" + (index + 1);
+            }
         }
+        return maMA;
     }
 
     private List<MonAn> getAllMonAn() {
