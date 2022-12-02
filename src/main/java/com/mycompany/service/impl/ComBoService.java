@@ -48,6 +48,11 @@ public class ComBoService implements ICommonService<ComBo, String>, IComBoServic
         }
     }
 
+    //
+    public List<ComBo> getAllTen(String ten) {
+        return cb.getAllTheoTen(ten);
+    }
+
     @Override
     public String update(ComBo kh, String ma) {
         if ((Boolean) cbr.update(kh, ma)) {

@@ -195,11 +195,6 @@ public class Form_SanPham extends javax.swing.JPanel {
                 searchText1CaretUpdate(evt);
             }
         });
-        searchText1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchText1ActionPerformed(evt);
-            }
-        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -705,11 +700,6 @@ public class Form_SanPham extends javax.swing.JPanel {
             jLabelImage.setIcon(new ImageIcon(image));
         }
     }//GEN-LAST:event_btnChonAnhActionPerformed
-
-    private void searchText1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchText1ActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_searchText1ActionPerformed
 
     private void searchText1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_searchText1CaretUpdate
         // TODO add your handling code here:

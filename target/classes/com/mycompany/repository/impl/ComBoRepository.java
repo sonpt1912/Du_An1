@@ -32,6 +32,15 @@ public class ComBoRepository implements ICommonRepository<ComBo, Boolean, String
         return comBos;
     }
 
+    //
+    public List<ComBo> getAllTheoTen(String ten) {
+        String hql = fromTable + "WHERE tenCB like :tenCBSearch";
+        Query query = session.createQuery(hql);
+        query.setParameter("tenCBSearch", "%" + ten + "%");
+        List<ComBo> comBos = query.getResultList();
+        return comBos;
+    }
+
     @Override
     public ComBo getOne(String ma) {
         String hql = fromTable + "WHERE maCB = :ma";

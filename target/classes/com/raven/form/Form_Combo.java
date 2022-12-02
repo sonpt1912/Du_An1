@@ -878,6 +878,9 @@ public class Form_Combo extends javax.swing.JPanel {
 
     private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
         // TODO add your handling code here:
+        String ten = txtSearch.getText();
+        listComBo = comBoService.getAllTen(ten);
+        showDataComBo(listComBo);
     }//GEN-LAST:event_txtSearchCaretUpdate
 
     private void cbbMaNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbMaNhanVienActionPerformed
