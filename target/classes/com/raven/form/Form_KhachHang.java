@@ -14,7 +14,7 @@ import com.mycompany.domainModel.KhachHang;
 import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.impl.KhachHangService;
 import com.mycompany.util.KhachHangUtil;
-import java.math.BigDecimal;
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,6 +49,8 @@ public class Form_KhachHang extends javax.swing.JPanel {
         dateNgaySinh.setDate(today);
         radioKhachThuong.setSelected(true);
         txtMa.setEditable(false);
+        JTextFieldDateEditor ngaySinh = (JTextFieldDateEditor) dateNgaySinh.getDateEditor();
+        ngaySinh.setEnabled(false);
     }
 
     private void showData(List<KhachHang> listKH, int stt) {
