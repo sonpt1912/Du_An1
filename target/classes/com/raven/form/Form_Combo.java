@@ -68,7 +68,7 @@ public class Form_Combo extends javax.swing.JPanel {
     private ChiTietComBo chiTietComBo;
     //đường dẫn
     private String selectedImagePath = "";
-    
+
     public Form_Combo(NhanVien nv) {
         initComponents();
         tbComBo.setModel(dtComBo);
@@ -100,11 +100,11 @@ public class Form_Combo extends javax.swing.JPanel {
 //        showDataSanPham(listMonAn = monAnService.getAll());
         txtMa.setEnabled(false);
         setCbb();
-        
+
     }
-    
+
     class CellRenderer implements TableCellRenderer {
-        
+
         @Override
         public Component getTableCellRendererComponent(JTable table,
                 Object value,
@@ -116,17 +116,17 @@ public class Form_Combo extends javax.swing.JPanel {
             TableColumn tb = tbChonMon.getColumn("ẢNH");
             tb.setMaxWidth(100);
             tb.setMinWidth(100);
-            
+
             tbChonMon.setRowHeight(60);
-            
+
             return (Component) value;
         }
-        
+
     }
 
     //
     class CellRenderers implements TableCellRenderer {
-        
+
         @Override
         public Component getTableCellRendererComponent(JTable table,
                 Object value,
@@ -138,12 +138,12 @@ public class Form_Combo extends javax.swing.JPanel {
             tbComBos.setMaxWidth(60);
             tbComBos.setMinWidth(60);
             tbComBo.setRowHeight(60);
-            
+
             return (Component) value;
         }
-        
+
     }
-    
+
     private void showDataComBo(List<ComBo> listComBo) {
         dtComBo.setRowCount(0);
         for (int i = 0; i < listComBo.size(); i++) {
@@ -159,7 +159,7 @@ public class Form_Combo extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void showDataCTComBo(List<ChiTietComBo> list) {
         dtCTComBo.setRowCount(0);
         int i = 1;
@@ -167,7 +167,7 @@ public class Form_Combo extends javax.swing.JPanel {
             dtCTComBo.addRow(cb.toShowData(i++));
         }
     }
-    
+
     private void showDataSanPham(List<MonAn> listMonAn) {
         dtSanPham.setRowCount(0);
         for (int i = 0; i < listMonAn.size(); i++) {
@@ -183,19 +183,19 @@ public class Form_Combo extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void setCbb() {
         List<NhanVien> listNhanVien = nhanVienService.getAll();
         for (NhanVien nv : listNhanVien) {
             dcbNhanVien.addElement(nv.getMa());
         }
-        
+
         List<DanhMuc> listDanhMuc = danhMucService.getAll();
         for (DanhMuc dv : listDanhMuc) {
             dcbLoai.addElement(dv.getMaDanhMuc());
         }
     }
-    
+
     private void clear() {
         txtDonGia.setText("");
         txtMa.setText("");
@@ -204,7 +204,7 @@ public class Form_Combo extends javax.swing.JPanel {
         cbbLoaiMonAn.setSelectedIndex(0);
         jLabelImage1.setIcon(null);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -761,9 +761,11 @@ public class Form_Combo extends javax.swing.JPanel {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here
         int index = tbComBo.getSelectedRow();
+        String hinhAnh;
         if (index < 0) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn comBo cần sửa");
         } else {
+            ComBo comBoo = listComBo.get(index);
             if (txtTen.getText().isEmpty() || txtTen.getText().matches("\\s+")) {
                 JOptionPane.showMessageDialog(this, "không được để trống tên món ăn");
             } else if (!txtTen.getText().matches("[a-z A-Z0-9]+")) {
@@ -781,7 +783,11 @@ public class Form_Combo extends javax.swing.JPanel {
                 } else {
                     apDung = 1;
                 }
-                String hinhAnh = selectedImagePath;
+                if (selectedImagePath != null) {
+                    hinhAnh = selectedImagePath;
+                } else {
+                    hinhAnh = comBoo.getHinhAnh();
+                }
                 NhanVien nhanVien = nhanVienService.getOne(dcbNhanVien.getSelectedItem().toString());
                 ComBo comB = new ComBo(this.comBo.getId(), nhanVien, this.comBo.getMaCB(), txtTen.getText(), hinhAnh, BigDecimal.valueOf(Double.valueOf(txtDonGia.getText())), apDung);
                 int checkConfirm = JOptionPane.showConfirmDialog(this, "Xác nhận update!");
@@ -886,7 +892,7 @@ public class Form_Combo extends javax.swing.JPanel {
         FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpg", "jpeg");
         browseImageFile.addChoosableFileFilter(fnef);
         int showOpenDialogue = browseImageFile.showOpenDialog(null);
-        
+
         if (showOpenDialogue == JFileChooser.APPROVE_OPTION) {
             File selectedImageFile = browseImageFile.getSelectedFile();
             selectedImagePath = selectedImageFile.getAbsolutePath();

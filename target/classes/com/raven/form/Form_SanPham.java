@@ -5,17 +5,13 @@
  */
 package com.raven.form;
 
-import com.mycompany.domainModel.DanhMuc;
 import com.mycompany.domainModel.Loai;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.domainModel.NhanVien;
-import com.mycompany.service.impl.DanhMucService;
 import com.mycompany.service.impl.LoaiService;
 import com.mycompany.service.impl.MonAnService;
 import java.awt.Component;
-
 import java.awt.Image;
-
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -634,15 +630,26 @@ public class Form_SanPham extends javax.swing.JPanel {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         //t
-        String hinhAnh = selectedImagePath;
-        int trangThai;
-        if (rdoApDung.isSelected()) {
-            trangThai = 0;
+        String hinhAnh;
+        int index = tbMonAn.getSelectedRow();
+        if (index < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn monAn");
         } else {
-            trangThai = 1;
-        }
-        //
-        if (monAn != null) {
+            MonAn monAnn = listMonAn.get(index);
+            hinhAnh = monAnn.getHinhAnh();
+            if (selectedImagePath != null) {
+                hinhAnh = selectedImagePath;
+            } else {
+                hinhAnh = monAnn.getHinhAnh();
+            }
+
+            int trangThai;
+            if (rdoApDung.isSelected()) {
+                trangThai = 0;
+            } else {
+                trangThai = 1;
+            }
+            //
             if (txtTen.getText().isEmpty() || txtTen.getText().matches("\\s+")) {
                 JOptionPane.showMessageDialog(this, "Không được để trống tên");
             } else if (txtDonGia.getText().isEmpty() || txtDonGia.getText().matches("\\s+")) {
@@ -663,18 +670,16 @@ public class Form_SanPham extends javax.swing.JPanel {
                 Loai loai = loaiService.getOne((String) cbbLoai.getSelectedItem());
                 //bỏ KM
 //            MonAn ma = new MonAn(monAn.getId(), loai, monAn.getKhuyenMai(), monAn.getMaMonAn(), txtTen.getText(), monAn.getHinhAnh(), new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), trangThai);
-                MonAn ma = new MonAn(monAn.getId(), loai, monAn.getMaMonAn(), txtTen.getText(),
+                MonAn ma = new MonAn(this.monAn.getId(), loai, this.monAn.getMaMonAn(), txtTen.getText(),
                         hinhAnh, new BigDecimal(txtDonGia.getText()), txtDonViTinh.getText(), trangThai);
                 int checkConfirm = JOptionPane.showConfirmDialog(this, "Xác nhận update!");
                 if (checkConfirm == 0) {
-                    String update = monAnService.update(ma, monAn.getMaMonAn());
+                    String update = monAnService.update(ma, txtMa.getText());
                     JOptionPane.showMessageDialog(this, update);
                     rdoApDung.setSelected(true);
                     rdoListApDungActionPerformed(evt);
                 }
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "vui lòng chọn sản phẩm");
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
