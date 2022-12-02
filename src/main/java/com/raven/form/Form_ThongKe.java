@@ -9,6 +9,7 @@ import com.mycompany.customModel.SanPhamRepose;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.impl.ThongKeService;
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Color;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -28,6 +29,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 public class Form_ThongKe extends javax.swing.JPanel {
+
     private ChartPanel charPanel = null;
 
     private DefaultTableModel dtmSP = new DefaultTableModel();
@@ -46,6 +48,13 @@ public class Form_ThongKe extends javax.swing.JPanel {
         dtmSP.setColumnIdentifiers(headerSP);
         cbbNgayThang.setModel(dcbmNgayThang);
         cbbDate();
+        // set enble
+//        txtNgayBatDau.getJCalendar().setMaxSelectableDate(today);
+//        JTextFieldDateEditor batDau = (JTextFieldDateEditor) txtNgayBatDau.getDateEditor();
+//        txtNgayKetThuc.getJCalendar().setMaxSelectableDate(today);
+//        JTextFieldDateEditor ketThuc = (JTextFieldDateEditor) txtNgayKetThuc.getDateEditor();
+
+        //
         String ngayBatDau = dateFormat.format(txtNgayBatDau.getDate());
         String ngayKetThuc = dateFormat.format(txtNgayKetThuc.getDate());
         listSanPham = thongKeService.getAllSanPham(Date.valueOf(ngayBatDau), Date.valueOf(ngayKetThuc));
@@ -98,7 +107,6 @@ public class Form_ThongKe extends javax.swing.JPanel {
         rdDaHuyHoaDon = new javax.swing.JRadioButton();
         cbbNgayThang = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
-        btnBieuDo = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(204, 204, 255));
         setPreferredSize(new java.awt.Dimension(953, 595));
@@ -428,13 +436,6 @@ public class Form_ThongKe extends javax.swing.JPanel {
         jLabel11.setForeground(new java.awt.Color(102, 102, 102));
         jLabel11.setText("Thống kê sản phẩm ");
 
-        btnBieuDo.setText("Biểu Đồ");
-        btnBieuDo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBieuDoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -458,8 +459,6 @@ public class Form_ThongKe extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(btnBieuDo)
-                                        .addGap(18, 18, 18)
                                         .addComponent(btnUpdate))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(10, 10, 10)
@@ -489,7 +488,6 @@ public class Form_ThongKe extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnUpdate)
-                    .addComponent(btnBieuDo)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -547,12 +545,6 @@ public class Form_ThongKe extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnUpdate1ActionPerformed
 
-    private void btnBieuDoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBieuDoActionPerformed
-        // TODO add your handling code here:
-        JDialogBieuDo bieuDo = new JDialogBieuDo(listSanPham);
-        bieuDo.setVisible(true);
-    }//GEN-LAST:event_btnBieuDoActionPerformed
-
 //    private void showDataSanPham(List<SanPhamRepose> listSanPham, int stt) {
 //        dtmSP.setRowCount(0);
 //        for (SanPhamRepose monAn : listSanPham) {
@@ -570,7 +562,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 20, 20));
         chartPanel.setBackground(Color.white);
-        jPanel8.add(chartPanel,new AbsoluteConstraints(0, 0, 450, 300));
+        jPanel8.add(chartPanel, new AbsoluteConstraints(0, 0, 450, 300));
     }
 
     private CategoryDataset createDataset(List<SanPhamRepose> list) {
@@ -585,7 +577,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
 //       
         for (SanPhamRepose x : list) {
             System.out.println(x.getMa());
-            dataset.addValue(x.getSoLuong(), x.getTen(), x.getTen());
+            dataset.addValue(x.getSoLuong(), x.getMa(), x.getTen());
         }
 
         return dataset;
@@ -644,7 +636,6 @@ public class Form_ThongKe extends javax.swing.JPanel {
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBieuDo;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnUpdate1;
     private javax.swing.ButtonGroup buttonGroup1;

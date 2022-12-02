@@ -75,9 +75,9 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
         dtmNhanVien.setColumnIdentifiers(header);
         showData(listNhanVien = nhanVienService.getAllByTrangThai(0));
         loadCBB(listChucVu = chucVuService.getChucVuActive());
-        txtNgaySinh.getJCalendar().setMaxSelectableDate(today);
         txtNgaySinh.setDate(today);
         txtMa.setEnabled(false);
+        txtNgaySinh.getJCalendar().setMaxSelectableDate(today);
         JTextFieldDateEditor ngaySinh = (JTextFieldDateEditor) txtNgaySinh.getDateEditor();
         ngaySinh.setEnabled(false);
         webCamCapture();

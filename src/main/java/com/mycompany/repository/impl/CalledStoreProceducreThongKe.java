@@ -57,7 +57,7 @@ public class CalledStoreProceducreThongKe {
     }
 
     public static void main(String[] args) {
-        List<SanPhamRepose> lists = new CalledStoreProceducreThongKe().calledStore(Date.valueOf("2022-11-12"), Date.valueOf("2022-01-12"));
+        List<SanPhamRepose> lists = new CalledStoreProceducreThongKe().calledStore(Date.valueOf("2022-12-02"), Date.valueOf("2022-12-02"));
 //        List<SanPhamRepose> list = new ArrayList<>();
 //
 //        lists.forEach(s -> System.out.println(s.toString()));
