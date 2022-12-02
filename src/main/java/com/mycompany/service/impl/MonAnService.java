@@ -56,9 +56,12 @@ public class MonAnService implements com.mycompany.service.ICommonService<MonAn,
     public List<MonAn> getMonAnByTrangThai(int trangThai) {
         return monAnRepo.getAllMonAnByTrangThai(trangThai);
     }
-
+    
     public List<MonAn> getMonAnTheoTen(String ten) {
         return monAnRepo.searchMonAnTheoTen(ten);
+    }
+    public List<MonAn> getMonAnTheoTenLoai(String ten, DanhMuc danhMuc) {
+        return monAnRepo.searchMonAnTheoTenLoai(ten, danhMuc);
     }
 
     public static void main(String[] args) {
