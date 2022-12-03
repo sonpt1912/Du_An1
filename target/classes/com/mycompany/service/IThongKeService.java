@@ -59,4 +59,28 @@ public interface IThongKeService {
 
     List<SanPhamRepose> getAllSanPham(Date ngaBatDau, Date ngayKetThuc);
 
+    BigDecimal getDoanhThuThang1();
+
+    BigDecimal getDoanhThuThang2();
+
+    BigDecimal getDoanhThuThang3();
+
+    BigDecimal getDoanhThuThang4();
+
+    BigDecimal getDoanhThuThang5();
+
+    BigDecimal getDoanhThuThang6();
+
+    BigDecimal getDoanhThuThang7();
+
+    BigDecimal getDoanhThuThang8();
+
+    BigDecimal getDoanhThuThang9();
+
+    BigDecimal getDoanhThuThang10();
+
+    BigDecimal getDoanhThuThang11();
+
+    BigDecimal getDoanhThuThang12();
+
 }

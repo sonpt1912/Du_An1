@@ -138,4 +138,64 @@ public class ThongKeService implements IThongKeService {
         return list;
     }
 
+    @Override
+    public BigDecimal getDoanhThuThang1() {
+        return thongKeRepository.getDoanhThuThang1();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang2() {
+        return thongKeRepository.getDoanhThuThang2();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang3() {
+        return thongKeRepository.getDoanhThuThang3();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang4() {
+        return thongKeRepository.getDoanhThuThang4();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang5() {
+        return thongKeRepository.getDoanhThuThang5();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang6() {
+        return thongKeRepository.getDoanhThuThang6();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang7() {
+        return thongKeRepository.getDoanhThuThang7();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang8() {
+        return thongKeRepository.getDoanhThuThang8();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang9() {
+        return thongKeRepository.getDoanhThuThang9();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang10() {
+        return thongKeRepository.getDoanhThuThang10();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang11() {
+        return thongKeRepository.getDoanhThuThang11();
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang12() {
+        return thongKeRepository.getDoanhThuThang12();
+    }
+
 }

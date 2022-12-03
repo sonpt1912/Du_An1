@@ -4,13 +4,11 @@
  */
 package com.mycompany.repository.impl;
 
-import com.mycompany.customModel.SanPhamRepose;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.IThongKeRepository;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -46,7 +44,7 @@ public class ThongKeRepository implements IThongKeRepository {
 //        for (HoaDon hoaDon : listHoaDon) {
 //            System.out.println(hoaDon.toString());
 //        }
-        BigDecimal hoaDon = new ThongKeRepository().getDoanhThuDAY();
+        BigDecimal hoaDon = new ThongKeRepository().getDoanhThuThang1();
         System.out.println(hoaDon);
     }
 
@@ -195,6 +193,102 @@ public class ThongKeRepository implements IThongKeRepository {
     @Override
     public BigDecimal getDoanhThuYEAR() {
         String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE YEAR(hd.ngayThanhToan) = YEAR(sysdatetime()) AND hd.trangThai = 1";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang1() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 1 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang2() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 2 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang3() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 3 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang4() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 4 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang5() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 5 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang6() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 6 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang7() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 7 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang8() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 8 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang9() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 9 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang10() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 10 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang11() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 11 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
+        Query query = SESSION.createQuery(hql);
+        BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
+        return hoaDons;
+    }
+
+    @Override
+    public BigDecimal getDoanhThuThang12() {
+        String hql = "SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 12 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
         Query query = SESSION.createQuery(hql);
         BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
         return hoaDons;
