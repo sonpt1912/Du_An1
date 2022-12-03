@@ -22,7 +22,8 @@ public class BanResponseRepository implements IBanResponseRepository<BanResponse
 
     @Override
     public List<BanResponseRepository> getAll() {
-        String hql = "SELECT new com.mycompany.customModel.BanResponse(B.maBan,B.soLuongChoNgoi,B.kv.tenKV,B.trangThai)" + fromTable;
+        String hql = "SELECT new com.mycompany.customModel.BanResponse(B.maBan,B.soLuongChoNgoi,B.kv.tenKV,B.trangThai)" + 
+                fromTable + "WHERE B.trangThai <> 2";
         Query query = session.createQuery(hql);
         List<BanResponseRepository> banResponses = query.getResultList();
         return banResponses;

@@ -25,7 +25,7 @@ public class BanRepository implements IBanRepository, ICommonRepository<Ban, Boo
 
     @Override
     public List<Ban> getAll() {
-        String hql = fromTable + "WHERE trangThai = 0";
+        String hql = fromTable + "WHERE trangThai <> 2";
         Query query = session.createQuery(hql);
         List<Ban> bans = query.getResultList();
         return bans;
@@ -84,7 +84,7 @@ public class BanRepository implements IBanRepository, ICommonRepository<Ban, Boo
 
     @Override
     public Boolean remove(String ma) {
-        String hql = "UPDATE " + fromTable + "SET trangThai = 1"
+        String hql = "UPDATE " + fromTable + "SET trangThai = 2"
                 + "WHERE maBan = :ma";
         Transaction transaction = null;
         int check = 0;
@@ -102,7 +102,7 @@ public class BanRepository implements IBanRepository, ICommonRepository<Ban, Boo
     }
 
     public List<Ban> getFull() {
-        String hql = fromTable;
+        String hql = fromTable + "WHERE trangThai <> 2";
         Query query = session.createQuery(hql);
         List<Ban> bans = query.getResultList();
         return bans;
