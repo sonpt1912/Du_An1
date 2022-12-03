@@ -826,6 +826,8 @@ public class Form_Home extends javax.swing.JPanel {
             hdTong = hd;
             // lấy ra những giao dịch có trong hoá đơn đã được chọn
             List<GiaoDich> giaoDichs = gds2.getTheoHoaDon(hd);
+//            for (GiaoDich giaoDich : giaoDichs) {
+//            }
             //list để fill mã bàn, không khai bảo toàn cục nhé
             List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hd);
             String maBan = lstChiTietBanHoaDons.get(0).getBan().getMaBan().toString();
@@ -855,17 +857,8 @@ public class Form_Home extends javax.swing.JPanel {
                 checkTrangThaiHD = 1;
                 lbMaHDThanhToan.setText("");
             }
-            txtTienMat.setText("");
+            txtTienMat.setText("0");
             txtChuyenKhoan.setText("");
-            // để fill hình thức thanh toán và số tiền
-            for (GiaoDich giaoDich : giaoDichs) {
-                if (giaoDich.getHinhThucThanhToan().equals("Chuyển khoản")) {
-                    txtChuyenKhoan.setText(giaoDich.getSoTienThanhToan().toString());
-                }
-                if (giaoDich.getHinhThucThanhToan().equals("Tiền mặt")) {
-                    txtTienMat.setText(giaoDich.getSoTienThanhToan().toString());
-                }
-            }
             // show data hdct theo hd đang chọn
             lstHDCTResponses = hdctResponseService.getAll(hd);
             showDataHDCT(lstHDCTResponses);
@@ -873,6 +866,25 @@ public class Form_Home extends javax.swing.JPanel {
             // gọi lại hàm để dữ liệu được cập nhập
             fillTienThuaChuyenKhoan();
             fillTienThuaTienMat();
+            // để fill hình thức thanh toán và số tiền
+            String tm = "";
+            String ck = "";
+            for (GiaoDich giaoDich : giaoDichs) {
+                if (giaoDich.getHinhThucThanhToan().equals("Tiền mặt")) {
+                    tm = giaoDich.getSoTienThanhToan().toString();
+//                    txtTienMat.setText(giaoDich.getSoTienThanhToan().toString());
+                    System.out.println(giaoDich.getHinhThucThanhToan() + " " + giaoDich.getSoTienThanhToan());
+                    System.out.println("có vào tm r nha");
+                }
+                if (giaoDich.getHinhThucThanhToan().equals("Chuyển khoản")) {
+                    ck = giaoDich.getSoTienThanhToan().toString();
+//                    txtChuyenKhoan.setText(giaoDich.getSoTienThanhToan().toString());
+                    System.out.println(giaoDich.getHinhThucThanhToan() + " " + giaoDich.getSoTienThanhToan());
+                    System.out.println("có vào ck r nha");
+                }
+            }
+            txtTienMat.setText(tm);
+            txtChuyenKhoan.setText(ck);
         }
     }//GEN-LAST:event_tbHoaDonMouseClicked
 
