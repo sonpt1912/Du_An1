@@ -18,4 +18,6 @@ public interface IMonAnResponseRepository<O, S> {
 
     List<O> getByDanhMucAndTenMonAn(S tenMonAn, S tenDanhMuc);
 
+    List<O> getMonAnJoinKMCT(String tenDanhMuc);
+
 }

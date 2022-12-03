@@ -18,4 +18,5 @@ public interface IMonAnResponseService<O, S> {
 
     List<O> getByDanhMucAndTenMonAn(S tenMonAn, S tenDanhMuc);
 
+    List<O> getMonAnJoinKMCT(String tenDanhMuc);
 }

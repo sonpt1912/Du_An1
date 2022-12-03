@@ -18,7 +18,6 @@ import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.IBanResponseService;
 import com.mycompany.service.IChiTietBanHoaDonService;
 import com.mycompany.service.impl.HoaDonChiTietResponseService;
-import com.mycompany.service.ICommonResponseService;
 import com.mycompany.service.ICommonService;
 import com.mycompany.service.IHoaDonChiTietResponseService;
 import com.mycompany.service.IMonAnResponseService;
@@ -36,7 +35,6 @@ import com.mycompany.service.impl.MonAnResponseService;
 import com.mycompany.service.impl.MonAnService;
 import com.mycompany.service.impl.NhanVienService;
 import com.mycompany.util.HoaDonUtil;
-//import java.awt.Color;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -48,6 +46,7 @@ import com.mycompany.service.impl.DanhMucService;
 import com.mycompany.service.impl.LoaiService;
 import java.awt.event.InputEvent;
 import javax.swing.DefaultComboBoxModel;
+//import java.awt.Color;
 //import java.awt.event.MouseEvent;
 //import javax.swing.JComponent;
 //import javax.swing.JMenu;
@@ -63,7 +62,9 @@ public class Form_Home extends javax.swing.JPanel {
     private DefaultTableModel dtmMonAn = new DefaultTableModel();
     private DefaultTableModel dtmCombo = new DefaultTableModel();
     private DefaultTableModel dtmDoUong = new DefaultTableModel();
-    private List<MonAnResponse> lstMonAnResponses = new ArrayList<>();
+    private List<MonAnResponse> lstMAReponByDM = new ArrayList<>();
+    private List<MonAnResponse> listMAReponBYKMCT = new ArrayList<>();
+    private List<MonAnResponse> listMAReponMerge = new ArrayList<>();
     private List<BanResponse> lstBanResponses = new ArrayList<>();
     private List<BanResponse> lstMaBan = new ArrayList<>();// list để lấy mã bàn
     private List<HoaDonResponse> lstHoaDonResponses = new ArrayList<>();
@@ -126,9 +127,11 @@ public class Form_Home extends javax.swing.JPanel {
         cbbSanPham.setModel(dcbmLoaiSP);
         lstBanResponses = banResponseService.getAll();
         lstHoaDonResponses = hoaDonResponseService.getAll();
-        lstMonAnResponses = monAnResponseService.getByDanhMuc("Đồ ăn");
+        lstMAReponByDM = monAnResponseService.getByDanhMuc(dcbmLoaiSP.getSelectedItem().toString());
+        listMAReponBYKMCT = monAnResponseService.getMonAnJoinKMCT(dcbmLoaiSP.getSelectedItem().toString());
+        listMAReponMerge = mergeMonAnRepon(listMAReponBYKMCT, lstMAReponByDM);
         radioTatCa.setSelected(true);
-        showDataMonAn(lstMonAnResponses);
+        showDataMonAn(listMAReponMerge);
         showDataBan(lstBanResponses);
         showDataHoaDon(lstHoaDonResponses);
         showDataHDCT(lstHDCTResponses);
@@ -139,6 +142,26 @@ public class Form_Home extends javax.swing.JPanel {
         txtTongTien.setEnabled(false);
         txtTienThua.setEnabled(false);
         // lbNhanVien.setText(nv.getMa());
+    }
+//đố biết =)))
+
+    private List<MonAnResponse> mergeMonAnRepon(List<MonAnResponse> listMAKMCT, List<MonAnResponse> listMAByDM) {
+        List<MonAnResponse> listMA = new ArrayList<>();
+        for (MonAnResponse monAnByKMCT : listMAKMCT) {
+            listMA.add(monAnByKMCT);
+        }
+        for (int i = 0; i < listMAByDM.size(); i++) {
+            int checkMADuplicate = 0;
+            for (int j = 0; j < listMA.size(); j++) {
+                if (listMAByDM.get(i).getMaMonAn().equals(listMA.get(j).getMaMonAn())) {
+                    checkMADuplicate++;
+                }
+            }
+            if (checkMADuplicate == 0) {
+                listMA.add(lstMAReponByDM.get(i));
+            }
+        }
+        return listMA;
     }
 
     private void clearFrom() {
@@ -156,10 +179,11 @@ public class Form_Home extends javax.swing.JPanel {
     }
 
     private void loadCbbLoaiSP() {
-        listLoai = loaiService.getAllByTrangThai(0);
-        for (Loai loai : listLoai) {
-            dcbmLoaiSP.addElement(loai.getTenLoai());
+        listDanhMuc = danhMucService.getAll();
+        for (DanhMuc danhMuc : listDanhMuc) {
+            dcbmLoaiSP.addElement(danhMuc.getTenDanhMuc());
         }
+        dcbmLoaiSP.addElement("Combo");
     }
 
     @SuppressWarnings("unchecked")
@@ -923,7 +947,7 @@ public class Form_Home extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn chưa thanh toán");
         } else if (cbChuyenKhoan.isSelected() == false && cbTienMat.isSelected() == false) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hình thức thanh toán");
-        } else if (check != 1) {
+        } else if (check < 0) {
             JOptionPane.showMessageDialog(this, "Chưa đủ tiền");
         } else {
             String hinhThucThanhToan = "";
@@ -933,7 +957,7 @@ public class Form_Home extends javax.swing.JPanel {
 
             //fix cuwnsg nv
             // NhanVien nv = (NhanVien) nvs.getOne(lbNhanVien.getText());
-            NhanVien nv = (NhanVien) nvs.getOne("NV1");
+            NhanVien nv = nhanV;
             // get one hoá đơn theo lable mã HD
             HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
             // set trạng thái của hoá đơn get one được 
@@ -951,10 +975,11 @@ public class Form_Home extends javax.swing.JPanel {
             // check trường hợp ô checkBox
             if (cbTienMat.isSelected() && cbChuyenKhoan.isSelected()) {
                 // nếu cả 2 check box cùng chọn thì add 2 dữ liệu vào bảng giao dịch
-                GiaoDich gd = new GiaoDich(null, hd, "Tiền mặt", BigDecimal.valueOf(Double.valueOf(tienMat)));
+//                GiaoDich gd = new GiaoDich(null, hd, "Tiền mặt", BigDecimal.valueOf(Double.valueOf(tienMat)));
+                GiaoDich gd = new GiaoDich(null, hd, "Tiền mặt", new BigDecimal(tienMat));
                 // add giao dịch với ô check box tiền mặt
                 String addGD = (String) gds.add(gd);
-                GiaoDich gd1 = new GiaoDich(null, hd, "Chuyển khoản", BigDecimal.valueOf(Double.valueOf(chuyenKhoan)));
+                GiaoDich gd1 = new GiaoDich(null, hd, "Chuyển khoản", new BigDecimal(chuyenKhoan));
                 // add giao dịch với ô check box chuyển khoản
                 String addGD1 = (String) gds.add(gd1);
                 // update lại hoá đơn
@@ -978,19 +1003,23 @@ public class Form_Home extends javax.swing.JPanel {
                 }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công");
                 // check xem đang chọn radio nào thì hiện thị đúng dữ liệu của radio đấy
-                if (checkRdo == 3) {
-                    lstHoaDonResponses = hoaDonResponseService.getAll();
-                    showDataHoaDon(lstHoaDonResponses);
-                } else if (checkRdo == 1) {
-                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(1);
-                    showDataHoaDon(lstHoaDonResponses);
-                } else if (checkRdo == 2) {
-                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(2);
-                    showDataHoaDon(lstHoaDonResponses);
-                } else {
-                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
-                    showDataHoaDon(lstHoaDonResponses);
-                }
+                //=>show lại chờ TT
+                rdoChoThanhToan.setSelected(true);
+                lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
+                showDataHoaDon(lstHoaDonResponses);
+//                if (checkRdo == 3) {
+//                    lstHoaDonResponses = hoaDonResponseService.getAll();
+//                    showDataHoaDon(lstHoaDonResponses);
+//                } else if (checkRdo == 1) {
+//                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(1);
+//                    showDataHoaDon(lstHoaDonResponses);
+//                } else if (checkRdo == 2) {
+//                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(2);
+//                    showDataHoaDon(lstHoaDonResponses);
+//                } else {
+//                    lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
+//                    showDataHoaDon(lstHoaDonResponses);
+//                }
                 // show lại data bàn
                 lstBanResponses = banResponseService.getAll();
                 showDataBan(lstBanResponses);
@@ -999,7 +1028,7 @@ public class Form_Home extends javax.swing.JPanel {
                 return;
             } else if (cbChuyenKhoan.isSelected()) {
                 hinhThucThanhToan = "Chuyển khoản";
-                GiaoDich gd = new GiaoDich(null, hd, hinhThucThanhToan, BigDecimal.valueOf(Double.valueOf(chuyenKhoan)));
+                GiaoDich gd = new GiaoDich(null, hd, hinhThucThanhToan, new BigDecimal(chuyenKhoan));
                 // add giao dịch chuyển khoản
                 String addGD = (String) gds.add(gd);
                 // update lại hd
@@ -1212,23 +1241,35 @@ public class Form_Home extends javax.swing.JPanel {
 
     private void cbbSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbSanPhamActionPerformed
         // TODO add your handling code here:
-        if (cbbSanPham.getSelectedItem().equals("Đồ Ăn")) {
-            loadTableMonAn();
-            lstMonAnResponses = monAnResponseService.getByDanhMuc("Đồ ăn");
-            showDataMonAn(lstMonAnResponses);
-        } else if (cbbSanPham.getSelectedItem().equals("Đồ Uống")) {
-            loadTableMonAn();
-            lstMonAnResponses = monAnResponseService.getByDanhMuc("Đồ uống");
-            showDataMonAn(lstMonAnResponses);
-        } else {
+        String tenDanhMuc = dcbmLoaiSP.getSelectedItem().toString();
+        if (tenDanhMuc.equalsIgnoreCase("Combo")) {
             lstComboResponses = comboResponseService.getAll();
             loadDataCombo(lstComboResponses);
+        } else {
+            lstMAReponByDM = monAnResponseService.getByDanhMuc(dcbmLoaiSP.getSelectedItem().toString());
+            listMAReponBYKMCT = monAnResponseService.getMonAnJoinKMCT(dcbmLoaiSP.getSelectedItem().toString());
+            listMAReponMerge = mergeMonAnRepon(listMAReponBYKMCT, lstMAReponByDM);
+            loadTableMonAn();
+            showDataMonAn(listMAReponMerge);
         }
+//        if (cbbSanPham.getSelectedItem().equals("Đồ Ăn")) {
+//            loadTableMonAn();
+//            lstMonAnResponses = monAnResponseService.getByDanhMuc("Đồ ăn");
+//            showDataMonAn(lstMonAnResponses);
+//        } else if (cbbSanPham.getSelectedItem().equals("Đồ Uống")) {
+//            loadTableMonAn();
+//            lstMonAnResponses = monAnResponseService.getByDanhMuc("Đồ uống");
+//            showDataMonAn(lstMonAnResponses);
+//        } else {
+//            lstComboResponses = comboResponseService.getAll();
+//            loadDataCombo(lstComboResponses);
+//        }
     }//GEN-LAST:event_cbbSanPhamActionPerformed
 
     private void tbMonAnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMonAnMouseClicked
         // TODO add your handling code here:
-        if (cbbSanPham.getSelectedItem().equals("ComBo")) {
+        String cbbSP = cbbSanPham.getSelectedItem().toString();
+        if (cbbSP.equals("Combo")) {
             if (checkTrangThaiHD == 1) {
                 JOptionPane.showMessageDialog(this, "Không thể thêm sản phẩm");
             } else if (checkMonAn == 1) {
@@ -1255,11 +1296,16 @@ public class Form_Home extends javax.swing.JPanel {
             } else {
                 int soLuong = Integer.valueOf(JOptionPane.showInputDialog("Mời bạn nhập số lượng"));
                 int index = tbMonAn.getSelectedRow();
-                MonAnResponse mar = lstMonAnResponses.get(index);// lấy ra món ăn đang chọn
+                lstMAReponByDM = monAnResponseService.getByDanhMuc(dcbmLoaiSP.getSelectedItem().toString());
+                listMAReponBYKMCT = monAnResponseService.getMonAnJoinKMCT(dcbmLoaiSP.getSelectedItem().toString());
+                listMAReponMerge = mergeMonAnRepon(listMAReponBYKMCT, lstMAReponByDM);
+                MonAnResponse mar = listMAReponMerge.get(index);// lấy ra món ăn đang chọn
                 MonAn ma = (MonAn) mas.getOne(mar.getMaMonAn());// chuyển đổi về món ăn để add vào hdct
+                //set lại giá cho món ăn là giá sau KM:
+                ma.setDonGia(mar.getDonGiaSauKM());
                 HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
                 // khai báo hdct để add
-                HoaDonChiTiet hdct = new HoaDonChiTiet(null, ma, hd, null, soLuong, ma.getDonGia(), 0, BigDecimal.valueOf(0), null);
+                HoaDonChiTiet hdct = new HoaDonChiTiet(null, ma, hd, null, soLuong, mar.getDonGiaSauKM(), 0, BigDecimal.valueOf(0), null);
                 //add hdct
                 String addHDCT = (String) hdctService.add(hdct);
                 lstHDCTResponses = hdctResponseService.getAll(hd);
@@ -1283,6 +1329,12 @@ public class Form_Home extends javax.swing.JPanel {
         txtTongTien.setText("0");
         txtSdtKH.setText("");
         txtTenKH.setText("");
+        dcbmLoaiSP.setSelectedItem("Đồ ăn");
+        lstMAReponByDM = monAnResponseService.getByDanhMuc("Đồ ăn");
+        listMAReponBYKMCT = monAnResponseService.getMonAnJoinKMCT("Đồ ăn");
+        listMAReponMerge = mergeMonAnRepon(listMAReponBYKMCT, lstMAReponByDM);
+        loadTableMonAn();
+        showDataMonAn(listMAReponMerge);
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
@@ -1294,11 +1346,11 @@ public class Form_Home extends javax.swing.JPanel {
             lstComboResponses = comboResponseService.getByTenComBo(txtSearch.getText());
             loadDataCombo(lstComboResponses);
         } else if (cbbSanPham.getSelectedItem().equals("Đồ Ăn")) {
-            lstMonAnResponses = monAnResponseService.getByDanhMucAndTenMonAn(txtSearch.getText(), "Đồ ăn");
-            showDataMonAn(lstMonAnResponses);
+            lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(txtSearch.getText(), "Đồ ăn");
+            showDataMonAn(lstMAReponByDM);
         } else {
-            lstMonAnResponses = monAnResponseService.getByDanhMucAndTenMonAn(txtSearch.getText(), "Đồ uống");
-            showDataMonAn(lstMonAnResponses);
+            lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(txtSearch.getText(), "Đồ uống");
+            showDataMonAn(lstMAReponByDM);
         }
     }//GEN-LAST:event_txtSearchCaretUpdate
 
@@ -1315,13 +1367,15 @@ public class Form_Home extends javax.swing.JPanel {
     }//GEN-LAST:event_gopHDActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        btnClearActionPerformed(evt);
+        //btnClearActionPerformed(evt);
         lstBanResponses = banResponseService.getAll();
         lstHoaDonResponses = hoaDonResponseService.getByTrangThai(0);
-        lstMonAnResponses = monAnResponseService.getByDanhMuc("Đồ ăn");
+        lstMAReponByDM = monAnResponseService.getByDanhMuc(dcbmLoaiSP.getSelectedItem().toString());
+        listMAReponBYKMCT = monAnResponseService.getMonAnJoinKMCT(dcbmLoaiSP.getSelectedItem().toString());
+        listMAReponMerge = mergeMonAnRepon(listMAReponBYKMCT, lstMAReponByDM);
         loadTableMonAn();
         rdoChoThanhToan.setSelected(true);
-        showDataMonAn(lstMonAnResponses);
+        showDataMonAn(listMAReponMerge);
         showDataHoaDon(lstHoaDonResponses);
         showDataHDCT(lstHDCTResponses);
         showDataBan(lstBanResponses);
@@ -1393,10 +1447,12 @@ public class Form_Home extends javax.swing.JPanel {
         try {
             BigDecimal tienMatB = new BigDecimal(tienMat);
             BigDecimal tienCK = new BigDecimal(chuyenKhoan);
-            BigDecimal tienThua = new BigDecimal(txtTienThua.getText());
+            BigDecimal tienKhachTra = tienMatB.add(tienCK);
+            //BigDecimal tienThua = new BigDecimal(txtTienThua.getText());
+            BigDecimal tienThua = null;
             BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
-            tienMatB.add(tienCK);
-            tienThua = tienMatB.subtract(tongTien);
+
+            tienThua = tienKhachTra.subtract(tongTien);
             txtTienThua.setText(tienThua.toString());
         } catch (Exception e) {
         }
@@ -1470,7 +1526,7 @@ public class Form_Home extends javax.swing.JPanel {
     }
 
     private void loadTableMonAn() {
-        String headerMonAn[] = {"STT", "Loại món ăn", "Mã món ăn", "Tên món ăn", "Đơn giá", "Đơn giá sau KM", "Đơn vị tính"};
+        String headerMonAn[] = {"STT", "Loại món ăn", "Mã món ăn", "Tên món ăn", "Đơn giá", "Sau KM", "Đơn vị tính"};
         tbMonAn.setModel(dtmMonAn);
         dtmMonAn.setColumnIdentifiers(headerMonAn);
     }
@@ -1487,7 +1543,9 @@ public class Form_Home extends javax.swing.JPanel {
         int stt = 0;
         for (MonAnResponse monAnResponse : monAnResponses) {
             stt++;
-            dtmMonAn.addRow(monAnResponse.toDataRow(stt));
+            dtmMonAn.addRow(new Object[]{stt, monAnResponse.getLoaiMonAn(), monAnResponse.getMaMonAn(), monAnResponse.getTenMonAn(),
+                monAnResponse.getDonGia(), monAnResponse.getDonGiaSauKM(), monAnResponse.getDonViTinh()});
+            //dtmMonAn.addRow(monAnResponse.toDataRow(stt));
         }
     }
 

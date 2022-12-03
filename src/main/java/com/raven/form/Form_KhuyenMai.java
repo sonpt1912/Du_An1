@@ -701,38 +701,48 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         if (index < 0) {
             JOptionPane.showMessageDialog(this, "Chọn data!");
         } else {
-            KhuyenMai khuyenMai = newKM();
+            //KhuyenMai khuyenMai = newKM();
 //            String ngayBDString = dateFormat.format(khuyenMai.getThoiGianBD());
 //            String ngayKTString = dateFormat.format(khuyenMai.getThoiGianKT());
-            if (khuyenMai != null) {
-                if (khuyenMaiUtil.checkValidateKM(khuyenMai)) {
-                    khuyenMai.setMaKhuyenMai(txtMaKM.getText());
-                    if (radioNgungApDung.isSelected()) {
-                        khuyenMai.setTrangThai(1);
-                        String updateTTKm = khuyenMaiService.update(khuyenMai, khuyenMai.getMaKhuyenMai());
-                        if (khuyenMai.getGhiChu().isEmpty()) {
-                            JOptionPane.showMessageDialog(this, "Vui lòng nhập ghi chú!");
-                        } else {
-                            khuyenMai.setGhiChu(txtGhiChu.getText());
-                            khuyenMai.setTrangThai(1);
-                            if (JOptionPane.showConfirmDialog(this, "Xác nhận update!") == 0) {
-                                JOptionPane.showMessageDialog(this, khuyenMaiService.update(khuyenMai, txtMaKM.getText()));
-                                listKM = khuyenMaiRepository.getAll();
-                                showData(listKM, 1);
-                                btnClearActionPerformed(evt);
-                            }
+
+            KhuyenMai khuyenMai = khuyenMaiService.getOne(txtMaKM.getText());
+            khuyenMai.setGhiChu(txtGhiChu.getText());
+            String updtae = khuyenMaiService.update(khuyenMai, khuyenMai.getMaKhuyenMai());
+            if (radioNgungApDung.isSelected()) {
+//                khuyenMai.setTrangThai(1);
+//                String updateTTKm = khuyenMaiService.update(khuyenMai, khuyenMai.getMaKhuyenMai());
+                if (khuyenMai.getGhiChu().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Vui lòng nhập ghi chú!");
+                } else {
+                    khuyenMai.setGhiChu(txtGhiChu.getText());
+                    khuyenMai.setTrangThai(1);
+                    List<KhuyenMaiChiTiet> listKMCT = khuyenMaiChiTiettService.getKMCTsByKM(khuyenMai);
+                    if (listKMCT.size() > 0) {
+                        for (KhuyenMaiChiTiet khuyenMaiChiTiet : listKMCT) {
+                            khuyenMaiChiTiet.setTrangThai(1);
+                            String updtaeKMCT = khuyenMaiChiTiettService.update(khuyenMaiChiTiet, khuyenMaiChiTiet.getId());
                         }
-                    } else {
-                        khuyenMai.setTrangThai(khuyenMaiUtil.trangThaiKM(Date.valueOf(dateFormat.format(khuyenMai.getThoiGianBD())), Date.valueOf(dateFormat.format(khuyenMai.getThoiGianKT()))));
-                        if (JOptionPane.showConfirmDialog(this, "Xác nhận update!") == 0) {
-                            JOptionPane.showMessageDialog(this, khuyenMaiService.update(khuyenMai, txtMaKM.getText()));
-                            listKM = khuyenMaiRepository.getAll();
-                            showData(listKM, 1);
-                            btnClearActionPerformed(evt);
-                        }
+                    }
+                    if (JOptionPane.showConfirmDialog(this, "Xác nhận update!") == 0) {
+                        JOptionPane.showMessageDialog(this, khuyenMaiService.update(khuyenMai, txtMaKM.getText()));
+                        listKM = khuyenMaiRepository.getAll();
+                        showData(listKM, 1);
+                        btnClearActionPerformed(evt);
+                    }
+                }
+            } else {
+                KhuyenMai khuyenMai1 = newKM();
+                if (khuyenMaiUtil.checkValidateKM(khuyenMai1)) {
+                    khuyenMai1.setTrangThai(khuyenMaiUtil.trangThaiKM(Date.valueOf(dateFormat.format(khuyenMai.getThoiGianBD())), Date.valueOf(dateFormat.format(khuyenMai.getThoiGianKT()))));
+                    if (JOptionPane.showConfirmDialog(this, "Xác nhận update!") == 0) {
+                        JOptionPane.showMessageDialog(this, khuyenMaiService.update(khuyenMai1, txtMaKM.getText()));
+                        listKM = khuyenMaiRepository.getAll();
+                        showData(listKM, 1);
+                        btnClearActionPerformed(evt);
                     }
                 }
             }
+
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 

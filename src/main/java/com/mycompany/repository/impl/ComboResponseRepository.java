@@ -22,7 +22,7 @@ public class ComboResponseRepository implements ICommonResponseRepository<ComboR
 
     @Override
     public List<ComboResponse> getAll() {
-        String hql = "SELECT new com.mycompany.customModel.ComboResponse(CB.maCB,CB.tenCB,CB.donGia)" + fromTable;
+        String hql = "SELECT new com.mycompany.customModel.ComboResponse(CB.maCB,CB.tenCB,CB.donGia)" + fromTable + " WHERE trangThai = 0";
         Query query = session.createQuery(hql);
         List<ComboResponse> comboResponses = query.getResultList();
         return comboResponses;

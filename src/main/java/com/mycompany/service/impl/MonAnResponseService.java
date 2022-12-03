@@ -5,10 +5,8 @@
 package com.mycompany.service.impl;
 
 import com.mycompany.customModel.MonAnResponse;
-import com.mycompany.repository.ICommonResponseRepository;
 import com.mycompany.repository.IMonAnResponseRepository;
 import com.mycompany.repository.impl.MonAnResponseRepository;
-import com.mycompany.service.ICommonResponseService;
 import com.mycompany.service.IMonAnResponseService;
 import java.util.List;
 
@@ -18,7 +16,7 @@ import java.util.List;
  */
 public class MonAnResponseService implements IMonAnResponseService<MonAnResponse, String> {
 
-    private final IMonAnResponseRepository marr = new MonAnResponseRepository();
+    private final MonAnResponseRepository marr = new MonAnResponseRepository();
 
     @Override
     public List<MonAnResponse> getAll() {
@@ -33,6 +31,11 @@ public class MonAnResponseService implements IMonAnResponseService<MonAnResponse
     @Override
     public List<MonAnResponse> getByDanhMucAndTenMonAn(String tenMonAn, String tenDanhMuc) {
         return marr.getByDanhMucAndTenMonAn(tenMonAn, tenDanhMuc);
+    }
+
+    @Override
+    public List<MonAnResponse> getMonAnJoinKMCT(String tenDanhMuc) {
+        return marr.getMonAnJoinKMCT(tenDanhMuc);
     }
 
 }

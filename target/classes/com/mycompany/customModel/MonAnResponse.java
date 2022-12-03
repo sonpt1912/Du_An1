@@ -24,13 +24,13 @@ public class MonAnResponse {
 
     private BigDecimal donGia;
 
-//    private BigDecimal donGiaSauKM;
+    private BigDecimal donGiaSauKM;
 
     private String donViTinh;
 
     private String loaiMonAn;
 
     public Object[] toDataRow(int stt) {
-        return new Object[]{stt, loaiMonAn, maMonAn, tenMonAn, donGia, donViTinh};
+        return new Object[]{stt, loaiMonAn, maMonAn, tenMonAn, donGia, donGiaSauKM, donViTinh};
     }
 }
