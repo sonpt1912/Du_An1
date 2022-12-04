@@ -5,6 +5,7 @@
 package com.mycompany.customModel;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,7 @@ public class HoaDonResponse {
     private String ghiChu;
     
     public Object[] toDataRow(int stt) {
-        return new Object[]{stt, maHoaDon, maKhachHang!=null?maKhachHang:"", ngayTao, checkTrangThai(trangThai), ghiChu};
+        return new Object[]{stt, maHoaDon, maKhachHang!=null?maKhachHang:"", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ngayTao), checkTrangThai(trangThai), ghiChu};
     }
 
     private String checkTrangThai(int trangThai) {

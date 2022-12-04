@@ -69,7 +69,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
 //        showData(listHD);
         txtNgayTao.setDate(today);
         // hàm getAll bàn where trạng thái =  còn trống = 0
-        //lbNgayGio.setText(String.valueOf(today));
+//        lbNgayGio.setText(String.valueOf(today));
         cbbTrangThaiHoaDon.setModel(dcbmTrangThaiHD);
         loadCbbTrangThaiHD();
         String headersHDCT[] = {"Mã HD", "Mã MA", "Sl món", "Đơn giá", "Combo", "SL combo", "Đơn giá", "Ghi chú"};
@@ -149,8 +149,8 @@ public class Form_HoaDon extends javax.swing.JPanel {
         }
         txtBan.setText(maBan);
         txtBan.setEditable(false);
-//        Date ngayTao = Date.valueOf(hoaDon.getNgayTao());
-//        txtNgayTao.setDate(ngayTao);
+        java.util.Date ngayTao = hoaDon.getNgayTao();
+        txtNgayTao.setDate(ngayTao);
         txtNgayThanhToan.setDate(hoaDon.getNgayThanhToan());
 //        lbKhuVuc.setText(hoaDon.getBan().getKv().getTenKV());
 //        txtBan.setText(String.valueOf(hoaDon.getBan().getMaBan()));
@@ -722,7 +722,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
         List<HoaDon> listHDShow = new ArrayList<>();
 //if rdoHnay được chọn: 
         //lấy 1 list HNay để lọc trạng thái = for=)))))
-//        listHD = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
+        listHD = hoaDonService.getHoaDonsHomNay(today);
         if (listHD.size() <= 0) {
             dtmHoaDon.setRowCount(0);
         } else {
@@ -731,7 +731,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
             dateNgay2.setEnabled(false);
             //lọc hoá đơn theo trjang thái: DÙNG FOR =))))
             if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
-//                listHDShow = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
+                listHDShow = hoaDonService.getHoaDonsHomNay(today);
                 showData(listHDShow);
             } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Chờ thanh toán")) {
                 for (HoaDon hoaDon : listHD) {
@@ -794,7 +794,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Thời gian không xác định!");
                 dtmHoaDon.setRowCount(0);
             } else {
-//                listHD = hoaDonService.getHoaDonsKhoangNgay(dateFormat.format(dateNgay1.getDate()), dateFormat.format(dateNgay2.getDate()));
+                listHD = hoaDonService.getHoaDonsKhoangNgay(dateNgay1.getDate(), dateNgay2.getDate());
                 if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
                     for (HoaDon hoaDon : listHD) {
                         listHDShow.add(hoaDon);

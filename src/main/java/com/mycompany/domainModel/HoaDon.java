@@ -6,6 +6,7 @@ package com.mycompany.domainModel;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 //import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -76,8 +77,13 @@ public class HoaDon {
 //    @OneToMany(mappedBy = "hoaDon", fetch = FetchType.LAZY)
 //    private List<HoaDonChiTiet> listHDCT;
     public Object[] toDataRow() {
-        return new Object[]{maHoaDon, nhanVien.getId(), khachHang.getId(), ngayTao, ngayThanhToan, tongTien, ghiChu};
+        return new Object[]{maHoaDon, nhanVien.getId(), khachHang.getId(), new SimpleDateFormat(), ngayThanhToan, tongTien, ghiChu};
     }
+//    private String checkNgayTao(java.util.Date ngayTao){
+//        if (ngayTao==null) {
+//            
+//        }
+//    }
 
     public String fillTrangThai(String trangThai) {
         if (Integer.valueOf(trangThai) == 0) {
@@ -95,7 +101,7 @@ public class HoaDon {
 
     public Object[] toDataRowViewHoaDon() {
         return new Object[]{maHoaDon, (nhanVien != null ? nhanVien.getMa() : " "), (khachHang != null ? khachHang.getMa() : " "),
-            ngayTao, ngayThanhToan, ghiChu, (trangThai != null ? fillTrangThai(String.valueOf(trangThai)) : "")};
+            new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ngayTao), ngayThanhToan==null?"":new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ngayThanhToan), ghiChu, (trangThai != null ? fillTrangThai(String.valueOf(trangThai)) : "")};
     }
 
     public Object[] toDataRowThongKe(int stt) {

@@ -102,7 +102,7 @@ public class BanRepository implements IBanRepository, ICommonRepository<Ban, Boo
     }
 
     public List<Ban> getFull() {
-        String hql = fromTable + "WHERE trangThai <> 2";
+        String hql = fromTable;
         Query query = session.createQuery(hql);
         List<Ban> bans = query.getResultList();
         return bans;

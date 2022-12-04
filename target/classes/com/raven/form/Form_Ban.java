@@ -51,6 +51,7 @@ public class Form_Ban extends javax.swing.JPanel {
         showData(listBan);
         listKV = khuVucService.getAll();
         loadCbb(listKV);
+        rdoDaXoa.setEnabled(false);
     }
 
     private void showData(List<Ban> listBan) {
@@ -93,8 +94,13 @@ public class Form_Ban extends javax.swing.JPanel {
         if (ban.getTrangThai() == 0) {
             radioControng.setSelected(true);
             cbbMaKhuVuc.setSelectedItem(ban.getKv().getMaKV());
-        } else {
+        }
+        if (ban.getTrangThai() == 1) {
             radioCoNguoi.setSelected(true);
+            cbbMaKhuVuc.setSelectedItem(ban.getKv().getMaKV());
+        }
+        if (ban.getTrangThai()==2) {
+            rdoDaXoa.setSelected(true);
             cbbMaKhuVuc.setSelectedItem(ban.getKv().getMaKV());
         }
     }
@@ -122,6 +128,7 @@ public class Form_Ban extends javax.swing.JPanel {
         btnLamMoiKhuVuc = new javax.swing.JButton();
         radioControng = new javax.swing.JRadioButton();
         radioCoNguoi = new javax.swing.JRadioButton();
+        rdoDaXoa = new javax.swing.JRadioButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbBan = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -188,6 +195,9 @@ public class Form_Ban extends javax.swing.JPanel {
         buttonGroup1.add(radioCoNguoi);
         radioCoNguoi.setText("Có người");
 
+        buttonGroup1.add(rdoDaXoa);
+        rdoDaXoa.setText("Đã xoá");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -213,21 +223,27 @@ public class Form_Ban extends javax.swing.JPanel {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 316, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtTenKhuVuc))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 316, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtTenKhuVuc))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbbMaKhuVuc, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20)
+                        .addComponent(btnAddKhuVuc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLamMoiKhuVuc)
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbbMaKhuVuc, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20)
-                .addComponent(btnAddKhuVuc)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnLamMoiKhuVuc)
-                .addContainerGap())
+                        .addGap(54, 54, 54)
+                        .addComponent(rdoDaXoa)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,7 +266,8 @@ public class Form_Ban extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(radioControng)
-                    .addComponent(radioCoNguoi))
+                    .addComponent(radioCoNguoi)
+                    .addComponent(rdoDaXoa))
                 .addGap(86, 86, 86))
         );
 
@@ -598,6 +615,7 @@ public class Form_Ban extends javax.swing.JPanel {
     private com.raven.swing.PanelBorder panelBorder1;
     private javax.swing.JRadioButton radioCoNguoi;
     private javax.swing.JRadioButton radioControng;
+    private javax.swing.JRadioButton rdoDaXoa;
     private javax.swing.JTable tbBan;
     private javax.swing.JTextField txtMa;
     private com.raven.swing.SearchText txtSearch;

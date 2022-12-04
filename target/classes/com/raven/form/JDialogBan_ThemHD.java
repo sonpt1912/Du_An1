@@ -34,7 +34,7 @@ public class JDialogBan_ThemHD extends javax.swing.JDialog {
     private List<HoaDon> listHD = new ArrayList<>();
     private HoaDonService hoaDonService = new HoaDonService();
     private HoaDonUtil hoaDonUtil = new HoaDonUtil();
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     private java.util.Date today = new java.util.Date();
     private NhanVienService nhanVienService = new NhanVienService();
     private List<ChiTietBanHoaDon> listCTBan_HD = new ArrayList<>();
@@ -202,10 +202,10 @@ public class JDialogBan_ThemHD extends javax.swing.JDialog {
                 listHD = hoaDonService.getAll();
                 //tạo hoá đơn mới
                 String maHD = hoaDonUtil.zenMaThuyDuong(listHD);
-                Date ngayTao = (Date.valueOf(dateFormat.format(today)));
+                java.util.Date ngayTao = (today);
                 HoaDon hoaDon = new HoaDon();
                 hoaDon.setMaHoaDon(maHD);
-//                hoaDon.setNgayTao(String.valueOf(ngayTao));
+                hoaDon.setNgayTao(ngayTao);
                 hoaDon.setTrangThai(0);
                 hoaDon.setNhanVien(nhanVien);
                 //thêm hd vào db

@@ -41,7 +41,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
     private List<HoaDon> listHD = new ArrayList<>();
     private HoaDonService hoaDonService = new HoaDonService();
     private HoaDonUtil hoaDonUtil = new HoaDonUtil();
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     private java.util.Date today = new java.util.Date();
     private HoaDonChiTietService hoaDonChiTietService = new HoaDonChiTietService();
     private MonAnService monAnService = new MonAnService();
@@ -311,7 +311,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         HoaDon hoaDonNew = new HoaDon();
         hoaDonNew.setGhiChu("Tach tu HD " + hoaDon.getMaHoaDon());
         hoaDonNew.setMaHoaDon(maHD);
-//        hoaDonNew.setNgayTao(String.valueOf(dateFormat.format(today)));
+        hoaDonNew.setNgayTao(today);
         hoaDonNew.setNhanVien(hoaDon.getNhanVien());
         hoaDonNew.setTrangThai(0);
         String themHD = hoaDonService.add(hoaDonNew);

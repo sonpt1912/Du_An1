@@ -101,7 +101,7 @@ public class HoaDonService implements ICommonService<HoaDon, String>, IHoaDonSer
     }
 
     @Override
-    public List<HoaDon> getHoaDonsKhoangNgay(String today1, String today2) {
+    public List<HoaDon> getHoaDonsKhoangNgay(java.util.Date today1, java.util.Date today2) {
         return hoaDonrepo.getHoaDonsKhoangNgay(today1, today2);
     }
 

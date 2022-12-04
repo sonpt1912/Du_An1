@@ -58,7 +58,7 @@ import javax.swing.DefaultComboBoxModel;
 //import javax.swing.JTable;
 
 public class Form_Home extends javax.swing.JPanel {
-    
+
     private DefaultTableModel dtmHoaDon = new DefaultTableModel();
     private DefaultTableModel dtmHoaDonCT = new DefaultTableModel();
     private DefaultTableModel dtmBan = new DefaultTableModel();
@@ -114,7 +114,7 @@ public class Form_Home extends javax.swing.JPanel {
     private DanhMucService danhMucService = new DanhMucService();
     private ThanhToanUtil thanhToanUtil = new ThanhToanUtil();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    
+
     public Form_Home(NhanVien nv) {
         initComponents();
         nhanV = nv;
@@ -168,7 +168,7 @@ public class Form_Home extends javax.swing.JPanel {
         }
         return listMA;
     }
-    
+
     private void clearFrom() {
         txtTongTien.setText("0");
         txtTienMat.setText("0");
@@ -182,7 +182,7 @@ public class Form_Home extends javax.swing.JPanel {
         txtChuyenKhoan.setEnabled(false);
         txtTienMat.setEnabled(false);
     }
-    
+
     private void loadCbbLoaiSP() {
         listDanhMuc = danhMucService.getAll();
         for (DanhMuc danhMuc : listDanhMuc) {
@@ -190,7 +190,7 @@ public class Form_Home extends javax.swing.JPanel {
         }
         dcbmLoaiSP.addElement("Combo");
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -845,7 +845,7 @@ public class Form_Home extends javax.swing.JPanel {
                 tachHD.setEnabled(true);
                 gopHD.setEnabled(true);
                 chuyenBan.setEnabled(true);
-                
+
             }
             popMenu.show(this, evt.getX() + 417, evt.getY() + 85);
         } else {
@@ -977,7 +977,7 @@ public class Form_Home extends javax.swing.JPanel {
         //comment
         String tienMat = txtTienMat.getText();
         String chuyenKhoan = txtChuyenKhoan.getText();
-        
+
         if ("".equals(tienMat)) {
             tienMat = "0";
         }
@@ -1517,7 +1517,7 @@ public class Form_Home extends javax.swing.JPanel {
                             } else {
                                 hoaDonThanhToanCustom.setMaKH("");
                             }
-                            hoaDonThanhToanCustom.setNgayTao(Date.valueOf(hoaDon.getNgayTao()));
+                            hoaDonThanhToanCustom.setNgayTao(hoaDon.getNgayTao());
                             hoaDonThanhToanCustom.setNgayThanhToan(null);
                             // hoaDonThanhToanCustom.setTienDuocGiam(new BigDecimal(txt));
                             //tiền được gianmr chưa có
@@ -1544,7 +1544,7 @@ public class Form_Home extends javax.swing.JPanel {
                             } else {
                                 hoaDonThanhToanCustom.setMaKH("");
                             }
-                            hoaDonThanhToanCustom.setNgayTao(Date.valueOf(hoaDon.getNgayTao()));
+                            hoaDonThanhToanCustom.setNgayTao(hoaDon.getNgayTao());
                             hoaDonThanhToanCustom.setNgayThanhToan(null);
                             // hoaDonThanhToanCustom.setTienDuocGiam(new BigDecimal(txt));
                             //tiền được gianmr chưa có
@@ -1571,7 +1571,7 @@ public class Form_Home extends javax.swing.JPanel {
                             } else {
                                 hoaDonThanhToanCustom.setMaKH("");
                             }
-                            hoaDonThanhToanCustom.setNgayTao(Date.valueOf(hoaDon.getNgayTao()));
+                            hoaDonThanhToanCustom.setNgayTao(hoaDon.getNgayTao());
                             hoaDonThanhToanCustom.setNgayThanhToan(null);
                             // hoaDonThanhToanCustom.setTienDuocGiam(new BigDecimal(txt));
                             //tiền được gianmr chưa có
@@ -1588,7 +1588,7 @@ public class Form_Home extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_btnDuongActionPerformed
-    
+
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
 //        String tienMat = txtTienMat.getText();
@@ -1623,14 +1623,14 @@ public class Form_Home extends javax.swing.JPanel {
             //BigDecimal tienThua = new BigDecimal(txtTienThua.getText());
             BigDecimal tienThua = null;
             BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
-            
+
             tienThua = tienKhachTra.subtract(tongTien);
             txtTienThua.setText(tienThua.toString());
         } catch (Exception e) {
         }
-        
+
     }
-    
+
     private void fillTienThuaTienMat() {
 //        txtChuyenKhoan.setText("0");
 //        String chuyenKhoan = txtChuyenKhoan.getText();
@@ -1670,7 +1670,7 @@ public class Form_Home extends javax.swing.JPanel {
         } catch (Exception e) {
         }
     }
-    
+
     private void fillTongTien() {
 //        Double tongTien = Double.valueOf(0);
 //        for (HoaDonChiTietResponse lstHDCTResponse : lstHDCTResponses) {
@@ -1690,27 +1690,27 @@ public class Form_Home extends javax.swing.JPanel {
         }
         txtTongTien.setText(String.valueOf(tienCB.add(tienMA)));
     }
-    
+
     private void loadTableCombo() {
         String header[] = {"STT", "Mã Combo", "Tên Combo", "Đơn giá"};
         tbMonAn.setModel(dtmCombo);
         dtmCombo.setColumnIdentifiers(header);
     }
-    
+
     private void loadTableMonAn() {
         String headerMonAn[] = {"STT", "Loại món ăn", "Mã món ăn", "Tên món ăn", "Đơn giá", "Sau KM", "Đơn vị tính"};
         tbMonAn.setModel(dtmMonAn);
         dtmMonAn.setColumnIdentifiers(headerMonAn);
     }
-    
+
     private void loadTableDoUong() {
         String headersDoUong[] = {"STT", "Loại đồ uống", "Mã đồ uống", "Tên đồ uống", "Đơn giá", "Đơn giá sau KM", "Đơn vị tính"};
         tbMonAn.setModel(dtmDoUong);
         dtmDoUong.setColumnIdentifiers(headersDoUong);
     }
-    
+
     private void showDataMonAn(List<MonAnResponse> monAnResponses) {
-        
+
         dtmMonAn.setRowCount(0);
         int stt = 0;
         for (MonAnResponse monAnResponse : monAnResponses) {
@@ -1720,7 +1720,7 @@ public class Form_Home extends javax.swing.JPanel {
             //dtmMonAn.addRow(monAnResponse.toDataRow(stt));
         }
     }
-    
+
     private void showDataHDCT(List<HoaDonChiTietResponse> hoaDonChiTietResponses) {
         dtmHoaDonCT.setRowCount(0);
         int stt = 0;
@@ -1729,7 +1729,7 @@ public class Form_Home extends javax.swing.JPanel {
             dtmHoaDonCT.addRow(hoaDonChiTietResponse.toDataRow(stt));
         }
     }
-    
+
     private void showDataHoaDon(List<HoaDonResponse> hoaDonResponses) {
         dtmHoaDon.setRowCount(0);
         int stt = 0;
@@ -1738,7 +1738,7 @@ public class Form_Home extends javax.swing.JPanel {
             dtmHoaDon.addRow(hoaDonResponse.toDataRow(stt));
         }
     }
-    
+
     private void showDataBan(List<BanResponse> banResponses) {
         dtmBan.setRowCount(0);
         int stt = 0;
@@ -1747,7 +1747,7 @@ public class Form_Home extends javax.swing.JPanel {
             dtmBan.addRow(banResponse.toDataRow(stt));
         }
     }
-    
+
     private void loadDataCombo(List<ComboResponse> comboResponses) {
         String headerCombo[] = {"Stt", "Mã combo", "Tên combo", "Đơn giá combo"};
         tbMonAn.setModel(dtmCombo);
