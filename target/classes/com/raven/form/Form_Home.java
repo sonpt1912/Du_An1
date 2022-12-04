@@ -46,6 +46,7 @@ import com.mycompany.service.IHoaDonChiTietService;
 import com.mycompany.service.impl.DanhMucService;
 import com.mycompany.service.impl.LoaiService;
 import com.mycompany.util.ThanhToanUtil;
+import com.raven.main.Main;
 import java.awt.event.InputEvent;
 import java.text.SimpleDateFormat;
 import javax.swing.DefaultComboBoxModel;
@@ -114,6 +115,7 @@ public class Form_Home extends javax.swing.JPanel {
     private DanhMucService danhMucService = new DanhMucService();
     private ThanhToanUtil thanhToanUtil = new ThanhToanUtil();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private Main main;
 
     public Form_Home(NhanVien nv) {
         initComponents();
@@ -801,9 +803,9 @@ public class Form_Home extends javax.swing.JPanel {
         // TODO add your handling code here:
         int index = tbHoaDon.getSelectedRow();
         HoaDonResponse hdr = lstHoaDonResponses.get(index);
-        if(hdr.getTrangThai() != 0){
+        if (hdr.getTrangThai() != 0) {
             btnThanhToan.setEnabled(false);
-        }else{
+        } else {
             btnThanhToan.setEnabled(true);
         }
         if (hdr.getTrangThai() != 0) {
