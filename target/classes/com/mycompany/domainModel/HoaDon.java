@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,11 +53,13 @@ public class HoaDon {
 //    @ManyToOne
 //    @JoinColumn(name = "IdBan", nullable = false)
 //    private Ban ban;
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "NgayTao", nullable = false)
-    private String ngayTao;
+    private java.util.Date ngayTao;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "NgayThanhToan")
-    private Date ngayThanhToan;
+    private java.util.Date ngayThanhToan;
 
     @Column(name = "TongTien")
     private BigDecimal tongTien;

@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,9 +54,11 @@ public class KhuyenMai {
 
 //    @Column(name = "ThoiGianBD", nullable = false)
 //    private Date thoiGianBD;
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ThoiGianBD", nullable = false)
     private Date thoiGianBD;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ThoiGianKT", nullable = false)
     private Date thoiGianKT;
 

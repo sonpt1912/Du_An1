@@ -22,7 +22,7 @@ public class HoaDonResponse {
 
     private String maKhachHang;
 
-    private String ngayTao;
+    private java.util.Date ngayTao;
 
 //    private Integer maBan;
 

@@ -43,7 +43,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
     private List<Ban> listBan = new ArrayList<>();
     private BanService banService = new BanService();
     private HoaDonUtil hoaDonUtil = new HoaDonUtil();
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     private NhanVienService nhanVienService = new NhanVienService();
     private NhanVien nhanV;
     private java.util.Date today = new java.util.Date();
@@ -81,7 +81,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
         btnLoc.setEnabled(false);
         dateNgay1.setEnabled(false);
         dateNgay2.setEnabled(false);
-        listHD = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
+        listHD = hoaDonService.getHoaDonsHomNay(today);
         showData(listHD);
         dateNgay1.getJCalendar().setMaxSelectableDate(today);
     }
@@ -149,8 +149,8 @@ public class Form_HoaDon extends javax.swing.JPanel {
         }
         txtBan.setText(maBan);
         txtBan.setEditable(false);
-        Date ngayTao = Date.valueOf(hoaDon.getNgayTao());
-        txtNgayTao.setDate(ngayTao);
+//        Date ngayTao = Date.valueOf(hoaDon.getNgayTao());
+//        txtNgayTao.setDate(ngayTao);
         txtNgayThanhToan.setDate(hoaDon.getNgayThanhToan());
 //        lbKhuVuc.setText(hoaDon.getBan().getKv().getTenKV());
 //        txtBan.setText(String.valueOf(hoaDon.getBan().getMaBan()));
@@ -602,7 +602,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
         dateNgay1.setDate(today);
         dateNgay2.setDate(today);
         lbMaHD.setText("");
-        // listHDCT = hoaDonChiTietService.getHDCTByHD(hoaDon);
+//         listHDCT = hoaDonChiTietService.getHDCTByHD(hoaDon);
         txtTongTien.setText("");
         txtGhiChu.setText("");
         radioChoTT.setSelected(true);
@@ -619,7 +619,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
         txtTongTien.setEditable(false);
         txtBan.setEditable(false);
         rdoHomNayActionPerformed(evt);
-        //listHD = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
+        listHD = hoaDonService.getHoaDonsHomNay(today);
         rdoHomNay.setSelected(true);
         //showData(listHD);
     }//GEN-LAST:event_btnClearActionPerformed
@@ -722,7 +722,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
         List<HoaDon> listHDShow = new ArrayList<>();
 //if rdoHnay được chọn: 
         //lấy 1 list HNay để lọc trạng thái = for=)))))
-        listHD = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
+//        listHD = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
         if (listHD.size() <= 0) {
             dtmHoaDon.setRowCount(0);
         } else {
@@ -731,7 +731,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
             dateNgay2.setEnabled(false);
             //lọc hoá đơn theo trjang thái: DÙNG FOR =))))
             if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
-                listHDShow = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
+//                listHDShow = hoaDonService.getHoaDonsHomNay(dateFormat.format(today));
                 showData(listHDShow);
             } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Chờ thanh toán")) {
                 for (HoaDon hoaDon : listHD) {
@@ -794,7 +794,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Thời gian không xác định!");
                 dtmHoaDon.setRowCount(0);
             } else {
-                listHD = hoaDonService.getHoaDonsKhoangNgay(dateFormat.format(dateNgay1.getDate()), dateFormat.format(dateNgay2.getDate()));
+//                listHD = hoaDonService.getHoaDonsKhoangNgay(dateFormat.format(dateNgay1.getDate()), dateFormat.format(dateNgay2.getDate()));
                 if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
                     for (HoaDon hoaDon : listHD) {
                         listHDShow.add(hoaDon);

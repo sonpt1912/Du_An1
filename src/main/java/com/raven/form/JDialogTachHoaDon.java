@@ -311,7 +311,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         HoaDon hoaDonNew = new HoaDon();
         hoaDonNew.setGhiChu("Tach tu HD " + hoaDon.getMaHoaDon());
         hoaDonNew.setMaHoaDon(maHD);
-        hoaDonNew.setNgayTao(String.valueOf(dateFormat.format(today)));
+//        hoaDonNew.setNgayTao(String.valueOf(dateFormat.format(today)));
         hoaDonNew.setNhanVien(hoaDon.getNhanVien());
         hoaDonNew.setTrangThai(0);
         String themHD = hoaDonService.add(hoaDonNew);

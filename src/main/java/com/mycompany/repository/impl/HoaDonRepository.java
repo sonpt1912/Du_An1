@@ -140,8 +140,10 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
         return listHD;
     }
 
-    public List<HoaDon> getHoaDonsHomNay(String today) {
-        String hql = fromTable + " WHERE ngayTao = :ngayTaoHD";
+    @Override
+    public List<HoaDon> getHoaDonsHomNay(java.util.Date today) {
+        String hql = fromTable + " WHERE DAY(NgayTao) = DAY(:ngayTaoHD) "
+                + "and month(NgayTao) = MONTH(:ngayTaoHD) and YEAR(NgayTao) = YEAR(:ngayTaoHD)";
         Query query = session.createQuery(hql);
         query.setParameter("ngayTaoHD", today);
         List<HoaDon> hoaDons = query.getResultList();
@@ -158,12 +160,12 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
         return hoaDons;
     }
 
-    public static void main(String[] args) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date today = new java.util.Date();
-        List<HoaDon> list = new HoaDonRepository().getHoaDonsHomNay("2022-12-01");
-        for (HoaDon hoaDon : list) {
-            System.out.println(hoaDon.toString());
-        }
-    }
+//    public static void main(String[] args) {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        java.util.Date today = new java.util.Date();
+//        List<HoaDon> list = new HoaDonRepository().getHoaDonsHomNay("2022-12-01");
+//        for (HoaDon hoaDon : list) {
+//            System.out.println(hoaDon.toString());
+//        }
+//    }
 }

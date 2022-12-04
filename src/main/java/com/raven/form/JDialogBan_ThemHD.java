@@ -205,7 +205,7 @@ public class JDialogBan_ThemHD extends javax.swing.JDialog {
                 Date ngayTao = (Date.valueOf(dateFormat.format(today)));
                 HoaDon hoaDon = new HoaDon();
                 hoaDon.setMaHoaDon(maHD);
-                hoaDon.setNgayTao(String.valueOf(ngayTao));
+//                hoaDon.setNgayTao(String.valueOf(ngayTao));
                 hoaDon.setTrangThai(0);
                 hoaDon.setNhanVien(nhanVien);
                 //thêm hd vào db
