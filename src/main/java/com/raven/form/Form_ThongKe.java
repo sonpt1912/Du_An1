@@ -130,7 +130,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        nameofmax.setText("jLabel7");
+        nameofmax.setText("tên sản phẩm:");
 
         soLuongofmax.setText("jLabel8");
 
@@ -147,7 +147,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                 .addComponent(soLuongofmax)
                 .addGap(40, 40, 40))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(61, Short.MAX_VALUE)
+                .addContainerGap(62, Short.MAX_VALUE)
                 .addComponent(jLabel9)
                 .addGap(55, 55, 55))
         );
@@ -262,7 +262,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbDoanhThuWEEK)
                             .addComponent(lbHoaDonTongWEEK))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,7 +432,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                 .addComponent(jLabel4)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(lbHoaDonHuyDAY)
@@ -602,6 +602,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
             String ngayBatDau = dateFormat.format(txtNgayBatDau.getDate());
             String ngayKetThuc = dateFormat.format(txtNgayKetThuc.getDate());
             listSanPham = thongKeService.getAllSanPham(Date.valueOf(ngayBatDau), Date.valueOf(ngayKetThuc));
+            soLuongofmax.setText(listSanPham.get(0).getTen());
 //            showDataSanPham(listSanPham, 1);
 
         }

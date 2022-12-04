@@ -783,13 +783,13 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
                 .addGap(18, 18, 18)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAdd)
+                        .addComponent(btnUpdate)
+                        .addComponent(btnRemove)
+                        .addComponent(btnClear))
+                    .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(radioListActive)
-                        .addComponent(radioListUnactive)
-                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAdd)
-                            .addComponent(btnUpdate)
-                            .addComponent(btnRemove)
-                            .addComponent(btnClear)))
+                        .addComponent(radioListUnactive))
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
@@ -871,10 +871,11 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
-        listNhanVien = nhanVienService.searchByNameAndMa(txtSearch.getText(), txtSearch.getText());
+
         if (txtSearch.getText().isEmpty()) {
             showData(listNhanVien = nhanVienService.getAll());
         } else {
+            listNhanVien = nhanVienService.searchByNameAndMa(txtSearch.getText(), txtSearch.getText());
             showData(listNhanVien);
         }
     }//GEN-LAST:event_txtSearchCaretUpdate

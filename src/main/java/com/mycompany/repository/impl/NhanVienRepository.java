@@ -162,8 +162,8 @@ public class NhanVienRepository implements ICommonRepository<NhanVien, Boolean, 
         List<NhanVien> lisstNV = new ArrayList<>();
         try ( Session session = HibernateUtil.getFactory().openSession()) {
             Query query = session.createQuery("FROM NhanVien WHERE ma = :Ma OR ten = :Ten");
-            query.setParameter("Ma", ma);
-            query.setParameter("Ten", name);
+            query.setParameter("Ma", "%" + ma + "%");
+            query.setParameter("Ten", "%" + name + "%");
             lisstNV = query.getResultList();
         }
         return lisstNV;
