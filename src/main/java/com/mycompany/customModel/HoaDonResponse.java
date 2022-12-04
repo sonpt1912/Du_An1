@@ -26,11 +26,10 @@ public class HoaDonResponse {
     private java.util.Date ngayTao;
 
 //    private Integer maBan;
-
     private Integer trangThai;
 
     private String ghiChu;
-    
+
     public Object[] toDataRow(int stt) {
         return new Object[]{stt, maHoaDon, maKhachHang!=null?maKhachHang:"", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ngayTao), checkTrangThai(trangThai), ghiChu};
     }
