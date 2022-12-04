@@ -977,6 +977,7 @@ public class Form_Home extends javax.swing.JPanel {
             hd.setTrangThai(0);
             // tạo hd
             JOptionPane.showMessageDialog(this, hds.add(hd));
+            lbMaHDThanhToan.setText(maHD);
             for (BanResponse banResponse : lstMaBan) {
                 // lấy bàn theo mã bàn lấy từ banResponse
                 Ban ban = (Ban) banService.getOne(banResponse.getMaBan().toString());
@@ -1106,7 +1107,7 @@ public class Form_Home extends javax.swing.JPanel {
         if (cbbSP.equals("Combo")) {
             if (checkTrangThaiHD == 1) {
                 JOptionPane.showMessageDialog(this, "Không thể thêm sản phẩm");
-            } else if (checkMonAn == 1) {
+            } else if ("".equals(lbMaHDThanhToan.getText())) {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn");
             } else {
                 int soLuong = Integer.valueOf(JOptionPane.showInputDialog("Mời bạn nhập số lượng"));
@@ -1124,7 +1125,7 @@ public class Form_Home extends javax.swing.JPanel {
             if (checkTrangThaiHD == 1) {
                 JOptionPane.showMessageDialog(this, "Không thể thêm sản phẩm");
                 return;
-            } else if (checkMonAn == 1) {
+            } else if ("".equals(lbMaHDThanhToan.getText())) {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn");
                 return;
             } else {
