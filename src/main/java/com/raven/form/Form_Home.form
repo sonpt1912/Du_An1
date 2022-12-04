@@ -153,7 +153,7 @@
                                       </Group>
                                       <Component id="jScrollPane7" alignment="0" min="-2" pref="389" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -217,31 +217,36 @@
                                               <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="txtSdtKH" min="-2" pref="118" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="btnSearchKH" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="txtSdtKH" min="-2" pref="118" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Component id="btnSearchKH" min="-2" max="-2" attributes="0"/>
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <Component id="txtTenKH" min="-2" pref="76" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" attributes="0">
-                                                          <Component id="txtTenKH" min="-2" pref="76" max="-2" attributes="0"/>
-                                                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                                                          <Component id="btnThemKH" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                          <Component id="btnClear" min="-2" pref="85" max="-2" attributes="0"/>
-                                                          <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <Group type="102" alignment="1" attributes="0">
-                                                          <Component id="btnHuy" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
-                                                  <Component id="btnThanhToan" min="-2" pref="172" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                                                  <Component id="btnHuy" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
-                                          <EmptySpace min="0" pref="30" max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="btnThemKH" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                  <Component id="btnClear" min="-2" pref="85" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="btnDuong" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="btnThanhToanIn" min="-2" pref="138" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="btnThanhToan" min="-2" pref="133" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -363,7 +368,17 @@
                               <Component id="btnSearchKH" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="btnThanhToan" alignment="3" min="-2" pref="56" max="-2" attributes="0"/>
+                                      <Component id="btnThanhToanIn" alignment="3" min="-2" pref="56" max="-2" attributes="0"/>
+                                      <Component id="btnHuy" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnDuong" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
@@ -373,14 +388,7 @@
                                           <Component id="btnClear" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="btnHuy" min="-2" max="-2" attributes="0"/>
-                                      <Component id="btnThanhToan" min="-2" pref="56" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -698,6 +706,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="H&#x1ee7;y"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHuyActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnClear">
           <Properties>
@@ -859,6 +870,25 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefreshActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnThanhToanIn">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Thanh To&#xe1;n &amp; In"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThanhToanInActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnDuong">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="D&#x1b0;&#x1a1;ng"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDuongActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

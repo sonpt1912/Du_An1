@@ -1,0 +1,9 @@
+diff a/src/main/java/com/raven/form/Form_Home.java b/src/main/java/com/raven/form/Form_Home.java	(rejected hunks)
+@@ -1142,6 +1142,7 @@
+         } else {
+             listHD = hoaDonService.getAll();
+             String maHD = hoaDonUtil.zenMaThuyDuong(listHD);
++            java.util.Date ngayTao = new java.util.Date();
+             String ngayThanhToan = new HoaDonUtil().layNgay();
+ 
+             // fixx cứng nv
