@@ -1496,93 +1496,114 @@ public class Form_Home extends javax.swing.JPanel {
                 //nếu list > 0
                 if (listHDCT.size() > 0) {
                     //nếu list > 0: lấy các dữ liệu set vào hoá đơn custom để chuyển frame
-                    BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
-                    //kiểm tra đã chọn hình thức thnah tonas chưa:
-                    if (!(cbTienMat.isSelected()) && !(cbChuyenKhoan.isSelected())) {
-                        JOptionPane.showMessageDialog(this, "Vui lòng chọn hình thức thanh toán!");
-                        return;
-                        //TH1: thanh toaons tiền mặt
-                    } else if ((cbTienMat.isSelected()) && !(cbChuyenKhoan.isSelected())) {
-                        //check validate tiền mặt:
-                        if (thanhToanUtil.checkBigDecimal(txtTienMat.getText())) {
-                            BigDecimal tienMatTT = new BigDecimal(txtTienMat.getText());
-                            //set thuộc tính cho hoá đơn thanh tonas custom:
-                            HoaDonThanhToanCustom hoaDonThanhToanCustom = new HoaDonThanhToanCustom();
-                            //hoaDonThanhToanCustom.setGhiChu(txt);
-                            hoaDonThanhToanCustom.setListBan(lbSoBan.getText());
-                            hoaDonThanhToanCustom.setMaHD(hoaDon.getMaHoaDon());
-                            hoaDonThanhToanCustom.setMaNV(hoaDon.getNhanVien().getMa());
-                            if (hoaDon.getKhachHang() != null) {
-                                hoaDonThanhToanCustom.setMaKH(hoaDon.getKhachHang().getMa());
-                            } else {
-                                hoaDonThanhToanCustom.setMaKH("");
-                            }
-                            hoaDonThanhToanCustom.setNgayTao(hoaDon.getNgayTao());
-                            hoaDonThanhToanCustom.setNgayThanhToan(null);
-                            // hoaDonThanhToanCustom.setTienDuocGiam(new BigDecimal(txt));
-                            //tiền được gianmr chưa có
-                            hoaDonThanhToanCustom.setTienThua(new BigDecimal(txtTienThua.getText()));
-                            hoaDonThanhToanCustom.setTongTien(new BigDecimal(txtTongTien.getText()));
-                            hoaDonThanhToanCustom.setTienMat(tienMatTT);
-                            hoaDonThanhToanCustom.setTienChuyenKhoan(new BigDecimal(0));
-                            JDialogThanhToan viewThanhToan = new JDialogThanhToan(null, true, hoaDonThanhToanCustom);
-                            viewThanhToan.setVisible(true);
-                        }
-                        //TH2: thanh toán chuyển khoản:
-                    } else if (!(cbTienMat.isSelected()) && cbChuyenKhoan.isSelected()) {
-                        //check validate tiền CK:
-                        if (thanhToanUtil.checkBigDecimal(txtChuyenKhoan.getText())) {
-                            BigDecimal tienCK = new BigDecimal(txtChuyenKhoan.getText());
-                            //set thuộc tính cho hoá đơn thanh tonas custom:
-                            HoaDonThanhToanCustom hoaDonThanhToanCustom = new HoaDonThanhToanCustom();
-                            //hoaDonThanhToanCustom.setGhiChu(txt);
-                            hoaDonThanhToanCustom.setListBan(lbSoBan.getText());
-                            hoaDonThanhToanCustom.setMaHD(hoaDon.getMaHoaDon());
-                            hoaDonThanhToanCustom.setMaNV(hoaDon.getNhanVien().getMa());
-                            if (hoaDon.getKhachHang() != null) {
-                                hoaDonThanhToanCustom.setMaKH(hoaDon.getKhachHang().getMa());
-                            } else {
-                                hoaDonThanhToanCustom.setMaKH("");
-                            }
-                            hoaDonThanhToanCustom.setNgayTao(hoaDon.getNgayTao());
-                            hoaDonThanhToanCustom.setNgayThanhToan(null);
-                            // hoaDonThanhToanCustom.setTienDuocGiam(new BigDecimal(txt));
-                            //tiền được gianmr chưa có
-                            hoaDonThanhToanCustom.setTienThua(new BigDecimal(txtTienThua.getText()));
-                            hoaDonThanhToanCustom.setTongTien(new BigDecimal(txtTongTien.getText()));
-                            hoaDonThanhToanCustom.setTienChuyenKhoan(tienCK);
-                            hoaDonThanhToanCustom.setTienMat(new BigDecimal(0));
-                            JDialogThanhToan viewThanhToan = new JDialogThanhToan(null, true, hoaDonThanhToanCustom);
-                            viewThanhToan.setVisible(true);
-                        }
-                        //TH3: thanh toán 2 hình thức:
+//                    BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
+//                    //kiểm tra đã chọn hình thức thnah tonas chưa:
+//                    if (!(cbTienMat.isSelected()) && !(cbChuyenKhoan.isSelected())) {
+//                        JOptionPane.showMessageDialog(this, "Vui lòng chọn hình thức thanh toán!");
+//                        return;
+//                        //TH1: thanh toaons tiền mặt
+//                    } else if ((cbTienMat.isSelected()) && !(cbChuyenKhoan.isSelected())) {
+//                        //check validate tiền mặt:
+//                        if (thanhToanUtil.checkBigDecimal(txtTienMat.getText())) {
+//                            BigDecimal tienMatTT = new BigDecimal(txtTienMat.getText());
+//                            //set thuộc tính cho hoá đơn thanh tonas custom:
+//                            HoaDonThanhToanCustom hoaDonThanhToanCustom = new HoaDonThanhToanCustom();
+//                            //hoaDonThanhToanCustom.setGhiChu(txt);
+//                            hoaDonThanhToanCustom.setListBan(lbSoBan.getText());
+//                            hoaDonThanhToanCustom.setMaHD(hoaDon.getMaHoaDon());
+//                            hoaDonThanhToanCustom.setMaNV(hoaDon.getNhanVien().getMa());
+//                            if (hoaDon.getKhachHang() != null) {
+//                                hoaDonThanhToanCustom.setMaKH(hoaDon.getKhachHang().getMa());
+//                            } else {
+//                                hoaDonThanhToanCustom.setMaKH("");
+//                            }
+//                            hoaDonThanhToanCustom.setNgayTao(hoaDon.getNgayTao());
+//                            hoaDonThanhToanCustom.setNgayThanhToan(null);
+//                            // hoaDonThanhToanCustom.setTienDuocGiam(new BigDecimal(txt));
+//                            //tiền được gianmr chưa có
+//                            hoaDonThanhToanCustom.setTienThua(new BigDecimal(txtTienThua.getText()));
+//                            hoaDonThanhToanCustom.setTongTien(new BigDecimal(txtTongTien.getText()));
+//                            hoaDonThanhToanCustom.setTienMat(tienMatTT);
+//                            hoaDonThanhToanCustom.setTienChuyenKhoan(new BigDecimal(0));
+//                            JDialogThanhToan viewThanhToan = new JDialogThanhToan(null, true, hoaDonThanhToanCustom);
+//                            viewThanhToan.setVisible(true);
+//                        }
+//                        //TH2: thanh toán chuyển khoản:
+//                    } else if (!(cbTienMat.isSelected()) && cbChuyenKhoan.isSelected()) {
+//                        //check validate tiền CK:
+//                        if (thanhToanUtil.checkBigDecimal(txtChuyenKhoan.getText())) {
+//                            BigDecimal tienCK = new BigDecimal(txtChuyenKhoan.getText());
+//                            //set thuộc tính cho hoá đơn thanh tonas custom:
+//                            HoaDonThanhToanCustom hoaDonThanhToanCustom = new HoaDonThanhToanCustom();
+//                            //hoaDonThanhToanCustom.setGhiChu(txt);
+//                            hoaDonThanhToanCustom.setListBan(lbSoBan.getText());
+//                            hoaDonThanhToanCustom.setMaHD(hoaDon.getMaHoaDon());
+//                            hoaDonThanhToanCustom.setMaNV(hoaDon.getNhanVien().getMa());
+//                            if (hoaDon.getKhachHang() != null) {
+//                                hoaDonThanhToanCustom.setMaKH(hoaDon.getKhachHang().getMa());
+//                            } else {
+//                                hoaDonThanhToanCustom.setMaKH("");
+//                            }
+//                            hoaDonThanhToanCustom.setNgayTao(hoaDon.getNgayTao());
+//                            hoaDonThanhToanCustom.setNgayThanhToan(null);
+//                            // hoaDonThanhToanCustom.setTienDuocGiam(new BigDecimal(txt));
+//                            //tiền được gianmr chưa có
+//                            hoaDonThanhToanCustom.setTienThua(new BigDecimal(txtTienThua.getText()));
+//                            hoaDonThanhToanCustom.setTongTien(new BigDecimal(txtTongTien.getText()));
+//                            hoaDonThanhToanCustom.setTienChuyenKhoan(tienCK);
+//                            hoaDonThanhToanCustom.setTienMat(new BigDecimal(0));
+//                            JDialogThanhToan viewThanhToan = new JDialogThanhToan(null, true, hoaDonThanhToanCustom);
+//                            viewThanhToan.setVisible(true);
+//                        }
+//                        //TH3: thanh toán 2 hình thức:
+//                    } else {
+//                        //check validate tiền CK:
+//                        if (thanhToanUtil.checkBigDecimal(txtChuyenKhoan.getText()) && thanhToanUtil.checkBigDecimal(txtTienMat.getText())) {
+//                            BigDecimal tienCK = new BigDecimal(txtChuyenKhoan.getText());
+//                            //set thuộc tính cho hoá đơn thanh tonas custom:
+//                            HoaDonThanhToanCustom hoaDonThanhToanCustom = new HoaDonThanhToanCustom();
+//                            //hoaDonThanhToanCustom.setGhiChu(txt);
+//                            hoaDonThanhToanCustom.setListBan(lbSoBan.getText());
+//                            hoaDonThanhToanCustom.setMaHD(hoaDon.getMaHoaDon());
+//                            hoaDonThanhToanCustom.setMaNV(hoaDon.getNhanVien().getMa());
+//                            if (hoaDon.getKhachHang() != null) {
+//                                hoaDonThanhToanCustom.setMaKH(hoaDon.getKhachHang().getMa());
+//                            } else {
+//                                hoaDonThanhToanCustom.setMaKH("");
+//                            }
+//                            hoaDonThanhToanCustom.setNgayTao(hoaDon.getNgayTao());
+//                            hoaDonThanhToanCustom.setNgayThanhToan(null);
+//                            // hoaDonThanhToanCustom.setTienDuocGiam(new BigDecimal(txt));
+//                            //tiền được gianmr chưa có
+//                            hoaDonThanhToanCustom.setTienThua(new BigDecimal(txtTienThua.getText()));
+//                            hoaDonThanhToanCustom.setTongTien(new BigDecimal(txtTongTien.getText()));
+//                            hoaDonThanhToanCustom.setTienChuyenKhoan(tienCK);
+//                            hoaDonThanhToanCustom.setTienMat(new BigDecimal(txtTienMat.getText()));
+//                            JDialogThanhToan viewThanhToan = new JDialogThanhToan(null, true, hoaDonThanhToanCustom);
+//                            viewThanhToan.setVisible(true);
+//                        }
+//                    }
+                    //set thuộc tính cho hoá đơn thanh tonas custom:
+                    HoaDonThanhToanCustom hoaDonThanhToanCustom = new HoaDonThanhToanCustom();
+                    //hoaDonThanhToanCustom.setGhiChu(txt);
+                    hoaDonThanhToanCustom.setListBan(lbSoBan.getText());
+                    hoaDonThanhToanCustom.setMaHD(hoaDon.getMaHoaDon());
+                    hoaDonThanhToanCustom.setMaNV(hoaDon.getNhanVien().getMa());
+                    if (hoaDon.getKhachHang() != null) {
+                        hoaDonThanhToanCustom.setMaKH(hoaDon.getKhachHang().getMa());
                     } else {
-                        //check validate tiền CK:
-                        if (thanhToanUtil.checkBigDecimal(txtChuyenKhoan.getText()) && thanhToanUtil.checkBigDecimal(txtTienMat.getText())) {
-                            BigDecimal tienCK = new BigDecimal(txtChuyenKhoan.getText());
-                            //set thuộc tính cho hoá đơn thanh tonas custom:
-                            HoaDonThanhToanCustom hoaDonThanhToanCustom = new HoaDonThanhToanCustom();
-                            //hoaDonThanhToanCustom.setGhiChu(txt);
-                            hoaDonThanhToanCustom.setListBan(lbSoBan.getText());
-                            hoaDonThanhToanCustom.setMaHD(hoaDon.getMaHoaDon());
-                            hoaDonThanhToanCustom.setMaNV(hoaDon.getNhanVien().getMa());
-                            if (hoaDon.getKhachHang() != null) {
-                                hoaDonThanhToanCustom.setMaKH(hoaDon.getKhachHang().getMa());
-                            } else {
-                                hoaDonThanhToanCustom.setMaKH("");
-                            }
-                            hoaDonThanhToanCustom.setNgayTao(hoaDon.getNgayTao());
-                            hoaDonThanhToanCustom.setNgayThanhToan(null);
-                            // hoaDonThanhToanCustom.setTienDuocGiam(new BigDecimal(txt));
-                            //tiền được gianmr chưa có
-                            hoaDonThanhToanCustom.setTienThua(new BigDecimal(txtTienThua.getText()));
-                            hoaDonThanhToanCustom.setTongTien(new BigDecimal(txtTongTien.getText()));
-                            hoaDonThanhToanCustom.setTienChuyenKhoan(tienCK);
-                            hoaDonThanhToanCustom.setTienMat(new BigDecimal(txtTienMat.getText()));
-                            JDialogThanhToan viewThanhToan = new JDialogThanhToan(null, true, hoaDonThanhToanCustom);
-                            viewThanhToan.setVisible(true);
-                        }
+                        hoaDonThanhToanCustom.setMaKH("");
                     }
+                    hoaDonThanhToanCustom.setNgayTao(hoaDon.getNgayTao());
+                    hoaDonThanhToanCustom.setNgayThanhToan(null);
+                    // hoaDonThanhToanCustom.setTienDuocGiam(new BigDecimal(txt));
+                    //tiền được gianmr chưa có
+                    hoaDonThanhToanCustom.setTienThua(new BigDecimal(0));
+                    hoaDonThanhToanCustom.setTongTien(new BigDecimal(txtTongTien.getText()));
+                    hoaDonThanhToanCustom.setTienChuyenKhoan(new BigDecimal(0));
+                    hoaDonThanhToanCustom.setTienMat(new BigDecimal(0));
+                    JDialogThanhToan viewThanhToan = new JDialogThanhToan(null, true, hoaDonThanhToanCustom);
+                    viewThanhToan.setVisible(true);
                 }
             }
         }

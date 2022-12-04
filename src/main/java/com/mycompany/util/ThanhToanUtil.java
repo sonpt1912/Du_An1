@@ -29,4 +29,9 @@ public class ThanhToanUtil {
             return isCheck;
         }
     }
+
+    public BigDecimal fillTienThua(BigDecimal tienMat, BigDecimal chuyenKhoan, BigDecimal tongTien) {
+        BigDecimal tienKhachTra = tienMat.add(chuyenKhoan);
+        return tienKhachTra.subtract(tongTien);
+    }
 }

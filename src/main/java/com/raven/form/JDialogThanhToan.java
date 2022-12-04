@@ -6,15 +6,26 @@ package com.raven.form;
 
 import com.mycompany.customModel.HoaDonChiTietResponse;
 import com.mycompany.customModel.HoaDonThanhToanCustom;
+import com.mycompany.domainModel.Ban;
+import com.mycompany.domainModel.ChiTietBanHoaDon;
+import com.mycompany.domainModel.GiaoDich;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.HoaDonChiTiet;
 import com.mycompany.domainModel.KhachHang;
+import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.ICommonService;
 import com.mycompany.service.IHoaDonChiTietResponseService;
+import com.mycompany.service.impl.BanService;
+import com.mycompany.service.impl.ChiTietBanHoaDonService;
+import com.mycompany.service.impl.GiaoDichService;
 import com.mycompany.service.impl.HoaDonChiTietResponseService;
 import com.mycompany.service.impl.HoaDonService;
 import com.mycompany.service.impl.KhachHangService;
+import com.mycompany.service.impl.NhanVienService;
+import com.mycompany.util.ThanhToanUtil;
 import java.awt.print.PrinterException;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +39,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class JDialogThanhToan extends javax.swing.JDialog {
-
+    
     private List<HoaDonChiTiet> listHdCt = new ArrayList<>();
     private HoaDonThanhToanCustom hdCustom;
     private DefaultTableModel dtmHoaDonCT = new DefaultTableModel();
@@ -37,6 +48,14 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     private IHoaDonChiTietResponseService hdctResponseService = new HoaDonChiTietResponseService();
     private HoaDonService hoaDonService = new HoaDonService();
     private KhachHangService khachHangService = new KhachHangService();
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    private ThanhToanUtil thanhToanUtil = new ThanhToanUtil();
+    private GiaoDichService giaoDichService = new GiaoDichService();
+    private BanService banService = new BanService();
+    private List<ChiTietBanHoaDon> listCTBan_HD = new ArrayList<>();
+    private ChiTietBanHoaDonService chiTietBanHoaDonService = new ChiTietBanHoaDonService();
+    private java.util.Date today = new java.util.Date();
+    private HoaDon hoaDon;
 
     /**
      * Creates new form JDialogThanhToan
@@ -44,20 +63,8 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     public JDialogThanhToan(java.awt.Frame parent, boolean modal, HoaDonThanhToanCustom hdCustom) {
         super(parent, modal);
         initComponents();
-//        hd = hd;
-//        tbHDCT.setModel(dtmHoaDonCT);
-//        txtId.setText(hd.getId());
-//        txtIdNhanVien.setText(hd.getNhanVien().getId());
-//        txtMaHD.setText(hd.getMaHoaDon());
-//        txtNgayTao.setText(hd.getNgayTao());
-//        txtNgayThanhToan.setText(String.valueOf(hd.getNgayThanhToan()));
-//        txtTenKhachHang.setText(hd.getKhachHang().getTen());
-//        txtTienDuocGiam.setText(String.valueOf(hd.getTienDuocGiam()));
-//        txtTongTien.setText(String.valueOf(hd.getTongTien()));
-//        txtTienKhachDua.setText(String.valueOf(hd.));
-//        txtGhiChu.setText(hd.getGhiChu());
         hdCustom = hdCustom;
-        HoaDon hoaDon = hoaDonService.getOne(hdCustom.getMaHD());
+        hoaDon = hoaDonService.getOne(hdCustom.getMaHD());
         tbHDCT.setModel(dtmHoaDonCT);
         String headerHoaDonCT[] = {"STT", "Tên món ăn", "Giá món ăn", "Số lượng món ăn", "Tên combo", "Giá combo", "Số lượng combo", "Tổng tiền", "Ghi chú"};
         dtmHoaDonCT.setColumnIdentifiers(headerHoaDonCT);
@@ -69,7 +76,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             KhachHang khachHang = khachHangService.getOne(hdCustom.getMaKH());
             txtTenKhachHang.setText(khachHang.getTen());
         }
-        txtNgayTao.setText(String.valueOf(hdCustom.getNgayTao()));
+        txtNgayTao.setText(dateFormat.format(hoaDon.getNgayTao()));
         txtTongTien.setText(String.valueOf(hdCustom.getTongTien()));
         txtTienDuocGiam.setText("Chưa có tiền được giảm");
         txtTiennMat.setText(String.valueOf(hdCustom.getTienMat()));
@@ -78,14 +85,16 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtGhiChu.setText(hdCustom.getGhiChu());
         txtBan.setText(hdCustom.getListBan());
         lstHDCTResponses = hdctResponseService.getAll(hoaDon);
-//        HoaDon hoaDon = (HoaDon) hds.getOne(txtMaHD.getText());
-//        lstHDCTResponses = hdctResponseService.getAll(hd);
-        for (HoaDonChiTietResponse lstHDCTResponse : lstHDCTResponses) {
-            System.out.println(lstHDCTResponse.toString() + "hú hú helllooooooo");
-        }
+        txtBan.setEditable(false);
+        txtChuyenKhoan.setEditable(false);
+        txtMaHD.setEditable(false);
+        txtNgayTao.setEditable(false);
+        txtTienThua.setEditable(false);
+        txtTiennMat.setEditable(false);
+        txtChuyenKhoan.setEditable(false);
         showDataHDCT(lstHDCTResponses);
     }
-
+    
     private void showDataHDCT(List<HoaDonChiTietResponse> hoaDonChiTietResponses) {
         dtmHoaDonCT.setRowCount(0);
         int stt = 0;
@@ -131,11 +140,14 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtGhiChu = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         txtChuyenKhoan = new javax.swing.JTextField();
+        cbTienMat = new javax.swing.JCheckBox();
+        cbChuyenKhoan = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtPrint = new javax.swing.JTextArea();
-        btnThanhToan = new javax.swing.JButton();
+        btnInHoaDonMau = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        btnThanhToan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -200,6 +212,12 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setText("TIỀN MẶT:");
 
+        txtTiennMat.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTiennMatCaretUpdate(evt);
+            }
+        });
+
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setText("TIỀN THỪA           :");
 
@@ -212,6 +230,31 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel14.setText("CHUYỂN KHOẢN:");
 
+        txtChuyenKhoan.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtChuyenKhoanCaretUpdate(evt);
+            }
+        });
+        txtChuyenKhoan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtChuyenKhoanMouseClicked(evt);
+            }
+        });
+
+        cbTienMat.setText("Tiền mặt");
+        cbTienMat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTienMatActionPerformed(evt);
+            }
+        });
+
+        cbChuyenKhoan.setText("Chuyển khoản");
+        cbChuyenKhoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbChuyenKhoanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -221,39 +264,61 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel3)
                                         .addComponent(jLabel4)
                                         .addComponent(jLabel5)
                                         .addComponent(jLabel6))
-                                    .addGap(24, 24, 24)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtMaHD)
-                                        .addComponent(txtMaNV)
-                                        .addComponent(txtTenKhachHang)
-                                        .addComponent(txtNgayTao, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel8)
-                                        .addComponent(jLabel9)
-                                        .addComponent(jLabel11)
-                                        .addComponent(jLabel12)
-                                        .addComponent(jLabel13))
-                                    .addGap(30, 30, 30)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                                        .addComponent(txtTienDuocGiam)
-                                        .addComponent(txtTienThua)
-                                        .addComponent(txtBan)
-                                        .addComponent(txtGhiChu))))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
+                                        .addGap(44, 44, 44)))
                                 .addGap(18, 18, 18)
-                                .addComponent(txtTiennMat, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                                .addComponent(jLabel14)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtMaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtMaHD, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(125, 125, 125))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtNgayTao, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(123, 123, 123))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(txtTongTien)
+                                        .addGap(102, 102, 102))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel11)
+                                            .addComponent(jLabel12)
+                                            .addComponent(jLabel13))
+                                        .addGap(32, 32, 32)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtTienThua)
+                                            .addComponent(txtBan)
+                                            .addComponent(txtGhiChu)))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addGap(30, 30, 30)
+                                        .addComponent(txtTienDuocGiam)))
+                                .addGap(117, 117, 117))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(8, 8, 8)
+                                        .addComponent(cbTienMat)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cbChuyenKhoan))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtTiennMat, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                                        .addComponent(jLabel14)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtChuyenKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -264,19 +329,19 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtMaHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtMaNV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtNgayTao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -284,11 +349,16 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbTienMat)
+                            .addComponent(cbChuyenKhoan)))
                     .addComponent(txtTienDuocGiam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(txtTiennMat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -302,7 +372,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(txtGhiChu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(txtBan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -330,12 +400,12 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        btnThanhToan.setBackground(new java.awt.Color(51, 255, 51));
-        btnThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnThanhToan.setText("IN Hoá Đơn Mẫu");
-        btnThanhToan.addActionListener(new java.awt.event.ActionListener() {
+        btnInHoaDonMau.setBackground(new java.awt.Color(51, 255, 51));
+        btnInHoaDonMau.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnInHoaDonMau.setText("IN Hoá Đơn Mẫu");
+        btnInHoaDonMau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThanhToanActionPerformed(evt);
+                btnInHoaDonMauActionPerformed(evt);
             }
         });
 
@@ -345,6 +415,13 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExitActionPerformed(evt);
+            }
+        });
+
+        btnThanhToan.setText("THANH TOÁN");
+        btnThanhToan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThanhToanActionPerformed(evt);
             }
         });
 
@@ -362,8 +439,10 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(171, 171, 171)
+                                .addComponent(btnInHoaDonMau, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -378,8 +457,9 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnInHoaDonMau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnExit)
+                            .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
@@ -388,8 +468,8 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
-
+    private void btnInHoaDonMauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHoaDonMauActionPerformed
+        
         txtPrint.append("\t\tHÓA ĐƠN THANH TOÁN \n"
                 + "===========================================================\n"
                 + "+\tMã NV:              " + txtMaNV.getText() + "\t\t\n\n"
@@ -421,14 +501,216 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             } catch (PrinterException ex) {
                 Logger.getLogger(JDialogThanhToan.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            
         }
-    }//GEN-LAST:event_btnThanhToanActionPerformed
+    }//GEN-LAST:event_btnInHoaDonMauActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
+        //kiểm tra  thanh toán theo hình thức nào:
+        //nếu ko chọn hình thức nào: 
+        HoaDon hd = hoaDonService.getOne(hoaDon.getMaHoaDon());
+        if (!(cbChuyenKhoan.isSelected()) && !(cbTienMat.isSelected())) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn hình thức thanh toán!");
+            return;
+            //Th1: thanh toán bằng tiền mặt:
+        } else if (cbTienMat.isSelected() && !(cbChuyenKhoan.isSelected())) {
+            //check tiền mặt:
+            if (thanhToanUtil.checkBigDecimal(txtTiennMat.getText())) {
+                //check tìeen đủ chưa:
+                if (new BigDecimal(txtTienThua.getText()).compareTo(new BigDecimal(0)) < 0) {
+                    JOptionPane.showMessageDialog(this, "Chưa đủ tiền!");
+                    return;
+                } else {
+                    try {
+                        if (JOptionPane.showConfirmDialog(this, "Xác nhận thanh toán") == 0) {
+                            //1.thêm giao dịch:
+                            GiaoDich giaoDich = new GiaoDich();
+                            giaoDich.setHinhThucThanhToan("Tiền mặt");
+                            giaoDich.setHoaDon(hd);
+                            giaoDich.setSoTienThanhToan(new BigDecimal(txtTiennMat.getText()));
+                            String addGD = giaoDichService.add(giaoDich);
+                            //chuyển trạng thái hoá đơn:
+                            if (hoaDon.getKhachHang() == null) {
+                                hd.setKhachHang(null);
+                            } else {
+                                hd.setKhachHang(hoaDon.getKhachHang());
+                            }
+                            hd.setGhiChu(txtGhiChu.getText());
+                            NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
+                            hd.setNhanVien(nhanVien);
+                            hd.setTongTien(new BigDecimal(txtTongTien.getText()));
+                            hd.setTienDuocGiam(new BigDecimal(0));
+                            hd.setNgayThanhToan(today);
+                            hd.setTrangThai(1);
+                            String update = hoaDonService.update(hd, hoaDon.getMaHoaDon());
+                            //get list bàn:
+                            listCTBan_HD = chiTietBanHoaDonService.getByHoaDon(hoaDon);
+                            for (ChiTietBanHoaDon chiTietBanHoaDon : listCTBan_HD) {
+                                Ban ban = chiTietBanHoaDon.getBan();
+                                ban.setTrangThai(0);
+                                String updateBan = banService.update(ban, ban.getMaBan().toString());
+                            }
+                        }
+                        JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
+                        this.dispose();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
+                        e.printStackTrace();
+                    }
+                }
+            }
+            //TH2: thanh toán chuyển khoản:
+        } else if (!(cbTienMat.isSelected()) && cbChuyenKhoan.isSelected()) {
+            //check tiền chuyển khoản:
+            if (thanhToanUtil.checkBigDecimal(txtChuyenKhoan.getText())) {
+                //check tìeen đủ chưa:
+                if (new BigDecimal(txtTienThua.getText()).compareTo(new BigDecimal(0)) < 0) {
+                    JOptionPane.showMessageDialog(this, "Chưa đủ tiền!");
+                    return;
+                } else {
+                    try {
+                        if (JOptionPane.showConfirmDialog(this, "Xác nhận thanh toán") == 0) {
+                            //1.thêm giao dịch:
+                            GiaoDich giaoDich = new GiaoDich();
+                            giaoDich.setHinhThucThanhToan("Chuyển khoản");
+                            giaoDich.setHoaDon(hd);
+                            giaoDich.setSoTienThanhToan(new BigDecimal(txtChuyenKhoan.getText()));
+                            String addGD = giaoDichService.add(giaoDich);
+                            //chuyển trạng thái hoá đơn:
+                            if (hoaDon.getKhachHang() == null) {
+                                hd.setKhachHang(null);
+                            } else {
+                                hd.setKhachHang(hoaDon.getKhachHang());
+                            }
+                            hd.setGhiChu(txtGhiChu.getText());
+                            NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
+                            hd.setNhanVien(nhanVien);
+                            hd.setTongTien(new BigDecimal(txtTongTien.getText()));
+                            hd.setTienDuocGiam(new BigDecimal(0));
+                            hd.setNgayThanhToan(today);
+                            hd.setTrangThai(1);
+                            String update = hoaDonService.update(hd, hoaDon.getMaHoaDon());
+                            //get list bàn:
+                            listCTBan_HD = chiTietBanHoaDonService.getByHoaDon(hoaDon);
+                            for (ChiTietBanHoaDon chiTietBanHoaDon : listCTBan_HD) {
+                                Ban ban = chiTietBanHoaDon.getBan();
+                                ban.setTrangThai(0);
+                                String updateBan = banService.update(ban, ban.getMaBan().toString());
+                            }
+                        }
+                        JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
+                        this.dispose();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
+                        e.printStackTrace();
+                    }
+                }
+            }
+            //TH 3: hai hình thức:
+        } else if (cbChuyenKhoan.isSelected() && cbTienMat.isSelected()) {
+            //check tiền chuyển khoản và tiền mặt:
+            if (thanhToanUtil.checkBigDecimal(txtChuyenKhoan.getText()) && thanhToanUtil.checkBigDecimal(txtTiennMat.getText())) {
+                //check tìeen đủ chưa:
+                if (new BigDecimal(txtTienThua.getText()).compareTo(new BigDecimal(0)) < 0) {
+                    JOptionPane.showMessageDialog(this, "Chưa đủ tiền!");
+                    return;
+                } else {
+                    try {
+                        if (JOptionPane.showConfirmDialog(this, "Xác nhận thanh toán") == 0) {
+                            //1.thêm giao dịch:
+                            //giao dịch 1: chuyển khoản
+                            GiaoDich giaoDich = new GiaoDich();
+                            giaoDich.setHinhThucThanhToan("Chuyển khoản");
+                            giaoDich.setHoaDon(hd);
+                            giaoDich.setSoTienThanhToan(new BigDecimal(txtChuyenKhoan.getText()));
+                            String addGD = giaoDichService.add(giaoDich);
+                            //giao dịch 2: tiền mặt
+                            GiaoDich giaoDich2 = new GiaoDich();
+                            giaoDich2.setHinhThucThanhToan("Tiền mặt");
+                            giaoDich2.setHoaDon(hd);
+                            giaoDich2.setSoTienThanhToan(new BigDecimal(txtTiennMat.getText()));
+                            String addGD2 = giaoDichService.add(giaoDich2);
+                            //chuyển trạng thái hoá đơn:
+                            if (hoaDon.getKhachHang() == null) {
+                                hd.setKhachHang(null);
+                            } else {
+                                hd.setKhachHang(hoaDon.getKhachHang());
+                            }
+                            hd.setGhiChu(txtGhiChu.getText());
+                            NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
+                            hd.setNhanVien(nhanVien);
+                            hd.setTongTien(new BigDecimal(txtTongTien.getText()));
+                            hd.setTienDuocGiam(new BigDecimal(0));
+                            hd.setNgayThanhToan(today);
+                            hd.setTrangThai(1);
+                            String update = hoaDonService.update(hd, hoaDon.getMaHoaDon());
+                            //get list bàn:
+                            listCTBan_HD = chiTietBanHoaDonService.getByHoaDon(hoaDon);
+                            for (ChiTietBanHoaDon chiTietBanHoaDon : listCTBan_HD) {
+                                Ban ban = chiTietBanHoaDon.getBan();
+                                ban.setTrangThai(0);
+                                String updateBan = banService.update(ban, ban.getMaBan().toString());
+                            }
+                        }
+                        JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
+                        this.dispose();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Chịu chả biết làm gì=)))");
+        }
+    }//GEN-LAST:event_btnThanhToanActionPerformed
+
+    private void cbChuyenKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbChuyenKhoanActionPerformed
+        if (!cbTienMat.isSelected()) {
+            txtTiennMat.setText("0");
+        }
+        txtChuyenKhoan.setEditable(true);
+    }//GEN-LAST:event_cbChuyenKhoanActionPerformed
+
+    private void cbTienMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTienMatActionPerformed
+        txtTiennMat.setEditable(true);
+        if (!cbChuyenKhoan.isSelected()) {
+            txtChuyenKhoan.setText("0");
+        }
+    }//GEN-LAST:event_cbTienMatActionPerformed
+
+    private void txtTiennMatCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTiennMatCaretUpdate
+        try {
+            BigDecimal tienMat = new BigDecimal(txtTiennMat.getText());
+            BigDecimal chuyenKhoan = new BigDecimal(txtChuyenKhoan.getText());
+            BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
+            BigDecimal tienThua = thanhToanUtil.fillTienThua(tienMat, chuyenKhoan, tongTien);
+            txtTienThua.setText(String.valueOf(tienThua));
+        } catch (Exception e) {
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTiennMatCaretUpdate
+
+    private void txtChuyenKhoanCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtChuyenKhoanCaretUpdate
+        try {
+            BigDecimal tienMat = new BigDecimal(txtTiennMat.getText());
+            BigDecimal chuyenKhoan = new BigDecimal(txtChuyenKhoan.getText());
+            BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
+            BigDecimal tienThua = thanhToanUtil.fillTienThua(tienMat, chuyenKhoan, tongTien);
+            txtTienThua.setText(String.valueOf(tienThua));
+        } catch (Exception e) {
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtChuyenKhoanCaretUpdate
+
+    private void txtChuyenKhoanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtChuyenKhoanMouseClicked
+        if (!cbChuyenKhoan.isSelected()) {
+            txtChuyenKhoan.setEditable(false);
+        }
+    }//GEN-LAST:event_txtChuyenKhoanMouseClicked
 
     /**
      * @param args the command line arguments
@@ -436,7 +718,10 @@ public class JDialogThanhToan extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnInHoaDonMau;
     private javax.swing.JButton btnThanhToan;
+    private javax.swing.JCheckBox cbChuyenKhoan;
+    private javax.swing.JCheckBox cbTienMat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
