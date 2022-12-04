@@ -504,6 +504,11 @@ public class Form_Home extends javax.swing.JPanel {
 
         btnThemKH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnThemKH.setText("+");
+        btnThemKH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemKHActionPerformed(evt);
+            }
+        });
 
         lbMaHDThanhToan.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -1184,9 +1189,8 @@ public class Form_Home extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchCaretUpdate
 
     private void btnThemBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemBanActionPerformed
-        // TODO add your handling code here:
-//        Form_Ban viewBan = new Form_Ban(nhanV);
-//        viewBan.
+        JDialogThemNhanhBan viewThemNhanhBan = new JDialogThemNhanhBan(null, true);
+        viewThemNhanhBan.setVisible(true);
     }//GEN-LAST:event_btnThemBanActionPerformed
 // sự kiện của chuột phải vào hoá đơn
     private void gopHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gopHDActionPerformed
@@ -1292,6 +1296,12 @@ public class Form_Home extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_btnThanhToanActionPerformed
+
+    private void btnThemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKHActionPerformed
+        // TODO add your handling code here:
+        JDialogThemNhanhKhachHang viewThemNhanhKH = new JDialogThemNhanhKhachHang(null, true);
+        viewThemNhanhKH.setVisible(true);
+    }//GEN-LAST:event_btnThemKHActionPerformed
 
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");

@@ -80,7 +80,7 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
         txtNgaySinh.getJCalendar().setMaxSelectableDate(today);
         JTextFieldDateEditor ngaySinh = (JTextFieldDateEditor) txtNgaySinh.getDateEditor();
         ngaySinh.setEnabled(false);
-        webCamCapture();
+//        webCamCapture();
     }
 
     public void showData(List<NhanVien> list) {
@@ -119,10 +119,10 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
             } catch (InterruptedException ex) {
 
             }
-
+            
             Result result = null;
             BufferedImage image = null;
-
+            
             if (webcam.isOpen()) {
                 if ((image = webcam.getImage()) == null) {
                     continue;

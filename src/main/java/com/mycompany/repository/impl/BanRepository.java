@@ -90,6 +90,7 @@ public class BanRepository implements IBanRepository, ICommonRepository<Ban, Boo
         int check = 0;
         try {
             transaction = session.beginTransaction();
+            session.clear();
             Query query = session.createQuery(hql);
             query.setParameter("ma", Integer.valueOf(ma));
             check = query.executeUpdate();
