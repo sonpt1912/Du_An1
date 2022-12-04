@@ -471,10 +471,6 @@ public class Form_Ban extends javax.swing.JPanel {
         if (index < 0) {
             JOptionPane.showMessageDialog(this, "Chọn data cần sửa!");
         } else {
-            if (null != banService.getOne(txtMa.getText())) {
-                JOptionPane.showMessageDialog(this, "Mã trùng");
-                return;
-            }
             if ("".equals(txtSoLuong.getText())) {
                 JOptionPane.showMessageDialog(this, "Số lượng không được trống");
                 return;

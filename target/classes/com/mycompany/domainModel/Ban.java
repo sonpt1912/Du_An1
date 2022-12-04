@@ -30,23 +30,23 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @ToString
 public class Ban {
-
+    
     @Id
     @GenericGenerator(name = "generator", strategy = "guid", parameters = {})
     @GeneratedValue(generator = "generator")
     @Column(name = "IdBan", columnDefinition = "uniqueidentifier")
     private String id;
-
+    
     @ManyToOne
     @JoinColumn(name = "IdKhuVuc", nullable = false)
     private KhuVuc kv;
-
+    
     @Column(name = "MaBan", nullable = false)
     private Integer maBan;
-
+    
     @Column(name = "SoLuongChoNgoi", nullable = false)
     private Integer soLuongChoNgoi;
-
+    
     @Column(name = "TrangThai", nullable = true)
     private Integer trangThai;
 
@@ -56,6 +56,16 @@ public class Ban {
 //        return new Object[]{maBan, soLuongChoNgoi};
 //    }
     public Object[] toDataRow() {
-        return new Object[]{maBan, kv.getTenKV(), soLuongChoNgoi, (trangThai == 0 ? "Còn trống" : "Có người")};
+        return new Object[]{maBan, kv.getTenKV(), soLuongChoNgoi, checkTrangThai(trangThai)};
+    }
+    
+    private String checkTrangThai(int trangThai) {
+        if (trangThai == 0) {
+            return "Còn trống";
+        } else if (trangThai == 1) {
+            return "Có người";
+        } else {
+            return "Đã xoá";
+        }
     }
 }

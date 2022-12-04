@@ -18,7 +18,7 @@ public interface IHoaDonService {
 
     List<HoaDon> getHDChoByMaBan(int maBan);
 
-    List<HoaDon> getHoaDonsHomNay(String today);
+    List<HoaDon> getHoaDonsHomNay(java.util.Date today);
 
     List<HoaDon> getHoaDonsKhoangNgay(String today1, String today2);
 

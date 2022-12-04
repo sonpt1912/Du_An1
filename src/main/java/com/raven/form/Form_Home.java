@@ -1179,7 +1179,7 @@ public class Form_Home extends javax.swing.JPanel {
         } else {
             listHD = hoaDonService.getAll();
             String maHD = hoaDonUtil.zenMaThuyDuong(listHD);
-            String ngayTao = new HoaDonUtil().layNgay();
+            java.util.Date ngayTao = new java.util.Date();
             String ngayThanhToan = new HoaDonUtil().layNgay();
 
             // fixx cứng nv
