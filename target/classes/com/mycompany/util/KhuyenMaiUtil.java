@@ -8,7 +8,7 @@ import com.mycompany.domainModel.KhuyenMai;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.service.impl.KhuyenMaiService;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -72,11 +72,11 @@ public class KhuyenMaiUtil {
         return check;
     }
 
-    public int trangThaiKM(Date tgianBD, Date tgianKT) {
+    public int trangThaiKM(Date tgianBD, Date tgianKT, Date today) {
         int trangThai = 0;
-        String ngayBDString = String.valueOf(tgianBD);
-        String ngayKTString = String.valueOf(tgianKT);
-        String todayString = String.valueOf(dateFormat.format(today));
+        String ngayBDString = dateFormat.format(tgianBD);
+        String ngayKTString = dateFormat.format(tgianKT);
+        String todayString = dateFormat.format(today);
         if (ngayBDString.compareTo(todayString) == 0 && ngayKTString.compareTo(todayString) >= 0) {
             //trạng thái = 0: áp dụng
             trangThai = 0;

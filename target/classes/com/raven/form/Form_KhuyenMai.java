@@ -62,7 +62,11 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         dtmKhuyenMai.setColumnIdentifiers(headers);
         listKM = khuyenMaiRepository.getAll();
         for (KhuyenMai khuyenMai : listKM) {
-            khuyenMai.setTrangThai(khuyenMaiUtil.trangThaiKM(Date.valueOf(dateFormat.format(khuyenMai.getThoiGianBD())), Date.valueOf(dateFormat.format(khuyenMai.getThoiGianKT()))));
+            if (khuyenMai.getTrangThai() != 1) {
+                khuyenMai.setTrangThai(khuyenMaiUtil.trangThaiKM(khuyenMai.getThoiGianBD(), khuyenMai.getThoiGianKT(), today));
+                String updateTT = khuyenMaiService.update(khuyenMai, khuyenMai.getMaKhuyenMai());
+            }
+
         }
         listKM = khuyenMaiService.getAll();
         showData(listKM, 1);
@@ -121,10 +125,15 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
 
     private void showData(List<KhuyenMai> listKM, int stt) {
         dtmKhuyenMai.setRowCount(0);
-//        for (KhuyenMai khuyenMai : listKM) {
-//            khuyenMai.setTrangThai(khuyenMaiUtil.trangThaiKM(Date.valueOf(dateFormat.format(khuyenMai.getThoiGianBD())), Date.valueOf(dateFormat.format(khuyenMai.getThoiGianKT()))));
-//            String updateTT = khuyenMaiService.update(khuyenMai, khuyenMai.getMaKhuyenMai());
-//        }
+        for (KhuyenMai khuyenMai : listKM) {
+            if (khuyenMai.getTrangThai() != 1) {
+//                String ngayBDString = dateFormat.format(khuyenMai.getThoiGianBD());
+//                String ngayKTString = dateFormat.format(khuyenMai.getThoiGianKT());
+//                String todayString = dateFormat.format(today);
+                khuyenMai.setTrangThai(khuyenMaiUtil.trangThaiKM(khuyenMai.getThoiGianBD(), khuyenMai.getThoiGianKT(), today));
+                String updateTT = khuyenMaiService.update(khuyenMai, khuyenMai.getMaKhuyenMai());
+            }
+        }
         for (KhuyenMai khuyenMai : listKM) {
             dtmKhuyenMai.addRow(khuyenMai.toDataRowViewKM(stt));
             stt++;
@@ -679,7 +688,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
             if (khuyenMai != null) {
                 listKM = khuyenMaiService.getAll();
                 khuyenMai.setMaKhuyenMai(khuyenMaiUtil.zenMaKM(listKM));
-                khuyenMai.setTrangThai(khuyenMaiUtil.trangThaiKM(Date.valueOf(dateFormat.format(khuyenMai.getThoiGianBD())), Date.valueOf(dateFormat.format(khuyenMai.getThoiGianKT()))));
+                khuyenMai.setTrangThai(khuyenMaiUtil.trangThaiKM(khuyenMai.getThoiGianBD(), khuyenMai.getThoiGianKT(), today));
                 boolean isCheckValidate = khuyenMaiUtil.checkValidateKM(khuyenMai);
                 if (isCheckValidate) {
                     //check validate = true => thêm
@@ -733,7 +742,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
             } else {
                 KhuyenMai khuyenMai1 = newKM();
                 if (khuyenMaiUtil.checkValidateKM(khuyenMai1)) {
-                    khuyenMai1.setTrangThai(khuyenMaiUtil.trangThaiKM(Date.valueOf(dateFormat.format(khuyenMai.getThoiGianBD())), Date.valueOf(dateFormat.format(khuyenMai.getThoiGianKT()))));
+                    khuyenMai.setTrangThai(khuyenMaiUtil.trangThaiKM(khuyenMai.getThoiGianBD(), khuyenMai.getThoiGianKT(), today));
                     if (JOptionPane.showConfirmDialog(this, "Xác nhận update!") == 0) {
                         JOptionPane.showMessageDialog(this, khuyenMaiService.update(khuyenMai1, txtMaKM.getText()));
                         listKM = khuyenMaiRepository.getAll();
@@ -769,7 +778,21 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         radioDangApDung.setSelected(true);
         listKM = khuyenMaiRepository.getAll();
         for (KhuyenMai khuyenMai : listKM) {
-            khuyenMai.setTrangThai(khuyenMaiUtil.trangThaiKM(Date.valueOf(dateFormat.format(khuyenMai.getThoiGianBD())), Date.valueOf(dateFormat.format(khuyenMai.getThoiGianKT()))));
+            if (khuyenMai.getTrangThai() != 1) {
+                khuyenMai.setTrangThai(khuyenMaiUtil.trangThaiKM(khuyenMai.getThoiGianBD(), khuyenMai.getThoiGianKT(), today));
+                String updateTT = khuyenMaiService.update(khuyenMai, khuyenMai.getMaKhuyenMai());
+            }
+        }
+        listKM = khuyenMaiService.getAll();
+        //khi khuyến mãi ngừng áp dụng=> CTKM cũng ngừng áp dụng
+        for (KhuyenMai khuyenMai : listKM) {
+            listCTKM = khuyenMaiChiTiettService.getKMCTsByKM(khuyenMai);
+            if (khuyenMai.getTrangThai() == 1) {
+                for (KhuyenMaiChiTiet khuyenMaiChiTiet : listCTKM) {
+                    khuyenMaiChiTiet.setTrangThai(1);
+                    String updtae = khuyenMaiChiTiettService.update(khuyenMaiChiTiet, khuyenMaiChiTiet.getId());
+                }
+            }
         }
         listKM = khuyenMaiService.getAll();
         showData(listKM, 1);
@@ -917,6 +940,17 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         btnClearActionPerformed(evt);
+        listKM = khuyenMaiService.getAll();
+        //khi khuyến mãi ngừng áp dụng=> CTKM cũng ngừng áp dụng
+        for (KhuyenMai khuyenMai : listKM) {
+            listCTKM = khuyenMaiChiTiettService.getKMCTsByKM(khuyenMai);
+            if (khuyenMai.getTrangThai() == 1) {
+                for (KhuyenMaiChiTiet khuyenMaiChiTiet : listCTKM) {
+                    khuyenMaiChiTiet.setTrangThai(1);
+                    String updtae = khuyenMaiChiTiettService.update(khuyenMaiChiTiet, khuyenMaiChiTiet.getId());
+                }
+            }
+        }
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
