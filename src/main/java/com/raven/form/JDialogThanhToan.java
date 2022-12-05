@@ -39,7 +39,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class JDialogThanhToan extends javax.swing.JDialog {
-
+    
     private List<HoaDonChiTiet> listHdCt = new ArrayList<>();
     private HoaDonThanhToanCustom hdCustom;
     private DefaultTableModel dtmHoaDonCT = new DefaultTableModel();
@@ -101,9 +101,12 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtTiennMat.setEditable(false);
         txtChuyenKhoan.setEditable(false);
         showDataHDCT(lstHDCTResponses);
-
+        txtTongTien.setEditable(false);
+        txtMaNV.setEditable(false);
+        txtTenKhachHang.setEditable(false);
+        
     }
-
+    
     private void showDataHDCT(List<HoaDonChiTietResponse> hoaDonChiTietResponses) {
         dtmHoaDonCT.setRowCount(0);
         int stt = 0;
@@ -112,7 +115,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             dtmHoaDonCT.addRow(hoaDonChiTietResponse.toDataRow(stt));
         }
     }
-
+    
     private void thanhToan() {
         HoaDon hd = hoaDonService.getOne(hoaDon.getMaHoaDon());
         //Th1: thanh toán bằng tiền mặt:
@@ -234,7 +237,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             }
         }
     }
-
+    
     private String tbMonAn() {
         String ten = "";
         String soLuong = "";
@@ -689,7 +692,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             try {
                 // TODO add your handling code here:
                 txtPrint.print();
-
+                
             } catch (PrinterException ex) {
                 Logger.getLogger(JDialogThanhToan.class
                         .getName()).log(Level.SEVERE, null, ex);
