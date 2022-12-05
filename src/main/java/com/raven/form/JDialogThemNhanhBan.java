@@ -63,15 +63,15 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
 
     private Ban banNew() {
         Ban ban = new Ban();
-        KhuVuc khuVuc = khuVucService.getOne(cbbMaKhuVuc.getSelectedItem().toString());
+        KhuVuc khuVuc = khuVucService.getOne(cbbMaKhuVuc4.getSelectedItem().toString());
         ban.setKv(khuVuc);
-        ban.setMaBan(Integer.valueOf(txtMa.getText()));
-        String soLuong = txtSoLuong.getText();
+        ban.setMaBan(Integer.valueOf(txtMa4.getText()));
+        String soLuong = txtSoLuong4.getText();
         if ("".equals(soLuong)) {
             soLuong = "0";
         }
         ban.setSoLuongChoNgoi(Integer.valueOf(soLuong));
-        if (radioCoNguoi.isSelected()) {
+        if (radioCoNguoi4.isSelected()) {
             ban.setTrangThai(1);
         } else {
             ban.setTrangThai(0);
@@ -130,6 +130,7 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
         btnUpdate = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -324,6 +325,14 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jButton1.setText("Exit");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBorder5Layout = new javax.swing.GroupLayout(panelBorder5);
         panelBorder5.setLayout(panelBorder5Layout);
         panelBorder5Layout.setHorizontalGroup(
@@ -354,7 +363,9 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnRemove)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnClear)))
+                                .addComponent(btnClear)
+                                .addGap(20, 20, 20)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
         );
         panelBorder5Layout.setVerticalGroup(
@@ -377,7 +388,8 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
                         .addComponent(btnAdd)
                         .addComponent(btnUpdate)
                         .addComponent(btnRemove)
-                        .addComponent(btnClear)))
+                        .addComponent(btnClear)
+                        .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -597,6 +609,11 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
         txtMa4.setEnabled(true);
     }//GEN-LAST:event_btnClearActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -641,108 +658,33 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnAddKhuVuc;
-    private javax.swing.JButton btnAddKhuVuc1;
-    private javax.swing.JButton btnAddKhuVuc2;
-    private javax.swing.JButton btnAddKhuVuc3;
     private javax.swing.JButton btnAddKhuVuc4;
     private javax.swing.JButton btnClear;
-    private javax.swing.JButton btnLamMoiKhuVuc;
-    private javax.swing.JButton btnLamMoiKhuVuc1;
-    private javax.swing.JButton btnLamMoiKhuVuc2;
-    private javax.swing.JButton btnLamMoiKhuVuc3;
     private javax.swing.JButton btnLamMoiKhuVuc4;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> cbbMaKhuVuc;
-    private javax.swing.JComboBox<String> cbbMaKhuVuc1;
-    private javax.swing.JComboBox<String> cbbMaKhuVuc2;
-    private javax.swing.JComboBox<String> cbbMaKhuVuc3;
     private javax.swing.JComboBox<String> cbbMaKhuVuc4;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane5;
-    private com.raven.swing.PanelBorder panelBorder1;
-    private com.raven.swing.PanelBorder panelBorder2;
-    private com.raven.swing.PanelBorder panelBorder3;
-    private com.raven.swing.PanelBorder panelBorder4;
     private com.raven.swing.PanelBorder panelBorder5;
-    private javax.swing.JRadioButton radioCoNguoi;
-    private javax.swing.JRadioButton radioCoNguoi1;
-    private javax.swing.JRadioButton radioCoNguoi2;
-    private javax.swing.JRadioButton radioCoNguoi3;
     private javax.swing.JRadioButton radioCoNguoi4;
-    private javax.swing.JRadioButton radioControng;
-    private javax.swing.JRadioButton radioControng1;
-    private javax.swing.JRadioButton radioControng2;
-    private javax.swing.JRadioButton radioControng3;
     private javax.swing.JRadioButton radioControng4;
-    private javax.swing.JRadioButton rdoDaXoa;
-    private javax.swing.JRadioButton rdoDaXoa1;
-    private javax.swing.JRadioButton rdoDaXoa2;
-    private javax.swing.JRadioButton rdoDaXoa3;
     private javax.swing.JRadioButton rdoDaXoa4;
     private javax.swing.JTable tbBan;
-    private javax.swing.JTextField txtMa;
-    private javax.swing.JTextField txtMa1;
-    private javax.swing.JTextField txtMa2;
-    private javax.swing.JTextField txtMa3;
     private javax.swing.JTextField txtMa4;
-    private com.raven.swing.SearchText txtSearch;
-    private com.raven.swing.SearchText txtSearch1;
-    private com.raven.swing.SearchText txtSearch2;
-    private com.raven.swing.SearchText txtSearch3;
     private com.raven.swing.SearchText txtSearch4;
-    private javax.swing.JTextField txtSoLuong;
-    private javax.swing.JTextField txtSoLuong1;
-    private javax.swing.JTextField txtSoLuong2;
-    private javax.swing.JTextField txtSoLuong3;
     private javax.swing.JTextField txtSoLuong4;
-    private javax.swing.JTextField txtTenKhuVuc;
-    private javax.swing.JTextField txtTenKhuVuc1;
-    private javax.swing.JTextField txtTenKhuVuc2;
-    private javax.swing.JTextField txtTenKhuVuc3;
     private javax.swing.JTextField txtTenKhuVuc4;
     // End of variables declaration//GEN-END:variables
 }
