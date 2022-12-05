@@ -39,7 +39,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class JDialogThanhToan extends javax.swing.JDialog {
-    
+
     private List<HoaDonChiTiet> listHdCt = new ArrayList<>();
     private HoaDonThanhToanCustom hdCustom;
     private DefaultTableModel dtmHoaDonCT = new DefaultTableModel();
@@ -56,6 +56,10 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     private ChiTietBanHoaDonService chiTietBanHoaDonService = new ChiTietBanHoaDonService();
     private java.util.Date today = new java.util.Date();
     private HoaDon hoaDon;
+//    private String tenMon;
+//    private String giaMonAn;
+//    private String soLuong;
+//    private String tongTien;
 
     /**
      * Creates new form JDialogThanhToan
@@ -78,7 +82,11 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         }
         txtNgayTao.setText(dateFormat.format(hoaDon.getNgayTao()));
         txtTongTien.setText(String.valueOf(hdCustom.getTongTien()));
-        txtTienDuocGiam.setText("Chưa có tiền được giảm");
+        if (hdCustom.getTienDuocGiam() != null) {
+            txtTienDuocGiam.setText(String.valueOf(hdCustom.getTienDuocGiam()));
+        } else {
+            txtTienDuocGiam.setText("0");
+        }
         txtTiennMat.setText(String.valueOf(hdCustom.getTienMat()));
         txtChuyenKhoan.setText(String.valueOf(hdCustom.getTienChuyenKhoan()));
         txtTienThua.setText(String.valueOf(hdCustom.getTienThua()));
@@ -93,8 +101,9 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtTiennMat.setEditable(false);
         txtChuyenKhoan.setEditable(false);
         showDataHDCT(lstHDCTResponses);
+
     }
-    
+
     private void showDataHDCT(List<HoaDonChiTietResponse> hoaDonChiTietResponses) {
         dtmHoaDonCT.setRowCount(0);
         int stt = 0;
@@ -102,6 +111,152 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             stt++;
             dtmHoaDonCT.addRow(hoaDonChiTietResponse.toDataRow(stt));
         }
+    }
+
+    private void thanhToan() {
+        HoaDon hd = hoaDonService.getOne(hoaDon.getMaHoaDon());
+        //Th1: thanh toán bằng tiền mặt:
+        if (cbTienMat.isSelected() && !(cbChuyenKhoan.isSelected())) {
+            //check tiền mặt:
+            try {
+                //1.thêm giao dịch:
+                GiaoDich giaoDich = new GiaoDich();
+                giaoDich.setHinhThucThanhToan("Tiền mặt");
+                giaoDich.setHoaDon(hd);
+                giaoDich.setSoTienThanhToan(new BigDecimal(txtTiennMat.getText()));
+                String addGD = giaoDichService.add(giaoDich);
+                //chuyển trạng thái hoá đơn:
+                if (hoaDon.getKhachHang() == null) {
+                    hd.setKhachHang(null);
+                } else {
+                    hd.setKhachHang(hoaDon.getKhachHang());
+                }
+                hd.setGhiChu(txtGhiChu.getText());
+                NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
+                hd.setNhanVien(nhanVien);
+                hd.setTongTien(new BigDecimal(txtTongTien.getText()));
+                hd.setTienDuocGiam(new BigDecimal(0));
+                hd.setNgayThanhToan(today);
+                hd.setTrangThai(1);
+                String update = hoaDonService.update(hd, hoaDon.getMaHoaDon());
+                //get list bàn:
+                listCTBan_HD = chiTietBanHoaDonService.getByHoaDon(hoaDon);
+                for (ChiTietBanHoaDon chiTietBanHoaDon : listCTBan_HD) {
+                    Ban ban = chiTietBanHoaDon.getBan();
+                    ban.setTrangThai(0);
+                    String updateBan = banService.update(ban, ban.getMaBan().toString());
+                }
+                JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
+                this.dispose();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
+                e.printStackTrace();
+            }
+            //TH2: thanh toán chuyển khoản:
+        } else if (!(cbTienMat.isSelected()) && cbChuyenKhoan.isSelected()) {
+            //check tiền chuyển khoản:
+            try {
+                //1.thêm giao dịch:
+                GiaoDich giaoDich = new GiaoDich();
+                giaoDich.setHinhThucThanhToan("Chuyển khoản");
+                giaoDich.setHoaDon(hd);
+                giaoDich.setSoTienThanhToan(new BigDecimal(txtChuyenKhoan.getText()));
+                String addGD = giaoDichService.add(giaoDich);
+                //chuyển trạng thái hoá đơn:
+                if (hoaDon.getKhachHang() == null) {
+                    hd.setKhachHang(null);
+                } else {
+                    hd.setKhachHang(hoaDon.getKhachHang());
+                }
+                hd.setGhiChu(txtGhiChu.getText());
+                NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
+                hd.setNhanVien(nhanVien);
+                hd.setTongTien(new BigDecimal(txtTongTien.getText()));
+                hd.setTienDuocGiam(new BigDecimal(0));
+                hd.setNgayThanhToan(today);
+                hd.setTrangThai(1);
+                String update = hoaDonService.update(hd, hoaDon.getMaHoaDon());
+                //get list bàn:
+                listCTBan_HD = chiTietBanHoaDonService.getByHoaDon(hoaDon);
+                for (ChiTietBanHoaDon chiTietBanHoaDon : listCTBan_HD) {
+                    Ban ban = chiTietBanHoaDon.getBan();
+                    ban.setTrangThai(0);
+                    String updateBan = banService.update(ban, ban.getMaBan().toString());
+                }
+                JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
+                this.dispose();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
+                e.printStackTrace();
+            }
+            //TH 3: hai hình thức:
+        } else if (cbChuyenKhoan.isSelected() && cbTienMat.isSelected()) {
+            //check tiền chuyển khoản và tiền mặt:
+            try {
+                //1.thêm giao dịch:
+                //giao dịch 1: chuyển khoản
+                GiaoDich giaoDich = new GiaoDich();
+                giaoDich.setHinhThucThanhToan("Chuyển khoản");
+                giaoDich.setHoaDon(hd);
+                giaoDich.setSoTienThanhToan(new BigDecimal(txtChuyenKhoan.getText()));
+                String addGD = giaoDichService.add(giaoDich);
+                //giao dịch 2: tiền mặt
+                GiaoDich giaoDich2 = new GiaoDich();
+                giaoDich2.setHinhThucThanhToan("Tiền mặt");
+                giaoDich2.setHoaDon(hd);
+                giaoDich2.setSoTienThanhToan(new BigDecimal(txtTiennMat.getText()));
+                String addGD2 = giaoDichService.add(giaoDich2);
+                //chuyển trạng thái hoá đơn:
+                if (hoaDon.getKhachHang() == null) {
+                    hd.setKhachHang(null);
+                } else {
+                    hd.setKhachHang(hoaDon.getKhachHang());
+                }
+                hd.setGhiChu(txtGhiChu.getText());
+                NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
+                hd.setNhanVien(nhanVien);
+                hd.setTongTien(new BigDecimal(txtTongTien.getText()));
+                hd.setTienDuocGiam(new BigDecimal(0));
+                hd.setNgayThanhToan(today);
+                hd.setTrangThai(1);
+                String update = hoaDonService.update(hd, hoaDon.getMaHoaDon());
+                //get list bàn:
+                listCTBan_HD = chiTietBanHoaDonService.getByHoaDon(hoaDon);
+                for (ChiTietBanHoaDon chiTietBanHoaDon : listCTBan_HD) {
+                    Ban ban = chiTietBanHoaDon.getBan();
+                    ban.setTrangThai(0);
+                    String updateBan = banService.update(ban, ban.getMaBan().toString());
+                }
+                JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private String tbMonAn() {
+        String ten = "";
+        String soLuong = "";
+        String donGia = "";
+        BigDecimal tongTien = BigDecimal.valueOf(0);
+        String comBoMonAn = "";
+        for (int i = 0; i < listHdCt.size(); i++) {
+            if (listHdCt.get(i).getComBo() == null) {
+                ten = listHdCt.get(i).getMonAn().getTenMonAn();
+                soLuong = String.valueOf(listHdCt.get(i).getSoLuongMonAn());
+                donGia = String.valueOf(listHdCt.get(i).getDonGiaMonAn());
+                tongTien = listHdCt.get(i).getDonGiaMonAn().multiply(new BigDecimal(listHdCt.get(i).getSoLuongMonAn()));
+                comBoMonAn = ten + "\t\t" + soLuong + "\t\t" + donGia + "\t\t" + String.valueOf(tongTien);
+            } else if (listHdCt.get(i).getMonAn() == null) {
+                ten = listHdCt.get(i).getComBo().getTenCB();
+                soLuong = String.valueOf(listHdCt.get(i).getSoLuongCombo());
+                donGia = String.valueOf(listHdCt.get(i).getDonGiaCombo());
+                tongTien = listHdCt.get(i).getDonGiaCombo().multiply(new BigDecimal(listHdCt.get(i).getSoLuongCombo()));
+                comBoMonAn = ten + "\t\t" + soLuong + "\t\t" + donGia + "\t\t" + String.valueOf(tongTien);
+            }
+        }
+        return comBoMonAn;
     }
 
     /**
@@ -143,7 +298,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         cbTienMat = new javax.swing.JCheckBox();
         cbChuyenKhoan = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
         txtPrint = new javax.swing.JTextArea();
         btnInHoaDonMau = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
@@ -384,18 +539,18 @@ public class JDialogThanhToan extends javax.swing.JDialog {
 
         txtPrint.setColumns(20);
         txtPrint.setRows(5);
-        jScrollPane2.setViewportView(txtPrint);
+        jScrollPane3.setViewportView(txtPrint);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane3)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -470,24 +625,59 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInHoaDonMauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHoaDonMauActionPerformed
-        
-        txtPrint.append("\t\tHÓA ĐƠN THANH TOÁN \n"
-                + "===========================================================\n"
-                + "+\tMã NV:              " + txtMaNV.getText() + "\t\t\n\n"
-                + "+\tMã HĐ:           " + txtMaHD.getText() + "\t\n\n"
-                + "+\tThu Ngân:        " + txtMaNV.getText() + "\t\n\n"
-                + "+\tTên Khách Hàng:  " + txtTenKhachHang.getText() + "\t\n\n"
-                + "+\tNgày Tạo:        " + txtNgayTao.getText() + "\t\n\n"
-                + "+\tNgày Thanh Toán: " + "ngayGioHienTai" + "\t\n\n"
-                + "+\tTổng Tiền:       " + txtTongTien.getText() + "\t\n\n"
-                + "+\tTiền Được Giảm:  " + txtTienDuocGiam.getText() + "\t\n\n"
-                + "+\tTiền Khách Đưa:  " + txtTiennMat.getText() + "\t\n\n"
-                + "+\tTiền Thừa:       " + txtTienThua.getText() + "\t\n\n"
-                + "+\tBàn:             " + txtBan.getText() + "\t\t\n\n"
-                + "+\tGhi Chú:         " + txtGhiChu.getText() + "\t\n\n"
-                + "===========================================================\n"
-                + "\t\tCảm ơn khách hàng, hẹn gặp lại lần sau!"
-        );
+        BigDecimal tienMat = new BigDecimal(Double.valueOf(txtTiennMat.getText()));
+        BigDecimal chuyenKhoan = new BigDecimal(Double.valueOf(txtChuyenKhoan.getText()));
+        BigDecimal tong = tienMat.add(chuyenKhoan);
+        String ten = "";
+        String soLuong = "";
+        String donGia = "";
+        BigDecimal tongTien = BigDecimal.valueOf(0);
+        String trangThai = "";
+        if (hoaDon.getTrangThai() == 0) {
+            trangThai = "Chờ Thanh Toán";
+        } else if (hoaDon.getTrangThai() == 1) {
+            trangThai = "Đã Thanh Toán";
+        }
+        lstHDCTResponses = hdctResponseService.getAll(hoaDon);
+        txtPrint.setText(txtPrint.getText() + "====================HÓA ĐƠN THANH TOÁN==================\n\n\n\n");
+        txtPrint.setText(txtPrint.getText() + "Mã NV:    " + txtMaNV.getText() + "___________" + "Ngày Tạo             : " + txtNgayTao.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Mã HĐ:    " + txtMaHD.getText() + "___________" + "Ngày Thanh Toán: " + dateFormat.format(today) + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Thu Ngân:    " + txtMaNV.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Tên Khách Hàng:  " + txtTenKhachHang.getText() + "______________________" + "Bàn:    " + txtBan.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Tiền Được Giảm:    " + txtTienDuocGiam.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Tiền Khách Đưa:    " + String.valueOf(tong) + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Tiền Thừa:    " + txtTienThua.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Ghi Chú:    " + txtGhiChu.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Trạng Thái:    " + trangThai + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n\n\n");
+        txtPrint.setText(txtPrint.getText() + "Tên Món" + "\t" + "Số Lượng" + "\t" + "Đơn Giá" + "\t" + "Tổng Tiền" + "\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        for (int i = 0; i < lstHDCTResponses.size(); i++) {
+            if (lstHDCTResponses.get(i).getTenCombo() == null) {
+                ten = lstHDCTResponses.get(i).getTenMonAn();
+                soLuong = String.valueOf(lstHDCTResponses.get(i).getSoLuongMonAn());
+                donGia = String.valueOf(lstHDCTResponses.get(i).getDonGiaMonAn());
+                tongTien = lstHDCTResponses.get(i).getDonGiaMonAn().multiply(new BigDecimal(lstHDCTResponses.get(i).getSoLuongMonAn()));
+                txtPrint.setText(txtPrint.getText() + ten + "\t" + soLuong + "\t" + donGia + "\t" + String.valueOf(tongTien) + "\n");
+            } else if (lstHDCTResponses.get(i).getTenMonAn() == null) {
+                ten = lstHDCTResponses.get(i).getTenCombo();
+                soLuong = String.valueOf(lstHDCTResponses.get(i).getSoLuongCombo());
+                donGia = String.valueOf(lstHDCTResponses.get(i).getDonGiaCombo());
+                tongTien = lstHDCTResponses.get(i).getDonGiaCombo().multiply(new BigDecimal(lstHDCTResponses.get(i).getSoLuongCombo()));
+                txtPrint.setText(txtPrint.getText() + ten + "\t" + soLuong + "\t" + donGia + "\t" + String.valueOf(tongTien) + "\n");
+            }
+        }
+        txtPrint.setText(txtPrint.getText() + "------------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "\t\t\t            TỔNG TIỀN:    " + txtTongTien.getText() + "\t\n\n");
+        txtPrint.setText(txtPrint.getText() + "-------------------Cảm Ơn Quý Khách_Hẹn Gặp Lại Quý Khách---------------\n");
         int thanhToan = JOptionPane.showConfirmDialog(null, "Bạn có muốn in hay không");
         if (thanhToan == JOptionPane.NO_OPTION) {
             return;
@@ -499,11 +689,13 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             try {
                 // TODO add your handling code here:
                 txtPrint.print();
+
             } catch (PrinterException ex) {
-                Logger.getLogger(JDialogThanhToan.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(JDialogThanhToan.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
-            
         }
+
     }//GEN-LAST:event_btnInHoaDonMauActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
@@ -513,11 +705,63 @@ public class JDialogThanhToan extends javax.swing.JDialog {
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         //kiểm tra  thanh toán theo hình thức nào:
-        //nếu ko chọn hình thức nào: 
+        txtPrint.setText("");
+        BigDecimal tienMat = new BigDecimal(Double.valueOf(txtTiennMat.getText()));
+        BigDecimal chuyenKhoan = new BigDecimal(Double.valueOf(txtChuyenKhoan.getText()));
+        BigDecimal tong = tienMat.add(chuyenKhoan);
+        String ten = "";
+        String soLuong = "";
+        String donGia = "";
+        BigDecimal tongTien = BigDecimal.valueOf(0);
+        String trangThai = "";
+//        if (hoaDon.getTrangThai() == 0) {
+//            trangThai = "Chờ Thanh Toán";
+//        } else if (hoaDon.getTrangThai() == 1) {
+//            trangThai = "Đã Thanh Toán";
+//        }
+        lstHDCTResponses = hdctResponseService.getAll(hoaDon);
+        txtPrint.setText(txtPrint.getText() + "================HÓA ĐƠN THANH TOÁN================\n\n\n\n");
+        txtPrint.setText(txtPrint.getText() + "Mã NV:    " + txtMaNV.getText() + "___________" + "Ngày Tạo             : " + txtNgayTao.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Mã HĐ:    " + txtMaHD.getText() + "___________" + "Ngày Thanh Toán: " + dateFormat.format(today) + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Thu Ngân:    " + txtMaNV.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Tên Khách Hàng:  " + txtTenKhachHang.getText() + "______________________" + "Bàn:    " + txtBan.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Tiền Được Giảm:    " + txtTienDuocGiam.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Tiền Khách Đưa:    " + String.valueOf(tong) + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Tiền Thừa:    " + txtTienThua.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Ghi Chú:    " + txtGhiChu.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "Trạng Thái:    " + "Đã Thanh Toán" + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n\n\n");
+        txtPrint.setText(txtPrint.getText() + "Tên Món" + "\t" + "Số Lượng" + "\t" + "Đơn Giá" + "\t" + "Tổng Tiền" + "\n");
+        txtPrint.setText(txtPrint.getText() + "-----------------------------------------------------------------------------------------------\n");
+        for (int i = 0; i < lstHDCTResponses.size(); i++) {
+            if (lstHDCTResponses.get(i).getTenCombo() == null) {
+                ten = lstHDCTResponses.get(i).getTenMonAn();
+                soLuong = String.valueOf(lstHDCTResponses.get(i).getSoLuongMonAn());
+                donGia = String.valueOf(lstHDCTResponses.get(i).getDonGiaMonAn());
+                tongTien = lstHDCTResponses.get(i).getDonGiaMonAn().multiply(new BigDecimal(lstHDCTResponses.get(i).getSoLuongMonAn()));
+                txtPrint.setText(txtPrint.getText() + ten + "\t" + soLuong + "\t" + donGia + "\t" + String.valueOf(tongTien) + "\n");
+            } else if (lstHDCTResponses.get(i).getTenMonAn() == null) {
+                ten = lstHDCTResponses.get(i).getTenCombo();
+                soLuong = String.valueOf(lstHDCTResponses.get(i).getSoLuongCombo());
+                donGia = String.valueOf(lstHDCTResponses.get(i).getDonGiaCombo());
+                tongTien = lstHDCTResponses.get(i).getDonGiaCombo().multiply(new BigDecimal(lstHDCTResponses.get(i).getSoLuongCombo()));
+                txtPrint.setText(txtPrint.getText() + ten + "\t" + soLuong + "\t" + donGia + "\t" + String.valueOf(tongTien) + "\n");
+            }
+        }
+        txtPrint.setText(txtPrint.getText() + "------------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "\t\t\t            TỔNG TIỀN:    " + txtTongTien.getText() + "\t\n\n");
+        txtPrint.setText(txtPrint.getText() + "-------------------Cảm Ơn Quý Khách_Hẹn Gặp Lại Quý Khách---------------\n");
         HoaDon hd = hoaDonService.getOne(hoaDon.getMaHoaDon());
         if (!(cbChuyenKhoan.isSelected()) && !(cbTienMat.isSelected())) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hình thức thanh toán!");
-            return;
             //Th1: thanh toán bằng tiền mặt:
         } else if (cbTienMat.isSelected() && !(cbChuyenKhoan.isSelected())) {
             //check tiền mặt:
@@ -525,149 +769,84 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 //check tìeen đủ chưa:
                 if (new BigDecimal(txtTienThua.getText()).compareTo(new BigDecimal(0)) < 0) {
                     JOptionPane.showMessageDialog(this, "Chưa đủ tiền!");
-                    return;
                 } else {
-                    try {
-                        if (JOptionPane.showConfirmDialog(this, "Xác nhận thanh toán") == 0) {
-                            //1.thêm giao dịch:
-                            GiaoDich giaoDich = new GiaoDich();
-                            giaoDich.setHinhThucThanhToan("Tiền mặt");
-                            giaoDich.setHoaDon(hd);
-                            giaoDich.setSoTienThanhToan(new BigDecimal(txtTiennMat.getText()));
-                            String addGD = giaoDichService.add(giaoDich);
-                            //chuyển trạng thái hoá đơn:
-                            if (hoaDon.getKhachHang() == null) {
-                                hd.setKhachHang(null);
-                            } else {
-                                hd.setKhachHang(hoaDon.getKhachHang());
-                            }
-                            hd.setGhiChu(txtGhiChu.getText());
-                            NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
-                            hd.setNhanVien(nhanVien);
-                            hd.setTongTien(new BigDecimal(txtTongTien.getText()));
-                            hd.setTienDuocGiam(new BigDecimal(0));
-                            hd.setNgayThanhToan(today);
-                            hd.setTrangThai(1);
-                            String update = hoaDonService.update(hd, hoaDon.getMaHoaDon());
-                            //get list bàn:
-                            listCTBan_HD = chiTietBanHoaDonService.getByHoaDon(hoaDon);
-                            for (ChiTietBanHoaDon chiTietBanHoaDon : listCTBan_HD) {
-                                Ban ban = chiTietBanHoaDon.getBan();
-                                ban.setTrangThai(0);
-                                String updateBan = banService.update(ban, ban.getMaBan().toString());
-                            }
+                    int thanhToan = JOptionPane.showConfirmDialog(this, "Bạn có muốn in hóa đơn hay không!");
+                    if (thanhToan == JOptionPane.NO_OPTION) {
+                        thanhToan();
+                        return;
+                    } else if (thanhToan == JOptionPane.CLOSED_OPTION) {
+                        JOptionPane.showMessageDialog(this, "Bạn chưa thanh toán hóa đơn");
+                        return;
+                    } else if (thanhToan == JOptionPane.CANCEL_OPTION) {
+                        JOptionPane.showMessageDialog(this, "Bạn chưa thanh toán hóa đơn");
+                        return;
+                    } else {
+                        try {
+                            // TODO add your handling code here:
+                            txtPrint.print();
+                        } catch (PrinterException ex) {
+                            Logger.getLogger(JDialogThanhToan.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
-                        this.dispose();
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
-                        e.printStackTrace();
+                        thanhToan();
                     }
                 }
             }
-            //TH2: thanh toán chuyển khoản:
         } else if (!(cbTienMat.isSelected()) && cbChuyenKhoan.isSelected()) {
             //check tiền chuyển khoản:
             if (thanhToanUtil.checkBigDecimal(txtChuyenKhoan.getText())) {
                 //check tìeen đủ chưa:
                 if (new BigDecimal(txtTienThua.getText()).compareTo(new BigDecimal(0)) < 0) {
                     JOptionPane.showMessageDialog(this, "Chưa đủ tiền!");
-                    return;
                 } else {
-                    try {
-                        if (JOptionPane.showConfirmDialog(this, "Xác nhận thanh toán") == 0) {
-                            //1.thêm giao dịch:
-                            GiaoDich giaoDich = new GiaoDich();
-                            giaoDich.setHinhThucThanhToan("Chuyển khoản");
-                            giaoDich.setHoaDon(hd);
-                            giaoDich.setSoTienThanhToan(new BigDecimal(txtChuyenKhoan.getText()));
-                            String addGD = giaoDichService.add(giaoDich);
-                            //chuyển trạng thái hoá đơn:
-                            if (hoaDon.getKhachHang() == null) {
-                                hd.setKhachHang(null);
-                            } else {
-                                hd.setKhachHang(hoaDon.getKhachHang());
-                            }
-                            hd.setGhiChu(txtGhiChu.getText());
-                            NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
-                            hd.setNhanVien(nhanVien);
-                            hd.setTongTien(new BigDecimal(txtTongTien.getText()));
-                            hd.setTienDuocGiam(new BigDecimal(0));
-                            hd.setNgayThanhToan(today);
-                            hd.setTrangThai(1);
-                            String update = hoaDonService.update(hd, hoaDon.getMaHoaDon());
-                            //get list bàn:
-                            listCTBan_HD = chiTietBanHoaDonService.getByHoaDon(hoaDon);
-                            for (ChiTietBanHoaDon chiTietBanHoaDon : listCTBan_HD) {
-                                Ban ban = chiTietBanHoaDon.getBan();
-                                ban.setTrangThai(0);
-                                String updateBan = banService.update(ban, ban.getMaBan().toString());
-                            }
+                    int thanhToan = JOptionPane.showConfirmDialog(this, "Bạn có muốn in hóa đơn hay không!");
+                    if (thanhToan == JOptionPane.NO_OPTION) {
+                        thanhToan();
+                        return;
+                    } else if (thanhToan == JOptionPane.CLOSED_OPTION) {
+                        JOptionPane.showMessageDialog(this, "Bạn chưa thanh toán hóa đơn");
+                        return;
+                    } else if (thanhToan == JOptionPane.CANCEL_OPTION) {
+                        JOptionPane.showMessageDialog(this, "Bạn chưa thanh toán hóa đơn");
+                        return;
+                    } else {
+                        try {
+                            // TODO add your handling code here:
+                            txtPrint.print();
+                        } catch (PrinterException ex) {
+                            Logger.getLogger(JDialogThanhToan.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
-                        this.dispose();
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
-                        e.printStackTrace();
+                        thanhToan();
                     }
                 }
             }
-            //TH 3: hai hình thức:
         } else if (cbChuyenKhoan.isSelected() && cbTienMat.isSelected()) {
             //check tiền chuyển khoản và tiền mặt:
             if (thanhToanUtil.checkBigDecimal(txtChuyenKhoan.getText()) && thanhToanUtil.checkBigDecimal(txtTiennMat.getText())) {
                 //check tìeen đủ chưa:
                 if (new BigDecimal(txtTienThua.getText()).compareTo(new BigDecimal(0)) < 0) {
                     JOptionPane.showMessageDialog(this, "Chưa đủ tiền!");
-                    return;
                 } else {
-                    try {
-                        if (JOptionPane.showConfirmDialog(this, "Xác nhận thanh toán") == 0) {
-                            //1.thêm giao dịch:
-                            //giao dịch 1: chuyển khoản
-                            GiaoDich giaoDich = new GiaoDich();
-                            giaoDich.setHinhThucThanhToan("Chuyển khoản");
-                            giaoDich.setHoaDon(hd);
-                            giaoDich.setSoTienThanhToan(new BigDecimal(txtChuyenKhoan.getText()));
-                            String addGD = giaoDichService.add(giaoDich);
-                            //giao dịch 2: tiền mặt
-                            GiaoDich giaoDich2 = new GiaoDich();
-                            giaoDich2.setHinhThucThanhToan("Tiền mặt");
-                            giaoDich2.setHoaDon(hd);
-                            giaoDich2.setSoTienThanhToan(new BigDecimal(txtTiennMat.getText()));
-                            String addGD2 = giaoDichService.add(giaoDich2);
-                            //chuyển trạng thái hoá đơn:
-                            if (hoaDon.getKhachHang() == null) {
-                                hd.setKhachHang(null);
-                            } else {
-                                hd.setKhachHang(hoaDon.getKhachHang());
-                            }
-                            hd.setGhiChu(txtGhiChu.getText());
-                            NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
-                            hd.setNhanVien(nhanVien);
-                            hd.setTongTien(new BigDecimal(txtTongTien.getText()));
-                            hd.setTienDuocGiam(new BigDecimal(0));
-                            hd.setNgayThanhToan(today);
-                            hd.setTrangThai(1);
-                            String update = hoaDonService.update(hd, hoaDon.getMaHoaDon());
-                            //get list bàn:
-                            listCTBan_HD = chiTietBanHoaDonService.getByHoaDon(hoaDon);
-                            for (ChiTietBanHoaDon chiTietBanHoaDon : listCTBan_HD) {
-                                Ban ban = chiTietBanHoaDon.getBan();
-                                ban.setTrangThai(0);
-                                String updateBan = banService.update(ban, ban.getMaBan().toString());
-                            }
+                    int thanhToan = JOptionPane.showConfirmDialog(this, "Bạn có muốn in hóa đơn hay không!");
+                    if (thanhToan == JOptionPane.NO_OPTION) {
+                        thanhToan();
+                        return;
+                    } else if (thanhToan == JOptionPane.CLOSED_OPTION) {
+                        JOptionPane.showMessageDialog(this, "Bạn chưa thanh toán hóa đơn");
+                        return;
+                    } else if (thanhToan == JOptionPane.CANCEL_OPTION) {
+                        JOptionPane.showMessageDialog(this, "Bạn chưa thanh toán hóa đơn");
+                        return;
+                    } else {
+                        try {
+                            // TODO add your handling code here:
+                            txtPrint.print();
+                        } catch (PrinterException ex) {
+                            Logger.getLogger(JDialogThanhToan.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
-                        this.dispose();
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
-                        e.printStackTrace();
+                        thanhToan();
                     }
                 }
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Chịu chả biết làm gì=)))");
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
@@ -739,7 +918,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable tbHDCT;
     private javax.swing.JTextField txtBan;
     private javax.swing.JTextField txtChuyenKhoan;
