@@ -80,7 +80,7 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
         txtNgaySinh.getJCalendar().setMaxSelectableDate(today);
         JTextFieldDateEditor ngaySinh = (JTextFieldDateEditor) txtNgaySinh.getDateEditor();
         ngaySinh.setEnabled(false);
-//        webCamCapture();
+        webCamCapture();
     }
 
     public void showData(List<NhanVien> list) {
@@ -107,7 +107,7 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
         panel.setFPSDisplayed(true);
         panel.setFPSLimited(true);
 
-        jPanel2.add(panel, new AbsoluteConstraints(0, 0, 270, 200));
+        jPanel2.add(panel, new AbsoluteConstraints(0, 0, 270, 250));
         executor.execute(this);
     }
 
@@ -119,10 +119,10 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
             } catch (InterruptedException ex) {
 
             }
-            
+
             Result result = null;
             BufferedImage image = null;
-            
+
             if (webcam.isOpen()) {
                 if ((image = webcam.getImage()) == null) {
                     continue;
@@ -140,16 +140,31 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
             }
 
             if (result != null) {
-                jTextArea1.setText(result.getText());
+
+                String[] cccd = result.getText().split("[|]");
+                if (cccd.length == 7) {
+                    if (txtMa.getText().isEmpty()) {
+                        String[] ten = cccd[2].split("\\s");
+                        if (ten.length < 4) {
+                            txtTen.setText(ten[2]);
+                            txtTenDem.setText(ten[1]);
+                            txtHo.setText(ten[0]);
+                            txtDiaChi.setText(cccd[5]);
+                        } else {
+                            txtTen.setText(ten[3]);
+                            txtTenDem.setText(ten[1] + " " + ten[2]);
+                            txtHo.setText(ten[0]);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "clear trước khi thêm mới");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "không phải cccd");
+                }
+
             }
 
         } while (true);
-    }
-
-    private void setText() {
-        if (jTextArea1.getText() != null) {
-            jTextField1.setText(jTextArea1.getText());
-        }
     }
 
     @Override
@@ -382,8 +397,6 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
         rdoKoXacDinh = new javax.swing.JRadioButton();
         txtTenCv = new javax.swing.JLabel();
         plCamera = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jTextField1 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -492,21 +505,10 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
         txtTenCv.setText("jLabel17");
 
         plCamera.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                jTextArea1CaretUpdate(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTextArea1);
-
-        plCamera.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 270, 80));
         plCamera.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 200, -1));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        plCamera.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 270, 170));
+        plCamera.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 270, 260));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -904,10 +906,6 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
         showData(listNhanVien = nhanVienService.getAllByTrangThai(1));
     }//GEN-LAST:event_radioListUnactiveActionPerformed
 
-    private void jTextArea1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextArea1CaretUpdate
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextArea1CaretUpdate
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -937,9 +935,7 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private com.raven.swing.PanelBorder panelBorder1;
     private javax.swing.JPanel plCamera;
