@@ -1207,11 +1207,11 @@ public class Form_Home extends javax.swing.JPanel {
         lstMAReponByDM = monAnResponseService.getByDanhMuc(dcbmLoaiSP.getSelectedItem().toString());
         listMAReponBYKMCT = monAnResponseService.getMonAnJoinKMCT(dcbmLoaiSP.getSelectedItem().toString());
         listMAReponMerge = mergeMonAnRepon(listMAReponBYKMCT, lstMAReponByDM);
+        dtmHoaDonCT.setRowCount(0);
         loadTableMonAn();
         rdoChoThanhToan.setSelected(true);
         showDataMonAn(listMAReponMerge);
         showDataHoaDon(lstHoaDonResponses);
-        showDataHDCT(lstHDCTResponses);
         showDataBan(lstBanResponses);
     }//GEN-LAST:event_btnRefreshActionPerformed
 
