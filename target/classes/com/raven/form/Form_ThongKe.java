@@ -88,6 +88,8 @@ public class Form_ThongKe extends javax.swing.JPanel {
         nameofmax1 = new javax.swing.JLabel();
         soLuongMin = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
+        nameofmax2 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lbDoanhThuWEEK = new javax.swing.JLabel();
@@ -171,20 +173,37 @@ public class Form_ThongKe extends javax.swing.JPanel {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameofmax1)
                     .addComponent(soLuongMin))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        nameofmax2.setText("Tổng tiền của ngày là");
+
+        jLabel7.setText("jLabel7");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(nameofmax2))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(114, 114, 114)
+                        .addComponent(jLabel7)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(nameofmax2)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
@@ -517,9 +536,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel11)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -613,10 +630,8 @@ public class Form_ThongKe extends javax.swing.JPanel {
             String ngayBatDau = dateFormat.format(txtNgayBatDau.getDate());
             String ngayKetThuc = dateFormat.format(txtNgayKetThuc.getDate());
             listSanPham = thongKeService.getAllSanPham(Date.valueOf(ngayBatDau), Date.valueOf(ngayKetThuc));
-//            soLuongofmax.setText(listSanPham.get(0).getTen());
             setTKSP(listSanPham);
-//            showDataSanPham(listSanPham, 1);
-
+            jLabel7.setText(thongKeService.soLuongTheoKhoangNgay(Date.valueOf(ngayBatDau), Date.valueOf(ngayKetThuc)) + "đ");
         }
     }//GEN-LAST:event_btnUpdate1ActionPerformed
 
@@ -624,7 +639,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         if (list.size() > 0) {
             soLuongofmax.setText(listSanPham.get(0).getTen());
             if (list.size() > 1) {
-                soLuongMin.setText(listSanPham.get(list.size()-1).getTen());
+                soLuongMin.setText(listSanPham.get(list.size() - 1).getTen());
             }
         }
     }
@@ -778,6 +793,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
@@ -805,6 +821,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
     private javax.swing.JLabel lbHoaDonTongYEAR;
     private javax.swing.JLabel nameofmax;
     private javax.swing.JLabel nameofmax1;
+    private javax.swing.JLabel nameofmax2;
     private com.raven.swing.PanelBorder panelBorder1;
     private com.raven.swing.PanelBorder panelBorder2;
     private com.raven.swing.ScrollBar scrollBar1;

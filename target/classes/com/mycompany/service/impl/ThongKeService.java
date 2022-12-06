@@ -198,4 +198,9 @@ public class ThongKeService implements IThongKeService {
         return thongKeRepository.getDoanhThuThang12();
     }
 
+    @Override
+    public Integer soLuongTheoKhoangNgay(Date ngayBatDau, Date ngayKetThuc) {
+        return calledStoreProceducre.calledStoreTT(ngayBatDau, ngayKetThuc);
+    }
+
 }

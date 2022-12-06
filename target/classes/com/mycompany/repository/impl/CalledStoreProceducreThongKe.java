@@ -7,6 +7,7 @@ package com.mycompany.repository.impl;
 import com.mycompany.customModel.SanPhamRepose;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -53,6 +54,21 @@ public class CalledStoreProceducreThongKe {
                 list.add(lists.get(i));
             }
             return list;
+        }
+    }
+
+    public BigDecimal calledStoreTT(Date ngayBatDau, Date ngayKetThuc) {
+        try ( Session session = HibernateUtil.getFactory().openSession()) {
+            try {
+                List<SanPhamRepose> lists = new ArrayList<>();
+                List<SanPhamRepose> list = new ArrayList<>();
+                Query query = session.createSQLQuery("SELECT dbo.tongTien :@NgayBatDau, :@NgayKetThuc");
+                query.setParameter("@NgayBatDau", ngayBatDau);
+                query.setParameter("@NgayKetThuc", ngayKetThuc);
+                return new BigDecimal((BigInteger) query.getSingleResult());
+            } catch (Exception e) {
+                return new BigDecimal(0);
+            }
         }
     }
 
