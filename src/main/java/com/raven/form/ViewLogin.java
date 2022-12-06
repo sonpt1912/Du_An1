@@ -203,13 +203,19 @@ public class ViewLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         String pass = new String(txtMatKhau.getPassword());
         String user = txtUser.getText();
-        NhanVien login = nhanVienService.getUserAndPass(user, pass);
-        if (login != null) {
-            Main trangChu = new Main(login);
-            this.dispose();
-            trangChu.setVisible(true);
+        if (user.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "không được để trống mật khẩu hoặc tài khoản");
+        } else if (pass.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "không được để trống mật khẩu hoặc tài khoản");
         } else {
-            JOptionPane.showMessageDialog(this, "tài khoản hoặc mật khẩu không chính xác");
+            NhanVien login = nhanVienService.getUserAndPass(user, pass);
+            if (login != null) {
+                Main trangChu = new Main(login);
+                this.dispose();
+                trangChu.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "tài khoản hoặc mật khẩu không chính xác");
+            }
         }
 
     }//GEN-LAST:event_btnDangNhapActionPerformed

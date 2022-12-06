@@ -150,30 +150,29 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
                             txtTenDem.setText(ten[1]);
                             txtHo.setText(ten[0]);
                             txtDiaChi.setText(cccd[5]);
-                            
-                            
-//                            int nam = cccd[3].charAt(4) + cccd[3].charAt(5) + cccd[3].charAt(6) + cccd[3].charAt(7);
-//                            int thang = cccd[3].charAt(2) + cccd[3].charAt(3);
-//                            int ngay = cccd[3].charAt(0) + cccd[3].charAt(1);
-//                            txtNgaySinh.setDate(Date.valueOf(nam + "-" + thang + "-" + ngay));
-                            if(cccd[4].equalsIgnoreCase("Nam")){
+
+                            String ngay = cccd[3].substring(4) + "-" + cccd[3].substring(2, 4) + "-" + cccd[3].substring(0, 2);
+                            txtNgaySinh.setDate(Date.valueOf(ngay));
+                            if (cccd[4].equalsIgnoreCase("Nam")) {
                                 rdoNam.setSelected(true);
-                            }else if(cccd[4].equalsIgnoreCase("Nữ")){
+                            } else if (cccd[4].equalsIgnoreCase("Nữ")) {
                                 rdoNu.setSelected(true);
-                            }else{
+                            } else {
                                 rdoKoXacDinh.setSelected(true);
                             }
                         } else {
                             txtTen.setText(ten[3]);
                             txtTenDem.setText(ten[1] + " " + ten[2]);
                             txtHo.setText(ten[0]);
-                            
-                             txtNgaySinh.setDate(Date.valueOf(cccd[3]));
-                            if(cccd[4].equalsIgnoreCase("Nam")){
+                            txtDiaChi.setText(cccd[5]);
+
+                            String ngay = cccd[3].substring(4) + "-" + cccd[3].substring(2, 4) + "-" + cccd[3].substring(0, 2);
+                            txtNgaySinh.setDate(Date.valueOf(ngay));
+                            if (cccd[4].equalsIgnoreCase("Nam")) {
                                 rdoNam.setSelected(true);
-                            }else if(cccd[4].equalsIgnoreCase("Nữ")){
+                            } else if (cccd[4].equalsIgnoreCase("Nữ")) {
                                 rdoNu.setSelected(true);
-                            }else{
+                            } else {
                                 rdoKoXacDinh.setSelected(true);
                             }
                         }
@@ -861,12 +860,17 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        if (!txtMa.getText().isEmpty()) {
-            String xoa = nhanVienService.remove(txtMa.getText());
-            showData(listNhanVien = nhanVienService.getAllByTrangThai(0));
-            radioListActiveActionPerformed(evt);
-            btnClearActionPerformed(evt);
-            JOptionPane.showMessageDialog(this, xoa);
+        int result = JOptionPane.showConfirmDialog(this, "bạn có muốn xóa nhân viên này không", "xác nhận", JOptionPane.YES_OPTION, JOptionPane.NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            if (!txtMa.getText().isEmpty()) {
+                String xoa = nhanVienService.remove(txtMa.getText());
+                showData(listNhanVien = nhanVienService.getAllByTrangThai(0));
+                radioListActiveActionPerformed(evt);
+                btnClearActionPerformed(evt);
+                JOptionPane.showMessageDialog(this, xoa);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "hủy xóa");
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 

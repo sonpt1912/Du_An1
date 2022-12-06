@@ -85,7 +85,7 @@ public class JDialogDanhMuc extends javax.swing.JDialog {
                     return "hủy sửa";
                 }
             }
-        }else{
+        } else {
             return "vui lòng chọn dữu liệu cần sửa";
         }
     }
@@ -375,14 +375,21 @@ public class JDialogDanhMuc extends javax.swing.JDialog {
     }//GEN-LAST:event_tbDanhMucMouseClicked
 
     private void btnRemoveDMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveDMActionPerformed
-        int index = tbDanhMuc.getSelectedRow();
-        if (index >= 0) {
-            String ma = listDM.get(index).getMaDanhMuc();
-            JOptionPane.showMessageDialog(this, danhMucService.remove(ma));
-            listDM = danhMucService.getAll();
-            showData(listDM);
-            btnClearDMActionPerformed(evt);
+        int result = JOptionPane.showConfirmDialog(this, "bạn có muốn sửa danh mục này không", "xác nhận", JOptionPane.YES_OPTION, JOptionPane.NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+
+            int index = tbDanhMuc.getSelectedRow();
+            if (index >= 0) {
+                String ma = listDM.get(index).getMaDanhMuc();
+                JOptionPane.showMessageDialog(this, danhMucService.remove(ma));
+                listDM = danhMucService.getAll();
+                showData(listDM);
+                btnClearDMActionPerformed(evt);
+            }
+        } else {
+           JOptionPane.showMessageDialog(this, "hủy xóa");
         }
+
     }//GEN-LAST:event_btnRemoveDMActionPerformed
 
     /**
@@ -399,16 +406,24 @@ public class JDialogDanhMuc extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JDialogDanhMuc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDialogDanhMuc.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JDialogDanhMuc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDialogDanhMuc.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JDialogDanhMuc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDialogDanhMuc.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDialogDanhMuc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDialogDanhMuc.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
