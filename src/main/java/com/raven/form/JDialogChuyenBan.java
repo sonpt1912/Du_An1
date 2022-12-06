@@ -193,21 +193,22 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
         int index = tbBanMoi.getSelectedRow();
         String maBan = lbBanMoi.getText();
         BanResponse banResponse = lstBanResponses.get(index);
-        for (BanResponse banResponse1 : lstMaBan) {
-            if (banResponse1.getMaBan() == banResponse.getMaBan()) {
-                JOptionPane.showMessageDialog(this, "Đã có bàn rồi");
-                return;
-            }
-        }
+        lbBanMoi.setText(banResponse.getMaBan().toString());
+//        for (BanResponse banResponse1 : lstMaBan) {
+//            if (banResponse1.getMaBan() == banResponse.getMaBan()) {
+//                JOptionPane.showMessageDialog(this, "Đã có bàn rồi");
+//                return;
+//            }
+//        }
         // add bàn click vào lstMaBan
-        lstMaBan.add(banResponse);
-        for (BanResponse banResponse1 : lstMaBan) {
-            if (lstMaBan.size() > 1) {
-                lbBanMoi.setText(maBan + ", " + banResponse1.getMaBan());
-            } else {
-                lbBanMoi.setText(banResponse1.getMaBan().toString());
-            }
-        }
+//        lstMaBan.add(banResponse);
+//        for (BanResponse banResponse1 : lstMaBan) {
+//            if (lstMaBan.size() > 1) {
+//                lbBanMoi.setText(maBan + ", " + banResponse1.getMaBan());
+//            } else {
+//                lbBanMoi.setText(banResponse1.getMaBan().toString());
+//            }
+//        }
     }//GEN-LAST:event_tbBanMoiMouseClicked
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
@@ -218,31 +219,31 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         // TODO add your handling code here:
         String xoaChiTIetBan = (String) chiTietBanHoaDonService.remove(hoaDon);
-        for (BanResponse banResponse : lstMaBan) {
-            Ban ban = (Ban) banService.getOne(banResponse.getMaBan().toString());
-            ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon(null, hoaDon, ban);
-            String addChiTietBanHoaDon = (String) chiTietBanHoaDonService.add(chiTietBanHoaDon);
-            List<HoaDon> listHDChuaTT = hoaDonService.getHDChoByMaBan(ban.getMaBan());
-            if (listHDChuaTT.size() <= 0) {
-                // set trạng thái = 0 cho bàn đã getone về
-                ban.setTrangThai(0);
-                String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
-            } else {
-                ban.setTrangThai(1);
-                String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
-            }
+//        for (BanResponse banResponse : lstMaBan) {
+        Ban ban2 = (Ban) banService.getOne(lbBanMoi.getText());
+        ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon(null, hoaDon, ban2);
+        String addChiTietBanHoaDon = (String) chiTietBanHoaDonService.add(chiTietBanHoaDon);
+        List<HoaDon> listHDChuaTT = hoaDonService.getHDChoByMaBan(ban2.getMaBan());
+        if (listHDChuaTT.size() <= 0) {
+            // set trạng thái = 0 cho bàn đã getone về
+            ban2.setTrangThai(0);
+            String setTrangThaiBan = (String) banService.update(ban2, ban2.getMaBan().toString());
+        } else {
+            ban2.setTrangThai(1);
+            String setTrangThaiBan = (String) banService.update(ban2, ban2.getMaBan().toString());
         }
+//        }
         for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
             Ban ban = (Ban) banService.getOne(lstChiTietBanHoaDon.getBan().getMaBan().toString());
             List<ChiTietBanHoaDon> chiTietBanHoaDons = chiTietBanHoaDonService.getByBan(ban);
             if (chiTietBanHoaDons.size() <= 0) {
                 ban.setTrangThai(0);
                 String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
-                JOptionPane.showMessageDialog(this, "OK");
+//                JOptionPane.showMessageDialog(this, "OK");
             } else {
                 ban.setTrangThai(1);
                 String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
-                JOptionPane.showMessageDialog(this, "KO");
+//                JOptionPane.showMessageDialog(this, "KO");
             }
         }
         JOptionPane.showMessageDialog(this, "Chuyển thành công");
