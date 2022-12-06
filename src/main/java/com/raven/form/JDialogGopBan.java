@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class JDialogGopBan extends javax.swing.JDialog {
-
+    
     private List<Ban> listBan = new ArrayList<>();
     private BanService banService = new BanService();
     private DefaultComboBoxModel dcbm = new DefaultComboBoxModel();
@@ -33,7 +33,7 @@ public class JDialogGopBan extends javax.swing.JDialog {
         lbMaBan.setText(bans.getMaBan().toString());
         loadCbb();
     }
-
+    
     private void loadCbb() {
         listBan = banService.getAll();
         for (int i = 0; i < listBan.size(); i++) {
@@ -178,7 +178,9 @@ public class JDialogGopBan extends javax.swing.JDialog {
         } else {
             bans.setSoLuongChoNgoi(bans.getSoLuongChoNgoi() + bancbb.getSoLuongChoNgoi());
             banService.update(bans, ma);
-            banService.delete(ma1);
+            bancbb.setSoLuongChoNgoi(0);
+            bancbb.setTrangThai(2);
+            banService.update(bancbb, ma1);
             JOptionPane.showMessageDialog(this, "Gộp Thành Công");
             this.dispose();
         }
@@ -188,7 +190,7 @@ public class JDialogGopBan extends javax.swing.JDialog {
         // TODO add your handling code here:
         String ma1 = cbbBan.getSelectedItem().toString();
         Ban bancbb = (Ban) banService.getOne(ma1);
-        lbChoNgoi.setText("Bàn:"+ bancbb.getMaBan().toString() +"("+bancbb.getSoLuongChoNgoi().toString()+")");
+        lbChoNgoi.setText("Bàn:" + bancbb.getMaBan().toString() + "(" + bancbb.getSoLuongChoNgoi().toString() + ")");
     }//GEN-LAST:event_cbbBanActionPerformed
 
     /**

@@ -316,9 +316,9 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtPrint.setText(txtPrint.getText() + "     --------------------------------------------------------------------------------------------------------------\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN HÀNG     :    " + txtTongTien.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            THUẾ VAT      :    " + "10%" + "\t\n\n");
-        txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN ĐƯỢC GIẢM:   " + txtTienDuocGiam.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN ĐƯỢC GIẢM:    " + txtTienDuocGiam.getText() + "\t\n");
         txtPrint.setText(txtPrint.getText() + "    __________________________________________________________________\n");
-        txtPrint.setText(txtPrint.getText() + "     \t\t\t            TỔNG TIỀN      :    " + txtTienThanhToan.getText() + "\t\n\n");
+        txtPrint.setText(txtPrint.getText() + "     \t\t\t            TỔNG TIỀN     :    " + txtTienThanhToan.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN KHÁCH ĐƯA:    " + String.valueOf(tong) + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN THỪA     :    " + txtTienThua.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     -----------------------Cảm Ơn Quý Khách_Hẹn Gặp Lại Quý Khách--------------------------\n");
@@ -389,7 +389,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtPrint.setText(txtPrint.getText() + "     --------------------------------------------------------------------------------------------------------------\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN HÀNG     :    " + txtTongTien.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            THUẾ VAT      :    " + "10%" + "\t\n\n");
-        txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN ĐƯỢC GIẢM:   " + txtTienDuocGiam.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN ĐƯỢC GIẢM:    " + txtTienDuocGiam.getText() + "\t\n");
         txtPrint.setText(txtPrint.getText() + "    __________________________________________________________________\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TỔNG TIỀN     :    " + txtTienThanhToan.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN KHÁCH ĐƯA:    " + String.valueOf(tong) + "\t\n\n");
