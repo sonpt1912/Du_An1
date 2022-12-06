@@ -239,7 +239,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                     String updateBan = banService.update(ban, ban.getMaBan().toString());
                 }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
-                 this.dispose();
+                this.dispose();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
                 e.printStackTrace();
