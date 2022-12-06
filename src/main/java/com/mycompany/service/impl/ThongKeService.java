@@ -199,7 +199,7 @@ public class ThongKeService implements IThongKeService {
     }
 
     @Override
-    public Integer soLuongTheoKhoangNgay(Date ngayBatDau, Date ngayKetThuc) {
+    public BigDecimal soLuongTheoKhoangNgay(Date ngayBatDau, Date ngayKetThuc) {
         return calledStoreProceducre.calledStoreTT(ngayBatDau, ngayKetThuc);
     }
 
