@@ -145,7 +145,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 hd.setGhiChu(txtGhiChu.getText());
                 NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
                 hd.setNhanVien(nhanVien);
-                hd.setTongTien(new BigDecimal(txtTongTien.getText()));
+                hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
                 hd.setTienDuocGiam(new BigDecimal(0));
                 hd.setNgayThanhToan(today);
                 hd.setTrangThai(1);
@@ -182,7 +182,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 hd.setGhiChu(txtGhiChu.getText());
                 NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
                 hd.setNhanVien(nhanVien);
-                hd.setTongTien(new BigDecimal(txtTongTien.getText()));
+                hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
                 hd.setTienDuocGiam(new BigDecimal(0));
                 hd.setNgayThanhToan(today);
                 hd.setTrangThai(1);
@@ -226,7 +226,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 hd.setGhiChu(txtGhiChu.getText());
                 NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
                 hd.setNhanVien(nhanVien);
-                hd.setTongTien(new BigDecimal(txtTongTien.getText()));
+                hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
                 hd.setTienDuocGiam(new BigDecimal(0));
                 hd.setNgayThanhToan(today);
                 hd.setTrangThai(1);
@@ -288,8 +288,8 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             trangThai = "Đã Thanh Toán";
         }
         lstHDCTResponses = hdctResponseService.getAll(hoaDon);
-        txtPrint.setText(txtPrint.getText() + "     ====================CỬA HÀNG....=============================\n\n");
-        txtPrint.setText(txtPrint.getText() + "     ====================HÓA ĐƠN THANH TOÁN==================\n\n\n");
+        txtPrint.setText(txtPrint.getText() + "     ====================CỬA HÀNG.....===============================\n\n");
+        txtPrint.setText(txtPrint.getText() + "     ======================HÓA ĐƠN THANH TOÁN=====================\n\n\n");
         txtPrint.setText(txtPrint.getText() + "     Mã NV                :    " + txtMaNV.getText() + "                          " + "Ngày Tạo              : " + txtNgayTao.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Mã HĐ                :    " + txtMaHD.getText() + "                         " + "Ngày Thanh Toán: " + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Thu Ngân           :    " + txtMaNV.getText() + "\t\n\n");
@@ -297,7 +297,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtPrint.setText(txtPrint.getText() + "     Ghi Chú              :    " + txtGhiChu.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Trạng Thái          :    " + trangThai + "\t\n\n\n");
         txtPrint.setText(txtPrint.getText() + "     Tên Món" + "\t" + "Số Lượng" + "\t" + "Đơn Giá" + "\t" + "Tổng Tiền" + "\n");
-        txtPrint.setText(txtPrint.getText() + "     ------------------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "     --------------------------------------------------------------------------------------------------------------\n");
         for (int i = 0; i < lstHDCTResponses.size(); i++) {
             if (lstHDCTResponses.get(i).getTenCombo() == null) {
                 ten = lstHDCTResponses.get(i).getTenMonAn();
@@ -313,15 +313,15 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 txtPrint.setText(txtPrint.getText() + "     " + ten + "\t" + soLuong + "\t" + donGia + "\t" + String.valueOf(tongTien) + "\n");
             }
         }
-        txtPrint.setText(txtPrint.getText() + "     -------------------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "     --------------------------------------------------------------------------------------------------------------\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN HÀNG     :    " + txtTongTien.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            THUẾ VAT      :    " + "10%" + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN ĐƯỢC GIẢM:   " + txtTienDuocGiam.getText() + "\t\n");
-        txtPrint.setText(txtPrint.getText() + "    _____________________________________________________________\n");
+        txtPrint.setText(txtPrint.getText() + "    __________________________________________________________________\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TỔNG TIỀN      :    " + txtTienThanhToan.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN KHÁCH ĐƯA:    " + String.valueOf(tong) + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN THỪA     :    " + txtTienThua.getText() + "\t\n\n");
-        txtPrint.setText(txtPrint.getText() + "     -------------------Cảm Ơn Quý Khách_Hẹn Gặp Lại Quý Khách------------------\n");
+        txtPrint.setText(txtPrint.getText() + "     -----------------------Cảm Ơn Quý Khách_Hẹn Gặp Lại Quý Khách--------------------------\n");
         int thanhToan = JOptionPane.showConfirmDialog(null, "Bạn có muốn in hay không");
         if (thanhToan == JOptionPane.NO_OPTION) {
             return;
@@ -361,8 +361,8 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         //        }
 
         lstHDCTResponses = hdctResponseService.getAll(hoaDon);
-        txtPrint.setText(txtPrint.getText() + "     ================CỬA HÀNG....========================\n\n");
-        txtPrint.setText(txtPrint.getText() + "     ================HÓA ĐƠN THANH TOÁN================\n\n\n\n");
+        txtPrint.setText(txtPrint.getText() + "     ====================CỬA HÀNG.....===============================\n\n");
+        txtPrint.setText(txtPrint.getText() + "     ======================HÓA ĐƠN THANH TOÁN=====================\n\n\n");
         txtPrint.setText(txtPrint.getText() + "     Mã NV                :    " + txtMaNV.getText() + "                          " + "Ngày Tạo              : " + txtNgayTao.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Mã HĐ                :    " + txtMaHD.getText() + "                         " + "Ngày Thanh Toán: " + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Thu Ngân           :    " + txtMaNV.getText() + "\t\n\n");
@@ -370,7 +370,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtPrint.setText(txtPrint.getText() + "     Ghi Chú              :    " + txtGhiChu.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Trạng Thái         :    " + "Đã Thanh Toán" + "\t\n\n\n");
         txtPrint.setText(txtPrint.getText() + "     Tên Món" + "\t" + "Số Lượng" + "\t" + "Đơn Giá" + "\t" + "Tổng Tiền" + "\n");
-        txtPrint.setText(txtPrint.getText() + "     -------------------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "     --------------------------------------------------------------------------------------------------------------\n");
         for (int i = 0; i < lstHDCTResponses.size(); i++) {
             if (lstHDCTResponses.get(i).getTenCombo() == null) {
                 ten = lstHDCTResponses.get(i).getTenMonAn();
@@ -386,11 +386,11 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 txtPrint.setText(txtPrint.getText() + "     " + ten + "\t" + soLuong + "\t" + donGia + "\t" + String.valueOf(tongTien) + "\n");
             }
         }
-        txtPrint.setText(txtPrint.getText() + "     -------------------------------------------------------------------------------------------------------\n");
+        txtPrint.setText(txtPrint.getText() + "     --------------------------------------------------------------------------------------------------------------\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN HÀNG     :    " + txtTongTien.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            THUẾ VAT      :    " + "10%" + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN ĐƯỢC GIẢM:   " + txtTienDuocGiam.getText() + "\t\n");
-        txtPrint.setText(txtPrint.getText() + "    ___________________________________________________________\n");
+        txtPrint.setText(txtPrint.getText() + "    __________________________________________________________________\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TỔNG TIỀN     :    " + txtTienThanhToan.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN KHÁCH ĐƯA:    " + String.valueOf(tong) + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN THỪA     :    " + txtTienThua.getText() + "\t\n\n");
