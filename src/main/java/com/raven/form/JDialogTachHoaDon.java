@@ -92,6 +92,23 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         }
     }
 
+    private boolean checkSoLuongTach(String soLuongTach) {
+        boolean isCheck = false;
+        if (soLuongTach.isEmpty() || soLuongTach.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Bạn đã không nhập số lượng khách!");
+            isCheck = false;
+        } else if (!soLuongTach.matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(null, "Bạn đã không nhập số cho số lượng khách hàng");
+            isCheck = false;;
+        } else if (Integer.valueOf(soLuongTach) <= 0) {
+            JOptionPane.showMessageDialog(null, "Số lượng khách phải là số nguyên dương");
+            isCheck = false;
+        } else {
+            isCheck = true;
+        }
+        return isCheck;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,7 +118,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbHDCTCu = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -112,10 +129,10 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton1.setText("Exit");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnExit.setText("Exit");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnExitActionPerformed(evt);
             }
         });
 
@@ -175,7 +192,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(203, 203, 203))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,7 +218,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnXacNhan)
-                    .addComponent(jButton1))
+                    .addComponent(btnExit))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -209,10 +226,10 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnExitActionPerformed
 
     private void tbHDCTCuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHDCTCuMouseClicked
 
@@ -227,9 +244,13 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         Integer soLuongComboCu = hdctrCu.getSoLuongCombo();
 
         String soLuong = JOptionPane.showInputDialog("Mời nhập số lượng");
+
         if (soLuong == null) {
             return;
         } else if (soLuong.equals("")) {
+            return;
+        } else if (!soLuong.matches("[0-9]+") || Integer.valueOf(soLuong) <= 0) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải là số nguyên dương");
             return;
         } else {
             if (hdctrCu.getMaMonAn() == null) {
@@ -240,7 +261,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Số lượng còn lại không được âm");
                     return;
                 }
-                // sét  số lượng cho thằng mới
+                // set  số lượng cho thằng mới
                 hdctrMoi.setDonGiaCombo(hdctrCu.getDonGiaCombo());
                 hdctrMoi.setGhiChu(hdctrCu.getGhiChu());
                 hdctrMoi.setMaCombo(hdctrCu.getMaCombo());
@@ -313,6 +334,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         hoaDonNew.setNgayTao(today);
         hoaDonNew.setNhanVien(hoaDon.getNhanVien());
         hoaDonNew.setTrangThai(0);
+        hoaDonNew.setSoLuongKhach(0);
         String themHD = hoaDonService.add(hoaDonNew);
 
         //get list chi tiết bàn hoá đơn của hoá đơn cũ
@@ -322,7 +344,6 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         }
         //in sz bàn:
         int sz = listCTBan_HD.size();
-        System.out.println("Hello World   dzdfghjkl " + sz);
         //duyệt for để cập nhật bàn đó cho hoá đơn mới => chung bàn
         //getOne hoaDonNew:
         HoaDon HDNew = hoaDonService.getOne(hoaDonNew.getMaHoaDon());
@@ -349,6 +370,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
                 hoaDonChiTiet.setSoLuongMonAn(hoaDonChiTietResponse.getSoLuongMonAn());
                 hoaDonChiTiet.setDonGiaCombo(BigDecimal.valueOf(0));
                 hoaDonChiTiet.setSoLuongCombo(0);
+                hoaDonChiTiet.setGhiChu("Tach tu " + hoaDon.getMaHoaDon());
                 String themHDCT = hoaDonChiTietService.add(hoaDonChiTiet);
             } else {
                 ComBo comBo = comBoService.getOne(hoaDonChiTietResponse.getMaCombo());
@@ -435,8 +457,8 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExit;
     private javax.swing.JButton btnXacNhan;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
