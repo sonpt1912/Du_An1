@@ -5,7 +5,6 @@
 package com.mycompany.domainModel;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 //import java.sql.Date;
 import javax.persistence.Column;
