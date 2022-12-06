@@ -32,4 +32,8 @@ public interface IHoaDonChiTietService<O, S, O2> {
     O getOneHDCTByCombo(HoaDon hd, ComBo combo);
 
     S updateHDCTById(O kh, S idHDCT);
+
+    S updateSoLuongCombo(O HDCT, O2 hd, ComBo combo);
+
+    S updateSoLuongMonAn(O HDCT, O2 hd, MonAn MonAn);
 }

@@ -96,4 +96,22 @@ public class HoaDonChiTietService implements IHoaDonChiTietService<HoaDonChiTiet
         HoaDonChiTiet hdct = new HoaDonChiTietService().getOneHDCTByMAHD(hoaDon, monAn);
         System.out.println(hdct.toString());
     }
+
+    @Override
+    public String updateSoLuongCombo(HoaDonChiTiet HDCT, HoaDon hd, ComBo combo) {
+        if ((Boolean) hdctr.updateSoLuongCombo(HDCT, hd, combo)) {
+            return "Update thành công";
+        } else {
+            return "Update thất bại";
+        }
+    }
+
+    @Override
+    public String updateSoLuongMonAn(HoaDonChiTiet HDCT, HoaDon hd, MonAn MonAn) {
+        if ((Boolean) hdctr.updateSoLuongMonAn(HDCT, hd, MonAn)) {
+            return "Update thành công";
+        } else {
+            return "Update thất bại";
+        }
+    }
 }

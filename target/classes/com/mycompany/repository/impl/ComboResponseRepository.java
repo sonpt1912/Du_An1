@@ -37,11 +37,4 @@ public class ComboResponseRepository implements ICommonResponseRepository<ComboR
         return comboResponses;
     }
 
-    public static void main(String[] args) {
-        List<ComboResponse> comboResponses = new ComboResponseRepository().getAll();
-        for (ComboResponse comboResponse : comboResponses) {
-            System.out.println(comboResponse.toString());
-        }
-    }
-
 }

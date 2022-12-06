@@ -33,13 +33,13 @@ public class HoaDonChiTietResponseRepository implements IHoaDonChiTietResponseRe
         return hoaDonChiTietResponses;
     }
 
-    public static void main(String[] args) {
-        HoaDon hd = new HoaDon();
-        hd.setId("88210A1C-1074-46CD-960A-5489EEEA8274");
-        List<HoaDonChiTietResponse> chiTietResponses = new HoaDonChiTietResponseRepository().getAll(hd);
-        for (HoaDonChiTietResponse chiTietResponse : chiTietResponses) {
-            System.out.println(chiTietResponse.toString());
-        }
-    }
+//    public static void main(String[] args) {
+//        HoaDon hd = new HoaDon();
+//        hd.setId("CF2EB6DC-2CA6-415E-8C28-5ACEE378AEC0");
+//        HoaDonChiTietResponse hd2 = new HoaDonChiTietResponseRepository().getOneMaCombo("CB57185", hd);
+//        System.out.println(hd2.getMaCombo());
+//        
+//    }
+    
 
 }

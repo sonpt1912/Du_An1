@@ -128,7 +128,7 @@ public class BanRepository implements IBanRepository, ICommonRepository<Ban, Boo
     }
 
     public static void main(String[] args) {
-        Ban b = new BanRepository().getOne("5");
+        Ban b = new BanRepository().getOne("100");
         System.out.println(b);
     }
 

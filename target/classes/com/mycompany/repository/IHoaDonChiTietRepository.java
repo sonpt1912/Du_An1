@@ -28,5 +28,10 @@ public interface IHoaDonChiTietRepository<O, B, S, O2, O3, O4> {
 
     B remove(O2 ma);
 
-    B updateHDCTById(O kh,S idHDCT);
+    B updateHDCTById(O kh, S idHDCT);
+
+    B updateSoLuongCombo(O HDCT, O2 hd, O3 combo);
+    
+    B updateSoLuongMonAn(O HDCT, O2 hd, O4 MonAn);
+    
 }

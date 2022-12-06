@@ -11,8 +11,8 @@ import java.util.List;
  *
  * @author Admin
  */
-public interface IHoaDonChiTietResponseRepository<O,I> {
+public interface IHoaDonChiTietResponseRepository<O, I> {
 
     List<O> getAll(I trangThai);
-    
+
 }

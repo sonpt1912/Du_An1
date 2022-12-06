@@ -104,48 +104,38 @@ public class HoaDonChiTietRepository implements IHoaDonChiTietRepository<HoaDonC
         return BigDecimal.valueOf(tongTien);
     }
 
-    public static void main(String[] args) {
-//        Ban ban = new Ban();
-//        ban.setId("E2379CDD-2827-4CB6-9A34-2C2103268F70");
-//        MonAn monAn = new MonAn();
-//        monAn.setId("F140701F-1D94-49E6-97EC-46CDAB6D9EC6");
-//        HoaDon hd = new HoaDon();
-//        hd.setId("ED4B2826-6CD7-4D7B-B6D5-3961C5DCD85D");
-//        ComBo comBo = new ComBo();
-//        comBo.setId(null);
-//        HoaDonChiTiet hdct = new HoaDonChiTiet(null, ban, monAn, null, null, 10, BigDecimal.ONE);
-//        boolean test = new HoaDonChiTietRepository().update(hdct,hd);
-//        System.out.println(test);
-//        List<HoaDonChiTiet> getAll = new HoaDonChiTietRepository().getAll();
-//        for (HoaDonChiTiet hoaDonChiTiet : getAll) {
-//            System.out.println(hoaDonChiTiet.toString());
-//        }
-        HoaDon hoaDon = new HoaDon();
-        hoaDon.setId("602EA574-B3FC-4991-8243-F5BCD5FEF480");
-        MonAn monAn = new MonAn();
-        monAn.setId("735E2EAE-92A5-458F-8CB7-8211402B3361");
-        HoaDonChiTiet hdct = new HoaDonChiTietRepository().getOneHDCTByMAHD(hoaDon, monAn);
-        System.out.println(hdct.toString());
-    }
-
     @Override
     public HoaDonChiTiet getOneCombo(HoaDon hd, ComBo combo) {
-        String hql = fromTable + "WHERE hoaDon = :hd AND comBo = :comBo";
-        Query query = session.createQuery(hql);
-        query.setParameter("hd", hd);
-        query.setParameter("comBo", combo);
-        HoaDonChiTiet kh = (HoaDonChiTiet) query.getSingleResult();
-        return kh;
+//        String hql = fromTable + "WHERE hoaDon = :hd AND comBo = :comBo";
+//        Query query = session.createQuery(hql);
+//        query.setParameter("hd", hd);
+//        query.setParameter("comBo", combo);
+//        HoaDonChiTiet kh = (HoaDonChiTiet) query.getSingleResult();
+//        return kh;
+        try {
+            String hql = fromTable + "WHERE hoaDon = :hd AND comBo = :comBo";
+            Query query = session.createQuery(hql);
+            query.setParameter("hd", hd);
+            query.setParameter("comBo", combo);
+            HoaDonChiTiet kh = (HoaDonChiTiet) query.getSingleResult();
+            return kh;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public HoaDonChiTiet getOneHDCTByMAHD(HoaDon hd, MonAn monAn) {
-        String hql = fromTable + "WHERE hoaDon = :hd AND monAn = :MA";
-        Query query = session.createQuery(hql);
-        query.setParameter("hd", hd);
-        query.setParameter("MA", monAn);
-        HoaDonChiTiet kh = (HoaDonChiTiet) query.getSingleResult();
-        return kh;
+        try {
+            String hql = fromTable + "WHERE hoaDon = :hd AND monAn = :MA";
+            Query query = session.createQuery(hql);
+            query.setParameter("hd", hd);
+            query.setParameter("MA", monAn);
+            HoaDonChiTiet kh = (HoaDonChiTiet) query.getSingleResult();
+            return kh;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public List<HoaDonChiTiet> getHDCTByHD(HoaDon hoaDon) {
@@ -173,6 +163,57 @@ public class HoaDonChiTietRepository implements IHoaDonChiTietRepository<HoaDonC
             query.setParameter("donGiaCombo", kh.getDonGiaCombo());
             query.setParameter("ghiChu", kh.getGhiChu());
             query.setParameter("idHDCT", idHDCT);
+            check = query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return check > 0;
+    }
+
+    public static void main(String[] args) {
+        HoaDon hd = new HoaDon();
+        hd.setId("CF2EB6DC-2CA6-415E-8C28-5ACEE378AEC0");
+        ComBo cb = new ComBo();
+        cb.setId("1AEBBB55-C1B7-43C1-A494-FBECCC087782");
+        HoaDonChiTiet hdct = new HoaDonChiTietRepository().getOneCombo(hd, cb);
+        System.out.println(hdct);
+    }
+
+    @Override
+    public Boolean updateSoLuongCombo(HoaDonChiTiet HDCT, HoaDon hd, ComBo combo) {
+        Transaction transaction = null;
+        String hql = "UPDATE " + fromTable + "SET soLuongCombo = :soLuongCombo "
+                + "WHERE hoaDon = :hoaDon AND comBo = :combo";
+        int check = 0;
+        try {
+            transaction = session.beginTransaction();
+            session.clear();
+            Query query = session.createQuery(hql);
+            query.setParameter("soLuongCombo", HDCT.getSoLuongCombo());
+            query.setParameter("hoaDon", hd);
+            query.setParameter("combo", combo);
+            check = query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return check > 0;
+    }
+
+    @Override
+    public Boolean updateSoLuongMonAn(HoaDonChiTiet HDCT, HoaDon hd, MonAn MonAn) {
+        Transaction transaction = null;
+        String hql = "UPDATE " + fromTable + "SET soLuongMonAn = :soLuongMonAn "
+                + "WHERE hoaDon = :hoaDon AND monAn = :monAn";
+        int check = 0;
+        try {
+            transaction = session.beginTransaction();
+            session.clear();
+            Query query = session.createQuery(hql);
+            query.setParameter("soLuongMonAn", HDCT.getSoLuongMonAn());
+            query.setParameter("hoaDon", hd);
+            query.setParameter("monAn", MonAn);
             check = query.executeUpdate();
             transaction.commit();
         } catch (Exception e) {
