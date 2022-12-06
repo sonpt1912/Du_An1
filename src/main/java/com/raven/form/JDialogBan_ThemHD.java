@@ -13,7 +13,6 @@ import com.mycompany.service.impl.ChiTietBanHoaDonService;
 import com.mycompany.service.impl.HoaDonService;
 import com.mycompany.service.impl.NhanVienService;
 import com.mycompany.util.HoaDonUtil;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -198,46 +197,65 @@ public class JDialogBan_ThemHD extends javax.swing.JDialog {
         if (listBanDangChon.size() <= 0) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn bàn!");
         } else {
+            //chạy for list bàn đang chọn để tính số ghế:
+            int soGhe = 0;
+            for (Ban ban : listBanDangChon) {
+                soGhe += ban.getSoLuongChoNgoi();
+            }
+            //nhập số khách:
+            String soLuongKH = "";
             try {
-                listHD = hoaDonService.getAll();
-                //tạo hoá đơn mới
-                String maHD = hoaDonUtil.zenMaThuyDuong(listHD);
-                java.util.Date ngayTao = (today);
-                HoaDon hoaDon = new HoaDon();
-                hoaDon.setMaHoaDon(maHD);
-                hoaDon.setNgayTao(ngayTao);
-                hoaDon.setTrangThai(0);
-                hoaDon.setNhanVien(nhanVien);
-                //thêm hd vào db
-                String themHD = hoaDonService.add(hoaDon);
-                //khai báo ChiTietBan_HoaDon, thêm bàn
-                HoaDon hoaDonMoiThem = hoaDonService.getOne(maHD);
-                for (Ban ban : listBanDangChon) {
-                    ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon();
-                    chiTietBanHoaDon.setHd(hoaDonMoiThem);
-                    chiTietBanHoaDon.setBan(ban);
-                    chiTietBanHoaDonService.add(chiTietBanHoaDon);
-                    //set trạng thái cho bàn
-                    ban.setTrangThai(1);
-                    String upDateBan = banService.update(ban, ban.getMaBan().toString());
-                }
-                //thêm xong clear list bàn đang chọn, clear drtm bàn đang chọn
-                listBanDangChon.removeAll(listBanDangChon);
-                dtmBanDangChon.setRowCount(0);
-                int checkConfirm = JOptionPane.showConfirmDialog(null, "Xác nhận thêm!");
-                if (checkConfirm == 0) {
-                    JOptionPane.showMessageDialog(this, themHD);
-                    JOptionPane.showMessageDialog(new Form_HoaDon(nhanVien), "Vui lòng refresh để kiểm tra thay đổi!");
-                    //thoát form
-                    this.dispose();
-                }
+                do {
+                    soLuongKH = JOptionPane.showInputDialog("Nhập số lượng khách hàng");
+                } while (!hoaDonUtil.checkSoLuongKhach(soLuongKH, soGhe));
             } catch (Exception e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Không thành công");
-                if (listBanDangChon.size() > 0) {
-                    for (Ban ban : listBanDangChon) {
-                        ban.setTrangThai(0);
-                        String upDateBan = banService.update(ban, ban.getMaBan().toString());
+                soLuongKH = "";
+            }
+            if (!soLuongKH.equals("")) {
+                if (JOptionPane.showConfirmDialog(this, "Xác nhận thêm") == 0) {
+                    try {
+                        listHD = hoaDonService.getAll();
+                        //tạo hoá đơn mới
+                        String maHD = hoaDonUtil.zenMaThuyDuong(listHD);
+                        java.util.Date ngayTao = (today);
+                        HoaDon hoaDon = new HoaDon();
+                        hoaDon.setMaHoaDon(maHD);
+                        hoaDon.setNgayTao(ngayTao);
+                        hoaDon.setTrangThai(0);
+                        hoaDon.setNhanVien(nhanVien);
+                        hoaDon.setSoLuongKhach(Integer.valueOf(soLuongKH));
+                        //thêm hd vào db
+                        String themHD = hoaDonService.add(hoaDon);
+                        //khai báo ChiTietBan_HoaDon, thêm bàn
+                        HoaDon hoaDonMoiThem = hoaDonService.getOne(maHD);
+                        for (Ban ban : listBanDangChon) {
+                            ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon();
+                            chiTietBanHoaDon.setHd(hoaDonMoiThem);
+                            chiTietBanHoaDon.setBan(ban);
+                            chiTietBanHoaDonService.add(chiTietBanHoaDon);
+                            //set trạng thái cho bàn
+                            ban.setTrangThai(1);
+                            String upDateBan = banService.update(ban, ban.getMaBan().toString());
+                        }
+                        //thêm xong clear list bàn đang chọn, clear drtm bàn đang chọn
+                        listBanDangChon.removeAll(listBanDangChon);
+                        dtmBanDangChon.setRowCount(0);
+                        int checkConfirm = JOptionPane.showConfirmDialog(null, "Xác nhận thêm!");
+                        if (checkConfirm == 0) {
+                            JOptionPane.showMessageDialog(this, themHD);
+                            JOptionPane.showMessageDialog(new Form_HoaDon(nhanVien), "Vui lòng refresh để kiểm tra thay đổi!");
+                            //thoát form
+                            this.dispose();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(this, "Không thành công");
+                        if (listBanDangChon.size() > 0) {
+                            for (Ban ban : listBanDangChon) {
+                                ban.setTrangThai(0);
+                                String upDateBan = banService.update(ban, ban.getMaBan().toString());
+                            }
+                        }
                     }
                 }
             }
