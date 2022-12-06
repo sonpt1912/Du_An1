@@ -11,13 +11,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 /**
@@ -42,9 +43,9 @@ public class ViewLogin extends javax.swing.JFrame {
         setLayout(new BorderLayout());
 
         JLabel background = new JLabel(new ImageIcon("src\\main\\java\\com\\raven\\icon\\1.jpg"));
-
+        ImageIcon iconLogo = new ImageIcon("src\\main\\java\\com\\raven\\icon\\user.png");
         add(background);
-
+        iconUser.setIcon(iconLogo);
         background.setLayout(new FlowLayout());
 //        jPanel2.setBackground(new Color(0, 0, 0, 190));
         jPanel2.addMouseListener(new MouseAdapter() {
@@ -65,7 +66,7 @@ public class ViewLogin extends javax.swing.JFrame {
                 btnDangNhap.setBackground(UIManager.getColor("control"));
             }
         });
-         lbQuenPass.addMouseListener(new java.awt.event.MouseAdapter() {
+        lbQuenPass.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lbQuenPass.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 lbQuenPass.setBackground(Color.WHITE);
@@ -75,6 +76,7 @@ public class ViewLogin extends javax.swing.JFrame {
                 lbQuenPass.setBackground(UIManager.getColor("control"));
             }
         });
+        txtUser.setHorizontalAlignment(JTextField.RIGHT);
     }
 
     /**
@@ -107,15 +109,19 @@ public class ViewLogin extends javax.swing.JFrame {
 
         txtUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         txtUser.setForeground(new java.awt.Color(255, 255, 255));
+        txtUser.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtUser.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txtUser.setLabelText("     Mã Nhân Viên");
 
         txtMatKhau.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         txtMatKhau.setForeground(new java.awt.Color(51, 51, 51));
         txtMatKhau.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txtMatKhau.setLabelText("     Mật Khẩu");
         txtMatKhau.setShowAndHide(true);
+        txtMatKhau.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtMatKhauKeyPressed(evt);
+            }
+        });
 
         btnDangNhap.setBackground(new java.awt.Color(204, 204, 255));
         btnDangNhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -125,8 +131,6 @@ public class ViewLogin extends javax.swing.JFrame {
                 btnDangNhapActionPerformed(evt);
             }
         });
-
-        iconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/user.png"))); // NOI18N
 
         lbLogin.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         lbLogin.setForeground(new java.awt.Color(255, 255, 255));
@@ -160,7 +164,7 @@ public class ViewLogin extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -175,8 +179,8 @@ public class ViewLogin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lbLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(iconUser, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addComponent(iconUser, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
                 .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,11 +216,27 @@ public class ViewLogin extends javax.swing.JFrame {
 
     private void lbQuenPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbQuenPassMouseClicked
         // TODO add your handling code here:
-        
+
         JDialogQuenMatKhau viewQuenMatKhau = new JDialogQuenMatKhau(this, true);
         this.dispose();
         viewQuenMatKhau.setVisible(true);
     }//GEN-LAST:event_lbQuenPassMouseClicked
+
+    private void txtMatKhauKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMatKhauKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String pass = new String(txtMatKhau.getPassword());
+            String user = txtUser.getText();
+            NhanVien login = nhanVienService.getUserAndPass(user, pass);
+            if (login != null) {
+                Main trangChu = new Main(login);
+                this.dispose();
+                trangChu.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "tài khoản hoặc mật khẩu không chính xác");
+            }
+        }
+    }//GEN-LAST:event_txtMatKhauKeyPressed
 
     /**
      * @param args the command line arguments
