@@ -60,7 +60,7 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
     @Override
     public Boolean update(HoaDon kh, String ma) {
         String hql = "UPDATE " + fromTable + "SET nhanVien = :nhanVien, khachHang = :khachHang, ngayTao = :ngayTao, ngayThanhToan = :ngayThanhToan, "
-                + "tongTien = :tongTien, ghiChu = :ghiTru, trangThai = :trangThai "
+                + "tongTien = :tongTien, ghiChu = :ghiTru,soLuongKhach = :soLuongKH, trangThai = :trangThai  "
                 + "WHERE maHoaDon = :maHoaDon";
         Transaction transaction = null;
         int check = 0;
@@ -75,6 +75,7 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
             query.setParameter("tongTien", kh.getTongTien());
             query.setParameter("ghiTru", kh.getGhiChu());
             query.setParameter("trangThai", kh.getTrangThai());
+            query.setParameter("soLuongKH", kh.getSoLuongKhach());
             //query.setParameter("ban", kh.getBan());
             query.setParameter("maHoaDon", ma);
             check = query.executeUpdate();
@@ -121,7 +122,7 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
     // hàm để check bàn đã có hoá đơn chờ hay chưa
     @Override
     public List<HoaDon> getHDByTrangThai(int trangThaiHD) {
-        String hql = fromTable + " WHERE trangThai = :trangThaiHD";
+        String hql = fromTable + " WHERE trangThai = :trangThaiHD ORDER BY ngayTao DESC";
         Query query = session.createQuery(hql);
         query.setParameter("trangThaiHD", trangThaiHD);
         List<HoaDon> hoaDons = query.getResultList();
@@ -143,7 +144,7 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
     @Override
     public List<HoaDon> getHoaDonsHomNay(java.util.Date today) {
         String hql = fromTable + " WHERE DAY(NgayTao) = DAY(:ngayTaoHD) "
-                + "and month(ngayTao) = MONTH(:ngayTaoHD) and YEAR(NgayTao) = YEAR(:ngayTaoHD)";
+                + "and month(ngayTao) = MONTH(:ngayTaoHD) and YEAR(NgayTao) = YEAR(:ngayTaoHD) ORDER By ngayTao DESC";
         Query query = session.createQuery(hql);
         query.setParameter("ngayTaoHD", today);
         List<HoaDon> hoaDons = query.getResultList();
@@ -154,7 +155,8 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
     public List<HoaDon> getHoaDonsKhoangNgay(java.util.Date today1, java.util.Date today2) {
         String hql = fromTable + " WHERE DAY(ngayTao) >= DAY(:ngayTao1) AND MONTH(ngayTao)>= MONTH(:ngayTao1) "
                 + "AND YEAR(ngayTao)>= YEAR(:ngayTao1) AND DAY(ngayTao) <= DAY(:ngayTao2) "
-                + "AND MONTH(ngayTao) <= MONTH(:ngayTao2) AND YEAR(ngayTao) <= YEAR(:ngayTao2)";
+                + "AND MONTH(ngayTao) <= MONTH(:ngayTao2) AND YEAR(ngayTao) <= YEAR(:ngayTao2) "
+                + "ORDER By ngayTao DESC";
         Query query = session.createQuery(hql);
         query.setParameter("ngayTao1", today1);
         query.setParameter("ngayTao2", today2);

@@ -13,30 +13,31 @@ import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Admin
  */
 public class HoaDonUtil {
-    
+
     public String zenMa() {
         String ma = "HD";
         Random rd = new Random();
-        
+
         for (int i = 0; i < 6; i++) {
             ma += rd.nextInt(10);
         }
         //dsad
         return ma;
     }
-    
+
     public String zenMaThuyDuong(List<HoaDon> listHD) {
         String ma = "HD";
         Random rd = new Random();
         return ma + String.valueOf(listHD.size() + 1);
     }
-    
+
     public String layNgay() {
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH) + 1;
@@ -45,7 +46,7 @@ public class HoaDonUtil {
         String namThangNgay = year + "-" + month + "-" + day;
         return namThangNgay;
     }
-    
+
     public BigDecimal tinhTongTienHD(List<HoaDonChiTiet> listHDCT) {
         BigDecimal tienMonAn = BigDecimal.valueOf(0);
         BigDecimal tienCombo = BigDecimal.valueOf(0);;
@@ -66,10 +67,30 @@ public class HoaDonUtil {
         }
         return tienCombo.add(tienMonAn);
     }
-    
+
     public static void main(String[] args) {
         HoaDon hoaDon = new HoaDonService().getOne("HD2");
         List<HoaDonChiTiet> list = new HoaDonChiTietService().getHDCTByHD(hoaDon);
         System.out.println(new HoaDonUtil().tinhTongTienHD(list) + " fghjkl;");
+    }
+
+    public boolean checkSoLuongKhach(String soLuong, int tongSoGhe) {
+        boolean isCheck = false;
+        if (soLuong.isEmpty() || soLuong.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Bạn đã không nhập số lượng khách!");
+            isCheck = false;
+        } else if (!soLuong.matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(null, "Bạn đã không nhập số cho số lượng khách hàng");
+            isCheck = false;;
+        } else if (Integer.valueOf(soLuong) <= 0) {
+            JOptionPane.showMessageDialog(null, "Số lượng khách phải là số nguyên dương");
+            isCheck = false;
+        } else if (Integer.valueOf(soLuong) > tongSoGhe) {
+            JOptionPane.showMessageDialog(null, "Số lượng khách đã vượt quá số ghế của bàn đang chọn!");
+            isCheck = false;
+        } else {
+            isCheck = true;
+        }
+        return isCheck;
     }
 }
