@@ -64,6 +64,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         listSanPham = thongKeService.getAllSanPham(Date.valueOf(batDau), Date.valueOf(ketThu));
 //            soLuongofmax.setText(listSanPham.get(0).getTen());
         setTKSP(listSanPham);
+        jLabel7.setText(thongKeService.soLuongTheoKhoangNgay(Date.valueOf(ngayBatDau), Date.valueOf(ngayKetThuc)) + "đ");
 
         initUIHoaDon6ThangDau(listHoaDon);
         showSoLuongDon();
