@@ -986,6 +986,10 @@ public class Form_Home extends javax.swing.JPanel {
             hd.setNhanVien(nhanVien);
             hd.setNgayTao(ngayTao);
             hd.setTrangThai(0);
+            int soLuongChoNgoi = 0;
+            for (BanResponse banResponse : lstMaBan) {
+                soLuongChoNgoi += banResponse.getSoLuongChoNgoi();
+            }
             for (BanResponse banResponse : lstMaBan) {
                 // lấy bàn theo mã bàn lấy từ banResponse
                 Ban ban = (Ban) banService.getOne(banResponse.getMaBan().toString());
@@ -993,20 +997,32 @@ public class Form_Home extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Bàn đang có khách");
                     return;
                 } else {
+                    String soLuongKhach = "";
+                    //check số lượng nhập vào
+
+                    do {
+                        soLuongKhach = JOptionPane.showInputDialog("Mời nhập số lượng khách");
+                    } while (checkSoLuong(soLuongKhach) == false);
                     // tạo hd
-                    JOptionPane.showMessageDialog(this, hds.add(hd));
-                    lbMaHDThanhToan.setText(maHD);
-                    // set bàn đang có khách
-                    ban.setTrangThai(1);
-                    //update lại trạng thái bàn
-                    String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
-                    HoaDon hd2 = (HoaDon) hds.getOne(maHD);// lấy hoá đơn vừa được tạo và add vào chiTietHoaDon
+                    if (Integer.valueOf(soLuongKhach) > soLuongChoNgoi) {
+                        JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi không đủ");
+                        return;
+                    } else {
+                        hd.setSoLuongKhach(Integer.valueOf(soLuongKhach));
+                        JOptionPane.showMessageDialog(this, hds.add(hd));
+                        lbMaHDThanhToan.setText(maHD);
+                        // set bàn đang có khách
+                        ban.setTrangThai(1);
+                        //update lại trạng thái bàn
+                        String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
+                        HoaDon hd2 = (HoaDon) hds.getOne(maHD);// lấy hoá đơn vừa được tạo và add vào chiTietHoaDon
 //                    ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon();
 //                    chiTietBanHoaDon.setHd(hd2);
 //                    chiTietBanHoaDon.setBan(ban);
-                    ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon(null, hd2, ban);
+                        ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon(null, hd2, ban);
 //                    System.out.println(chiTietBanHoaDon.getHd().getId()+" "+chiTietBanHoaDon.getBan().getId());
-                    String addChiTietBanHoaDon = (String) chiTietBanHoaDonService.add(chiTietBanHoaDon);
+                        String addChiTietBanHoaDon = (String) chiTietBanHoaDonService.add(chiTietBanHoaDon);
+                    }
                 }
             }
 
@@ -1616,6 +1632,24 @@ public class Form_Home extends javax.swing.JPanel {
     private boolean nhapSoLuong(String soLuong) {
         if (!soLuong.matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Số lượng phải là số");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean checkSoLuong(String soLuong) {
+//        if (soLuong < 0) {
+//            JOptionPane.showMessageDialog(this, "Số lượng phải > 0");
+//            return false;
+//        } else {
+//            return true;
+//        }
+        if (!soLuong.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải là số");
+            return false;
+        } else if (Integer.valueOf(soLuong) < 0) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải > 0");
             return false;
         } else {
             return true;
