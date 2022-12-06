@@ -54,6 +54,20 @@ public class JDialogTachBan extends javax.swing.JDialog {
         }
     }
 
+    private boolean checkMaTrung() {
+        boolean check = true;
+        listBan = banService.getFull();
+        for (int i = 0; i < listBan.size(); i++) {
+            if (Integer.valueOf(txtMaBanMoi.getText()) == listBan.get(i).getMaBan()) {
+                return false;
+            } else {
+                check = true;
+                return check;
+            }
+        }
+        return check;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -291,8 +305,8 @@ public class JDialogTachBan extends javax.swing.JDialog {
         String maBanMoi = txtMaBanMoi.getText();
         if (maBanMoi.equalsIgnoreCase("") || maBanMoi.matches("\\s+")) {
             JOptionPane.showMessageDialog(this, "Không được để trống");
-        } else if (maBanMoi.equalsIgnoreCase(ban.getMaBan().toString())) {
-            JOptionPane.showMessageDialog(this, "Trùng Mã");
+        } else if (checkMaTrung() == false || maBanMoi.equalsIgnoreCase(ma)) {
+            JOptionPane.showMessageDialog(this, "Mã Trùng");
         } else {
             String soLuongCho = JOptionPane.showInputDialog("Mời bạn nhập số lượng chỗ: ");
             if (soLuongCho != null) {
@@ -310,6 +324,7 @@ public class JDialogTachBan extends javax.swing.JDialog {
                     bans.setTrangThai(ban.getTrangThai());
                     bans.setSoLuongChoNgoi(Integer.valueOf(soLuongCho));
                     //add bàn vào list
+                    listBan = new ArrayList<>();
                     listBan.add(bans);
                     // set txtSoLuong
                     txtSoLuong.setText(String.valueOf(Integer.valueOf(txtSoLuong.getText()) - Integer.valueOf(soLuongCho)));

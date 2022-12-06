@@ -30,7 +30,6 @@ public class BanRepository implements IBanRepository, ICommonRepository<Ban, Boo
         List<Ban> bans = query.getResultList();
         return bans;
     }
-
     @Override
     public Ban getOne(String ma) {
         try {
