@@ -8,6 +8,7 @@ import com.mycompany.customModel.MonAnResponse;
 import com.mycompany.repository.IMonAnResponseRepository;
 import com.mycompany.repository.impl.MonAnResponseRepository;
 import com.mycompany.service.IMonAnResponseService;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -36,6 +37,11 @@ public class MonAnResponseService implements IMonAnResponseService<MonAnResponse
     @Override
     public List<MonAnResponse> getMonAnJoinKMCT(String tenDanhMuc) {
         return marr.getMonAnJoinKMCT(tenDanhMuc);
+    }
+
+    @Override
+    public List<MonAnResponse> getByDanhMucAndDonGia(BigDecimal donGia, String tenDanhMuc) {
+        return marr.getByDanhMucAndGiaMon(donGia, tenDanhMuc);
     }
 
 }

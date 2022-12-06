@@ -895,10 +895,13 @@ public class Form_Home extends javax.swing.JPanel {
             // show data hdct theo hd đang chọn
             lstHDCTResponses = hdctResponseService.getAll(hd);
             showDataHDCT(lstHDCTResponses);
-            fillTongTien();
+//            fillTongTien();
+            if (hdr.getTrangThai() == 1) {
+                fillTongTien();
+                fillTienThuaChuyenKhoan();
+                fillTienThuaTienMat();
+            }
             // gọi lại hàm để dữ liệu được cập nhập
-            fillTienThuaChuyenKhoan();
-            fillTienThuaTienMat();
             // để fill hình thức thanh toán và số tiền
             String tm = "";
             String ck = "";
@@ -1210,7 +1213,7 @@ public class Form_Home extends javax.swing.JPanel {
                     String updateHDCT = (String) hdctService.updateSoLuongMonAn(hdct, hd, ma);
                     lstHDCTResponses = hdctResponseService.getAll(hd);
                     showDataHDCT(lstHDCTResponses);
-                    fillTongTien();
+//                    fillTongTien();
                 } else {
                     HoaDonChiTiet hdct = new HoaDonChiTiet(null, ma, hd, null, soLuong, mar.getDonGiaSauKM(), 0, BigDecimal.valueOf(0), null);
 //                    String addHDCT = (String) hdctService.add(hdct);
@@ -1221,7 +1224,7 @@ public class Form_Home extends javax.swing.JPanel {
                     lstHDCTResponses = hdctResponseService.getAll(hd);
                     showDataHDCT(lstHDCTResponses);
                     //gọi lại fill tổng tiền để cập nhập lại tổng tiền mỗi khi thêm món ăn vào hdct
-                    fillTongTien();
+//                    fillTongTien();
                     return;
                 }
             }
@@ -1250,18 +1253,82 @@ public class Form_Home extends javax.swing.JPanel {
 
     private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
         // TODO add your handling code here:
-        if ("".equals(txtSearch.getText())) {
-            return;
-        }
-        if (cbbSanPham.getSelectedItem().equals("ComBo")) {
-            lstComboResponses = comboResponseService.getByTenComBo(txtSearch.getText());
-            loadDataCombo(lstComboResponses);
-        } else if (cbbSanPham.getSelectedItem().equals("Đồ Ăn")) {
-            lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(txtSearch.getText(), "Đồ ăn");
-            showDataMonAn(lstMAReponByDM);
+//        if ("".equals(txtSearch.getText())) {
+//            return;
+//        }
+        if (cbbSanPham.getSelectedItem().equals("Combo")) {
+            String search = txtSearch.getText();
+            if ("".equals(search)) {
+                lstComboResponses = comboResponseService.getAll();
+                loadDataCombo(lstComboResponses);
+            } else {
+                if (!search.matches("\\d+")) {
+                    lstComboResponses = comboResponseService.getByTenComBo(search);
+                    loadDataCombo(lstComboResponses);
+                } else {
+                    lstComboResponses = comboResponseService.getByDonGia(new BigDecimal(search));
+                    loadDataCombo(lstComboResponses);
+                }
+            }
+        } else if (cbbSanPham.getSelectedItem().equals("Đồ ăn")) {
+            String search = txtSearch.getText();
+            if ("".equals(search)) {
+                lstMAReponByDM = monAnResponseService.getByDanhMuc("Đồ ăn");
+                showDataMonAn(lstMAReponByDM);
+//                JOptionPane.showMessageDialog(this, "Có if nhé");
+            } else {
+                if (!search.matches("\\d+")) {
+                    lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(search, "Đồ ăn");
+                    List<MonAnResponse> lstSearch = new ArrayList<>();
+                    for (MonAnResponse monAnResponse : lstMAReponByDM) {
+                        MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+                        if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ ăn")) {
+                            lstSearch.add(monAnResponse);
+                        }
+                    }
+                    showDataMonAn(lstSearch);
+                } else {
+                    lstMAReponByDM = monAnResponseService.getByDanhMucAndDonGia(new BigDecimal(search), "Đồ ăn");
+                    List<MonAnResponse> lstSearch = new ArrayList<>();
+                    for (MonAnResponse monAnResponse : lstMAReponByDM) {
+                        MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+                        if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ ăn")) {
+                            lstSearch.add(monAnResponse);
+                        }
+                    }
+                    showDataMonAn(lstSearch);
+                }
+            }
         } else {
-            lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(txtSearch.getText(), "Đồ uống");
-            showDataMonAn(lstMAReponByDM);
+            String search = txtSearch.getText();
+            if ("".equals(search)) {
+                lstMAReponByDM = monAnResponseService.getByDanhMuc("Đồ uống");
+                showDataMonAn(lstMAReponByDM);
+//                JOptionPane.showMessageDialog(this, "Có if nhé");
+            } else {
+                if (!search.matches("\\d+")) {
+                    lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(search, "Đồ uống");
+                    List<MonAnResponse> lstSearch = new ArrayList<>();
+                    for (MonAnResponse monAnResponse : lstMAReponByDM) {
+                        MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+                        if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ uống")) {
+                            lstSearch.add(monAnResponse);
+                        }
+                    }
+                    showDataMonAn(lstSearch);
+                } else {
+                    lstMAReponByDM = monAnResponseService.getByDanhMucAndDonGia(new BigDecimal(search), "Đồ uống");
+                    List<MonAnResponse> lstSearch = new ArrayList<>();
+                    for (MonAnResponse monAnResponse : lstMAReponByDM) {
+                        MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+                        if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ uống")) {
+                            lstSearch.add(monAnResponse);
+                        }
+                    }
+                    showDataMonAn(lstSearch);
+
+                }
+            }
         }
     }//GEN-LAST:event_txtSearchCaretUpdate
 
@@ -1389,58 +1456,67 @@ public class Form_Home extends javax.swing.JPanel {
         String soLuong = "";
         do {
             soLuong = JOptionPane.showInputDialog("Mời nhập số lượng");
+            if (null == soLuong) {
+                return;
+            }
         } while (nhapSoLuong(soLuong) == false);
-        if (Integer.valueOf(soLuong) <= 0) {
-            if (hdctR.getMaMonAn() == null) {
-                int checkXoa = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xoá chứ?");
-                if (checkXoa == JOptionPane.YES_OPTION) {
-                    ComBo cb = (ComBo) cbs.getOne(hdctR.getMaCombo());
-                    HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
-                    JOptionPane.showMessageDialog(this, hdctService.removeCombo(hd, cb));
-                    lstHDCTResponses = hdctResponseService.getAll(hd);
-                    showDataHDCT(lstHDCTResponses);
-                } else {
-                    return;
-                }
+        do {
+            ghiChu = JOptionPane.showInputDialog("Bắt buộc phải nhập ghi chú");
+        } while ("".equals(ghiChu));
+        if (null == ghiChu) {
+            return;
+        }
+//        if (Integer.valueOf(soLuong) <= 0) {
+//            if (hdctR.getMaMonAn() == null) {
+//                int checkXoa = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xoá chứ?");
+//                if (checkXoa == JOptionPane.YES_OPTION) {
+//                    ComBo cb = (ComBo) cbs.getOne(hdctR.getMaCombo());
+//                    HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
+//                    JOptionPane.showMessageDialog(this, hdctService.removeCombo(hd, cb));
+//                    lstHDCTResponses = hdctResponseService.getAll(hd);
+//                    showDataHDCT(lstHDCTResponses);
+//                } else {
+//                    return;
+//                }
+//            } else {
+//                int checkXoa = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xoá chứ?");
+//                if (checkXoa == JOptionPane.YES_OPTION) {
+//                    MonAn ma = (MonAn) mas.getOne(hdctR.getMaMonAn());
+//                    HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
+//                    JOptionPane.showMessageDialog(this, hdctService.removeMonAn(hd, ma));
+//                    lstHDCTResponses = hdctResponseService.getAll(hd);
+//                    showDataHDCT(lstHDCTResponses);
+//                } else {
+//                    return;
+//                }
+//            }
+//        } else {
+        if (hdctR.getMaMonAn() == null) {
+            ComBo cb = (ComBo) cbs.getOne(hdctR.getMaCombo());
+            HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
+            HoaDonChiTiet hdct = new HoaDonChiTiet(null, null, hd, cb, 0, BigDecimal.valueOf(0), Integer.valueOf(soLuong), cb.getDonGia(), ghiChu);
+            int checkUpdate = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn sửa không?");
+            if (checkUpdate == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(this, hdctService.updateSoLuongCombo(hdct, hd, cb));
+                lstHDCTResponses = hdctResponseService.getAll(hd);
+                showDataHDCT(lstHDCTResponses);
             } else {
-                int checkXoa = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xoá chứ?");
-                if (checkXoa == JOptionPane.YES_OPTION) {
-                    MonAn ma = (MonAn) mas.getOne(hdctR.getMaMonAn());
-                    HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
-                    JOptionPane.showMessageDialog(this, hdctService.removeMonAn(hd, ma));
-                    lstHDCTResponses = hdctResponseService.getAll(hd);
-                    showDataHDCT(lstHDCTResponses);
-                } else {
-                    return;
-                }
+                return;
             }
         } else {
-            if (hdctR.getMaMonAn() == null) {
-                ComBo cb = (ComBo) cbs.getOne(hdctR.getMaCombo());
-                HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
-                HoaDonChiTiet hdct = new HoaDonChiTiet(null, null, hd, cb, 0, BigDecimal.valueOf(0), Integer.valueOf(soLuong), cb.getDonGia(), null);
-                int checkUpdate = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn sửa không?");
-                if (checkUpdate == JOptionPane.YES_OPTION) {
-                    JOptionPane.showMessageDialog(this, hdctService.updateSoLuongCombo(hdct, hd, cb));
-                    lstHDCTResponses = hdctResponseService.getAll(hd);
-                    showDataHDCT(lstHDCTResponses);
-                } else {
-                    return;
-                }
+            MonAn ma = (MonAn) mas.getOne(hdctR.getMaMonAn());
+            HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
+            HoaDonChiTiet hdct = new HoaDonChiTiet(null, ma, hd, null, Integer.valueOf(soLuong), hdctR.getDonGiaMonAn(), 0, BigDecimal.valueOf(0), ghiChu);
+            int checkUpdate = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn sửa không?");
+            if (checkUpdate == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(this, hdctService.updateSoLuongMonAn(hdct, hd, ma));
+                lstHDCTResponses = hdctResponseService.getAll(hd);
+                showDataHDCT(lstHDCTResponses);
             } else {
-                MonAn ma = (MonAn) mas.getOne(hdctR.getMaMonAn());
-                HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
-                HoaDonChiTiet hdct = new HoaDonChiTiet(null, ma, hd, null, Integer.valueOf(soLuong), hdctR.getDonGiaMonAn(), 0, BigDecimal.valueOf(0), null);
-                int checkUpdate = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn sửa không?");
-                if (checkUpdate == JOptionPane.YES_OPTION) {
-                    JOptionPane.showMessageDialog(this, hdctService.updateSoLuongMonAn(hdct, hd, ma));
-                    lstHDCTResponses = hdctResponseService.getAll(hd);
-                    showDataHDCT(lstHDCTResponses);
-                } else {
-                    return;
-                }
+                return;
             }
         }
+//        }
     }//GEN-LAST:event_tbHoaDonCTMouseClicked
 
     private void btnSearchKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchKHActionPerformed
@@ -1541,23 +1617,19 @@ public class Form_Home extends javax.swing.JPanel {
     }
 
     private void fillTongTien() {
-//        Double tongTien = Double.valueOf(0);
+        HoaDon hd = (HoaDon) hds.getOne(lbMaHD.getText());
+        txtTongTien.setText(hd.getTongTien().toString());
+
+//        BigDecimal tongTien = BigDecimal.valueOf(0);
+//        BigDecimal tienMA = BigDecimal.valueOf(0);
+//        BigDecimal tienCB = BigDecimal.valueOf(0);
 //        for (HoaDonChiTietResponse lstHDCTResponse : lstHDCTResponses) {
-//            String giaCB = lstHDCTResponse.getDonGiaCombo().toString();
-//            String giaMA = lstHDCTResponse.getDonGiaMonAn().toString();
-//            tongTien += (Double.valueOf(giaCB) * lstHDCTResponse.getSoLuongCombo()) + (Double.valueOf(giaMA) * lstHDCTResponse.getSoLuongMonAn());
+//            BigDecimal soLuongMA = new BigDecimal(lstHDCTResponse.getSoLuongMonAn());
+//            BigDecimal soLuongCB = new BigDecimal(lstHDCTResponse.getSoLuongCombo());
+//            tienMA = tienMA.add(lstHDCTResponse.getDonGiaMonAn().multiply(soLuongMA));
+//            tienCB = tienCB.add(lstHDCTResponse.getDonGiaCombo().multiply(soLuongCB));
 //        }
-//        txtTongTien.setText(tongTien.toString());
-        BigDecimal tongTien = BigDecimal.valueOf(0);
-        BigDecimal tienMA = BigDecimal.valueOf(0);
-        BigDecimal tienCB = BigDecimal.valueOf(0);
-        for (HoaDonChiTietResponse lstHDCTResponse : lstHDCTResponses) {
-            BigDecimal soLuongMA = new BigDecimal(lstHDCTResponse.getSoLuongMonAn());
-            BigDecimal soLuongCB = new BigDecimal(lstHDCTResponse.getSoLuongCombo());
-            tienMA = tienMA.add(lstHDCTResponse.getDonGiaMonAn().multiply(soLuongMA));
-            tienCB = tienCB.add(lstHDCTResponse.getDonGiaCombo().multiply(soLuongCB));
-        }
-        txtTongTien.setText(String.valueOf(tienCB.add(tienMA)));
+//        txtTongTien.setText(String.valueOf(tienCB.add(tienMA)));
     }
 
     private void loadTableCombo() {

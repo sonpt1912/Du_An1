@@ -8,6 +8,7 @@ import com.mycompany.customModel.ComboResponse;
 import com.mycompany.repository.ICommonResponseRepository;
 import com.mycompany.repository.impl.ComboResponseRepository;
 import com.mycompany.service.ICommonResponseService;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -26,6 +27,11 @@ public class ComboResponseService implements ICommonResponseService<ComboRespons
     public List<ComboResponse> getByTenComBo(String tenCB) {
         return cbrr.getByTenComBo(tenCB);
     }
+
+    public List<ComboResponse> getByDonGia(BigDecimal donGia) {
+        return cbrr.getByDonGia(donGia);
+    }
+
     public static void main(String[] args) {
         List<ComboResponse> comboResponses = new ComboResponseService().getByTenComBo("Com");
         for (ComboResponse comboResponse : comboResponses) {

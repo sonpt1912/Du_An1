@@ -7,6 +7,7 @@ package com.mycompany.repository.impl;
 import com.mycompany.customModel.MonAnResponse;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.IMonAnResponseRepository;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
@@ -30,7 +31,7 @@ public class MonAnResponseRepository implements IMonAnResponseRepository<MonAnRe
     }
 
     public static void main(String[] args) {
-        List<MonAnResponse> list = new MonAnResponseRepository().getMonAnJoinKMCT("Đồ ăn");
+        List<MonAnResponse> list = new MonAnResponseRepository().getByDanhMucAndGiaMon(new BigDecimal(10), "Đồ ăn");
         for (MonAnResponse monAnResponse : list) {
             System.out.println(monAnResponse.toString());
         }
@@ -50,7 +51,7 @@ public class MonAnResponseRepository implements IMonAnResponseRepository<MonAnRe
     @Override
     public List<MonAnResponse> getByDanhMucAndTenMonAn(String tenMonAn, String tenDanhMuc) {
         String hql = "SELECT new com.mycompany.customModel.MonAnResponse(MA.maMonAn,MA.tenMonAn,MA.donGia,MA.donViTinh,MA.loai.tenLoai)" + fromTable
-                + " AND MA.loai.danhMuc.tenDanhMuc = :tenDanhMuc AND MA.tenMonAn like :tenMonAn";
+                + " AND MA.loai.danhMuc.tenDanhMuc = :tenDanhMuc AND MA.tenMonAn like :tenMonAn OR MA.maMonAn LIKE :tenMonAn OR MA.loai.tenLoai LIKE :tenMonAn";
         Query query = session.createQuery(hql);
         query.setParameter("tenDanhMuc", tenDanhMuc);
         query.setParameter("tenMonAn", "%" + tenMonAn + "%");
@@ -80,6 +81,17 @@ public class MonAnResponseRepository implements IMonAnResponseRepository<MonAnRe
         query.setParameter("tenDM", tenDanhMuc);
         list = query.getResultList();
         return list;
+    }
+
+    @Override
+    public List<MonAnResponse> getByDanhMucAndGiaMon(BigDecimal donGia, String tenDanhMuc) {
+        String hql = "SELECT new com.mycompany.customModel.MonAnResponse(MA.maMonAn,MA.tenMonAn,MA.donGia,MA.donViTinh,MA.loai.tenLoai)" + fromTable
+                + " AND MA.loai.danhMuc.tenDanhMuc = :tenDanhMuc AND MA.donGia = :donGia";
+        Query query = session.createQuery(hql);
+        query.setParameter("tenDanhMuc", tenDanhMuc);
+        query.setParameter("donGia", donGia);
+        List<MonAnResponse> monAnResponses = query.getResultList();
+        return monAnResponses;
     }
 
 }

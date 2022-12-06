@@ -318,6 +318,10 @@ public class JDialogGopHoaDon extends javax.swing.JDialog {
         String soLuong = JOptionPane.showInputDialog("Mời nhập số lượng");
         if (soLuong == null) {
             return;
+        } else if (!soLuong.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải là số");
+        } else if (Integer.valueOf(soLuong) <= 0) {
+            JOptionPane.showMessageDialog(this, "Số lượng không được < 1");
         } else if (soLuong.equals("")) {
             return;
         } else {

@@ -183,14 +183,15 @@ public class HoaDonChiTietRepository implements IHoaDonChiTietRepository<HoaDonC
     @Override
     public Boolean updateSoLuongCombo(HoaDonChiTiet HDCT, HoaDon hd, ComBo combo) {
         Transaction transaction = null;
-        String hql = "UPDATE " + fromTable + "SET soLuongCombo = :soLuongCombo "
-                + "WHERE hoaDon = :hoaDon AND comBo = :combo";
+        String hql = "UPDATE " + "FROM HoaDonChiTiet HDCT " + "SET HDCT.soLuongCombo = :soLuongCombo, HDCT.ghiChu = :ghiChu "
+                + "WHERE HDCT.hoaDon = :hoaDon AND HDCT.comBo = :combo";
         int check = 0;
         try {
             transaction = session.beginTransaction();
             session.clear();
             Query query = session.createQuery(hql);
             query.setParameter("soLuongCombo", HDCT.getSoLuongCombo());
+            query.setParameter("ghiChu", HDCT.getGhiChu());
             query.setParameter("hoaDon", hd);
             query.setParameter("combo", combo);
             check = query.executeUpdate();
@@ -204,14 +205,15 @@ public class HoaDonChiTietRepository implements IHoaDonChiTietRepository<HoaDonC
     @Override
     public Boolean updateSoLuongMonAn(HoaDonChiTiet HDCT, HoaDon hd, MonAn MonAn) {
         Transaction transaction = null;
-        String hql = "UPDATE " + fromTable + "SET soLuongMonAn = :soLuongMonAn "
-                + "WHERE hoaDon = :hoaDon AND monAn = :monAn";
+        String hql = "UPDATE " + "FROM HoaDonChiTiet HDCT " + "SET HDCT.soLuongMonAn = :soLuongMonAn, HDCT.ghiChu = :ghiChu "
+                + "WHERE HDCT.hoaDon = :hoaDon AND HDCT.monAn = :monAn";
         int check = 0;
         try {
             transaction = session.beginTransaction();
             session.clear();
             Query query = session.createQuery(hql);
             query.setParameter("soLuongMonAn", HDCT.getSoLuongMonAn());
+            query.setParameter("ghiChu", HDCT.getGhiChu());
             query.setParameter("hoaDon", hd);
             query.setParameter("monAn", MonAn);
             check = query.executeUpdate();

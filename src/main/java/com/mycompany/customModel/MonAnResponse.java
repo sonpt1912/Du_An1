@@ -26,6 +26,14 @@ public class MonAnResponse {
 
     private BigDecimal donGiaSauKM;
 
+    public MonAnResponse(String maMonAn, String tenMonAn, BigDecimal donGia, String donViTinh, String loaiMonAn) {
+        this.maMonAn = maMonAn;
+        this.tenMonAn = tenMonAn;
+        this.donGia = donGia;
+        this.donViTinh = donViTinh;
+        this.loaiMonAn = loaiMonAn;
+    }
+
     private String donViTinh;
 
     private String loaiMonAn;

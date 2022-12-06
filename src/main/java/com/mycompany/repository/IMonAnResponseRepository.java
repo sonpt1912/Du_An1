@@ -4,6 +4,7 @@
  */
 package com.mycompany.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -17,6 +18,8 @@ public interface IMonAnResponseRepository<O, S> {
     List<O> getByDanhMuc(S tenDanhMuc);
 
     List<O> getByDanhMucAndTenMonAn(S tenMonAn, S tenDanhMuc);
+    
+    List<O> getByDanhMucAndGiaMon(BigDecimal donGia, S tenDanhMuc);
 
     List<O> getMonAnJoinKMCT(String tenDanhMuc);
 
