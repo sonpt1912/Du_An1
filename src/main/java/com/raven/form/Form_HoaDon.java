@@ -132,7 +132,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
             radioChoTT.setEnabled(false);
             radioDaHuy.setEnabled(false);
             radioDaTT.setEnabled(false);
-        } else if (trangThaiHD == 3) {
+        } else if (trangThaiHD == 2) {
             radioDaHuy.setSelected(true);
             radioChoTT.setEnabled(false);
             radioDaHuy.setEnabled(false);
@@ -649,7 +649,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
             } else if (radioDaTT.isSelected()) {
                 hoaDon.setTrangThai(1);
             } else if (radioDaHuy.isSelected()) {
-                hoaDon.setTrangThai(3);
+                hoaDon.setTrangThai(2);
                 hoaDon.setGhiChu(txtGhiChu.getText());
                 if (hoaDon.getGhiChu().isEmpty() || hoaDon.getGhiChu().equals("")) {
                     JOptionPane.showMessageDialog(this, "Không được để trống ghi chú");
@@ -689,7 +689,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Ghi chú ko được trống!");
             } else {
                 hoaDon.setGhiChu(txtGhiChu.getText());
-                hoaDon.setTrangThai(3);
+                hoaDon.setTrangThai(2);
                 // Ban ban = hoaDon.getBan();
                 // ban.setTrangThai(0);
                 //String updateBan = banService.update(ban, String.valueOf(ban.getMaBan()));
@@ -757,7 +757,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
                 }
             } else if (dcbmTrangThaiHD.getSelectedItem().toString().equalsIgnoreCase("Đã huỷ")) {
                 for (HoaDon hoaDon : listHD) {
-                    if (hoaDon.getTrangThai() == 3) {
+                    if (hoaDon.getTrangThai() == 2) {
                         listHDShow.add(hoaDon);
                     }
                 }
@@ -828,7 +828,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
                     }
                 } else {
                     for (HoaDon hoaDon : listHD) {
-                        if (hoaDon.getTrangThai() == 3) {
+                        if (hoaDon.getTrangThai() == 2) {
                             listHDShow.add(hoaDon);
                         }
                     }

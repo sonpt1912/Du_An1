@@ -90,7 +90,7 @@ public class HoaDon {
             return "Chưa thanh toán";
         } else if (Integer.valueOf(trangThai) == 1) {
             return "Đã thanh toán";
-        } else if (Integer.valueOf(trangThai) == 3) {
+        } else if (Integer.valueOf(trangThai) == 2) {
             return "Đã huỷ";
         } else if (trangThai == null) {
             return "";
