@@ -222,4 +222,40 @@ public class HoaDonChiTietRepository implements IHoaDonChiTietRepository<HoaDonC
         return check > 0;
     }
 
+    @Override
+    public Boolean removeMonAn(HoaDon hd, MonAn MonAn) {
+        String hql = "DELETE " + fromTable + "WHERE hoaDon = :hd AND monAn = :monAn";
+        int check = 0;
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Query query = session.createQuery(hql);
+            query.setParameter("hd", hd);
+            query.setParameter("monAn", MonAn);
+            check = query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return check > 0;
+    }
+
+    @Override
+    public Boolean removeCombo(HoaDon hd, ComBo Combo) {
+        String hql = "DELETE " + fromTable + "WHERE hoaDon = :hd AND comBo = :comBo";
+        int check = 0;
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Query query = session.createQuery(hql);
+            query.setParameter("hd", hd);
+            query.setParameter("comBo", Combo);
+            check = query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return check > 0;
+    }
+
 }

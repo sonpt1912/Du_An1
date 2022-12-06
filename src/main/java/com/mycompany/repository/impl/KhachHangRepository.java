@@ -116,4 +116,19 @@ public class KhachHangRepository implements ICommonRepository<KhachHang, Boolean
         return listKH;
     }
 
+    public KhachHang getOneBySdt(String sdt) {
+        try {
+            String hql = fromTable + "WHERE sdt = :sdt";
+            Query query = session.createQuery(hql);
+            query.setParameter("sdt", sdt);
+            KhachHang kh = (KhachHang) query.getSingleResult();
+            return kh;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public static void main(String[] args) {
+        KhachHang kh = new KhachHangRepository().getOneBySdt("0339927993");
+        System.out.println(kh);
+    }
 }

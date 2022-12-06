@@ -60,4 +60,9 @@ public class KhachHangService implements com.mycompany.service.ICommonService<Kh
     public List<KhachHang> searchBySDTOrTen(String txtTimKiem) {
         return khr.searchBySDTOrTen(txtTimKiem);
     }
+
+    @Override
+    public KhachHang getOneBySdt(String sdt) {
+        return khr.getOneBySdt(sdt);
+    }
 }

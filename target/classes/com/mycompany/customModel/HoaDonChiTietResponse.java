@@ -40,13 +40,23 @@ public class HoaDonChiTietResponse {
     public Object[] toDataRow(int stt) {
 //        return new Object[]{stt, maMonAn, tenMonAn, donGiaMonAn,
 //            maCombo != null ? maCombo : "", tenCombo != null ? tenCombo : "", donGiaCombo != null ? donGiaCombo : ""};
-        return new Object[]{stt, tenMonAn, donGiaMonAn, soLuongMonAn, tenCombo == null ? "" : tenCombo, donGiaCombo == null ? "" : donGiaCombo, soLuongCombo,tongTien(),ghiChu};
+        return new Object[]{stt, tenMonAn, donGiaMonAn, soLuongMonAn, tenCombo == null ? "" : tenCombo, donGiaCombo == null ? "" : donGiaCombo, soLuongCombo, tongTien(), ghiChu};
     }
-    private BigDecimal tongTien(){
-        if (null==tenCombo) {
+    
+    public Object[] toDataRow2(int stt) {
+//        return new Object[]{stt, tenMonAn, donGiaMonAn, soLuongMonAn, tenCombo == null ? "" : tenCombo, donGiaCombo == null ? "" : donGiaCombo, soLuongCombo, tongTien(), ghiChu};
+        if (null == tenCombo) {
+            return new Object[]{stt, tenMonAn, donGiaMonAn, soLuongMonAn, tongTien(), ghiChu};
+        } else {
+            return new Object[]{stt, tenCombo, donGiaCombo, soLuongCombo, tongTien(), ghiChu};
+        }
+    }
+
+    private BigDecimal tongTien() {
+        if (null == tenCombo) {
             BigDecimal soLuong = new BigDecimal(soLuongMonAn);
             return donGiaMonAn.multiply(soLuong);
-        }else{
+        } else {
             BigDecimal soLuong = new BigDecimal(soLuongCombo);
             return donGiaCombo.multiply(soLuong);
         }

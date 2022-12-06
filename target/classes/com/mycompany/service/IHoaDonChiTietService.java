@@ -36,4 +36,9 @@ public interface IHoaDonChiTietService<O, S, O2> {
     S updateSoLuongCombo(O HDCT, O2 hd, ComBo combo);
 
     S updateSoLuongMonAn(O HDCT, O2 hd, MonAn MonAn);
+
+    S removeMonAn(O2 hd, MonAn MonAn);
+
+    S removeCombo(O2 hd, ComBo Combo);
+
 }

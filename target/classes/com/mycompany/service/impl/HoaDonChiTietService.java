@@ -114,4 +114,22 @@ public class HoaDonChiTietService implements IHoaDonChiTietService<HoaDonChiTiet
             return "Update thất bại";
         }
     }
+
+    @Override
+    public String removeMonAn(HoaDon hd, MonAn MonAn) {
+        if ((Boolean) hdctr.removeMonAn(hd, MonAn)) {
+            return "Xoá thành công";
+        } else {
+            return "Xoá thất bại";
+        }
+    }
+
+    @Override
+    public String removeCombo(HoaDon hd, ComBo Combo) {
+        if ((Boolean) hdctr.removeCombo(hd, Combo)) {
+            return "Xoá thành công";
+        } else {
+            return "Xoá thất bại";
+        }
+    }
 }
