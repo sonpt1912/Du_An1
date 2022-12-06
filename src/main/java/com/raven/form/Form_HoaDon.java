@@ -688,6 +688,12 @@ public class Form_HoaDon extends javax.swing.JPanel {
             if (txtGhiChu.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Ghi chú ko được trống!");
             } else {
+                List<ChiTietBanHoaDon> listCTBan_HD = chiTietBanHoaDonService.getByHoaDon(hoaDon);
+                for (ChiTietBanHoaDon chiTietBanHoaDon : listCTBan_HD) {
+                    Ban ban = chiTietBanHoaDon.getBan();
+                    ban.setTrangThai(0);
+                    String updateBan = new BanService().update(ban, ban.getMaBan().toString());
+                }
                 hoaDon.setGhiChu(txtGhiChu.getText());
                 hoaDon.setTrangThai(2);
                 // Ban ban = hoaDon.getBan();
@@ -712,9 +718,15 @@ public class Form_HoaDon extends javax.swing.JPanel {
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         btnClearActionPerformed(evt);
-        listHD = hoaDonService.getHDByTrangThai(0);
+        listHD = hoaDonService.getHoaDonsHomNay(today);
+        List<HoaDon> listHDShow = new ArrayList<>();
+        for (HoaDon hoaDon : listHD) {
+            if (hoaDon.getTrangThai() == 0) {
+                listHDShow.add(hoaDon);
+            }
+        }
         dcbmTrangThaiHD.setSelectedItem("Chờ thanh toán");
-        showData(listHD);
+        showData(listHDShow);
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void rdoHomNayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoHomNayActionPerformed
