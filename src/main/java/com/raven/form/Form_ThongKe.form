@@ -35,10 +35,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="138" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
@@ -202,15 +199,16 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                      <Component id="nameofmax" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="nameofmax1" min="-2" max="-2" attributes="0"/>
+                          <Component id="nameofmax" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="soLuongofmax" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="soLuongofmax" min="-2" max="-2" attributes="0"/>
+                          <Component id="soLuongMin" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="62" max="32767" attributes="0"/>
-                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -222,9 +220,12 @@
                           <Component id="nameofmax" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="soLuongofmax" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="nameofmax1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="soLuongMin" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -232,7 +233,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="nameofmax">
               <Properties>
-                <Property name="text" type="java.lang.String" value="t&#xea;n s&#x1ea3;n ph&#x1ea9;m:"/>
+                <Property name="text" type="java.lang.String" value="s&#x1ea3;n ph&#x1ea9;m b&#xe1;n ch&#x1ea1;y nh&#x1ea5;t: "/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="soLuongofmax">
@@ -240,9 +241,14 @@
                 <Property name="text" type="java.lang.String" value="jLabel8"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel9">
+            <Component class="javax.swing.JLabel" name="nameofmax1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="S&#x1ea3;n ph&#x1ea9;m b&#xe1;n ch&#x1ea1;y nh&#x1ea5;t"/>
+                <Property name="text" type="java.lang.String" value="s&#x1ea3;n ph&#x1ea9;m b&#xe1;n ch&#x1ea1;y nh&#x1ea5;t: "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="soLuongMin">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="jLabel7"/>
               </Properties>
             </Component>
           </SubComponents>
