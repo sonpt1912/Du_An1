@@ -71,6 +71,9 @@ public class HoaDon {
     @Column(name = "GhiChu")
     private String ghiChu;
 
+    @Column(name = "SoLuongKhach")
+    private Integer soLuongKhach;
+
     @Column(name = "TrangThai")
     private Integer trangThai;
 
@@ -101,7 +104,7 @@ public class HoaDon {
 
     public Object[] toDataRowViewHoaDon() {
         return new Object[]{maHoaDon, (nhanVien != null ? nhanVien.getMa() : " "), (khachHang != null ? khachHang.getMa() : " "),
-            new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ngayTao), ngayThanhToan==null?"":new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ngayThanhToan), ghiChu, (trangThai != null ? fillTrangThai(String.valueOf(trangThai)) : "")};
+            new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ngayTao), ngayThanhToan == null ? "" : new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ngayThanhToan), ghiChu, (trangThai != null ? fillTrangThai(String.valueOf(trangThai)) : "")};
     }
 
     public Object[] toDataRowThongKe(int stt) {
