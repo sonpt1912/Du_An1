@@ -37,7 +37,7 @@ public class ViewLogin extends javax.swing.JFrame {
     public ViewLogin() {
         initComponents();
 
-        setSize(1000, 650);
+//        setSize(1000, 650);
         setVisible(true);
 
         setLayout(new BorderLayout());
@@ -101,6 +101,7 @@ public class ViewLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("LOGIN");
         setAlwaysOnTop(true);
+        setMinimumSize(new java.awt.Dimension(1000, 650));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, -1, -1));
@@ -114,7 +115,7 @@ public class ViewLogin extends javax.swing.JFrame {
         txtUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         txtMatKhau.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        txtMatKhau.setForeground(new java.awt.Color(51, 51, 51));
+        txtMatKhau.setForeground(new java.awt.Color(255, 255, 255));
         txtMatKhau.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtMatKhau.setShowAndHide(true);
         txtMatKhau.addKeyListener(new java.awt.event.KeyAdapter() {

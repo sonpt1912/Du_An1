@@ -61,6 +61,10 @@ public class HoaDon {
     @Column(name = "NgayThanhToan")
     private java.util.Date ngayThanhToan;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "NgayHuy")
+    private java.util.Date ngayHuy;
+
     @Column(name = "TongTien")
     private BigDecimal tongTien;
 

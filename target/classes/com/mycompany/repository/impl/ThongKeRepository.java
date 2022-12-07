@@ -44,7 +44,7 @@ public class ThongKeRepository implements IThongKeRepository {
 //        for (HoaDon hoaDon : listHoaDon) {
 //            System.out.println(hoaDon.toString());
 //        }
-        long hoaDon = new ThongKeRepository().soLuongKhachHangDAY();
+        long hoaDon = new ThongKeRepository().getHoaDonHuyDAY();
         System.out.println(hoaDon);
     }
 
@@ -132,7 +132,7 @@ public class ThongKeRepository implements IThongKeRepository {
 
     @Override
     public long getHoaDonHuyDAY() {
-        String hql = "select COUNT(*) FROM HoaDon hd WHERE day(hd.ngayThanhToan) = day(sysdatetime()) AND hd.trangThai = 2";
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE day(hd.ngayHuy) = day(sysdatetime()) AND hd.trangThai = 2";
         Query query = SESSION.createQuery(hql);
         long hoaDons = (long) query.getSingleResult();
         return hoaDons;
@@ -140,7 +140,7 @@ public class ThongKeRepository implements IThongKeRepository {
 
     @Override
     public long getHoaDonHuyWEEK() {
-        String hql = "select COUNT(*) FROM HoaDon hd WHERE (day(datediff(d,0,hd.ngayThanhToan)/7*7)-1)/7+1 = (day(datediff(d,0,sysdatetime())/7*7)-1)/7+1 AND hd.trangThai = 2";
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE (day(datediff(d,0,hd.ngayHuy)/7*7)-1)/7+1 = (day(datediff(d,0,sysdatetime())/7*7)-1)/7+1 AND hd.trangThai = 2";
         Query query = SESSION.createQuery(hql);
         long hoaDons = (long) query.getSingleResult();
         return hoaDons;
@@ -148,7 +148,7 @@ public class ThongKeRepository implements IThongKeRepository {
 
     @Override
     public long getHoaDonHuyMONTH() {
-        String hql = "select COUNT(*) FROM HoaDon hd WHERE month(hd.ngayThanhToan) = month(sysdatetime()) AND hd.trangThai = 2";
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE month(hd.ngayHuy) = month(sysdatetime()) AND hd.trangThai = 2";
         Query query = SESSION.createQuery(hql);
         long hoaDons = (long) query.getSingleResult();
         return hoaDons;
@@ -156,7 +156,7 @@ public class ThongKeRepository implements IThongKeRepository {
 
     @Override
     public long getHoaDonHuyYEAR() {
-        String hql = "select COUNT(*) FROM HoaDon hd WHERE year(hd.ngayThanhToan) = year(sysdatetime()) AND hd.trangThai = 2";
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE year(hd.ngayHuy) = year(sysdatetime()) AND hd.trangThai = 2";
         Query query = SESSION.createQuery(hql);
         long hoaDons = (long) query.getSingleResult();
         return hoaDons;

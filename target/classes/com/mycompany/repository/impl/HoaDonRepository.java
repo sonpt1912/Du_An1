@@ -59,7 +59,7 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
 
     @Override
     public Boolean update(HoaDon kh, String ma) {
-        String hql = "UPDATE " + fromTable + "SET nhanVien = :nhanVien, khachHang = :khachHang, ngayTao = :ngayTao, ngayThanhToan = :ngayThanhToan, "
+        String hql = "UPDATE " + fromTable + "SET nhanVien = :nhanVien, khachHang = :khachHang, ngayTao = :ngayTao, ngayThanhToan = :ngayThanhToan,ngayHuy = :ngayHuy, "
                 + "tongTien = :tongTien, ghiChu = :ghiTru,soLuongKhach = :soLuongKH, trangThai = :trangThai  "
                 + "WHERE maHoaDon = :maHoaDon";
         Transaction transaction = null;
@@ -72,6 +72,7 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
             query.setParameter("khachHang", kh.getKhachHang());
             query.setParameter("ngayTao", kh.getNgayTao());
             query.setParameter("ngayThanhToan", kh.getNgayThanhToan());
+            query.setParameter("ngayHuy", kh.getNgayHuy());
             query.setParameter("tongTien", kh.getTongTien());
             query.setParameter("ghiTru", kh.getGhiChu());
             query.setParameter("trangThai", kh.getTrangThai());
