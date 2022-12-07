@@ -7,6 +7,7 @@ package com.mycompany.repository.impl;
 import com.mycompany.customModel.MonAnCoKM;
 import com.mycompany.domainModel.DanhMuc;
 import com.mycompany.domainModel.KhuyenMai;
+import com.mycompany.domainModel.Loai;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.ICommonRepository;
@@ -111,7 +112,18 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
         }
         return check > 0;
     }
-
+//loai
+//    public List<MonAn> getMonAnByLoai(Loai loai) {
+//        List<MonAn> listMA = new ArrayList<>();
+//        try ( Session session = HibernateUtil.getFactory().openSession()) {
+//            Query query = session.createQuery("FROM MonAn WHERE loai = :loaiSearch AND trangThai = 0");
+//            query.setParameter("loaiSearch", loai);
+//            listMA = query.getResultList();
+//        } finally {
+//            return listMA;
+//        }
+//    }
+    //
     public List<MonAn> getMonAnByDanhMuc(DanhMuc danhMuc) {
         List<MonAn> listMA = new ArrayList<>();
         try ( Session session = HibernateUtil.getFactory().openSession()) {
