@@ -900,12 +900,11 @@ public class Form_Home extends javax.swing.JPanel {
                 fillTongTienDaThanhToan();
                 fillTienThuaChuyenKhoan();
                 fillTienThuaTienMat();
-                
-            }else{
+            } else {
                 fillTongTien();
                 fillTienThuaChuyenKhoan();
                 fillTienThuaTienMat();
-                
+
             }
             // gọi lại hàm để dữ liệu được cập nhập
             // để fill hình thức thanh toán và số tiền
