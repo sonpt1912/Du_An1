@@ -897,9 +897,15 @@ public class Form_Home extends javax.swing.JPanel {
             showDataHDCT(lstHDCTResponses);
 //            fillTongTien();
             if (hdr.getTrangThai() == 1) {
+                fillTongTienDaThanhToan();
+                fillTienThuaChuyenKhoan();
+                fillTienThuaTienMat();
+                
+            }else{
                 fillTongTien();
                 fillTienThuaChuyenKhoan();
                 fillTienThuaTienMat();
+                
             }
             // gọi lại hàm để dữ liệu được cập nhập
             // để fill hình thức thanh toán và số tiền
@@ -1617,19 +1623,23 @@ public class Form_Home extends javax.swing.JPanel {
     }
 
     private void fillTongTien() {
+
+        BigDecimal tongTien = BigDecimal.valueOf(0);
+        BigDecimal tienMA = BigDecimal.valueOf(0);
+        BigDecimal tienCB = BigDecimal.valueOf(0);
+        for (HoaDonChiTietResponse lstHDCTResponse : lstHDCTResponses) {
+            BigDecimal soLuongMA = new BigDecimal(lstHDCTResponse.getSoLuongMonAn());
+            BigDecimal soLuongCB = new BigDecimal(lstHDCTResponse.getSoLuongCombo());
+            tienMA = tienMA.add(lstHDCTResponse.getDonGiaMonAn().multiply(soLuongMA));
+            tienCB = tienCB.add(lstHDCTResponse.getDonGiaCombo().multiply(soLuongCB));
+        }
+        txtTongTien.setText(String.valueOf(tienCB.add(tienMA)));
+    }
+
+    private void fillTongTienDaThanhToan() {
         HoaDon hd = (HoaDon) hds.getOne(lbMaHD.getText());
         txtTongTien.setText(hd.getTongTien().toString());
 
-//        BigDecimal tongTien = BigDecimal.valueOf(0);
-//        BigDecimal tienMA = BigDecimal.valueOf(0);
-//        BigDecimal tienCB = BigDecimal.valueOf(0);
-//        for (HoaDonChiTietResponse lstHDCTResponse : lstHDCTResponses) {
-//            BigDecimal soLuongMA = new BigDecimal(lstHDCTResponse.getSoLuongMonAn());
-//            BigDecimal soLuongCB = new BigDecimal(lstHDCTResponse.getSoLuongCombo());
-//            tienMA = tienMA.add(lstHDCTResponse.getDonGiaMonAn().multiply(soLuongMA));
-//            tienCB = tienCB.add(lstHDCTResponse.getDonGiaCombo().multiply(soLuongCB));
-//        }
-//        txtTongTien.setText(String.valueOf(tienCB.add(tienMA)));
     }
 
     private void loadTableCombo() {
