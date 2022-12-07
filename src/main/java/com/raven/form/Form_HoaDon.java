@@ -33,7 +33,7 @@ import javax.swing.table.DefaultTableModel;
  * @author RAVEN
  */
 public class Form_HoaDon extends javax.swing.JPanel {
-
+    
     private DefaultTableModel dtmHoaDon = new DefaultTableModel();
     private List<HoaDon> listHD = new ArrayList<>();
     private HoaDonService hoaDonService = new HoaDonService();
@@ -51,7 +51,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
     private ChiTietBanHoaDonService chiTietBanHoaDonService = new ChiTietBanHoaDonService();
     private List<ChiTietBanHoaDon> listCTBan_HD = new ArrayList<>();
     private DefaultTableModel dtmHDCT = new DefaultTableModel();
-
+    
     public Form_HoaDon(NhanVien nv) {
         initComponents();
         this.nhanV = nv;
@@ -83,8 +83,9 @@ public class Form_HoaDon extends javax.swing.JPanel {
         listHD = hoaDonService.getHoaDonsHomNay(today);
         showData(listHD);
         dateNgay1.getJCalendar().setMaxSelectableDate(today);
+        txtNgayThanhToan.setEnabled(false);
     }
-
+    
     private void showData(List<HoaDon> listHD) {
         if (listHD.size() > 0) {
             dtmHoaDon.setRowCount(0);
@@ -93,7 +94,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
             }
         }
     }
-
+    
     private void showDataHDCT(List<HoaDonChiTiet> listHDCT) {
         dtmHDCT.setRowCount(0);
         if (listHDCT.size() > 0) {
@@ -102,7 +103,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
             }
         }
     }
-
+    
     private void loadCbbTrangThaiHD() {
         listTrangThaiHD.add("Tất cả");
         listTrangThaiHD.add("Chờ thanh toán");
@@ -112,7 +113,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
             dcbmTrangThaiHD.addElement(string);
         }
     }
-
+    
     private void fillHD(HoaDon hoaDon) {
         lbMaHD.setText(hoaDon.getMaHoaDon());
         listHDCT = hoaDonChiTietService.getHDCTByHD(hoaDon);
@@ -166,7 +167,7 @@ public class Form_HoaDon extends javax.swing.JPanel {
         lbKhuVuc.setText(banService.getOne(listCTBan_HD.get(0).getBan().getMaBan().toString()).getKv().getTenKV());
         txtSoLuongKhach.setText(hoaDon.getSoLuongKhach().toString());
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
