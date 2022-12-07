@@ -5,6 +5,7 @@
 package com.mycompany.util;
 
 import com.mycompany.domainModel.KhachHang;
+import com.mycompany.service.impl.KhachHangService;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -49,6 +50,9 @@ public class KhachHangUtil {
         } else if (!khachHang.getHo().isEmpty() && (!khachHang.getHo().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$"))) {
             isCheck = false;
             JOptionPane.showMessageDialog(null, "Họ không được chứa kí tự đặc biệt!");
+        } else if (new KhachHangService().getOneBySdt(khachHang.getSdt()) != null) {
+            isCheck = false;
+            JOptionPane.showMessageDialog(null, "Sdt này đã trùng với sdt của KH có trong hệ thống!");
         } else if (!khachHang.getTen().isEmpty() && (!khachHang.getTen().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$"))) {
             isCheck = false;
             JOptionPane.showMessageDialog(null, "Tên không được chứa kí tự đặc biệt!");
