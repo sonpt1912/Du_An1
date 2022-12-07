@@ -18,7 +18,7 @@ import java.util.List;
 public interface IThongKeService {
 
     List<HoaDon> getAllHoaDon(int t);
-    
+
     BigDecimal soLuongTheoKhoangNgay(Date ngayBatDau, Date ngayKetThuc);
 
     List<MonAn> getAllSanPham();
@@ -84,5 +84,13 @@ public interface IThongKeService {
     BigDecimal getDoanhThuThang11();
 
     BigDecimal getDoanhThuThang12();
+
+    long soLuongKhachHangDAY();
+
+    long soLuongKhachHangWEEK();
+
+    long soLuongKhachHangMONTH();
+
+    long soLuongKhachHangYEAR();
 
 }
