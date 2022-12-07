@@ -60,12 +60,10 @@ public class CalledStoreProceducreThongKe {
     public BigDecimal calledStoreTT(Date ngayBatDau, Date ngayKetThuc) {
         try ( Session session = HibernateUtil.getFactory().openSession()) {
             try {
-                List<SanPhamRepose> lists = new ArrayList<>();
-                List<SanPhamRepose> list = new ArrayList<>();
-                Query query = session.createSQLQuery("SELECT dbo.tongTien :@NgayBatDau, :@NgayKetThuc");
-                query.setParameter("@NgayBatDau", ngayBatDau);
-                query.setParameter("@NgayKetThuc", ngayKetThuc);
-                return new BigDecimal((BigInteger) query.getSingleResult());
+                Query query = session.createSQLQuery("SELECT dbo.tongTien ( :@ngayBatDau, :@ngayKetThuc )");
+                query.setParameter("@ngayBatDau", ngayBatDau);
+                query.setParameter("@ngayKetThuc", ngayKetThuc);
+                return (BigDecimal) query.getSingleResult();
             } catch (Exception e) {
                 return new BigDecimal(0);
             }
@@ -73,7 +71,7 @@ public class CalledStoreProceducreThongKe {
     }
 
     public static void main(String[] args) {
-        List<SanPhamRepose> lists = new CalledStoreProceducreThongKe().calledStore(Date.valueOf("2022-12-02"), Date.valueOf("2022-12-02"));
+        BigDecimal e = new CalledStoreProceducreThongKe().calledStoreTT(Date.valueOf("2022-12-02"), Date.valueOf("2022-12-07"));
 //        List<SanPhamRepose> list = new ArrayList<>();
 //
 //        lists.forEach(s -> System.out.println(s.toString()));
@@ -88,7 +86,7 @@ public class CalledStoreProceducreThongKe {
 //            list.add(lists.get(i));
 //        }
 //
-        lists.forEach(s -> System.out.println(s.toString()));
+        System.out.println(e);
 
     }
 }

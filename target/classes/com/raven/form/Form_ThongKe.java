@@ -459,11 +459,11 @@ public class Form_ThongKe extends javax.swing.JPanel {
                 .addComponent(jLabel4)
                 .addGap(13, 13, 13)
                 .addComponent(lbDoangThuDAY)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbSoLuongKhachDAY)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbHoaDonDaThanhToanDAY)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbHoaDonHuyDAY)
                 .addContainerGap())
         );
@@ -511,7 +511,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelBorder2, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
+                        .addComponent(panelBorder2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27))
@@ -605,6 +605,8 @@ public class Form_ThongKe extends javax.swing.JPanel {
             String ngayKetThuc = dateFormat.format(txtNgayKetThuc.getDate());
             listSanPham = thongKeService.getAllSanPham(Date.valueOf(ngayBatDau), Date.valueOf(ngayKetThuc));
             setTKSP(listSanPham);
+            System.out.println("phạm sơn");
+            System.out.println(thongKeService.soLuongTheoKhoangNgay(Date.valueOf(ngayBatDau), Date.valueOf(ngayKetThuc)) + "đ");
             jLabel7.setText(thongKeService.soLuongTheoKhoangNgay(Date.valueOf(ngayBatDau), Date.valueOf(ngayKetThuc)) + "đ");
         }
     }//GEN-LAST:event_btnSearchActionPerformed
@@ -705,7 +707,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
     private JFreeChart createChartHoaDon(CategoryDataset dataset) {
 
         JFreeChart barChart = ChartFactory.createBarChart(
-                "BIỂU ĐỒ THỐNG KÊ HÓA ĐƠN",
+                "BIỂU ĐỒ THỐNG KÊ DOANH THU",
                 "",
                 "Doanh thu",
                 dataset,
