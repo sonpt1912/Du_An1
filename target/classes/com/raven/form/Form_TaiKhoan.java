@@ -86,8 +86,8 @@ public class Form_TaiKhoan extends javax.swing.JPanel {
         jLabel16 = new javax.swing.JLabel();
         txtTenCV = new javax.swing.JTextField();
         txtTen = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         btnDoiMatKhau = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -133,6 +133,15 @@ public class Form_TaiKhoan extends javax.swing.JPanel {
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setText("Tên CV:");
+
+        btnDoiMatKhau.setBackground(new java.awt.Color(255, 204, 204));
+        btnDoiMatKhau.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDoiMatKhau.setText("ĐỔI MẬT KHẨU");
+        btnDoiMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiMatKhauActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -190,6 +199,10 @@ public class Form_TaiKhoan extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(btnLoad)))
                 .addContainerGap(37, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDoiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(67, 67, 67))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,15 +244,13 @@ public class Form_TaiKhoan extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(88, 88, 88))
+                .addGap(6, 6, 6)
+                .addComponent(btnDoiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Thông Tin Nhân Viên");
-
-        btnDoiMatKhau.setBackground(new java.awt.Color(255, 204, 204));
-        btnDoiMatKhau.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnDoiMatKhau.setText("ĐỔI MẬT KHẨU");
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -256,10 +267,6 @@ public class Form_TaiKhoan extends javax.swing.JPanel {
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(6, 6, 6))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnDoiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,8 +277,7 @@ public class Form_TaiKhoan extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addGap(8, 8, 8)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(btnDoiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -292,6 +298,10 @@ public class Form_TaiKhoan extends javax.swing.JPanel {
         //        listChucVu = chucVuService.getChucVuActive();
         //        loadCBB(listChucVu);
     }//GEN-LAST:event_btnLoadActionPerformed
+
+    private void btnDoiMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMatKhauActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDoiMatKhauActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
