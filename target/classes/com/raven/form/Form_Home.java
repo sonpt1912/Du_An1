@@ -320,6 +320,11 @@ public class Form_Home extends javax.swing.JPanel {
                 txtSearchCaretUpdate(evt);
             }
         });
+        txtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchActionPerformed(evt);
+            }
+        });
 
         cbbSanPham.setBackground(new java.awt.Color(255, 255, 0));
         cbbSanPham.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -505,6 +510,12 @@ public class Form_Home extends javax.swing.JPanel {
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setText("SĐT:");
+
+        txtSdtKH.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSdtKHKeyPressed(evt);
+            }
+        });
 
         btnSearchKH.setBackground(new java.awt.Color(204, 204, 204));
         btnSearchKH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -878,7 +889,12 @@ public class Form_Home extends javax.swing.JPanel {
                     lbSoBan.setText(lstChiTietBanHoaDons.get(i).getBan().getMaBan().toString());
                 }
             }
-
+            //fill khách hàng
+            if (hd.getKhachHang() != null) {
+                txtTenKH.setText(hd.getKhachHang().getTen());
+            }else{
+                txtTenKH.setText("");
+            }
             // nếu hoá đơn đang chọn có trạng thái là dang chờ thanh toán thì set check trangthaiHD = 0
             //, và check món ăn = 0 và fill mã HD lên label
             // ngược lại nếu hd đã thanh toán hoặc đã huỷ thì check TrangTHaiHD = 1 và fill rỗng lên ô tếch phiu mã HD
@@ -900,12 +916,11 @@ public class Form_Home extends javax.swing.JPanel {
                 fillTongTienDaThanhToan();
                 fillTienThuaChuyenKhoan();
                 fillTienThuaTienMat();
-                
-            }else{
+            } else {
                 fillTongTien();
                 fillTienThuaChuyenKhoan();
                 fillTienThuaTienMat();
-                
+
             }
             // gọi lại hàm để dữ liệu được cập nhập
             // để fill hình thức thanh toán và số tiền
@@ -989,12 +1004,16 @@ public class Form_Home extends javax.swing.JPanel {
 
             // fixx cứng nv
             NhanVien nhanVien = (NhanVien) nvs.getOne(nhanV.getMa());
+            KhachHang kh = khs.getOneBySdt(txtSdtKH.getText());
             HoaDon hd = new HoaDon();
             //  HoaDon hd = new HoaDon(null, maHD, nhanVien, null, ngayTao, Date.valueOf(ngayThanhToan), null, null, 0);
             hd.setMaHoaDon(maHD);
             hd.setNhanVien(nhanVien);
             hd.setNgayTao(ngayTao);
             hd.setTrangThai(0);
+            if (kh != null) {
+                hd.setKhachHang(kh);
+            }
             int soLuongChoNgoi = 0;
             for (BanResponse banResponse : lstMaBan) {
                 soLuongChoNgoi += banResponse.getSoLuongChoNgoi();
@@ -1219,18 +1238,18 @@ public class Form_Home extends javax.swing.JPanel {
                     String updateHDCT = (String) hdctService.updateSoLuongMonAn(hdct, hd, ma);
                     lstHDCTResponses = hdctResponseService.getAll(hd);
                     showDataHDCT(lstHDCTResponses);
-//                    fillTongTien();
+                    fillTongTien();
                 } else {
                     HoaDonChiTiet hdct = new HoaDonChiTiet(null, ma, hd, null, soLuong, mar.getDonGiaSauKM(), 0, BigDecimal.valueOf(0), null);
 //                    String addHDCT = (String) hdctService.add(hdct);
 //                    lstHDCTResponses = hdctResponseService.getAll(hd);
 //                    showDataHDCT(lstHDCTResponses);
-//                    fillTongTien();
+                    fillTongTien();
                     String addHDCT = (String) hdctService.add(hdct);
                     lstHDCTResponses = hdctResponseService.getAll(hd);
                     showDataHDCT(lstHDCTResponses);
                     //gọi lại fill tổng tiền để cập nhập lại tổng tiền mỗi khi thêm món ăn vào hdct
-//                    fillTongTien();
+                    fillTongTien();
                     return;
                 }
             }
@@ -1539,6 +1558,25 @@ public class Form_Home extends javax.swing.JPanel {
             txtTenKH.setText(kh.getTen());
         }
     }//GEN-LAST:event_btnSearchKHActionPerformed
+
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void txtSdtKHKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSdtKHKeyPressed
+        // TODO add your handling code here:
+//        String sdt = txtSdtKH.getText();
+//        KhachHang kh = khs.getOneBySdt(sdt);
+//        if (kh == null) {
+//            int checkThemKH = JOptionPane.showConfirmDialog(this, "Chưa có khách hàng, bạn có muốn thêm không?");
+//            if (checkThemKH == JOptionPane.YES_OPTION) {
+//                JDialogThemNhanhKhachHang viewThemNhanhKH = new JDialogThemNhanhKhachHang(null, true);
+//                viewThemNhanhKH.setVisible(true);
+//            }
+//        } else {
+//            txtTenKH.setText(kh.getTen());
+//        }
+    }//GEN-LAST:event_txtSdtKHKeyPressed
 
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
