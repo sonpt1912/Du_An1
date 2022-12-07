@@ -76,7 +76,7 @@ public class ViewLogin extends javax.swing.JFrame {
                 lbQuenPass.setBackground(UIManager.getColor("control"));
             }
         });
-        txtUser.setHorizontalAlignment(JTextField.RIGHT);
+        txtUser.setHorizontalAlignment(JTextField.LEFT);
     }
 
     /**

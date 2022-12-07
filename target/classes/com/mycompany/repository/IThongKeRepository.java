@@ -81,4 +81,12 @@ public interface IThongKeRepository {
 
     BigDecimal getDoanhThuThang12();
 
+    long soLuongKhachHangDAY();
+
+    long soLuongKhachHangWEEK();
+
+    long soLuongKhachHangMONTH();
+
+    long soLuongKhachHangYEAR();
+
 }

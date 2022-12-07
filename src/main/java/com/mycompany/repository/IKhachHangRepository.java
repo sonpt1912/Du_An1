@@ -14,4 +14,6 @@ import java.util.List;
 public interface IKhachHangRepository {
 
     List<KhachHang> searchBySDTOrTen(String txtTimKiem);
+
+    KhachHang getOneBySdt(String sdt);
 }

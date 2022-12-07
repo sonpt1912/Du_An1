@@ -649,7 +649,7 @@ public class Form_Combo extends javax.swing.JPanel {
         if (txtMa.getText().isEmpty()) {
             if (txtTen.getText().isEmpty() || txtTen.getText().matches("\\s+")) {
                 JOptionPane.showMessageDialog(this, "không được để trống tên món ăn");
-            } else if (!txtTen.getText().matches("[a-z A-Z0-9]+")) {
+            } else if (!txtTen.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ0-9 ]+$")) {
                 JOptionPane.showMessageDialog(this, "tên phải là số hoặc chữ");
             } else if (txtDonGia.getText().isEmpty() || txtDonGia.getText().matches("\\s+")) {
                 JOptionPane.showMessageDialog(this, "đơn giá được để trống tên món ăn");
@@ -781,7 +781,7 @@ public class Form_Combo extends javax.swing.JPanel {
             ComBo comBoo = listComBo.get(index);
             if (txtTen.getText().isEmpty() || txtTen.getText().matches("\\s+")) {
                 JOptionPane.showMessageDialog(this, "không được để trống tên món ăn");
-            } else if (!txtTen.getText().matches("[a-z A-Z0-9]+")) {
+            } else if (!txtTen.getText().matches("[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ0-9 ]+$")) {
                 JOptionPane.showMessageDialog(this, "tên phải là số hoặc chữ");
             } else if (txtDonGia.getText().isEmpty() || txtDonGia.getText().matches("\\s+")) {
                 JOptionPane.showMessageDialog(this, "đơn giá được để trống tên món ăn");

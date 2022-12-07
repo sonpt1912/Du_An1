@@ -10,6 +10,10 @@ import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.impl.ThongKeService;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,7 +86,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         txtNgayBatDau = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         txtNgayKetThuc = new com.toedter.calendar.JDateChooser();
-        btnUpdate1 = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         nameofmax = new javax.swing.JLabel();
         soLuongofmax = new javax.swing.JLabel();
@@ -94,27 +98,27 @@ public class Form_ThongKe extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lbDoanhThuWEEK = new javax.swing.JLabel();
-        lbHoaDonTongWEEK = new javax.swing.JLabel();
         lbHoaDonDaThanhToanWEEK = new javax.swing.JLabel();
         lbHoaDonHuyWEEK = new javax.swing.JLabel();
+        lbSoLuongKhachHangWEEK = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         lbDoanhThuMONTH = new javax.swing.JLabel();
-        lbHoaDonTongMONTH = new javax.swing.JLabel();
         lbHoaDonDaThanhToanMONTH = new javax.swing.JLabel();
         lbHoaDonHuyMONTH = new javax.swing.JLabel();
+        lbSoLuongKhachHangMONTH = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         lbDoanhThuYEAR = new javax.swing.JLabel();
-        lbHoaDonTongYEAR = new javax.swing.JLabel();
         lbHoaDonDaThanhToanYEAR = new javax.swing.JLabel();
         lbHoaDonHuyYEAR = new javax.swing.JLabel();
+        lbSoLuongKhachHangYEAR = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         lbDoangThuDAY = new javax.swing.JLabel();
-        lbHoaDonTongDAY = new javax.swing.JLabel();
         lbHoaDonDaThanhToanDAY = new javax.swing.JLabel();
         lbHoaDonHuyDAY = new javax.swing.JLabel();
+        lbSoLuongKhachDAY = new javax.swing.JLabel();
         btnUpdate = new javax.swing.JButton();
         panelBorder2 = new com.raven.swing.PanelBorder();
         cbbNgayThang = new javax.swing.JComboBox<>();
@@ -131,10 +135,10 @@ public class Form_ThongKe extends javax.swing.JPanel {
 
         jLabel6.setText("To :");
 
-        btnUpdate1.setText("Search");
-        btnUpdate1.addActionListener(new java.awt.event.ActionListener() {
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdate1ActionPerformed(evt);
+                btnSearchActionPerformed(evt);
             }
         });
 
@@ -212,7 +216,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         panelBorder1Layout.setHorizontalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -225,7 +229,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                             .addComponent(txtNgayBatDau, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
                             .addComponent(txtNgayKetThuc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUpdate1)))
+                        .addComponent(btnSearch)))
                 .addContainerGap())
         );
         panelBorder1Layout.setVerticalGroup(
@@ -243,7 +247,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                             .addComponent(txtNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addComponent(btnUpdate1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -257,165 +261,145 @@ public class Form_ThongKe extends javax.swing.JPanel {
         jPanel1.setPreferredSize(new java.awt.Dimension(203, 198));
 
         jLabel2.setBackground(new java.awt.Color(153, 255, 153));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 21)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Tuần");
+        jLabel2.setText("TUẦN ");
 
-        lbDoanhThuWEEK.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
+        lbDoanhThuWEEK.setFont(new java.awt.Font("Segoe UI", 1, 29)); // NOI18N
         lbDoanhThuWEEK.setText("100.000 đ");
 
-        lbHoaDonTongWEEK.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbHoaDonTongWEEK.setText("Tổng số hóa đơn : 8");
+        lbHoaDonDaThanhToanWEEK.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbHoaDonDaThanhToanWEEK.setText("Đã thanh toán : 8");
 
-        lbHoaDonDaThanhToanWEEK.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbHoaDonDaThanhToanWEEK.setText("Hóa đơn đã thanh toán : 8");
+        lbHoaDonHuyWEEK.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbHoaDonHuyWEEK.setText("Đã hủy : 8");
 
-        lbHoaDonHuyWEEK.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbHoaDonHuyWEEK.setText("Hóa đơn đã hủy : 8");
+        lbSoLuongKhachHangWEEK.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbSoLuongKhachHangWEEK.setText("Số lượng khách hàng : 8");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(lbHoaDonDaThanhToanWEEK))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(lbHoaDonHuyWEEK))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbDoanhThuWEEK)
-                            .addComponent(lbHoaDonTongWEEK))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(lbHoaDonDaThanhToanWEEK)
+                    .addComponent(lbSoLuongKhachHangWEEK)
+                    .addComponent(lbHoaDonHuyWEEK)
+                    .addComponent(jLabel2)
+                    .addComponent(lbDoanhThuWEEK))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lbDoanhThuWEEK)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbHoaDonTongWEEK)
-                .addGap(13, 13, 13)
+                .addComponent(lbSoLuongKhachHangWEEK)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbHoaDonDaThanhToanWEEK)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbHoaDonHuyWEEK)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.setPreferredSize(new java.awt.Dimension(203, 198));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 21)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Tháng");
+        jLabel3.setText("THÁNG");
 
-        lbDoanhThuMONTH.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
+        lbDoanhThuMONTH.setFont(new java.awt.Font("Segoe UI", 1, 29)); // NOI18N
         lbDoanhThuMONTH.setText("100.000 đ");
 
-        lbHoaDonTongMONTH.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbHoaDonTongMONTH.setText("Tổng số hóa đơn : 8");
+        lbHoaDonDaThanhToanMONTH.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbHoaDonDaThanhToanMONTH.setText("Đã thanh toán : 8");
 
-        lbHoaDonDaThanhToanMONTH.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbHoaDonDaThanhToanMONTH.setText("Hóa đơn đã thanh toán : 8");
+        lbHoaDonHuyMONTH.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbHoaDonHuyMONTH.setText("Đã hủy : 8");
 
-        lbHoaDonHuyMONTH.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbHoaDonHuyMONTH.setText("Hóa đơn đã hủy : 8");
+        lbSoLuongKhachHangMONTH.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbSoLuongKhachHangMONTH.setText("Số lượng khách hàng : 8");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbSoLuongKhachHangMONTH)
+                    .addComponent(lbDoanhThuMONTH))
+                .addGap(24, 24, 24))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(lbDoanhThuMONTH))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
+                        .addGap(28, 28, 28)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(lbHoaDonTongMONTH)
-                                .addGap(15, 15, 15))
+                            .addComponent(lbHoaDonHuyMONTH)
                             .addComponent(lbHoaDonDaThanhToanMONTH)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(lbHoaDonHuyMONTH)))
-                .addGap(39, 39, 39))
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel3)))
+                .addGap(65, 65, 65))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lbDoanhThuMONTH)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbSoLuongKhachHangMONTH)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbHoaDonTongMONTH)
-                .addGap(10, 10, 10)
                 .addComponent(lbHoaDonDaThanhToanMONTH)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbHoaDonHuyMONTH)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setPreferredSize(new java.awt.Dimension(203, 198));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 21)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Năm");
+        jLabel5.setText("NĂM");
 
-        lbDoanhThuYEAR.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
+        lbDoanhThuYEAR.setFont(new java.awt.Font("Segoe UI", 1, 29)); // NOI18N
         lbDoanhThuYEAR.setText("100.000 đ");
 
-        lbHoaDonTongYEAR.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbHoaDonTongYEAR.setText("Tổng số hóa đơn : 8");
+        lbHoaDonDaThanhToanYEAR.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbHoaDonDaThanhToanYEAR.setText("Đã thanh toán : 8");
 
-        lbHoaDonDaThanhToanYEAR.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbHoaDonDaThanhToanYEAR.setText("Hóa đơn đã thanh toán : 8");
+        lbHoaDonHuyYEAR.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbHoaDonHuyYEAR.setText("Đã hủy : 8");
 
-        lbHoaDonHuyYEAR.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbHoaDonHuyYEAR.setText("Hóa đơn đã hủy : 8");
+        lbSoLuongKhachHangYEAR.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbSoLuongKhachHangYEAR.setText("Số lượng khách hàng : 8");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(76, 76, 76))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lbHoaDonTongYEAR)
-                                .addGap(23, 23, 23))
-                            .addComponent(lbHoaDonDaThanhToanYEAR))
-                        .addGap(23, 23, 23))))
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(lbDoanhThuYEAR))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(lbHoaDonHuyYEAR)))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbHoaDonDaThanhToanYEAR)
+                            .addComponent(lbSoLuongKhachHangYEAR)
+                            .addComponent(lbHoaDonHuyYEAR)
+                            .addComponent(lbDoanhThuYEAR))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -423,13 +407,13 @@ public class Form_ThongKe extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lbDoanhThuYEAR)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbSoLuongKhachHangYEAR)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbHoaDonTongYEAR)
-                .addGap(10, 10, 10)
                 .addComponent(lbHoaDonDaThanhToanYEAR)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbHoaDonHuyYEAR)
                 .addContainerGap())
         );
@@ -438,59 +422,50 @@ public class Form_ThongKe extends javax.swing.JPanel {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setPreferredSize(new java.awt.Dimension(203, 198));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 21)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Hôm nay");
+        jLabel4.setText("HÔM NAY");
 
-        lbDoangThuDAY.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
+        lbDoangThuDAY.setFont(new java.awt.Font("Segoe UI", 1, 29)); // NOI18N
         lbDoangThuDAY.setText("100.000 đ");
 
-        lbHoaDonTongDAY.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbHoaDonTongDAY.setText("Tổng số hóa đơn : 8");
+        lbHoaDonDaThanhToanDAY.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbHoaDonDaThanhToanDAY.setText("Đã thanh toán : 8");
 
-        lbHoaDonDaThanhToanDAY.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbHoaDonDaThanhToanDAY.setText("Hóa đơn đã thanh toán : 8");
+        lbHoaDonHuyDAY.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbHoaDonHuyDAY.setText("Đã hủy : 8");
 
-        lbHoaDonHuyDAY.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbHoaDonHuyDAY.setText("Hóa đơn đã hủy : 8");
+        lbSoLuongKhachDAY.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbSoLuongKhachDAY.setText("Số lượng khách hàng : 8");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jLabel4)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(lbHoaDonHuyDAY)
-                        .addGap(40, 40, 40))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbHoaDonTongDAY)
-                            .addComponent(lbDoangThuDAY))
-                        .addGap(34, 34, 34))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(lbHoaDonDaThanhToanDAY)
-                        .addGap(21, 21, 21))))
+                    .addComponent(jLabel4)
+                    .addComponent(lbSoLuongKhachDAY)
+                    .addComponent(lbDoangThuDAY)
+                    .addComponent(lbHoaDonDaThanhToanDAY)
+                    .addComponent(lbHoaDonHuyDAY))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(13, 13, 13)
                 .addComponent(lbDoangThuDAY)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbHoaDonTongDAY)
-                .addGap(13, 13, 13)
+                .addComponent(lbSoLuongKhachDAY)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbHoaDonDaThanhToanDAY)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(lbHoaDonHuyDAY)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         btnUpdate.setText("Update");
@@ -536,33 +511,31 @@ public class Form_ThongKe extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
+                        .addComponent(panelBorder2, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(21, 21, 21)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnUpdate))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelBorder2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(32, 32, 32)))
                 .addComponent(scrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(75, Short.MAX_VALUE)
+                .addContainerGap(78, Short.MAX_VALUE)
                 .addComponent(scrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(527, 527, 527))
             .addGroup(layout.createSequentialGroup()
@@ -575,9 +548,9 @@ public class Form_ThongKe extends javax.swing.JPanel {
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnUpdate)
-                    .addComponent(jLabel11))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(btnUpdate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelBorder2, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
@@ -615,7 +588,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbbNgayThangActionPerformed
 
-    private void btnUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate1ActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
         if (txtNgayBatDau.getDate() == null) {
             JOptionPane.showMessageDialog(this, "không được để trống ngày bắt đầu");
@@ -634,7 +607,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
             setTKSP(listSanPham);
             jLabel7.setText(thongKeService.soLuongTheoKhoangNgay(Date.valueOf(ngayBatDau), Date.valueOf(ngayKetThuc)) + "đ");
         }
-    }//GEN-LAST:event_btnUpdate1ActionPerformed
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     private void setTKSP(List<SanPhamRepose> list) {
         if (list.size() > 0) {
@@ -743,46 +716,50 @@ public class Form_ThongKe extends javax.swing.JPanel {
 
     private void showSoLuongDon() {
 //        Tổng số hóa đơn
-        lbHoaDonTongDAY.setText("Tổng số hóa đơn: " + (String.valueOf(thongKeService.getCountAllDay())));
-        lbHoaDonTongWEEK.setText("Tổng số hóa đơn: " + (String.valueOf(thongKeService.getCountAllWeek())));
-        lbHoaDonTongMONTH.setText("Tổng số hóa đơn: " + String.valueOf(thongKeService.getCountAllMonth()));
-        lbHoaDonTongYEAR.setText("Tổng số hóa đơn: " + (String.valueOf(thongKeService.getCountAllYear())));
+//        lbHoaDonTongDAY.setText("Tổng số hóa đơn: " + (String.valueOf(thongKeService.getCountAllDay())));
+//        lbHoaDonTongWEEK.setText("Tổng số hóa đơn: " + (String.valueOf(thongKeService.getCountAllWeek())));
+//        lbHoaDonTongMONTH.setText("Tổng số hóa đơn: " + String.valueOf(thongKeService.getCountAllMonth()));
+//        lbHoaDonTongYEAR.setText("Tổng số hóa đơn: " + (String.valueOf(thongKeService.getCountAllYear())));
 //        Đã thanh toán
-        lbHoaDonDaThanhToanDAY.setText("Hóa đơn đã thanh toán: " + (String.valueOf(thongKeService.getHoaDonDaTTDAY())));
-        lbHoaDonDaThanhToanWEEK.setText("Hóa đơn đã thanh toán: " + (String.valueOf(thongKeService.getHoaDonDaTTWEEK())));
-        lbHoaDonDaThanhToanMONTH.setText("Hóa đơn đã thanh toán: " + (String.valueOf(thongKeService.getHoaDonDaTTMONTH())));
-        lbHoaDonDaThanhToanYEAR.setText("Hóa đơn đã thanh toán: " + (String.valueOf(thongKeService.getHoaDonDaTTYEAR())));
+        lbHoaDonDaThanhToanDAY.setText("Đã thanh toán: " + (String.valueOf(thongKeService.getHoaDonDaTTDAY())));
+        lbHoaDonDaThanhToanWEEK.setText("Đã thanh toán: " + (String.valueOf(thongKeService.getHoaDonDaTTWEEK())));
+        lbHoaDonDaThanhToanMONTH.setText("Đã thanh toán: " + (String.valueOf(thongKeService.getHoaDonDaTTMONTH())));
+        lbHoaDonDaThanhToanYEAR.setText("Đã thanh toán: " + (String.valueOf(thongKeService.getHoaDonDaTTYEAR())));
 //        Đã hủy
-        lbHoaDonHuyDAY.setText("Hóa đơn đã húy: " + (String.valueOf(thongKeService.getHoaDonHuyDAY())));
-        lbHoaDonHuyWEEK.setText("Hóa đơn đã húy: " + (String.valueOf(thongKeService.getHoaDonHuyWEEK())));
-        lbHoaDonHuyMONTH.setText("Hóa đơn đã húy: " + (String.valueOf(thongKeService.getHoaDonHuyMONTH())));
-        lbHoaDonHuyYEAR.setText("Hóa đơn đã húy: " + (String.valueOf(thongKeService.getHoaDonHuyYEAR())));
+        lbHoaDonHuyDAY.setText("Đã húy: " + (String.valueOf(thongKeService.getHoaDonHuyDAY())));
+        lbHoaDonHuyWEEK.setText("Đã húy: " + (String.valueOf(thongKeService.getHoaDonHuyWEEK())));
+        lbHoaDonHuyMONTH.setText("Đã húy: " + (String.valueOf(thongKeService.getHoaDonHuyMONTH())));
+        lbHoaDonHuyYEAR.setText("Đã húy: " + (String.valueOf(thongKeService.getHoaDonHuyYEAR())));
 //        Doanh Thu
         if (thongKeService.getDoanhThuDAY() == null) {
-            lbDoangThuDAY.setText(String.valueOf("      " + 0 + " đ"));
+            lbDoangThuDAY.setText(String.valueOf(0 + " đ"));
         } else {
             lbDoangThuDAY.setText(String.valueOf(thongKeService.getDoanhThuDAY() + " đ"));
         }
         if (thongKeService.getDoanhThuWEEK() == null) {
-            lbDoanhThuWEEK.setText(String.valueOf("      " + 0 + " đ"));
+            lbDoanhThuWEEK.setText(String.valueOf(0 + " đ"));
         } else {
             lbDoanhThuWEEK.setText(String.valueOf(thongKeService.getDoanhThuWEEK() + " đ"));
         }
         if (thongKeService.getDoanhThuMONTH() == null) {
-            lbDoanhThuMONTH.setText(String.valueOf("      " + 0 + " đ"));
+            lbDoanhThuMONTH.setText(String.valueOf(0 + " đ"));
         } else {
             lbDoanhThuMONTH.setText(String.valueOf(thongKeService.getDoanhThuMONTH() + " đ"));
         }
         if (thongKeService.getDoanhThuYEAR() == null) {
-            lbDoanhThuYEAR.setText(String.valueOf("      " + 0 + " đ"));
+            lbDoanhThuYEAR.setText(String.valueOf(0 + " đ"));
         } else {
             lbDoanhThuYEAR.setText(String.valueOf(thongKeService.getDoanhThuYEAR() + " đ"));
         }
-
+// Số lượng khách
+        lbSoLuongKhachDAY.setText("Số lượng khách hàng :" + thongKeService.soLuongKhachHangDAY());
+        lbSoLuongKhachHangWEEK.setText("Số lượng khách hàng :" + thongKeService.soLuongKhachHangWEEK());
+        lbSoLuongKhachHangMONTH.setText("Số lượng khách hàng :" + thongKeService.soLuongKhachHangMONTH());
+        lbSoLuongKhachHangYEAR.setText("Số lượng khách hàng :" + thongKeService.soLuongKhachHangYEAR());
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JButton btnUpdate1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cbbNgayThang;
@@ -816,10 +793,10 @@ public class Form_ThongKe extends javax.swing.JPanel {
     private javax.swing.JLabel lbHoaDonHuyMONTH;
     private javax.swing.JLabel lbHoaDonHuyWEEK;
     private javax.swing.JLabel lbHoaDonHuyYEAR;
-    private javax.swing.JLabel lbHoaDonTongDAY;
-    private javax.swing.JLabel lbHoaDonTongMONTH;
-    private javax.swing.JLabel lbHoaDonTongWEEK;
-    private javax.swing.JLabel lbHoaDonTongYEAR;
+    private javax.swing.JLabel lbSoLuongKhachDAY;
+    private javax.swing.JLabel lbSoLuongKhachHangMONTH;
+    private javax.swing.JLabel lbSoLuongKhachHangWEEK;
+    private javax.swing.JLabel lbSoLuongKhachHangYEAR;
     private javax.swing.JLabel nameofmax;
     private javax.swing.JLabel nameofmax1;
     private javax.swing.JLabel nameofmax2;

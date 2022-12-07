@@ -6,7 +6,6 @@ package com.mycompany.repository.impl;
 
 import com.mycompany.domainModel.KhachHang;
 import com.mycompany.hibernateUtil.HibernateUtil;
-import java.sql.Date;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -116,6 +115,7 @@ public class KhachHangRepository implements ICommonRepository<KhachHang, Boolean
         return listKH;
     }
 
+    @Override
     public KhachHang getOneBySdt(String sdt) {
         try {
             String hql = fromTable + "WHERE sdt = :sdt";
@@ -127,8 +127,10 @@ public class KhachHangRepository implements ICommonRepository<KhachHang, Boolean
             return null;
         }
     }
+
     public static void main(String[] args) {
         KhachHang kh = new KhachHangRepository().getOneBySdt("0339927993");
         System.out.println(kh);
     }
+
 }

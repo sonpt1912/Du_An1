@@ -7,7 +7,6 @@ package com.mycompany.service.impl;
 import com.mycompany.customModel.SanPhamRepose;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.MonAn;
-import com.mycompany.repository.IThongKeRepository;
 import com.mycompany.repository.impl.CalledStoreProceducreThongKe;
 import com.mycompany.repository.impl.ThongKeRepository;
 import com.mycompany.service.IThongKeService;
@@ -201,6 +200,26 @@ public class ThongKeService implements IThongKeService {
     @Override
     public BigDecimal soLuongTheoKhoangNgay(Date ngayBatDau, Date ngayKetThuc) {
         return calledStoreProceducre.calledStoreTT(ngayBatDau, ngayKetThuc);
+    }
+
+    @Override
+    public long soLuongKhachHangDAY() {
+        return thongKeRepository.soLuongKhachHangDAY();
+    }
+
+    @Override
+    public long soLuongKhachHangWEEK() {
+        return thongKeRepository.soLuongKhachHangWEEK();
+    }
+
+    @Override
+    public long soLuongKhachHangMONTH() {
+        return thongKeRepository.soLuongKhachHangMONTH();
+    }
+
+    @Override
+    public long soLuongKhachHangYEAR() {
+        return thongKeRepository.soLuongKhachHangYEAR();
     }
 
 }
