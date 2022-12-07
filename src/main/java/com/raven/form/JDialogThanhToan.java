@@ -25,7 +25,6 @@ import com.mycompany.service.impl.NhanVienService;
 import com.mycompany.util.ThanhToanUtil;
 import java.awt.print.PrinterException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,6 +62,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
 //    private String soLuong;
 //    private String tongTien;
     private DecimalFormat df = new DecimalFormat("#,###.00");
+    private BigDecimal tongTienTT = new BigDecimal(0);
 
     /**
      * Creates new form JDialogThanhToan
@@ -110,9 +110,11 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         BigDecimal thue = BigDecimal.valueOf(0);
         BigDecimal tongTienHang = new BigDecimal(txtTongTien.getText());
         thue = tongTienHang.multiply(new BigDecimal(0.1));
-        BigDecimal tongTienThanhToan = BigDecimal.valueOf(0);
+        BigDecimal tongTienThanhToan = new BigDecimal(0);
         tongTienThanhToan = hdCustom.getTongTien().add(thue);
+        tongTienTT = tongTienThanhToan;
         txtTienThanhToan.setText(String.valueOf(df.format(tongTienThanhToan)));
+        //txtTienThanhToan.setText(tongTienThanhToan.toString());
     }
 
     private void showDataHDCT(List<HoaDonChiTietResponse> hoaDonChiTietResponses) {
@@ -145,7 +147,10 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 hd.setGhiChu(txtGhiChu.getText());
                 NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
                 hd.setNhanVien(nhanVien);
-                hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
+                System.out.println("====" + txtTienThanhToan.getText());
+                //hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
+                hd.setTongTien(tongTienTT);
+                System.out.println(txtTienThanhToan.getText());
                 hd.setTienDuocGiam(new BigDecimal(0));
                 hd.setNgayThanhToan(today);
                 hd.setTrangThai(1);
@@ -182,7 +187,8 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 hd.setGhiChu(txtGhiChu.getText());
                 NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
                 hd.setNhanVien(nhanVien);
-                hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
+                // hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
+                hd.setTongTien(tongTienTT);
                 hd.setTienDuocGiam(new BigDecimal(0));
                 hd.setNgayThanhToan(today);
                 hd.setTrangThai(1);
@@ -226,7 +232,8 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 hd.setGhiChu(txtGhiChu.getText());
                 NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
                 hd.setNhanVien(nhanVien);
-                hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
+                // hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
+                hd.setTongTien(tongTienTT);
                 hd.setTienDuocGiam(new BigDecimal(0));
                 hd.setNgayThanhToan(today);
                 hd.setTrangThai(1);
@@ -553,6 +560,12 @@ public class JDialogThanhToan extends javax.swing.JDialog {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("TIỀN THANH TOÁN:");
+
+        txtTienThanhToan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTienThanhToanActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -922,6 +935,10 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             txtChuyenKhoan.setEditable(false);
         }
     }//GEN-LAST:event_txtChuyenKhoanMouseClicked
+
+    private void txtTienThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienThanhToanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTienThanhToanActionPerformed
 
     /**
      * @param args the command line arguments
