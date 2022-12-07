@@ -7,6 +7,7 @@ package com.mycompany.service.impl;
 import com.mycompany.customModel.MonAnCoKM;
 import com.mycompany.domainModel.DanhMuc;
 import com.mycompany.domainModel.KhuyenMai;
+import com.mycompany.domainModel.Loai;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.repository.ICommonRepository;
 import com.mycompany.repository.impl.MonAnRepository;
@@ -61,6 +62,9 @@ public class MonAnService implements com.mycompany.service.ICommonService<MonAn,
         return monAnRepo.searchMonAnTheoTen(ten);
     }
 
+//    public List<MonAn> getMonAnLoai(Loai loai) {
+//        return monAnRepo.getMonAnByLoai(loai);
+//    }
     public List<MonAn> getMonAnTheoTenLoai(String ten, DanhMuc danhMuc) {
         return monAnRepo.searchMonAnTheoTenLoai(ten, danhMuc);
     }

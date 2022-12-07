@@ -5,9 +5,11 @@
  */
 package com.raven.form;
 
+import com.mycompany.domainModel.DanhMuc;
 import com.mycompany.domainModel.Loai;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.domainModel.NhanVien;
+import com.mycompany.service.impl.DanhMucService;
 import com.mycompany.service.impl.LoaiService;
 import com.mycompany.service.impl.MonAnService;
 import java.awt.Component;
@@ -41,10 +43,13 @@ public class Form_SanPham extends javax.swing.JPanel {
     // tạo default 
     private DefaultTableModel dtm = new DefaultTableModel();
     private DefaultComboBoxModel dcbm = new DefaultComboBoxModel();
+    private DefaultComboBoxModel dcbmSearch = new DefaultComboBoxModel();
     // tạo thực thể
     private MonAn monAn;
     /// đường dẫn ảnh
     private String selectedImagePath = "";
+    //
+    private DanhMucService danhMucService = new DanhMucService();
 
     /**
      * Creates new form Form_1
@@ -55,6 +60,7 @@ public class Form_SanPham extends javax.swing.JPanel {
         dtm.setColumnIdentifiers(header);
         tbMonAn.setModel(dtm);
         cbbLoai.setModel(dcbm);
+        cbbSearchLoai.setModel(dcbmSearch);
         tbMonAn.setFillsViewportHeight(true);
         tbMonAn.getColumn("ẢNH").setCellRenderer(new CellRenderer());
         listMonAn = monAnService.getMonAnByTrangThai(0);
@@ -62,10 +68,11 @@ public class Form_SanPham extends javax.swing.JPanel {
         txtId.setEnabled(false);
         txtMa.setEnabled(false);
         setCBB();
+        setCBBSearch();
     }
-
+    
     class CellRenderer implements TableCellRenderer {
-
+        
         @Override
         public Component getTableCellRendererComponent(JTable table,
                 Object value,
@@ -73,16 +80,16 @@ public class Form_SanPham extends javax.swing.JPanel {
                 boolean hasFocus,
                 int row,
                 int column) {
-
+            
             TableColumn tb = tbMonAn.getColumn("ẢNH");
             tb.setMaxWidth(100);
             tb.setMinWidth(100);
-
+            
             tbMonAn.setRowHeight(60);
-
+            
             return (Component) value;
         }
-
+        
     }
 
     /**
@@ -99,7 +106,7 @@ public class Form_SanPham extends javax.swing.JPanel {
         rdoApDung.setSelected(true);
         jLabelImage.setIcon(null);
     }
-
+    
     private void showData(List<MonAn> listMonAn) {
         dtm.setRowCount(0);
 //        int i = 1;
@@ -119,7 +126,7 @@ public class Form_SanPham extends javax.swing.JPanel {
             }
         }
     }
-
+    
     private void fillData() {
         txtDonGia.setText(monAn.getDonGia().toString());
         txtDonViTinh.setText(monAn.getDonViTinh());
@@ -136,9 +143,9 @@ public class Form_SanPham extends javax.swing.JPanel {
         Image img = imageicon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         jLabelImage.setIcon(new ImageIcon(img));
         jLabelImage.setIcon(imageicon);
-
+        
     }
-
+    
     private void setCBB() {
         List<Loai> listLoai = loaiService.getAllByTrangThai(0);
         dcbm.removeAllElements();
@@ -146,7 +153,20 @@ public class Form_SanPham extends javax.swing.JPanel {
             dcbm.addElement(dm.getMaLoai());
         }
     }
-
+    
+    private void setCBBSearch() {
+//        List<Loai> listLoai = loaiService.getAllByTrangThai(0);
+//        dcbmSearch.removeAllElements();
+//        for (Loai dm : listLoai) {
+//            dcbmSearch.addElement(dm.getTenLoai());
+//        }
+        List<DanhMuc> listDanhMuc = danhMucService.getAll();
+        dcbmSearch.removeAllElements();
+        for (DanhMuc danhMuc : listDanhMuc) {
+            dcbmSearch.addElement(danhMuc.getTenDanhMuc());
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -187,6 +207,7 @@ public class Form_SanPham extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         rdoListNgungApDung = new javax.swing.JRadioButton();
         rdoListApDung = new javax.swing.JRadioButton();
+        cbbSearchLoai = new javax.swing.JComboBox<>();
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -452,6 +473,13 @@ public class Form_SanPham extends javax.swing.JPanel {
             }
         });
 
+        cbbSearchLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbSearchLoai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbSearchLoaiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -477,6 +505,8 @@ public class Form_SanPham extends javax.swing.JPanel {
                                 .addComponent(rdoListApDung)
                                 .addGap(32, 32, 32)
                                 .addComponent(rdoListNgungApDung)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbbSearchLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnAdd)
                                 .addGap(18, 18, 18)
@@ -498,22 +528,18 @@ public class Form_SanPham extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addGap(8, 8, 8)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAdd)
-                            .addComponent(btnUpdate)
-                            .addComponent(btnRemove)
-                            .addComponent(btnClear)
-                            .addComponent(jLabel4)))
-                    .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(rdoListApDung)
-                            .addComponent(rdoListNgungApDung))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdd)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnRemove)
+                    .addComponent(btnClear)
+                    .addComponent(jLabel4)
+                    .addComponent(rdoListApDung)
+                    .addComponent(rdoListNgungApDung)
+                    .addComponent(cbbSearchLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -639,7 +665,7 @@ public class Form_SanPham extends javax.swing.JPanel {
             } else {
                 hinhAnh = monAnn.getHinhAnh();
             }
-
+            
             int trangThai;
             if (rdoApDung.isSelected()) {
                 trangThai = 0;
@@ -691,7 +717,7 @@ public class Form_SanPham extends javax.swing.JPanel {
         FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpg", "jpeg");
         browseImageFile.addChoosableFileFilter(fnef);
         int showOpenDialogue = browseImageFile.showOpenDialog(null);
-
+        
         if (showOpenDialogue == JFileChooser.APPROVE_OPTION) {
             File selectedImageFile = browseImageFile.getSelectedFile();
             selectedImagePath = selectedImageFile.getAbsolutePath();
@@ -712,6 +738,14 @@ public class Form_SanPham extends javax.swing.JPanel {
         showData(listMonAn);
     }//GEN-LAST:event_searchText1CaretUpdate
 
+    private void cbbSearchLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbSearchLoaiActionPerformed
+        // TODO add your handling code here:
+//        String ma = cbbSearchLoai.getSelectedItem().toString();
+//        Loai loai = loaiService.getOne(ma);
+//        listMonAn = monAnService.getMonAnLoai(loai);
+//        showData(listMonAn);
+    }//GEN-LAST:event_cbbSearchLoaiActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -724,6 +758,7 @@ public class Form_SanPham extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cbbLoai;
+    private javax.swing.JComboBox<String> cbbSearchLoai;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
