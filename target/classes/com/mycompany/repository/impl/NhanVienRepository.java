@@ -161,7 +161,7 @@ public class NhanVienRepository implements ICommonRepository<NhanVien, Boolean, 
     public List<NhanVien> searchByNameAndMa(String name, String ma) {
         List<NhanVien> lisstNV = new ArrayList<>();
         try ( Session session = HibernateUtil.getFactory().openSession()) {
-            Query query = session.createQuery("FROM NhanVien WHERE ma = :Ma OR ten = :Ten");
+            Query query = session.createQuery("FROM NhanVien WHERE ma LIKE :Ma OR ten LIKE :Ten");
             query.setParameter("Ma", "%" + ma + "%");
             query.setParameter("Ten", "%" + name + "%");
             lisstNV = query.getResultList();
