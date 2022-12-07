@@ -1292,87 +1292,9 @@ public class Form_Home extends javax.swing.JPanel {
 
     private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
         // TODO add your handling code here:
-//        if ("".equals(txtSearch.getText())) {
-//            return;
-//        }
-//        for (DanhMuc danhMuc : listDanhMuc) {
-//
-//            if (cbbSanPham.getSelectedItem().equals("Combo")) {
-//                String search = txtSearch.getText();
-//                if ("".equals(search)) {
-//                    lstComboResponses = comboResponseService.getAll();
-//                    loadDataCombo(lstComboResponses);
-//                } else {
-//                    if (!search.matches("\\d+")) {
-//                        lstComboResponses = comboResponseService.getByTenComBo(search);
-//                        loadDataCombo(lstComboResponses);
-//                    } else {
-//                        lstComboResponses = comboResponseService.getByDonGia(new BigDecimal(search));
-//                        loadDataCombo(lstComboResponses);
-//                    }
-//                }
-//            } else if (cbbSanPham.getSelectedItem().equals("Đồ ăn")) {
-//                String search = txtSearch.getText();
-//                if ("".equals(search)) {
-//                    lstMAReponByDM = monAnResponseService.getByDanhMuc("Đồ ăn");
-//                    showDataMonAn(lstMAReponByDM);
-////                JOptionPane.showMessageDialog(this, "Có if nhé");
-//                } else {
-//                    if (!search.matches("\\d+")) {
-//                        lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(search, "Đồ ăn");
-//                        List<MonAnResponse> lstSearch = new ArrayList<>();
-//                        for (MonAnResponse monAnResponse : lstMAReponByDM) {
-//                            MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
-//                            if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ ăn")) {
-//                                lstSearch.add(monAnResponse);
-//                            }
-//                        }
-//                        showDataMonAn(lstSearch);
-//                    } else {
-//                        lstMAReponByDM = monAnResponseService.getByDanhMucAndDonGia(new BigDecimal(search), "Đồ ăn");
-//                        List<MonAnResponse> lstSearch = new ArrayList<>();
-//                        for (MonAnResponse monAnResponse : lstMAReponByDM) {
-//                            MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
-//                            if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ ăn")) {
-//                                lstSearch.add(monAnResponse);
-//                            }
-//                        }
-//                        showDataMonAn(lstSearch);
-//                    }
-//                }
-//            } else {
-//                String search = txtSearch.getText();
-//                if ("".equals(search)) {
-//                    lstMAReponByDM = monAnResponseService.getByDanhMuc("Đồ uống");
-//                    showDataMonAn(lstMAReponByDM);
-////                JOptionPane.showMessageDialog(this, "Có if nhé");
-//                } else {
-//                    if (!search.matches("\\d+")) {
-//                        lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(search, "Đồ uống");
-//                        List<MonAnResponse> lstSearch = new ArrayList<>();
-//                        for (MonAnResponse monAnResponse : lstMAReponByDM) {
-//                            MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
-//                            if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ uống")) {
-//                                lstSearch.add(monAnResponse);
-//                            }
-//                        }
-//                        showDataMonAn(lstSearch);
-//                    } else {
-//                        lstMAReponByDM = monAnResponseService.getByDanhMucAndDonGia(new BigDecimal(search), "Đồ uống");
-//                        List<MonAnResponse> lstSearch = new ArrayList<>();
-//                        for (MonAnResponse monAnResponse : lstMAReponByDM) {
-//                            MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
-//                            if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ uống")) {
-//                                lstSearch.add(monAnResponse);
-//                            }
-//                        }
-//                        showDataMonAn(lstSearch);
-//
-//                    }
-//                }
-//            }
-//        }
-
+        for (DanhMuc danhMuc : listDanhMuc) {
+            System.out.println(danhMuc);
+        }
         if (cbbSanPham.getSelectedItem().equals("Combo")) {
             String search = txtSearch.getText();
             if ("".equals(search)) {
@@ -1387,66 +1309,146 @@ public class Form_Home extends javax.swing.JPanel {
                     loadDataCombo(lstComboResponses);
                 }
             }
-        } else if (cbbSanPham.getSelectedItem().equals("Đồ ăn")) {
-            String search = txtSearch.getText();
-            if ("".equals(search)) {
-                lstMAReponByDM = monAnResponseService.getByDanhMuc("Đồ ăn");
-                showDataMonAn(lstMAReponByDM);
-//                JOptionPane.showMessageDialog(this, "Có if nhé");
-            } else {
-                if (!search.matches("\\d+")) {
-                    lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(search, "Đồ ăn");
-                    List<MonAnResponse> lstSearch = new ArrayList<>();
-                    for (MonAnResponse monAnResponse : lstMAReponByDM) {
-                        MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
-                        if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ ăn")) {
-                            lstSearch.add(monAnResponse);
-                        }
-                    }
-                    showDataMonAn(lstSearch);
-                } else {
-                    lstMAReponByDM = monAnResponseService.getByDanhMucAndDonGia(new BigDecimal(search), "Đồ ăn");
-                    List<MonAnResponse> lstSearch = new ArrayList<>();
-                    for (MonAnResponse monAnResponse : lstMAReponByDM) {
-                        MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
-                        if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ ăn")) {
-                            lstSearch.add(monAnResponse);
-                        }
-                    }
-                    showDataMonAn(lstSearch);
-                }
-            }
         } else {
-            String search = txtSearch.getText();
-            if ("".equals(search)) {
-                lstMAReponByDM = monAnResponseService.getByDanhMuc("Đồ uống");
-                showDataMonAn(lstMAReponByDM);
+            for (DanhMuc danhMuc : listDanhMuc) {
+                if (cbbSanPham.getSelectedItem().equals(danhMuc.getTenDanhMuc())) {
+                    String search = txtSearch.getText();
+                    if ("".equals(search)) {
+                        lstMAReponByDM = monAnResponseService.getByDanhMuc(danhMuc.getTenDanhMuc());
+                        showDataMonAn(lstMAReponByDM);
 //                JOptionPane.showMessageDialog(this, "Có if nhé");
-            } else {
-                if (!search.matches("\\d+")) {
-                    lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(search, "Đồ uống");
-                    List<MonAnResponse> lstSearch = new ArrayList<>();
-                    for (MonAnResponse monAnResponse : lstMAReponByDM) {
-                        MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
-                        if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ uống")) {
-                            lstSearch.add(monAnResponse);
+                    } else {
+                        if (!search.matches("\\d+")) {
+                            lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(search, danhMuc.getTenDanhMuc());
+                            List<MonAnResponse> lstSearch = new ArrayList<>();
+                            for (MonAnResponse monAnResponse : lstMAReponByDM) {
+                                MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+                                if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals(danhMuc.getTenDanhMuc())) {
+                                    lstSearch.add(monAnResponse);
+                                }
+                            }
+                            showDataMonAn(lstSearch);
+                        } else {
+                            lstMAReponByDM = monAnResponseService.getByDanhMucAndDonGia(new BigDecimal(search), danhMuc.getTenDanhMuc());
+                            List<MonAnResponse> lstSearch = new ArrayList<>();
+                            for (MonAnResponse monAnResponse : lstMAReponByDM) {
+                                MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+                                if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals(danhMuc.getTenDanhMuc())) {
+                                    lstSearch.add(monAnResponse);
+                                }
+                            }
+                            showDataMonAn(lstSearch);
                         }
                     }
-                    showDataMonAn(lstSearch);
-                } else {
-                    lstMAReponByDM = monAnResponseService.getByDanhMucAndDonGia(new BigDecimal(search), "Đồ uống");
-                    List<MonAnResponse> lstSearch = new ArrayList<>();
-                    for (MonAnResponse monAnResponse : lstMAReponByDM) {
-                        MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
-                        if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ uống")) {
-                            lstSearch.add(monAnResponse);
-                        }
-                    }
-                    showDataMonAn(lstSearch);
+                }
+                if (cbbSanPham.getSelectedItem().equals(danhMuc.getTenDanhMuc())) {
+                    String search = txtSearch.getText();
+                    if ("".equals(search)) {
+                        lstMAReponByDM = monAnResponseService.getByDanhMuc(danhMuc.getTenDanhMuc());
+                        showDataMonAn(lstMAReponByDM);
+//                JOptionPane.showMessageDialog(this, "Có if nhé");
+                    } else {
+                        if (!search.matches("\\d+")) {
+                            lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(search, danhMuc.getTenDanhMuc());
+                            List<MonAnResponse> lstSearch = new ArrayList<>();
+                            for (MonAnResponse monAnResponse : lstMAReponByDM) {
+                                MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+                                if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals(danhMuc.getTenDanhMuc())) {
+                                    lstSearch.add(monAnResponse);
+                                }
+                            }
+                            showDataMonAn(lstSearch);
+                        } else {
+                            lstMAReponByDM = monAnResponseService.getByDanhMucAndDonGia(new BigDecimal(search), danhMuc.getTenDanhMuc());
+                            List<MonAnResponse> lstSearch = new ArrayList<>();
+                            for (MonAnResponse monAnResponse : lstMAReponByDM) {
+                                MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+                                if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals(danhMuc.getTenDanhMuc())) {
+                                    lstSearch.add(monAnResponse);
+                                }
+                            }
+                            showDataMonAn(lstSearch);
 
+                        }
+                    }
                 }
             }
         }
+
+//        if (cbbSanPham.getSelectedItem().equals("Combo")) {
+//            String search = txtSearch.getText();
+//            if ("".equals(search)) {
+//                lstComboResponses = comboResponseService.getAll();
+//                loadDataCombo(lstComboResponses);
+//            } else {
+//                if (!search.matches("\\d+")) {
+//                    lstComboResponses = comboResponseService.getByTenComBo(search);
+//                    loadDataCombo(lstComboResponses);
+//                } else {
+//                    lstComboResponses = comboResponseService.getByDonGia(new BigDecimal(search));
+//                    loadDataCombo(lstComboResponses);
+//                }
+//            }
+//        } else if (cbbSanPham.getSelectedItem().equals("Đồ ăn")) {
+//            String search = txtSearch.getText();
+//            if ("".equals(search)) {
+//                lstMAReponByDM = monAnResponseService.getByDanhMuc("Đồ ăn");
+//                showDataMonAn(lstMAReponByDM);
+////                JOptionPane.showMessageDialog(this, "Có if nhé");
+//            } else {
+//                if (!search.matches("\\d+")) {
+//                    lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(search, "Đồ ăn");
+//                    List<MonAnResponse> lstSearch = new ArrayList<>();
+//                    for (MonAnResponse monAnResponse : lstMAReponByDM) {
+//                        MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+//                        if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ ăn")) {
+//                            lstSearch.add(monAnResponse);
+//                        }
+//                    }
+//                    showDataMonAn(lstSearch);
+//                } else {
+//                    lstMAReponByDM = monAnResponseService.getByDanhMucAndDonGia(new BigDecimal(search), "Đồ ăn");
+//                    List<MonAnResponse> lstSearch = new ArrayList<>();
+//                    for (MonAnResponse monAnResponse : lstMAReponByDM) {
+//                        MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+//                        if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ ăn")) {
+//                            lstSearch.add(monAnResponse);
+//                        }
+//                    }
+//                    showDataMonAn(lstSearch);
+//                }
+//            }
+//        } else {
+//            String search = txtSearch.getText();
+//            if ("".equals(search)) {
+//                lstMAReponByDM = monAnResponseService.getByDanhMuc("Đồ uống");
+//                showDataMonAn(lstMAReponByDM);
+////                JOptionPane.showMessageDialog(this, "Có if nhé");
+//            } else {
+//                if (!search.matches("\\d+")) {
+//                    lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(search, "Đồ uống");
+//                    List<MonAnResponse> lstSearch = new ArrayList<>();
+//                    for (MonAnResponse monAnResponse : lstMAReponByDM) {
+//                        MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+//                        if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ uống")) {
+//                            lstSearch.add(monAnResponse);
+//                        }
+//                    }
+//                    showDataMonAn(lstSearch);
+//                } else {
+//                    lstMAReponByDM = monAnResponseService.getByDanhMucAndDonGia(new BigDecimal(search), "Đồ uống");
+//                    List<MonAnResponse> lstSearch = new ArrayList<>();
+//                    for (MonAnResponse monAnResponse : lstMAReponByDM) {
+//                        MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+//                        if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals("Đồ uống")) {
+//                            lstSearch.add(monAnResponse);
+//                        }
+//                    }
+//                    showDataMonAn(lstSearch);
+//
+//                }
+//            }
+//        }
     }//GEN-LAST:event_txtSearchCaretUpdate
 
     private void btnThemBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemBanActionPerformed
@@ -1682,7 +1684,7 @@ public class Form_Home extends javax.swing.JPanel {
                 Ban b = (Ban) banService.getOne(lstChiTietBanHoaDon.getBan().getMaBan().toString());
                 soLuong += b.getSoLuongChoNgoi();
             }
-            if (soLuongChoNgoi < (Integer.valueOf(soLuong)+hd.getSoLuongKhach())) {
+            if (soLuongChoNgoi < (Integer.valueOf(soLuong) + hd.getSoLuongKhach())) {
                 JOptionPane.showMessageDialog(this, "Số lượng khách vượt quá số lượng chỗ ngồi");
             } else {
                 hd.setSoLuongKhach(hd.getSoLuongKhach() + Integer.valueOf(soLuong));
