@@ -4,6 +4,7 @@
  */
 package com.mycompany.repository.impl;
 
+import com.mycompany.customModel.MonAnCoKM;
 import com.mycompany.domainModel.DanhMuc;
 import com.mycompany.domainModel.KhuyenMai;
 import com.mycompany.domainModel.MonAn;
@@ -144,6 +145,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
         List<MonAn> monAns = query.getResultList();
         return monAns;
     }
+
     //
     public List<MonAn> searchMonAnTheoTenLoai(String ten, DanhMuc danhMuc) {
         String hql = fromTable + "WHERE tenMonAn like :tenMonAnMoi AND loai.danhMuc = :danhMuc AND trangThai = 0";
@@ -163,10 +165,14 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
     }
 
     @Override
-    public List<MonAn> getMonAnCoKM() {
-        List<MonAn> monAns = new ArrayList<>();
-//        String hql = "FROM MonAn MA RIGHT OUTER JOIN KhuyenMai KM ON KM.id = MA.khuyenMai.id";
-//        Query query = session.createQuery(hql);
+    public List<MonAnCoKM> getMonAnCoKM() {
+        List<MonAnCoKM> monAns = new ArrayList<>();
+        String hql = "SELECT NEW com.mycompany.customModel.MonAnCoKM(MA.maMonAn, MA.tenMonAn, KMCT.id, KM.id)"
+                + "  FROM MonAn MA RIGHT JOIN KhuyenMaiChiTiet KMCT ON MA.id = KMCT.monAn.id\n"
+                + "JOIN KhuyenMai KM ON KMCT.khuyenMai.id = KM.id\n"
+                + "WHERE KMCT.trangThai = 0 AND KM.trangThai = 0";
+        Query query = session.createQuery(hql);
+        monAns = query.getResultList();
 //        monAns = query.getResultList();
         return monAns;
     }
@@ -186,7 +192,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
     public List<MonAn> getMonAnLeftJoinKMCT() {
         List<MonAn> listMA = new ArrayList<>();
         try ( Session session = HibernateUtil.getFactory().openSession()) {
-            Query query = session.createQuery("SELECT FROM MonAn MA LEFT JOIN KhuyenMaiChiTiet KMCT "
+            Query query = session.createQuery(" FROM MonAn MA LEFT JOIN KhuyenMaiChiTiet KMCT "
                     + "ON MA.id = KMCT.monAn.id");
             listMA = query.getResultList();
         } finally {
@@ -195,9 +201,9 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
     }
 
     public static void main(String[] args) {
-        List<MonAn> lsList = new MonAnRepository().getAll();
-        for (MonAn monAn : lsList) {
-            System.out.println(monAn.getMaMonAn());
+        List<MonAnCoKM> lsList = new MonAnRepository().getMonAnCoKM();
+        for (MonAnCoKM monAn : lsList) {
+            System.out.println(monAn.getMaMA());
         }
     }
 }

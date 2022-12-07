@@ -4,6 +4,7 @@
  */
 package com.mycompany.repository;
 
+import com.mycompany.customModel.MonAnCoKM;
 import com.mycompany.domainModel.ComBo;
 import com.mycompany.domainModel.MonAn;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public interface IMonAnRepository {
 
-    List<MonAn> getMonAnCoKM();
+    List<MonAnCoKM> getMonAnCoKM();
 
     List<MonAn> getMonAnByComBo(MonAn id);
 

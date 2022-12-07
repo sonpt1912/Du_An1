@@ -4,9 +4,9 @@
  */
 package com.mycompany.service.impl;
 
+import com.mycompany.customModel.MonAnCoKM;
 import com.mycompany.domainModel.DanhMuc;
 import com.mycompany.domainModel.KhuyenMai;
-import com.mycompany.domainModel.KhuyenMaiChiTiet;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.repository.ICommonRepository;
 import com.mycompany.repository.impl.MonAnRepository;
@@ -26,7 +26,7 @@ public class MonAnService implements com.mycompany.service.ICommonService<MonAn,
 
     @Override
     public List<MonAn> getAll() {
-        return mar.getAll();
+        return monAnRepo.getAll();
     }
 
     @Override
@@ -56,15 +56,20 @@ public class MonAnService implements com.mycompany.service.ICommonService<MonAn,
     public List<MonAn> getMonAnByTrangThai(int trangThai) {
         return monAnRepo.getAllMonAnByTrangThai(trangThai);
     }
-    
+
     public List<MonAn> getMonAnTheoTen(String ten) {
         return monAnRepo.searchMonAnTheoTen(ten);
     }
+
     public List<MonAn> getMonAnTheoTenLoai(String ten, DanhMuc danhMuc) {
         return monAnRepo.searchMonAnTheoTenLoai(ten, danhMuc);
     }
 
     public static void main(String[] args) {
+        List<MonAnCoKM> list = new MonAnService().getMonAnCoKM();
+        for (MonAnCoKM monAn : list) {
+            System.out.println(list.toString());
+        }
     }
 
     public String maTuDong() {
@@ -98,7 +103,7 @@ public class MonAnService implements com.mycompany.service.ICommonService<MonAn,
     }
 
     @Override
-    public List<MonAn> getMonAnCoKM() {
+    public List<MonAnCoKM> getMonAnCoKM() {
         return monAnRepo.getMonAnCoKM();
     }
 

@@ -4,12 +4,14 @@
  */
 package com.mycompany.util;
 
+import com.mycompany.customModel.MonAnCoKM;
 import com.mycompany.domainModel.KhuyenMai;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.service.impl.KhuyenMaiService;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -90,6 +92,30 @@ public class KhuyenMaiUtil {
         return trangThai;
     }
 
+    public List<MonAn> listKoKM(List<MonAn> listAll, List<MonAnCoKM> listCoKM) {
+        List<MonAn> listMAkoKM = new ArrayList<>();
+        //chạy for list all, so sánh lần lượt với list KM, nếu ko trùng => add vvafo list ko có KM:
+        if (listAll.size() > 0 && listCoKM.size() > 0) {
+            for (int i = 0; i < listAll.size(); i++) {
+                MonAn monAn = listAll.get(i);
+                int check = 0;
+                for (int j = 0; j < listCoKM.size(); j++) {
+                    MonAnCoKM monAnKM = listCoKM.get(j);
+                    if (monAn.getMaMonAn().equals(monAnKM.getMaMA())) {
+                        check++;
+                    }
+                }
+                if (check <= 0) {
+                    listMAkoKM.add(listAll.get(i));
+                }
+            }
+        } else if (listAll.size() > 0 && listCoKM.size() <= 0) {
+            listMAkoKM.addAll(listAll);
+        } else {
+            return null;
+        }
+        return listMAkoKM;
+    }
 //    public static void main(String[] args) {
 //        Date date = Date.valueOf("2022-11-27");
 //        String dateString = "2022-11-29";
