@@ -54,14 +54,12 @@ public class JDialogTachBan extends javax.swing.JDialog {
         }
     }
 
-    private boolean checkMaTrung() {
-        boolean check = true;
+    private int checkMaTrung() {
+        int check = 0;
         listBan = banService.getFull();
         for (int i = 0; i < listBan.size(); i++) {
             if (Integer.valueOf(txtMaBanMoi.getText()) == listBan.get(i).getMaBan()) {
-                return false;
-            } else {
-                check = true;
+                check = 1;
                 return check;
             }
         }
@@ -305,7 +303,7 @@ public class JDialogTachBan extends javax.swing.JDialog {
         String maBanMoi = txtMaBanMoi.getText();
         if (maBanMoi.equalsIgnoreCase("") || maBanMoi.matches("\\s+")) {
             JOptionPane.showMessageDialog(this, "Không được để trống");
-        } else if (checkMaTrung() == false || maBanMoi.equalsIgnoreCase(ma)) {
+        } else if (checkMaTrung() == 1 || maBanMoi.equalsIgnoreCase(ma)) {
             JOptionPane.showMessageDialog(this, "Mã Trùng");
         } else {
             String soLuongCho = JOptionPane.showInputDialog("Mời bạn nhập số lượng chỗ: ");
