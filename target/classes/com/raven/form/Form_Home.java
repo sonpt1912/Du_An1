@@ -208,6 +208,7 @@ public class Form_Home extends javax.swing.JPanel {
         gopHD = new javax.swing.JMenuItem();
         tachHD = new javax.swing.JMenuItem();
         chuyenBan = new javax.swing.JMenuItem();
+        ThemKhach = new javax.swing.JMenuItem();
         popMenu1 = new javax.swing.JPopupMenu();
         GopBan = new javax.swing.JMenuItem();
         TachBan = new javax.swing.JMenuItem();
@@ -237,7 +238,6 @@ public class Form_Home extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         btnThemBan = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
-        btnHuy = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         txtSdtKH = new javax.swing.JTextField();
@@ -262,6 +262,8 @@ public class Form_Home extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         btnRefresh = new javax.swing.JButton();
         btnThanhToan = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        lbSoLuongKhach = new javax.swing.JLabel();
 
         gopHD.setText("Gộp hoá đơn");
         gopHD.addActionListener(new java.awt.event.ActionListener() {
@@ -286,6 +288,14 @@ public class Form_Home extends javax.swing.JPanel {
             }
         });
         popMenu.add(chuyenBan);
+
+        ThemKhach.setText("Thêm số lượng khách");
+        ThemKhach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ThemKhachActionPerformed(evt);
+            }
+        });
+        popMenu.add(ThemKhach);
 
         GopBan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         GopBan.setText("Gộp Bàn");
@@ -450,7 +460,7 @@ public class Form_Home extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 39, Short.MAX_VALUE)
+            .addGap(0, 40, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -489,15 +499,6 @@ public class Form_Home extends javax.swing.JPanel {
         jComboBox2.setBackground(new java.awt.Color(255, 255, 0));
         jComboBox2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tầng 1", "Tầng 2" }));
-
-        btnHuy.setBackground(new java.awt.Color(255, 51, 0));
-        btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnHuy.setText("Hủy");
-        btnHuy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHuyActionPerformed(evt);
-            }
-        });
 
         btnClear.setBackground(new java.awt.Color(204, 204, 204));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -604,6 +605,11 @@ public class Form_Home extends javax.swing.JPanel {
             }
         });
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel11.setText("Số lượng khách:");
+
+        lbSoLuongKhach.setText("                             ");
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -631,7 +637,7 @@ public class Form_Home extends javax.swing.JPanel {
                                         .addGap(101, 101, 101)
                                         .addComponent(btnRefresh))
                                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 19, Short.MAX_VALUE)))
+                                .addGap(0, 18, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
@@ -709,12 +715,15 @@ public class Form_Home extends javax.swing.JPanel {
                                         .addGap(14, 14, 14)
                                         .addComponent(btnThemKH)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnHuy)
-                                            .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(112, 112, 112))))
+                                .addGap(67, 67, 67))
+                            .addGroup(panelBorder1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(30, 30, 30)
+                                .addComponent(lbSoLuongKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -783,25 +792,27 @@ public class Form_Home extends javax.swing.JPanel {
                                     .addComponent(jLabel14)
                                     .addComponent(txtChuyenKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cbChuyenKhoan))))
-                        .addGap(20, 20, 20)
-                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtSdtKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16)
-                            .addComponent(btnSearchKH))
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
+                                .addGap(52, 52, 52)
+                                .addComponent(btnThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(panelBorder1Layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel11)
+                                    .addComponent(lbSoLuongKhach))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtSdtKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel16)
+                                    .addComponent(btnSearchKH))
                                 .addGap(10, 10, 10)
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel17)
                                     .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(btnThemKH)
-                                        .addComponent(btnClear)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnHuy))
-                            .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addComponent(btnClear)))))
                         .addGap(37, 37, 37))))
         );
 
@@ -868,6 +879,8 @@ public class Form_Home extends javax.swing.JPanel {
             // con vớt về hoá đơn
             HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
             hdTong = hd;
+            //fill so khách có ở trong hd
+            lbSoLuongKhach.setText(hd.getSoLuongKhach().toString());
             // lấy ra những giao dịch có trong hoá đơn đã được chọn
             List<GiaoDich> giaoDichs = gds2.getTheoHoaDon(hd);
 //            for (GiaoDich giaoDich : giaoDichs) {
@@ -1499,10 +1512,6 @@ public class Form_Home extends javax.swing.JPanel {
         chuyenBan.setVisible(true);
     }//GEN-LAST:event_chuyenBanActionPerformed
 
-    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnHuyActionPerformed
-
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         //check xem có đang chọn hoá đơn nào không
         if (lbMaHD.getText().isEmpty()) {
@@ -1656,6 +1665,32 @@ public class Form_Home extends javax.swing.JPanel {
 //            txtTenKH.setText(kh.getTen());
 //        }
     }//GEN-LAST:event_txtSdtKHKeyPressed
+
+    private void ThemKhachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThemKhachActionPerformed
+        // TODO add your handling code here:
+        String soLuong = JOptionPane.showInputDialog("Mời nhập số lượng");
+        if (soLuong == null) {
+            return;
+        } else if (!soLuong.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải là số");
+            return;
+        } else {
+            HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
+            List<ChiTietBanHoaDon> lstChiTietBanHoaDons = chiTietBanHoaDonService.getByHoaDon(hd);
+            int soLuongChoNgoi = 0;
+            for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
+                Ban b = (Ban) banService.getOne(lstChiTietBanHoaDon.getBan().getMaBan().toString());
+                soLuong += b.getSoLuongChoNgoi();
+            }
+            if (soLuongChoNgoi < (Integer.valueOf(soLuong)+hd.getSoLuongKhach())) {
+                JOptionPane.showMessageDialog(this, "Số lượng khách vượt quá số lượng chỗ ngồi");
+            } else {
+                hd.setSoLuongKhach(hd.getSoLuongKhach() + Integer.valueOf(soLuong));
+                JOptionPane.showMessageDialog(this, hds.update(hd, hd.getMaHoaDon()));
+                lbSoLuongKhach.setText(hd.getSoLuongKhach() + Integer.valueOf(soLuong) + "");
+            }
+        }
+    }//GEN-LAST:event_ThemKhachActionPerformed
 
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
@@ -1859,8 +1894,8 @@ public class Form_Home extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem GopBan;
     private javax.swing.JMenuItem TachBan;
+    private javax.swing.JMenuItem ThemKhach;
     private javax.swing.JButton btnClear;
-    private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSearchKH;
     private javax.swing.JButton btnTaoHoaDon;
@@ -1876,6 +1911,7 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -1896,6 +1932,7 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JLabel lbMaHD;
     private javax.swing.JLabel lbMaHDThanhToan;
     private javax.swing.JLabel lbSoBan;
+    private javax.swing.JLabel lbSoLuongKhach;
     private javax.swing.JLayeredPane panel;
     private com.raven.swing.PanelBorder panelBorder1;
     private javax.swing.JPopupMenu popMenu;

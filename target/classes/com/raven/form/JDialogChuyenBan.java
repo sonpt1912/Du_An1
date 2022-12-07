@@ -46,7 +46,7 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
         String headerBan[] = {"STT", "Mã Bàn", "Số lượng chỗ ngồi", "Khu vực", "Trạng thái"};
         tbBanMoi.setModel(dtmBan);
         dtmBan.setColumnIdentifiers(headerBan);
-        lstBanResponses = banResponseService.getByTrangThai(0);
+        lstBanResponses = banResponseService.getByTrangThaiAndSoLuongChoNgoi(0, hd.getSoLuongKhach());
         showDataBan(lstBanResponses);
         fillBanCu();
     }

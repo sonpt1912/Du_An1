@@ -22,8 +22,8 @@ public class BanResponseRepository implements IBanResponseRepository<BanResponse
 
     @Override
     public List<BanResponseRepository> getAll() {
-        String hql = "SELECT new com.mycompany.customModel.BanResponse(B.maBan,B.soLuongChoNgoi,B.kv.tenKV,B.trangThai)" + 
-                fromTable + "WHERE B.trangThai <> 2";
+        String hql = "SELECT new com.mycompany.customModel.BanResponse(B.maBan,B.soLuongChoNgoi,B.kv.tenKV,B.trangThai)"
+                + fromTable + "WHERE B.trangThai <> 2";
         Query query = session.createQuery(hql);
         List<BanResponseRepository> banResponses = query.getResultList();
         return banResponses;
@@ -34,6 +34,16 @@ public class BanResponseRepository implements IBanResponseRepository<BanResponse
         String hql = "SELECT new com.mycompany.customModel.BanResponse(B.maBan,B.soLuongChoNgoi,B.kv.tenKV,B.trangThai)" + fromTable
                 + "WHERE trangThai = 0";
         Query query = session.createQuery(hql);
+        List<BanResponseRepository> banResponses = query.getResultList();
+        return banResponses;
+    }
+
+    @Override
+    public List<BanResponseRepository> getByTrangThaiAndSoLuongChoNgoi(Integer trangThai, Integer soLuongKhach) {
+        String hql = "SELECT new com.mycompany.customModel.BanResponse(B.maBan,B.soLuongChoNgoi,B.kv.tenKV,B.trangThai)" + fromTable
+                + "WHERE B.trangThai = 0 AND B.soLuongChoNgoi >= :soLuongKhach";
+        Query query = session.createQuery(hql);
+        query.setParameter("soLuongKhach", soLuongKhach);
         List<BanResponseRepository> banResponses = query.getResultList();
         return banResponses;
     }
