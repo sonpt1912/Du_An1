@@ -12,7 +12,8 @@ import com.mycompany.domainModel.NhanVien;
  * @author RAVEN
  */
 public class Form_TaiKhoan extends javax.swing.JPanel {
-    private NhanVien nv ;
+
+    private NhanVien nv;
 
     /**
      * Creates new form Form_1
@@ -42,6 +43,7 @@ public class Form_TaiKhoan extends javax.swing.JPanel {
     
     private void enbl() {
         txtDiaChi.setEnabled(false);
+        txtTen.setEnabled(false);
         txtEmail.setEnabled(false);
         txtHo.setEnabled(false);
         txtMa.setEnabled(false);
