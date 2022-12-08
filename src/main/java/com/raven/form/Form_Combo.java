@@ -806,6 +806,8 @@ public class Form_Combo extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "đơn giá được để trống tên món ăn");
             } else if (!txtDonGia.getText().matches("[0-9]+")) {
                 JOptionPane.showMessageDialog(this, "đơn giá phải là số");
+            } else if (comBoo.getTrangThai() != 2) {
+                JOptionPane.showMessageDialog(this, "không được sửa combo đang áp dụng");
             } else {
                 int apDung;
                 if (rdoApDung.isSelected()) {
@@ -826,8 +828,9 @@ public class Form_Combo extends javax.swing.JPanel {
                 if (checkConfirm == 0) {
                     String update = comBoService.update(comB, txtMa.getText());
                     JOptionPane.showMessageDialog(this, update);
-                    rdoListApDungActionPerformed(evt);
+                    rdoListApDung.setSelected(true);
                     showDataComBo(listComBo = comBoService.getAllByTrangThai(0));
+                    clear();
                 }
             }
         }
