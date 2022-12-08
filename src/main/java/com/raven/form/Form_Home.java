@@ -925,6 +925,7 @@ public class Form_Home extends javax.swing.JPanel {
             HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
             hdTong = hd;
             //fill so khách có ở trong hd
+            JOptionPane.showMessageDialog(this, hd.getSoLuongKhach());
             lbSoLuongKhach.setText(hd.getSoLuongKhach().toString());
             // lấy ra những giao dịch có trong hoá đơn đã được chọn
             List<GiaoDich> giaoDichs = gds2.getTheoHoaDon(hd);
@@ -1727,14 +1728,14 @@ public class Form_Home extends javax.swing.JPanel {
             int soLuongChoNgoi = 0;
             for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
                 Ban b = (Ban) banService.getOne(lstChiTietBanHoaDon.getBan().getMaBan().toString());
-                soLuong += b.getSoLuongChoNgoi();
+                soLuongChoNgoi += b.getSoLuongChoNgoi();
             }
             if (soLuongChoNgoi < (Integer.valueOf(soLuong) + hd.getSoLuongKhach())) {
                 JOptionPane.showMessageDialog(this, "Số lượng khách vượt quá số lượng chỗ ngồi");
             } else {
                 hd.setSoLuongKhach(hd.getSoLuongKhach() + Integer.valueOf(soLuong));
                 JOptionPane.showMessageDialog(this, hds.update(hd, hd.getMaHoaDon()));
-                lbSoLuongKhach.setText(hd.getSoLuongKhach() + Integer.valueOf(soLuong) + "");
+                lbSoLuongKhach.setText(hd.getSoLuongKhach().toString());
             }
         }
     }//GEN-LAST:event_ThemKhachActionPerformed
