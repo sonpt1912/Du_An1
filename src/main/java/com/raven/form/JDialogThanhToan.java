@@ -39,7 +39,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class JDialogThanhToan extends javax.swing.JDialog {
-
+    
     private List<HoaDonChiTiet> listHdCt = new ArrayList<>();
     private HoaDonThanhToanCustom hdCustom;
     private DefaultTableModel dtmHoaDonCT = new DefaultTableModel();
@@ -61,16 +61,19 @@ public class JDialogThanhToan extends javax.swing.JDialog {
 //    private String soLuong;
 //    private String tongTien;
     private DecimalFormat df = new DecimalFormat("#,###.00");
-    private BigDecimal tongTienTT = new BigDecimal(0);
     private KhachHang khachHang = new KhachHang();
+    private BigDecimal tongTienTT = new BigDecimal(0);
+    private BigDecimal tienTraLai = new BigDecimal(0);
+    private BigDecimal tienMat = new BigDecimal(0);
+    private BigDecimal tienCK = new BigDecimal(0);
 
     /**
      * Creates new form JDialogThanhToan
      */
-    public JDialogThanhToan(java.awt.Frame parent, boolean modal, HoaDonThanhToanCustom hdCustom) {
+    public JDialogThanhToan(java.awt.Frame parent, boolean modal, HoaDonThanhToanCustom hoaDonCustom) {
         super(parent, modal);
         initComponents();
-        hdCustom = hdCustom;
+        hdCustom = hoaDonCustom;
         hoaDon = hoaDonService.getOne(hdCustom.getMaHD());
         tbHDCT.setModel(dtmHoaDonCT);
         String headerHoaDonCT[] = {"STT", "Tên món ăn", "Giá món ăn", "Số lượng món ăn", "Tên combo", "Giá combo", "Số lượng combo", "Tổng tiền", "Ghi chú"};
@@ -90,9 +93,12 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         } else {
             txtTienDuocGiam.setText("0");
         }
-        txtTiennMat.setText(String.valueOf(hdCustom.getTienMat()));
-        txtChuyenKhoan.setText(String.valueOf(hdCustom.getTienChuyenKhoan()));
-        txtTienThua.setText(String.valueOf(hdCustom.getTienThua()));
+        tienMat = hdCustom.getTienMat();
+        txtTiennMat.setText(tienMat.toString());
+        tienCK = hdCustom.getTienChuyenKhoan();
+        txtChuyenKhoan.setText(tienCK.toString());
+        tienTraLai = hdCustom.getTienThua();
+        txtTienThua.setText(tienTraLai.toString());
         txtGhiChu.setText(hdCustom.getGhiChu());
         txtBan.setText(hdCustom.getListBan());
         lstHDCTResponses = hdctResponseService.getAll(hoaDon);
@@ -116,7 +122,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtTienThanhToan.setText(String.valueOf(df.format(tongTienThanhToan)));
         //txtTienThanhToan.setText(tongTienThanhToan.toString());
     }
-
+    
     private void showDataHDCT(List<HoaDonChiTietResponse> hoaDonChiTietResponses) {
         dtmHoaDonCT.setRowCount(0);
         int stt = 0;
@@ -125,7 +131,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             dtmHoaDonCT.addRow(hoaDonChiTietResponse.toDataRow(stt));
         }
     }
-
+    
     private void thanhToan() {
         HoaDon hd = hoaDonService.getOne(hoaDon.getMaHoaDon());
         //Th1: thanh toán bằng tiền mặt:
@@ -536,6 +542,11 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 txtTiennMatCaretUpdate(evt);
             }
         });
+        txtTiennMat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTiennMatActionPerformed(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setText("TIỀN THỪA           :");
@@ -557,6 +568,11 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtChuyenKhoan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtChuyenKhoanMouseClicked(evt);
+            }
+        });
+        txtChuyenKhoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtChuyenKhoanActionPerformed(evt);
             }
         });
 
@@ -868,7 +884,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             //check tiền mặt:
             if (thanhToanUtil.checkBigDecimal(txtTiennMat.getText())) {
                 //check tìeen đủ chưa:
-                if (new BigDecimal(txtTienThua.getText()).compareTo(new BigDecimal(0)) < 0) {
+                if (tienTraLai.compareTo(new BigDecimal(0)) < 0) {
                     JOptionPane.showMessageDialog(this, "Chưa đủ tiền!");
                 } else {
                     checkInHoaDon();
@@ -897,7 +913,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             //check tiền chuyển khoản:
             if (thanhToanUtil.checkBigDecimal(txtChuyenKhoan.getText())) {
                 //check tìeen đủ chưa:
-                if (new BigDecimal(txtTienThua.getText()).compareTo(new BigDecimal(0)) < 0) {
+                if (tienTraLai.compareTo(new BigDecimal(0)) < 0) {
                     JOptionPane.showMessageDialog(this, "Chưa đủ tiền!");
                 } else {
                     checkInHoaDon();
@@ -926,7 +942,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             //check tiền chuyển khoản và tiền mặt:
             if (thanhToanUtil.checkBigDecimal(txtChuyenKhoan.getText()) && thanhToanUtil.checkBigDecimal(txtTiennMat.getText())) {
                 //check tìeen đủ chưa:
-                if (new BigDecimal(txtTienThua.getText()).compareTo(new BigDecimal(0)) < 0) {
+                if (tienTraLai.compareTo(new BigDecimal(0)) < 0) {
                     JOptionPane.showMessageDialog(this, "Chưa đủ tiền!");
                 } else {
                     checkInHoaDon();
@@ -972,24 +988,24 @@ public class JDialogThanhToan extends javax.swing.JDialog {
 
     private void txtTiennMatCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTiennMatCaretUpdate
         try {
-            BigDecimal tienMat = new BigDecimal(txtTiennMat.getText());
-            BigDecimal chuyenKhoan = new BigDecimal(txtChuyenKhoan.getText());
-            BigDecimal tongTien = new BigDecimal(txtTienThanhToan.getText());
-            BigDecimal tienThua = thanhToanUtil.fillTienThua(tienMat, chuyenKhoan, tongTien);
-            txtTienThua.setText(String.valueOf(tienThua));
+            tienMat = new BigDecimal(txtTiennMat.getText());
+            tienCK = new BigDecimal(txtChuyenKhoan.getText());
+            tienTraLai = thanhToanUtil.fillTienThua(tienMat, tienCK, tongTienTT);
+            txtTienThua.setText(df.format(tienTraLai));
         } catch (Exception e) {
+            //  e.printStackTrace();
         }        // TODO add your handling code here:
     }//GEN-LAST:event_txtTiennMatCaretUpdate
 
     private void txtChuyenKhoanCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtChuyenKhoanCaretUpdate
         try {
-            BigDecimal tienMat = new BigDecimal(txtTiennMat.getText());
-            BigDecimal chuyenKhoan = new BigDecimal(txtChuyenKhoan.getText());
-            BigDecimal tongTien = new BigDecimal(txtTienThanhToan.getText());
-            BigDecimal tienThua = thanhToanUtil.fillTienThua(tienMat, chuyenKhoan, tongTien);
-            txtTienThua.setText(String.valueOf(tienThua));
+            tienMat = new BigDecimal(txtTiennMat.getText());
+            tienCK = new BigDecimal(txtChuyenKhoan.getText());
+            tienTraLai = thanhToanUtil.fillTienThua(tienMat, tienCK, tongTienTT);
+            txtTienThua.setText(df.format(tienTraLai));
         } catch (Exception e) {
-        }        // TODO add your handling code here:
+            //e.printStackTrace();
+        }      // TODO add your handling code here:
     }//GEN-LAST:event_txtChuyenKhoanCaretUpdate
 
     private void txtChuyenKhoanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtChuyenKhoanMouseClicked
@@ -1023,6 +1039,20 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         JDialogThemKH jDialogThemKH = new JDialogThemKH(null, rootPaneCheckingEnabled);
         jDialogThemKH.setVisible(true);
     }//GEN-LAST:event_cbbThemKHActionPerformed
+
+    private void txtTiennMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiennMatActionPerformed
+        if (!cbTienMat.isSelected()) {
+            txtTiennMat.setEditable(false);
+            txtTiennMat.setText("0");
+        }
+    }//GEN-LAST:event_txtTiennMatActionPerformed
+
+    private void txtChuyenKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtChuyenKhoanActionPerformed
+        if (!cbChuyenKhoan.isSelected()) {
+            txtChuyenKhoan.setEditable(false);
+            txtChuyenKhoan.setText("0");
+        }
+    }//GEN-LAST:event_txtChuyenKhoanActionPerformed
     private boolean checkValidatesdt(String sdt) {
         boolean isCheckSdt = false;
         if (!sdt.matches("(0)((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))[0-9]{7}")) {
