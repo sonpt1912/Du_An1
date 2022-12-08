@@ -816,8 +816,8 @@ public class Form_Combo extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "đơn giá được để trống tên món ăn");
             } else if (!txtDonGia.getText().matches("[0-9]+")) {
                 JOptionPane.showMessageDialog(this, "đơn giá phải là số");
-            } else if (comBoo.getTrangThai() != 2) {
-                JOptionPane.showMessageDialog(this, "vui lòng chọn combo ở trạng thái chờ áp dụng");
+            } else if (comBoo.getTrangThai() == 2) {
+                JOptionPane.showMessageDialog(this, "vui lòng chọn combo ở trạng thái chờ áp dụng hoặc đã hủy");
             } else {
                 int apDung;
                 if (rdoApDung.isSelected()) {
