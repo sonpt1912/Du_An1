@@ -26,6 +26,7 @@ import java.awt.Component;
 import java.awt.Image;
 import java.awt.PopupMenu;
 import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -215,6 +216,7 @@ public class Form_Combo extends javax.swing.JPanel {
         buttonGroup2 = new javax.swing.ButtonGroup();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         xoa = new javax.swing.JMenuItem();
+        sua = new javax.swing.JMenuItem();
         panelBorder1 = new com.raven.swing.PanelBorder();
         txtSearch = new com.raven.swing.SearchText();
         jLabel1 = new javax.swing.JLabel();
@@ -262,6 +264,14 @@ public class Form_Combo extends javax.swing.JPanel {
             }
         });
         jPopupMenu1.add(xoa);
+
+        sua.setText("sửa");
+        sua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                suaActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(sua);
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -807,7 +817,7 @@ public class Form_Combo extends javax.swing.JPanel {
             } else if (!txtDonGia.getText().matches("[0-9]+")) {
                 JOptionPane.showMessageDialog(this, "đơn giá phải là số");
             } else if (comBoo.getTrangThai() != 2) {
-                JOptionPane.showMessageDialog(this, "không được sửa combo đang áp dụng");
+                JOptionPane.showMessageDialog(this, "vui lòng chọn combo ở trạng thái chờ áp dụng");
             } else {
                 int apDung;
                 if (rdoApDung.isSelected()) {
@@ -828,9 +838,8 @@ public class Form_Combo extends javax.swing.JPanel {
                 if (checkConfirm == 0) {
                     String update = comBoService.update(comB, txtMa.getText());
                     JOptionPane.showMessageDialog(this, update);
-                    rdoListApDung.setSelected(true);
+                    rdoListApDungActionPerformed(evt);
                     showDataComBo(listComBo = comBoService.getAllByTrangThai(0));
-                    clear();
                 }
             }
         }
@@ -886,30 +895,8 @@ public class Form_Combo extends javax.swing.JPanel {
 
     private void tbCTComboMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCTComboMouseClicked
         // TODO add your handling code here:
-        // lấy chi tiết combo
-        if (rdoChoApDung.isSelected()) {
-            int index = tbCTCombo.getSelectedRow();
-            chiTietComBo = listCTComBo.get(index);
-
-            //tạo chi tiết combo để update
-            String soLuongGiam = JOptionPane.showInputDialog("chọn số lượng muốn giảm");
-            if (soLuongGiam != null) {
-                if (soLuongGiam.matches("[0-9]+")) {
-                    int soLuongMonAn = chiTietComBo.getSoLuongMonAn() - Integer.valueOf(soLuongGiam);
-                    if (soLuongMonAn <= 0) {
-                        String xoa = chiTietComBoService.deleteCTCombo(chiTietComBo.getId());
-                        JOptionPane.showMessageDialog(this, xoa);
-                    } else {
-                        String update = chiTietComBoService.updateSoLuong(chiTietComBo, comBo, soLuongMonAn);
-                        JOptionPane.showMessageDialog(this, update);
-                    }
-                    showDataCTComBo(listCTComBo = chiTietComBoService.getAllByComBo(comBo));
-                } else {
-                    JOptionPane.showMessageDialog(this, "vui lòng nhập số");
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "không thể sửa hoặc xóa");
-            }
+        if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
+            jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_tbCTComboMouseClicked
 
@@ -972,12 +959,35 @@ public class Form_Combo extends javax.swing.JPanel {
 
     private void tbCTComboMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCTComboMouseReleased
         // TODO add your handling code here:
-        if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
-            if (evt.isPopupTrigger() && tbCTCombo.getSelectedRow() != 0) {
-                jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
+    }//GEN-LAST:event_tbCTComboMouseReleased
+
+    private void suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suaActionPerformed
+        // TODO add your handling code here:
+        if (rdoChoApDung.isSelected()) {
+            int index = tbCTCombo.getSelectedRow();
+            chiTietComBo = listCTComBo.get(index);
+
+            //tạo chi tiết combo để update
+            String soLuongGiam = JOptionPane.showInputDialog("chọn số lượng muốn giảm");
+            if (soLuongGiam.isEmpty()) {
+                if (soLuongGiam.matches("[0-9]+")) {
+                    int soLuongMonAn = chiTietComBo.getSoLuongMonAn() - Integer.valueOf(soLuongGiam);
+                    if (soLuongMonAn <= 0) {
+                        String xoa = chiTietComBoService.deleteCTCombo(chiTietComBo.getId());
+                        JOptionPane.showMessageDialog(this, xoa);
+                    } else {
+                        String update = chiTietComBoService.updateSoLuong(chiTietComBo, comBo, soLuongMonAn);
+                        JOptionPane.showMessageDialog(this, update);
+                    }
+                    showDataCTComBo(listCTComBo = chiTietComBoService.getAllByComBo(comBo));
+                } else {
+                    JOptionPane.showMessageDialog(this, "vui lòng nhập số");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "không thể sửa hoặc xóa");
             }
         }
-    }//GEN-LAST:event_tbCTComboMouseReleased
+    }//GEN-LAST:event_suaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1015,6 +1025,7 @@ public class Form_Combo extends javax.swing.JPanel {
     private javax.swing.JRadioButton rdoListChoApDung;
     private javax.swing.JRadioButton rdoListNgungApDung;
     private javax.swing.JRadioButton rdoNgungApDung;
+    private javax.swing.JMenuItem sua;
     private javax.swing.JTable tbCTCombo;
     private javax.swing.JTable tbChonMon;
     private javax.swing.JTable tbComBo;
