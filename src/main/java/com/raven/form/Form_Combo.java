@@ -5,6 +5,7 @@
  */
 package com.raven.form;
 
+import com.mycompany.customModel.BanResponse;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -23,6 +24,8 @@ import com.mycompany.service.impl.MonAnService;
 import com.mycompany.service.impl.NhanVienService;
 import java.awt.Component;
 import java.awt.Image;
+import java.awt.PopupMenu;
+import java.awt.event.InputEvent;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -68,7 +71,7 @@ public class Form_Combo extends javax.swing.JPanel {
     private ChiTietComBo chiTietComBo;
     //đường dẫn
     private String selectedImagePath = "";
-    
+
     public Form_Combo(NhanVien nv) {
         initComponents();
         tbComBo.setModel(dtComBo);
@@ -100,11 +103,11 @@ public class Form_Combo extends javax.swing.JPanel {
 //        showDataSanPham(listMonAn = monAnService.getAll());
         txtMa.setEnabled(false);
         setCbb();
-        
+
     }
-    
+
     class CellRenderer implements TableCellRenderer {
-        
+
         @Override
         public Component getTableCellRendererComponent(JTable table,
                 Object value,
@@ -117,15 +120,15 @@ public class Form_Combo extends javax.swing.JPanel {
             tb.setMaxWidth(100);
             tb.setMinWidth(100);
             tbChonMon.setRowHeight(60);
-            
+
             return (Component) value;
         }
-        
+
     }
 
     //
     class CellRenderers implements TableCellRenderer {
-        
+
         @Override
         public Component getTableCellRendererComponent(JTable table,
                 Object value,
@@ -137,12 +140,12 @@ public class Form_Combo extends javax.swing.JPanel {
             tbComBos.setMaxWidth(100);
             tbComBos.setMinWidth(100);
             tbComBo.setRowHeight(60);
-            
+
             return (Component) value;
         }
-        
+
     }
-    
+
     private void showDataComBo(List<ComBo> listComBo) {
         dtComBo.setRowCount(0);
         for (int i = 0; i < listComBo.size(); i++) {
@@ -158,7 +161,7 @@ public class Form_Combo extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void showDataCTComBo(List<ChiTietComBo> list) {
         dtCTComBo.setRowCount(0);
         int i = 1;
@@ -166,7 +169,7 @@ public class Form_Combo extends javax.swing.JPanel {
             dtCTComBo.addRow(cb.toShowData(i++));
         }
     }
-    
+
     private void showDataSanPham(List<MonAn> listMonAn) {
         dtSanPham.setRowCount(0);
         for (int i = 0; i < listMonAn.size(); i++) {
@@ -182,19 +185,19 @@ public class Form_Combo extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void setCbb() {
         List<NhanVien> listNhanVien = nhanVienService.getAll();
         for (NhanVien nv : listNhanVien) {
             dcbNhanVien.addElement(nv.getMa());
         }
-        
+
         List<DanhMuc> listDanhMuc = danhMucService.getAll();
         for (DanhMuc dv : listDanhMuc) {
             dcbLoai.addElement(dv.getMaDanhMuc());
         }
     }
-    
+
     private void clear() {
         txtDonGia.setText("");
         txtMa.setText("");
@@ -203,13 +206,15 @@ public class Form_Combo extends javax.swing.JPanel {
         cbbLoaiMonAn.setSelectedIndex(0);
         jLabelImage1.setIcon(null);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        xoa = new javax.swing.JMenuItem();
         panelBorder1 = new com.raven.swing.PanelBorder();
         txtSearch = new com.raven.swing.SearchText();
         jLabel1 = new javax.swing.JLabel();
@@ -249,6 +254,14 @@ public class Form_Combo extends javax.swing.JPanel {
         rdoListNgungApDung = new javax.swing.JRadioButton();
         lbLoaiMon = new javax.swing.JLabel();
         txtSearch1 = new com.raven.swing.SearchText();
+
+        xoa.setText("Xóa");
+        xoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                xoaActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(xoa);
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -388,7 +401,7 @@ public class Form_Combo extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(rdoNgungApDung)
                                 .addComponent(btnClear)))))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -480,6 +493,9 @@ public class Form_Combo extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbComBoMouseClicked(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tbComBoMouseReleased(evt);
+            }
         });
         jScrollPane1.setViewportView(tbComBo);
 
@@ -500,6 +516,9 @@ public class Form_Combo extends javax.swing.JPanel {
         tbCTCombo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbCTComboMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tbCTComboMouseReleased(evt);
             }
         });
         jScrollPane3.setViewportView(tbCTCombo);
@@ -871,21 +890,23 @@ public class Form_Combo extends javax.swing.JPanel {
 
             //tạo chi tiết combo để update
             String soLuongGiam = JOptionPane.showInputDialog("chọn số lượng muốn giảm");
-            if (soLuongGiam.matches("[0-9]+")) {
-                int soLuongMonAn = chiTietComBo.getSoLuongMonAn() - Integer.valueOf(soLuongGiam);
-                if (soLuongMonAn <= 0) {
-                    String xoa = chiTietComBoService.deleteCTCombo(chiTietComBo.getId());
-                    JOptionPane.showMessageDialog(this, xoa);
+            if (soLuongGiam != null) {
+                if (soLuongGiam.matches("[0-9]+")) {
+                    int soLuongMonAn = chiTietComBo.getSoLuongMonAn() - Integer.valueOf(soLuongGiam);
+                    if (soLuongMonAn <= 0) {
+                        String xoa = chiTietComBoService.deleteCTCombo(chiTietComBo.getId());
+                        JOptionPane.showMessageDialog(this, xoa);
+                    } else {
+                        String update = chiTietComBoService.updateSoLuong(chiTietComBo, comBo, soLuongMonAn);
+                        JOptionPane.showMessageDialog(this, update);
+                    }
+                    showDataCTComBo(listCTComBo = chiTietComBoService.getAllByComBo(comBo));
                 } else {
-                    String update = chiTietComBoService.updateSoLuong(chiTietComBo, comBo, soLuongMonAn);
-                    JOptionPane.showMessageDialog(this, update);
+                    JOptionPane.showMessageDialog(this, "vui lòng nhập số");
                 }
-                showDataCTComBo(listCTComBo = chiTietComBoService.getAllByComBo(comBo));
             } else {
-                JOptionPane.showMessageDialog(this, "vui lòng nhập số");
+                JOptionPane.showMessageDialog(this, "không thể sửa hoặc xóa");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "không thể sửa hoặc xóa");
         }
     }//GEN-LAST:event_tbCTComboMouseClicked
 
@@ -908,7 +929,7 @@ public class Form_Combo extends javax.swing.JPanel {
         FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpg", "jpeg");
         browseImageFile.addChoosableFileFilter(fnef);
         int showOpenDialogue = browseImageFile.showOpenDialog(null);
-        
+
         if (showOpenDialogue == JFileChooser.APPROVE_OPTION) {
             File selectedImageFile = browseImageFile.getSelectedFile();
             selectedImagePath = selectedImageFile.getAbsolutePath();
@@ -931,6 +952,29 @@ public class Form_Combo extends javax.swing.JPanel {
         listMonAn = monAnService.getMonAnTheoTenLoai(ten, danhMuc);
         showDataSanPham(listMonAn);
     }//GEN-LAST:event_txtSearch1CaretUpdate
+
+    private void tbComBoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbComBoMouseReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_tbComBoMouseReleased
+
+    private void xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xoaActionPerformed
+        // TODO add your handling code here:
+        int index = tbCTCombo.getSelectedRow();
+        chiTietComBo = listCTComBo.get(index);
+        String xoa = chiTietComBoService.deleteCTCombo(chiTietComBo.getId());
+        JOptionPane.showMessageDialog(this, xoa);
+        showDataCTComBo(listCTComBo = chiTietComBoService.getAllByComBo(comBo));
+    }//GEN-LAST:event_xoaActionPerformed
+
+    private void tbCTComboMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCTComboMouseReleased
+        // TODO add your handling code here:
+        if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
+            if (evt.isPopupTrigger() && tbCTCombo.getSelectedRow() != 0) {
+                jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        }
+    }//GEN-LAST:event_tbCTComboMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -956,6 +1000,7 @@ public class Form_Combo extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelImage1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
@@ -975,5 +1020,6 @@ public class Form_Combo extends javax.swing.JPanel {
     private com.raven.swing.SearchText txtSearch;
     private com.raven.swing.SearchText txtSearch1;
     private javax.swing.JTextField txtTen;
+    private javax.swing.JMenuItem xoa;
     // End of variables declaration//GEN-END:variables
 }
