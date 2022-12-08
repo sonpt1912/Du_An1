@@ -912,7 +912,7 @@ public class Form_Home extends javax.swing.JPanel {
                 chuyenBan.setEnabled(true);
 
             }
-            popMenu.show(this, evt.getX() + 417, evt.getY() + 85);
+            popMenu.show(this, evt.getX() + 521, evt.getY() + 85);
         } else {
             lstMaBan.clear();// clear để lấy mã bàn mới
             // set lại tiền thừa với tổng tiền  = 0.0 để cho dữ liệu được chính xác hơn
@@ -925,7 +925,6 @@ public class Form_Home extends javax.swing.JPanel {
             HoaDon hd = (HoaDon) hds.getOne(lbMaHDThanhToan.getText());
             hdTong = hd;
             //fill so khách có ở trong hd
-            JOptionPane.showMessageDialog(this, hd.getSoLuongKhach());
             lbSoLuongKhach.setText(hd.getSoLuongKhach().toString());
             // lấy ra những giao dịch có trong hoá đơn đã được chọn
             List<GiaoDich> giaoDichs = gds2.getTheoHoaDon(hd);
@@ -1008,7 +1007,7 @@ public class Form_Home extends javax.swing.JPanel {
         // TODO add your handling code here:
         // lấy ra bàn đang chọn và fill mã bàn lên label
         if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
-            popMenu1.show(this, evt.getX() + 9, evt.getY() + 396);
+            popMenu1.show(this, evt.getX() + 9, evt.getY() + 496);
             int index = tbBan.getSelectedRow();
             String maBan = lbSoBan.getText();
             BanResponse banResponse = lstBanResponses.get(index);
