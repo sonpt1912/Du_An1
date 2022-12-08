@@ -105,18 +105,14 @@ public class KhuVucRepository implements ICommonRepository<KhuVuc, Boolean, Stri
         }
     }
 
-    public static void main(String[] args) {
-        KhuVuc khuVuc = new KhuVuc();
-        khuVuc.setMaKV("KV1");
-        khuVuc.setTenKV("Khu vực 12222");
-        khuVuc.setTrangThai(1);
-        boolean add = new KhuVucRepository().remove("KV1");
-        System.out.println(add);
-        List<KhuVuc> list = new KhuVucRepository().getAll();
-        for (KhuVuc khuVuc1 : list) {
-            System.out.println(khuVuc1.toString());
+    public List<KhuVuc> getAllTrangThai(){
+        List<KhuVuc> listKV = new ArrayList<>();
+        try ( Session session = HibernateUtil.getFactory().openSession()) {
+            Query query = session.createQuery("FROM KhuVuc WHERE trangThai = 0");
+            listKV = query.getResultList();
+        } finally {
+            return listKV;
         }
-        KhuVuc kv = new KhuVucRepository().getOne("KV1");
-        System.out.println(kv.toString());
     }
+   
 }

@@ -15,6 +15,8 @@ public interface IBanResponseService<O, I> {
     List<O> getAll();
 
     List<O> getByTrangThai(I trangThai);
+    
+    List<O> getByTrangThaiAndKhuVuc(String tenKV);
 
     List<O> getByTrangThaiAndSoLuongChoNgoi(I trangThai, I soLuongKhach);
 

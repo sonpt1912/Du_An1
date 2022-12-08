@@ -33,10 +33,16 @@ public class KhachHangRepository implements ICommonRepository<KhachHang, Boolean
 
     @Override
     public KhachHang getOne(String ma) {
-        String hql = fromTable + "WHERE ma = :ma and trangThai = 0";
-        Query query = session.createQuery(hql);
-        KhachHang kh = (KhachHang) query.getSingleResult();
-        return kh;
+        try {
+
+            String hql = fromTable + "WHERE ma = :ma and trangThai = 0";
+            Query query = session.createQuery(hql);
+            query.setParameter("ma", ma);
+            KhachHang kh = (KhachHang) query.getSingleResult();
+            return kh;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

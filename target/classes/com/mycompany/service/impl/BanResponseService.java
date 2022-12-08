@@ -35,4 +35,9 @@ public class BanResponseService implements IBanResponseService<BanResponse, Inte
         return brr.getByTrangThaiAndSoLuongChoNgoi(trangThai, soLuongKhach);
     }
 
+    @Override
+    public List<BanResponse> getByTrangThaiAndKhuVuc(String tenKV) {
+        return brr.getByTrangThaiAndKhuVuc(tenKV);
+    }
+
 }

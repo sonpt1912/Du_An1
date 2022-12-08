@@ -31,7 +31,7 @@ public class KhuVucService implements ICommonService<KhuVuc, String> {
 
     @Override
     public String add(KhuVuc kh) {
-            return thongBao.thongBaoADD(khuVucRepo.add(kh));
+        return thongBao.thongBaoADD(khuVucRepo.add(kh));
     }
 
     @Override
@@ -42,6 +42,10 @@ public class KhuVucService implements ICommonService<KhuVuc, String> {
     @Override
     public String remove(String ma) {
         return thongBao.thongBaoDELETE(khuVucRepo.remove(ma));
+    }
+
+    public List<KhuVuc> getAllTrangThai() {
+        return khuVucRepo.getAllTrangThai();
     }
 
 }

@@ -14,6 +14,7 @@ import com.mycompany.domainModel.GiaoDich;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.HoaDonChiTiet;
 import com.mycompany.domainModel.KhachHang;
+import com.mycompany.domainModel.KhuVuc;
 import com.mycompany.domainModel.Loai;
 import com.mycompany.domainModel.MonAn;
 import com.mycompany.domainModel.NhanVien;
@@ -46,6 +47,7 @@ import javax.swing.table.DefaultTableModel;
 import com.mycompany.service.IHoaDonChiTietService;
 import com.mycompany.service.impl.DanhMucService;
 import com.mycompany.service.impl.KhachHangService;
+import com.mycompany.service.impl.KhuVucService;
 import com.mycompany.service.impl.LoaiService;
 import com.mycompany.util.ThanhToanUtil;
 import com.raven.main.Main;
@@ -63,6 +65,7 @@ import net.bytebuddy.jar.asm.Opcodes;
 
 public class Form_Home extends javax.swing.JPanel {
 
+    private DefaultComboBoxModel dcbmKhuVuc = new DefaultComboBoxModel();
     private DefaultTableModel dtmHoaDon = new DefaultTableModel();
     private DefaultTableModel dtmHoaDonCT = new DefaultTableModel();
     private DefaultTableModel dtmBan = new DefaultTableModel();
@@ -86,6 +89,7 @@ public class Form_Home extends javax.swing.JPanel {
     private ICommonService cbs = new ComBoService();
     private ICommonService gds = new GiaoDichService();
     private ICommonService nvs = new NhanVienService();
+    private KhuVucService kvs = new KhuVucService();
     private ICommonService monAnService = new MonAnService();
     private ICommonService banService = new BanService();
     private IHoaDonChiTietService hdctService = new HoaDonChiTietService();
@@ -127,12 +131,14 @@ public class Form_Home extends javax.swing.JPanel {
         tbHoaDon.setModel(dtmHoaDon);
         tbHoaDonCT.setModel(dtmHoaDonCT);
         tbBan.setModel(dtmBan);
+        cbbKhuVuc.setModel(dcbmKhuVuc);
         String headerHoaDon[] = {"STT", "MÃ HĐ", "MÃ KH", "Ngày Tạo", "Trạng Thái", "Ghi Chú"};
 //        String headerHoaDonCT[] = {"STT", "Tên món ăn", "Giá món ăn", "Số lượng món ăn", "Tên combo", "Giá combo", "Số lượng combo", "Tổng tiền", "Ghi chú"};
         String headerHoaDonCT[] = {"STT", "Tên sản phẩm", "Giá sản phẩm", "Số lượng sản phẩm", "Tổng tiền", "Ghi chú"};
         String headerBan[] = {"STT", "Mã Bàn", "Số lượng chỗ ngồi", "Khu vực", "Trạng thái"};
         loadTableMonAn();
         loadCbbLoaiSP();
+        loadCBBKhuVuc();
         dtmHoaDon.setColumnIdentifiers(headerHoaDon);
         dtmHoaDonCT.setColumnIdentifiers(headerHoaDonCT);
         dtmBan.setColumnIdentifiers(headerBan);
@@ -155,6 +161,14 @@ public class Form_Home extends javax.swing.JPanel {
         txtTienThua.setEditable(false);
         txtTenKH.setEditable(false);
         // lbNhanVien.setText(nv.getMa());
+    }
+
+    private void loadCBBKhuVuc() {
+        dcbmKhuVuc.addElement("Tất cả");
+        List<KhuVuc> khuVucs = kvs.getAllTrangThai();
+        for (KhuVuc khuVuc : khuVucs) {
+            dcbmKhuVuc.addElement(khuVuc.getTenKV());
+        }
     }
 //đố biết =)))
 
@@ -624,12 +638,12 @@ public class Form_Home extends javax.swing.JPanel {
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
+                            .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnThemBan)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbbKhuVuc, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)
+                                .addComponent(cbbKhuVuc, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(38, 38, 38))
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1048,6 +1062,9 @@ public class Form_Home extends javax.swing.JPanel {
 
                     do {
                         soLuongKhach = JOptionPane.showInputDialog("Mời nhập số lượng khách");
+                        if (soLuongKhach == null) {
+                            return;
+                        }
                     } while (checkSoLuong(soLuongKhach) == false);
                     // tạo hd
                     if (Integer.valueOf(soLuongKhach) > soLuongChoNgoi) {
@@ -1701,6 +1718,21 @@ public class Form_Home extends javax.swing.JPanel {
 
     private void cbbKhuVucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbKhuVucActionPerformed
         // TODO add your handling code here:
+        if (cbbKhuVuc.getSelectedItem().equals("Tất cả")) {
+            lstBanResponses = banResponseService.getAll();
+            showDataBan(lstBanResponses);
+        } else {
+            List<KhuVuc> khuVucs = kvs.getAllTrangThai();
+            for (KhuVuc khuVuc : khuVucs) {
+                if (cbbKhuVuc.getSelectedItem().equals(khuVuc.getTenKV())) {
+                    lstBanResponses = banResponseService.getByTrangThaiAndKhuVuc(khuVuc.getTenKV());
+                    for (BanResponse lstBanResponse : lstBanResponses) {
+                        System.out.println(lstBanResponse.toString());
+                    }
+                    showDataBan(lstBanResponses);
+                }
+            }
+        }
     }//GEN-LAST:event_cbbKhuVucActionPerformed
 
     private void fillTienThuaChuyenKhoan() {

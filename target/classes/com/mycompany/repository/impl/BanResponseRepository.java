@@ -48,4 +48,14 @@ public class BanResponseRepository implements IBanResponseRepository<BanResponse
         return banResponses;
     }
 
+    @Override
+    public List<BanResponseRepository> getByTrangThaiAndKhuVuc(String tenKV) {
+        String hql = "SELECT new com.mycompany.customModel.BanResponse(B.maBan,B.soLuongChoNgoi,B.kv.tenKV,B.trangThai)" + fromTable
+                + "WHERE B.kv.trangThai = 0 AND B.kv.tenKV = :tenKV";
+        Query query = session.createQuery(hql);
+        query.setParameter("tenKV", tenKV);
+        List<BanResponseRepository> banResponses = query.getResultList();
+        return banResponses;
+    }
+
 }

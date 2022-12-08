@@ -16,6 +16,8 @@ public interface IBanResponseRepository<O, I> {
 
     List<O> getByTrangThai(I trangThai);
 
+    List<O> getByTrangThaiAndKhuVuc(String tenKV);
+
     List<O> getByTrangThaiAndSoLuongChoNgoi(I trangThai, I soLuongKhach);
 
 }
