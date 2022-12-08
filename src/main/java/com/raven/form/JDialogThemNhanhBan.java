@@ -500,13 +500,7 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
             ban.setKv(khuVuc);
             ban.setMaBan(Integer.valueOf(txtMa4.getText()));
             ban.setSoLuongChoNgoi(Integer.valueOf(txtSoLuong4.getText()));
-            if (radioCoNguoi4.isSelected()) {
-                ban.setTrangThai(1);
-            } else if (radioControng4.isSelected()) {
-                ban.setTrangThai(0);
-            } else {
-                ban.setTrangThai(2);
-            }
+            ban.setTrangThai(0);
             JOptionPane.showMessageDialog(this, banService.add(ban));
             listBan = banService.getFull();
             showData(listBan);
