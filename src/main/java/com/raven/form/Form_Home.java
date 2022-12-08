@@ -237,7 +237,7 @@ public class Form_Home extends javax.swing.JPanel {
         tbBan = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         btnThemBan = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbbKhuVuc = new javax.swing.JComboBox<>();
         btnClear = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         txtSdtKH = new javax.swing.JTextField();
@@ -496,9 +496,14 @@ public class Form_Home extends javax.swing.JPanel {
             }
         });
 
-        jComboBox2.setBackground(new java.awt.Color(255, 255, 0));
-        jComboBox2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tầng 1", "Tầng 2" }));
+        cbbKhuVuc.setBackground(new java.awt.Color(255, 255, 0));
+        cbbKhuVuc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cbbKhuVuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tầng 1", "Tầng 2" }));
+        cbbKhuVuc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbKhuVucActionPerformed(evt);
+            }
+        });
 
         btnClear.setBackground(new java.awt.Color(204, 204, 204));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -623,8 +628,9 @@ public class Form_Home extends javax.swing.JPanel {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnThemBan)
-                                .addGap(32, 32, 32)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbbKhuVuc, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38))
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panelBorder1Layout.createSequentialGroup()
@@ -637,8 +643,7 @@ public class Form_Home extends javax.swing.JPanel {
                                         .addGap(101, 101, 101)
                                         .addComponent(btnRefresh))
                                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 18, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)))
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -749,7 +754,7 @@ public class Form_Home extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnThemBan)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbbKhuVuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1341,37 +1346,37 @@ public class Form_Home extends javax.swing.JPanel {
                         }
                     }
                 }
-                if (cbbSanPham.getSelectedItem().equals(danhMuc.getTenDanhMuc())) {
-                    String search = txtSearch.getText();
-                    if ("".equals(search)) {
-                        lstMAReponByDM = monAnResponseService.getByDanhMuc(danhMuc.getTenDanhMuc());
-                        showDataMonAn(lstMAReponByDM);
-//                JOptionPane.showMessageDialog(this, "Có if nhé");
-                    } else {
-                        if (!search.matches("\\d+")) {
-                            lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(search, danhMuc.getTenDanhMuc());
-                            List<MonAnResponse> lstSearch = new ArrayList<>();
-                            for (MonAnResponse monAnResponse : lstMAReponByDM) {
-                                MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
-                                if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals(danhMuc.getTenDanhMuc())) {
-                                    lstSearch.add(monAnResponse);
-                                }
-                            }
-                            showDataMonAn(lstSearch);
-                        } else {
-                            lstMAReponByDM = monAnResponseService.getByDanhMucAndDonGia(new BigDecimal(search), danhMuc.getTenDanhMuc());
-                            List<MonAnResponse> lstSearch = new ArrayList<>();
-                            for (MonAnResponse monAnResponse : lstMAReponByDM) {
-                                MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
-                                if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals(danhMuc.getTenDanhMuc())) {
-                                    lstSearch.add(monAnResponse);
-                                }
-                            }
-                            showDataMonAn(lstSearch);
-
-                        }
-                    }
-                }
+//                if (cbbSanPham.getSelectedItem().equals(danhMuc.getTenDanhMuc())) {
+//                    String search = txtSearch.getText();
+//                    if ("".equals(search)) {
+//                        lstMAReponByDM = monAnResponseService.getByDanhMuc(danhMuc.getTenDanhMuc());
+//                        showDataMonAn(lstMAReponByDM);
+////                JOptionPane.showMessageDialog(this, "Có if nhé");
+//                    } else {
+//                        if (!search.matches("\\d+")) {
+//                            lstMAReponByDM = monAnResponseService.getByDanhMucAndTenMonAn(search, danhMuc.getTenDanhMuc());
+//                            List<MonAnResponse> lstSearch = new ArrayList<>();
+//                            for (MonAnResponse monAnResponse : lstMAReponByDM) {
+//                                MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+//                                if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals(danhMuc.getTenDanhMuc())) {
+//                                    lstSearch.add(monAnResponse);
+//                                }
+//                            }
+//                            showDataMonAn(lstSearch);
+//                        } else {
+//                            lstMAReponByDM = monAnResponseService.getByDanhMucAndDonGia(new BigDecimal(search), danhMuc.getTenDanhMuc());
+//                            List<MonAnResponse> lstSearch = new ArrayList<>();
+//                            for (MonAnResponse monAnResponse : lstMAReponByDM) {
+//                                MonAn ma = (MonAn) mas.getOne(monAnResponse.getMaMonAn());
+//                                if (ma.getLoai().getDanhMuc().getTenDanhMuc().equals(danhMuc.getTenDanhMuc())) {
+//                                    lstSearch.add(monAnResponse);
+//                                }
+//                            }
+//                            showDataMonAn(lstSearch);
+//
+//                        }
+//                    }
+//                }
             }
         }
 
@@ -1694,6 +1699,10 @@ public class Form_Home extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_ThemKhachActionPerformed
 
+    private void cbbKhuVucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbKhuVucActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbbKhuVucActionPerformed
+
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
 //        String tienMat = txtTienMat.getText();
@@ -1907,10 +1916,10 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox cbChuyenKhoan;
     private javax.swing.JCheckBox cbTienMat;
+    private javax.swing.JComboBox<String> cbbKhuVuc;
     private javax.swing.JComboBox<String> cbbSanPham;
     private javax.swing.JMenuItem chuyenBan;
     private javax.swing.JMenuItem gopHD;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
