@@ -60,7 +60,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
 //    private String giaMonAn;
 //    private String soLuong;
 //    private String tongTien;
-    private DecimalFormat df = new DecimalFormat("#,###.00");
+    private DecimalFormat df = new DecimalFormat("0.00");
     private KhachHang khachHang = new KhachHang();
     private BigDecimal tongTienTT = new BigDecimal(0);
     private BigDecimal tienTraLai = new BigDecimal(0);
@@ -113,11 +113,15 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtTongTien.setEditable(false);
         txtMaNV.setEditable(false);
         txtTenKhachHang.setEditable(false);
-        BigDecimal thue = BigDecimal.valueOf(0);
+        // BigDecimal thue = BigDecimal.valueOf(0);
+        //đổi double 
+        Double thue = Double.valueOf("0");
+        thue = Double.valueOf(String.valueOf(hdCustom.getTongTien())) * 0.1;
         BigDecimal tongTienHang = new BigDecimal(txtTongTien.getText());
-        thue = tongTienHang.multiply(new BigDecimal(0.1));
+        //thue = tongTienHang.multiply(new BigDecimal(0.1));
         BigDecimal tongTienThanhToan = new BigDecimal(0);
-        tongTienThanhToan = hdCustom.getTongTien().add(thue);
+        // tongTienThanhToan = hdCustom.getTongTien().add(thue);
+        tongTienThanhToan = hdCustom.getTongTien().add(new BigDecimal(thue));
         tongTienTT = tongTienThanhToan;
         txtTienThanhToan.setText(String.valueOf(df.format(tongTienThanhToan)));
         //txtTienThanhToan.setText(tongTienThanhToan.toString());
