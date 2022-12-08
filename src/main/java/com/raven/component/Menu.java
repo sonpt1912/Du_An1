@@ -29,22 +29,22 @@ public class Menu extends javax.swing.JPanel {
     }
 
     private void init() {
-        listMenu1.addItem(new Model_Menu("1", "Trang Chủ", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("2", "Hóa Đơn", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("3", "Nhân Viên", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("4", "Khách Hàng", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("5", "Bàn", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("1", "TRANG CHỦ", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("2", "HOÁ ĐƠN", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("3", "NHÂN VIÊN", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("4", "KHÁCH HÀNG", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("5", "BÀN", Model_Menu.MenuType.MENU));
 //        listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
 //
 //        listMenu1.addItem(new Model_Menu("", "My Data", Model_Menu.MenuType.TITLE));
 //        listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("6", "Khuyến Mãi", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("7", "Sản Phẩm", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("9", "Combo", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("8", "Thống Kê", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("8", "Tài Khoản", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("6", "KHUYẾN MÃI", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("7", "SẢN PHẨM", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("9", "COM BO", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("8", "THỐNG KÊ", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("8", "TÀI KHOẢN", Model_Menu.MenuType.MENU));
 //        listMenu1.addItem(new Model_Menu("9", "More", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("8", "Logout", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("8", "LOG OUT", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
     }
 
@@ -59,10 +59,9 @@ public class Menu extends javax.swing.JPanel {
         panelMoving.setOpaque(false);
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon("E:\\SOF2041_IT17317_BLOCK1\\Thanh\\src\\main\\java\\com\\raven\\icon\\logo.png")); // NOI18N
-        jLabel1.setText("Nhà Hàng - Hàu");
+        jLabel1.setText("Nhà Hàng-ERROR 102");
 
         javax.swing.GroupLayout panelMovingLayout = new javax.swing.GroupLayout(panelMoving);
         panelMoving.setLayout(panelMovingLayout);
@@ -86,16 +85,14 @@ public class Menu extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelMoving, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(listMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(listMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelMoving, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
-                .addComponent(listMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
+                .addComponent(listMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -103,7 +100,7 @@ public class Menu extends javax.swing.JPanel {
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        GradientPaint g = new GradientPaint(0, 0, Color.decode("#00BFFF"), 0, getHeight(), Color.decode("#191970"));
+        GradientPaint g = new GradientPaint(0, 0, Color.decode("#CC99FF"), 0, getHeight(), Color.decode("#0099FF"));
         g2.setPaint(g);
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
         g2.fillRect(getWidth() - 20, 0, getWidth(), getHeight());

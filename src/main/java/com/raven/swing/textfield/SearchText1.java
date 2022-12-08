@@ -1,4 +1,4 @@
-package com.raven.swing;
+package com.raven.swing.textfield;
 
 import java.awt.Color;
 import java.awt.FontMetrics;
@@ -9,9 +9,9 @@ import java.awt.RenderingHints;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class SearchText extends JTextField {
+public class SearchText1 extends JTextField {
 
-    public SearchText() {
+    public SearchText1() {
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setSelectionColor(new Color(220, 204, 182));
     }
