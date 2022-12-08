@@ -127,4 +127,11 @@ public class ComBoRepository implements ICommonRepository<ComBo, Boolean, String
         List<ComBo> comBos = query.getResultList();
         return comBos;
     }
+
+    @Override
+    public List<ComBo> getAlls() {
+     String hql = fromTable;
+        Query query = session.createQuery(hql);
+        List<ComBo> comBos = query.getResultList();
+        return comBos;}
 }

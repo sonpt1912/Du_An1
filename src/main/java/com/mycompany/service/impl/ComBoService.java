@@ -83,18 +83,16 @@ public class ComBoService implements ICommonService<ComBo, String>, IComBoServic
         return cb.getAllByTrangThai(trangThai);
     }
 
-    public String randomMaHoaDon() {
-        Random rd = new Random();
-        int ran = 0;
-        String ma = "";
-        while (true) {
-            ran = rd.nextInt(99999) + 1;
-            ma = "CB" + ran;
-            if (new ComBoService().getOne(ma) == null) {
-                break;
+    public String randomMaHoaDon(List<ComBo> listCB) {
+        String maCB = "CB";
+        int sz = listCB.size();
+        maCB = maCB + (sz + 1);
+        for (ComBo khachHang : listCB) {
+            if (khachHang.getMaCB().equals(maCB)) {
+                maCB = "CB" + (sz + 1 + 1);
             }
         }
-        return ma;
+        return maCB;
     }
 
     @Override
@@ -111,6 +109,11 @@ public class ComBoService implements ICommonService<ComBo, String>, IComBoServic
                 }
             }
         }
+    }
+
+    @Override
+    public List<ComBo> getAlls() {
+        return cb.getAlls();
     }
 
 }

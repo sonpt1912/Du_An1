@@ -16,5 +16,7 @@ public interface IComBoService {
 
     List<ComBo> getAllByTrangThai(int trangThai);
     
+     List<ComBo> getAlls();
+    
     void checkTrangThaiMonAn(ComBo idComBo);
 }

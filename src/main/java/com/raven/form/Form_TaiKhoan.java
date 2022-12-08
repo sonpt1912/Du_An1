@@ -12,12 +12,14 @@ import com.mycompany.domainModel.NhanVien;
  * @author RAVEN
  */
 public class Form_TaiKhoan extends javax.swing.JPanel {
+    private NhanVien nv ;
 
     /**
      * Creates new form Form_1
      */
     public Form_TaiKhoan(NhanVien nv) {
         initComponents();
+        this.nv = nv;
         enbl();
         fillData(nv);
     }
@@ -295,12 +297,13 @@ public class Form_TaiKhoan extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
-        //        listChucVu = chucVuService.getChucVuActive();
-        //        loadCBB(listChucVu);
+        fillData(nv);
     }//GEN-LAST:event_btnLoadActionPerformed
 
     private void btnDoiMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMatKhauActionPerformed
         // TODO add your handling code here:
+        JDialogDoiMatKhau dmk = new JDialogDoiMatKhau(null, true, nv);
+        dmk.setVisible(true);
     }//GEN-LAST:event_btnDoiMatKhauActionPerformed
 
 

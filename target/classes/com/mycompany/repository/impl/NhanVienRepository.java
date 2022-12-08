@@ -110,6 +110,27 @@ public class NhanVienRepository implements ICommonRepository<NhanVien, Boolean, 
         }
     }
 
+    public Boolean updateMatKhau(NhanVien nv, String ma) {
+        int check = 0;
+        try ( Session session = HibernateUtil.getFactory().openSession()) {
+            Transaction transaction = session.getTransaction();
+            transaction.begin();
+            try {
+                Query query = session.createQuery("UPDATE NhanVien SET matKhau = :matKhauNV"
+                        + " WHERE ma = :maNV");
+                query.setParameter("matKhauNV", nv.getMatKhau());
+                query.setParameter("maNV", ma);
+                check = query.executeUpdate();
+                transaction.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+                transaction.rollback();
+            }
+        } finally {
+            return check > 0;
+        }
+    }
+
     @Override
     public Boolean remove(String ma) {
         int check = 0;

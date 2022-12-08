@@ -14,4 +14,6 @@ import java.util.List;
 public interface IComBoRepository {
 
     List<ComBo> getAllByTrangThai(int trangThai);
+
+    List<ComBo> getAlls();
 }

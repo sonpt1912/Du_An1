@@ -4,18 +4,26 @@
  */
 package com.raven.form;
 
+import com.mycompany.domainModel.NhanVien;
+import com.mycompany.repository.impl.NhanVienRepository;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
  */
 public class JDialogDoiMatKhau extends javax.swing.JDialog {
 
+    private NhanVien nv;
+    private NhanVienRepository nhanVienRepository = new NhanVienRepository();
+
     /**
      * Creates new form QuenMK
      */
-    public JDialogDoiMatKhau(java.awt.Frame parent, boolean modal) {
+    public JDialogDoiMatKhau(java.awt.Frame parent, boolean modal, NhanVien nv) {
         super(parent, modal);
         initComponents();
+        this.nv = nv;
     }
 
     /**
@@ -150,61 +158,76 @@ public class JDialogDoiMatKhau extends javax.swing.JDialog {
 
     private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuayLaiActionPerformed
         // TODO add your handling code here:
-                ViewLogin viewLogin = new ViewLogin();
-                this.dispose();
-                viewLogin.setVisible(true);
+        ViewLogin viewLogin = new ViewLogin();
         this.dispose();
+        viewLogin.setVisible(true);
     }//GEN-LAST:event_btnQuayLaiActionPerformed
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         // TODO add your handling code here:
-        //        JOptionPane.showMessageDialog(this, loginUtil.checkMail(txtUser.getText()));
+        if (!txtMatKhauCu.getText().isEmpty() && !txtMatKhauMoi.getText().isEmpty() && !txtXacNhanMatKhauMoi.getText().isEmpty()) {
+            if (!txtMatKhauCu.getText().equals(nv.getMatKhau())) {
+                JOptionPane.showMessageDialog(this, "mật khẩu sai");
+            } else if (!txtXacNhanMatKhauMoi.equals(txtMatKhauMoi.getText())) {
+                JOptionPane.showMessageDialog(this, "mật khẩu nhập lại không chính xác");
+            } else if (!txtMatKhauMoi.getText().matches("[a-zA-Z0-9]{8}")) {
+                JOptionPane.showMessageDialog(this, "mật khẩu sai định dạng");
+            } else if (!txtXacNhanMatKhauMoi.getText().matches("[a-zA-Z0-9]{8}")) {
+                JOptionPane.showMessageDialog(this, "mật khẩu sai định dạng");
+            } else {
+                nv.setMatKhau(txtMatKhauMoi.getText());
+                nhanVienRepository.updateMatKhau(nv, nv.getMa());
+                JOptionPane.showMessageDialog(this, "đổi mật khẩu thành công");
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "không được để trống bất kỳ trường nào");
+        }
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JDialogDoiMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JDialogDoiMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JDialogDoiMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDialogDoiMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JDialogDoiMatKhau dialog = new JDialogDoiMatKhau(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(JDialogDoiMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(JDialogDoiMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(JDialogDoiMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(JDialogDoiMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                JDialogDoiMatKhau dialog = new JDialogDoiMatKhau(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnQuayLai;
