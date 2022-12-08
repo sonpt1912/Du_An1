@@ -18,4 +18,6 @@ public interface IMonAnService {
 
     List<MonAn> getMonAnLeftJoinKMCT();
 
+    List<MonAn> searchMonAnFormSP(String tenTimKiem);
+
 }

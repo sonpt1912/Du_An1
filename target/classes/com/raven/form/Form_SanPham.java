@@ -60,7 +60,6 @@ public class Form_SanPham extends javax.swing.JPanel {
         dtm.setColumnIdentifiers(header);
         tbMonAn.setModel(dtm);
         cbbLoai.setModel(dcbm);
-        cbbSearchLoai.setModel(dcbmSearch);
         tbMonAn.setFillsViewportHeight(true);
         tbMonAn.getColumn("ẢNH").setCellRenderer(new CellRenderer());
         listMonAn = monAnService.getMonAnByTrangThai(0);
@@ -70,9 +69,9 @@ public class Form_SanPham extends javax.swing.JPanel {
         setCBB();
         setCBBSearch();
     }
-    
+
     class CellRenderer implements TableCellRenderer {
-        
+
         @Override
         public Component getTableCellRendererComponent(JTable table,
                 Object value,
@@ -80,16 +79,16 @@ public class Form_SanPham extends javax.swing.JPanel {
                 boolean hasFocus,
                 int row,
                 int column) {
-            
+
             TableColumn tb = tbMonAn.getColumn("ẢNH");
             tb.setMaxWidth(100);
             tb.setMinWidth(100);
-            
+
             tbMonAn.setRowHeight(60);
-            
+
             return (Component) value;
         }
-        
+
     }
 
     /**
@@ -106,7 +105,7 @@ public class Form_SanPham extends javax.swing.JPanel {
         rdoApDung.setSelected(true);
         jLabelImage.setIcon(null);
     }
-    
+
     private void showData(List<MonAn> listMonAn) {
         dtm.setRowCount(0);
 //        int i = 1;
@@ -126,7 +125,7 @@ public class Form_SanPham extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void fillData() {
         txtDonGia.setText(monAn.getDonGia().toString());
         txtDonViTinh.setText(monAn.getDonViTinh());
@@ -143,9 +142,9 @@ public class Form_SanPham extends javax.swing.JPanel {
         Image img = imageicon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         jLabelImage.setIcon(new ImageIcon(img));
         jLabelImage.setIcon(imageicon);
-        
+
     }
-    
+
     private void setCBB() {
         List<Loai> listLoai = loaiService.getAllByTrangThai(0);
         dcbm.removeAllElements();
@@ -153,7 +152,7 @@ public class Form_SanPham extends javax.swing.JPanel {
             dcbm.addElement(dm.getMaLoai());
         }
     }
-    
+
     private void setCBBSearch() {
 //        List<Loai> listLoai = loaiService.getAllByTrangThai(0);
 //        dcbmSearch.removeAllElements();
@@ -166,7 +165,7 @@ public class Form_SanPham extends javax.swing.JPanel {
             dcbmSearch.addElement(danhMuc.getTenDanhMuc());
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -174,7 +173,7 @@ public class Form_SanPham extends javax.swing.JPanel {
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         panelBorder1 = new com.raven.swing.PanelBorder();
-        searchText1 = new com.raven.swing.SearchText();
+        txtSearch = new com.raven.swing.SearchText();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -207,13 +206,12 @@ public class Form_SanPham extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         rdoListNgungApDung = new javax.swing.JRadioButton();
         rdoListApDung = new javax.swing.JRadioButton();
-        cbbSearchLoai = new javax.swing.JComboBox<>();
 
         panelBorder1.setBackground(new java.awt.Color(204, 204, 255));
 
-        searchText1.addCaretListener(new javax.swing.event.CaretListener() {
+        txtSearch.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                searchText1CaretUpdate(evt);
+                txtSearchCaretUpdate(evt);
             }
         });
 
@@ -473,13 +471,6 @@ public class Form_SanPham extends javax.swing.JPanel {
             }
         });
 
-        cbbSearchLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbbSearchLoai.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbSearchLoaiActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -491,9 +482,8 @@ public class Form_SanPham extends javax.swing.JPanel {
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addComponent(cbbSearchLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(155, 155, 155)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel1)))
                         .addGap(0, 481, Short.MAX_VALUE))
@@ -523,9 +513,7 @@ public class Form_SanPham extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cbbSearchLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addComponent(jLabel2)
                 .addGap(8, 8, 8)
@@ -666,7 +654,7 @@ public class Form_SanPham extends javax.swing.JPanel {
             } else {
                 hinhAnh = monAnn.getHinhAnh();
             }
-            
+
             int trangThai;
             if (rdoApDung.isSelected()) {
                 trangThai = 0;
@@ -718,7 +706,7 @@ public class Form_SanPham extends javax.swing.JPanel {
         FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpg", "jpeg");
         browseImageFile.addChoosableFileFilter(fnef);
         int showOpenDialogue = browseImageFile.showOpenDialog(null);
-        
+
         if (showOpenDialogue == JFileChooser.APPROVE_OPTION) {
             File selectedImageFile = browseImageFile.getSelectedFile();
             selectedImagePath = selectedImageFile.getAbsolutePath();
@@ -732,20 +720,25 @@ public class Form_SanPham extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnChonAnhActionPerformed
 
-    private void searchText1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_searchText1CaretUpdate
-        // TODO add your handling code here:
-        String ten = searchText1.getText();
-        listMonAn = monAnService.getMonAnTheoTen(ten);
-        showData(listMonAn);
-    }//GEN-LAST:event_searchText1CaretUpdate
-
-    private void cbbSearchLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbSearchLoaiActionPerformed
-        // TODO add your handling code here:
-//        String ma = cbbSearchLoai.getSelectedItem().toString();
-//        Loai loai = loaiService.getOne(ma);
-//        listMonAn = monAnService.getMonAnLoai(loai);
-//        showData(listMonAn);
-    }//GEN-LAST:event_cbbSearchLoaiActionPerformed
+    private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
+        if (txtSearch.getText().isEmpty() || txtSearch.getText().equals("")) {
+            listMonAn = monAnService.getAll();
+            showData(listMonAn);
+        } else {
+            List<MonAn> listSearch = monAnService.searchMonAnFormSP(txtSearch.getText());
+            List<MonAn> lstShow = new ArrayList<>();
+            for (MonAn monAn1 : listSearch) {
+                if (monAn1.getLoai().getTenLoai().equals(txtSearch.getText())) {
+                    lstShow.add(monAn1);
+                }
+            }
+            if (lstShow.size() > 0) {
+                showData(lstShow);
+            } else {
+                showData(listSearch);
+            }
+        }
+    }//GEN-LAST:event_txtSearchCaretUpdate
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -759,7 +752,6 @@ public class Form_SanPham extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cbbLoai;
-    private javax.swing.JComboBox<String> cbbSearchLoai;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -779,12 +771,12 @@ public class Form_SanPham extends javax.swing.JPanel {
     private javax.swing.JRadioButton rdoListApDung;
     private javax.swing.JRadioButton rdoListNgungApDung;
     private javax.swing.JRadioButton rdoNgungApDung;
-    private com.raven.swing.SearchText searchText1;
     private javax.swing.JTable tbMonAn;
     private javax.swing.JTextField txtDonGia;
     private javax.swing.JTextField txtDonViTinh;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtMa;
+    private com.raven.swing.SearchText txtSearch;
     private javax.swing.JTextField txtTen;
     // End of variables declaration//GEN-END:variables
 }

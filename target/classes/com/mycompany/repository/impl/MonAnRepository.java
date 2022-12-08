@@ -124,6 +124,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
 //        }
 //    }
     //
+
     public List<MonAn> getMonAnByDanhMuc(DanhMuc danhMuc) {
         List<MonAn> listMA = new ArrayList<>();
         try ( Session session = HibernateUtil.getFactory().openSession()) {
@@ -150,10 +151,15 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
     }
 
     // searchMonAnTheoTen
-    public List<MonAn> searchMonAnTheoTen(String ten) {
-        String hql = fromTable + "WHERE tenMonAn like :tenMonAnMoi AND trangThai = 0";
+    @Override
+    public List<MonAn> searchMonAnFormSP(String tenTimKiem) {
+        String hql = "FROM MonAn MA WHERE "
+                + "MA.tenMonAn like :tenMA OR MA.maMonAn like :maMA OR"
+                + " MA.loai.tenLoai like :tenLoai";
         Query query = session.createQuery(hql);
-        query.setParameter("tenMonAnMoi", "%" + ten + "%");
+        query.setParameter("tenMA", "%" + tenTimKiem + "%");
+        query.setParameter("maMA", "%" + tenTimKiem + "%");
+        query.setParameter("tenLoai", "%" + tenTimKiem + "%");
         List<MonAn> monAns = query.getResultList();
         return monAns;
     }
@@ -213,9 +219,9 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
     }
 
     public static void main(String[] args) {
-        List<MonAnCoKM> lsList = new MonAnRepository().getMonAnCoKM();
-        for (MonAnCoKM monAn : lsList) {
-            System.out.println(monAn.getMaMA());
+        List<MonAn> lsList = new MonAnRepository().searchMonAnFormSP("Có ga");
+        for (MonAn monAn : lsList) {
+            System.out.println(monAn.getTenMonAn());
         }
     }
 }

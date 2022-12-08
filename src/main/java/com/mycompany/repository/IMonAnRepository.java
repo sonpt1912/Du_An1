@@ -20,4 +20,6 @@ public interface IMonAnRepository {
     List<MonAn> getMonAnByComBo(MonAn id);
 
     List<MonAn> getMonAnLeftJoinKMCT();
+
+    List<MonAn> searchMonAnFormSP(String tenTimKiem);
 }
