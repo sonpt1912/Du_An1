@@ -912,7 +912,7 @@ public class Form_Home extends javax.swing.JPanel {
                 chuyenBan.setEnabled(true);
 
             }
-            popMenu.show(this, evt.getX() + 417, evt.getY() + 85);
+            popMenu.show(this, evt.getX() + 521, evt.getY() + 85);
         } else {
             lstMaBan.clear();// clear để lấy mã bàn mới
             // set lại tiền thừa với tổng tiền  = 0.0 để cho dữ liệu được chính xác hơn
@@ -1007,7 +1007,7 @@ public class Form_Home extends javax.swing.JPanel {
         // TODO add your handling code here:
         // lấy ra bàn đang chọn và fill mã bàn lên label
         if (evt.getModifiers() == InputEvent.BUTTON3_MASK) {
-            popMenu1.show(this, evt.getX() + 9, evt.getY() + 396);
+            popMenu1.show(this, evt.getX() + 9, evt.getY() + 496);
             int index = tbBan.getSelectedRow();
             String maBan = lbSoBan.getText();
             BanResponse banResponse = lstBanResponses.get(index);
@@ -1727,14 +1727,14 @@ public class Form_Home extends javax.swing.JPanel {
             int soLuongChoNgoi = 0;
             for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
                 Ban b = (Ban) banService.getOne(lstChiTietBanHoaDon.getBan().getMaBan().toString());
-                soLuong += b.getSoLuongChoNgoi();
+                soLuongChoNgoi += b.getSoLuongChoNgoi();
             }
             if (soLuongChoNgoi < (Integer.valueOf(soLuong) + hd.getSoLuongKhach())) {
                 JOptionPane.showMessageDialog(this, "Số lượng khách vượt quá số lượng chỗ ngồi");
             } else {
                 hd.setSoLuongKhach(hd.getSoLuongKhach() + Integer.valueOf(soLuong));
                 JOptionPane.showMessageDialog(this, hds.update(hd, hd.getMaHoaDon()));
-                lbSoLuongKhach.setText(hd.getSoLuongKhach() + Integer.valueOf(soLuong) + "");
+                lbSoLuongKhach.setText(hd.getSoLuongKhach().toString());
             }
         }
     }//GEN-LAST:event_ThemKhachActionPerformed

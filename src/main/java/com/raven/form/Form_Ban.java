@@ -529,13 +529,7 @@ public class Form_Ban extends javax.swing.JPanel {
             ban.setKv(khuVuc);
             ban.setMaBan(Integer.valueOf(txtMa.getText()));
             ban.setSoLuongChoNgoi(Integer.valueOf(txtSoLuong.getText()));
-            if (radioCoNguoi.isSelected()) {
-                ban.setTrangThai(1);
-            } else if (radioControng.isSelected()) {
-                ban.setTrangThai(0);
-            } else {
-                ban.setTrangThai(2);
-            }
+            ban.setTrangThai(0);
             JOptionPane.showMessageDialog(this, banService.add(ban));
             listBan = banService.getFull();
             showData(listBan);
