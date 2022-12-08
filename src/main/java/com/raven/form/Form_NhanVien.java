@@ -80,7 +80,6 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
         txtNgaySinh.getJCalendar().setMaxSelectableDate(today);
         JTextFieldDateEditor ngaySinh = (JTextFieldDateEditor) txtNgaySinh.getDateEditor();
         ngaySinh.setEnabled(false);
-        webCamCapture();
     }
 
     public void showData(List<NhanVien> list) {
@@ -107,7 +106,7 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
         panel.setFPSDisplayed(true);
         panel.setFPSLimited(true);
 
-        jPanel2.add(panel, new AbsoluteConstraints(0, 0, 270, 250));
+        jPanel2.add(panel, new AbsoluteConstraints(0, 0, 270, 200));
         executor.execute(this);
     }
 
@@ -420,6 +419,8 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
         plCamera = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
+        btnOpenCamera = new javax.swing.JButton();
+        btnCloseCamera = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbNhanVien = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -529,7 +530,23 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
         plCamera.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 200, -1));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        plCamera.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 270, 260));
+        plCamera.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 270, 200));
+
+        btnOpenCamera.setText("Mở Camera");
+        btnOpenCamera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenCameraActionPerformed(evt);
+            }
+        });
+        plCamera.add(btnOpenCamera, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, -1, -1));
+
+        btnCloseCamera.setText("Đóng Camera");
+        btnCloseCamera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseCameraActionPerformed(evt);
+            }
+        });
+        plCamera.add(btnCloseCamera, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -932,12 +949,24 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
         showData(listNhanVien = nhanVienService.getAllByTrangThai(1));
     }//GEN-LAST:event_radioListUnactiveActionPerformed
 
+    private void btnOpenCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenCameraActionPerformed
+        // TODO add your handling code here:
+        webCamCapture();
+    }//GEN-LAST:event_btnOpenCameraActionPerformed
+
+    private void btnCloseCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseCameraActionPerformed
+        // TODO add your handling code here:
+        webcam.close();
+    }//GEN-LAST:event_btnCloseCameraActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnAddChucVu;
     private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnCloseCamera;
     private javax.swing.JButton btnLoad;
+    private javax.swing.JButton btnOpenCamera;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
