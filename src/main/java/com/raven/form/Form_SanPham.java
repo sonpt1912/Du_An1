@@ -64,7 +64,6 @@ public class Form_SanPham extends javax.swing.JPanel {
         tbMonAn.getColumn("ẢNH").setCellRenderer(new CellRenderer());
         listMonAn = monAnService.getMonAnByTrangThai(0);
         showData(listMonAn);
-        txtId.setEnabled(false);
         txtMa.setEnabled(false);
         setCBB();
         setCBBSearch();
@@ -99,7 +98,6 @@ public class Form_SanPham extends javax.swing.JPanel {
     private void clearData() {
         txtDonGia.setText("");
         txtDonViTinh.setText("");
-        txtId.setText("");
         txtMa.setText("");
         txtTen.setText("");
         rdoApDung.setSelected(true);
@@ -129,7 +127,6 @@ public class Form_SanPham extends javax.swing.JPanel {
     private void fillData() {
         txtDonGia.setText(monAn.getDonGia().toString());
         txtDonViTinh.setText(monAn.getDonViTinh());
-        txtId.setText(monAn.getId());
         txtMa.setText(monAn.getMaMonAn());
         txtTen.setText(monAn.getTenMonAn());
         cbbLoai.setSelectedItem(monAn.getLoai().getMaLoai());
