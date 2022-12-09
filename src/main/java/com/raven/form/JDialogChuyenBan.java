@@ -8,23 +8,24 @@ import com.mycompany.customModel.BanResponse;
 import com.mycompany.domainModel.Ban;
 import com.mycompany.domainModel.ChiTietBanHoaDon;
 import com.mycompany.domainModel.HoaDon;
-import com.mycompany.repository.impl.BanRepository;
 import com.mycompany.service.IBanResponseService;
 import com.mycompany.service.IChiTietBanHoaDonService;
-import com.mycompany.service.ICommonResponseService;
 import com.mycompany.service.ICommonService;
 import com.mycompany.service.impl.BanResponseService;
 import com.mycompany.service.impl.BanService;
 import com.mycompany.service.impl.ChiTietBanHoaDonService;
 import com.mycompany.service.impl.HoaDonService;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
- * @author Admin
+ * @author Duongntt
  */
 public class JDialogChuyenBan extends javax.swing.JDialog {
 
@@ -39,6 +40,9 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
     private ICommonService banService = new BanService();
     private HoaDon hoaDon;
 
+    /**
+     * Creates new form JDialogChuyenB
+     */
     public JDialogChuyenBan(java.awt.Frame parent, boolean modal, HoaDon hd) {
         super(parent, modal);
         initComponents();
@@ -49,6 +53,11 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
         lstBanResponses = banResponseService.getByTrangThaiAndSoLuongChoNgoi(0, hd.getSoLuongKhach());
         showDataBan(lstBanResponses);
         fillBanCu();
+        //
+        JTableHeader hd2 = tbBanMoi.getTableHeader();
+        hd2.setBackground(Color.red);
+        hd2.setForeground(Color.red);
+        hd2.setFont(new Font("Segoe", Font.BOLD, 13));
     }
 
     private void showDataBan(List<BanResponse> banResponses) {
@@ -88,6 +97,7 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
@@ -98,11 +108,18 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
         btnXacNhan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("CHUYỂN BÀN");
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Bàn cũ:");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Bàn mới:");
 
+        tbBanMoi.setBackground(new java.awt.Color(178, 205, 255));
+        tbBanMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tbBanMoi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -121,10 +138,12 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
         });
         jScrollPane7.setViewportView(tbBanMoi);
 
+        lbBanCu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbBanCu.setText("Mã bàn cũ");
 
         lbBanMoi.setText("                                                   ");
 
+        btnExit.setBackground(new java.awt.Color(255, 255, 255));
         btnExit.setText("Quay lại");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,6 +151,7 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
             }
         });
 
+        btnXacNhan.setBackground(new java.awt.Color(51, 255, 51));
         btnXacNhan.setText("Xác nhận");
         btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,48 +159,59 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(64, 64, 64)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnXacNhan)
                         .addGap(66, 66, 66)
                         .addComponent(btnExit))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lbBanMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(lbBanCu, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(64, 64, 64))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lbBanCu))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(lbBanMoi))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnExit)
                     .addComponent(btnXacNhan))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -194,21 +225,21 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
         String maBan = lbBanMoi.getText();
         BanResponse banResponse = lstBanResponses.get(index);
         lbBanMoi.setText(banResponse.getMaBan().toString());
-//        for (BanResponse banResponse1 : lstMaBan) {
-//            if (banResponse1.getMaBan() == banResponse.getMaBan()) {
-//                JOptionPane.showMessageDialog(this, "Đã có bàn rồi");
-//                return;
-//            }
-//        }
+        //        for (BanResponse banResponse1 : lstMaBan) {
+        //            if (banResponse1.getMaBan() == banResponse.getMaBan()) {
+        //                JOptionPane.showMessageDialog(this, "Đã có bàn rồi");
+        //                return;
+        //            }
+        //        }
         // add bàn click vào lstMaBan
-//        lstMaBan.add(banResponse);
-//        for (BanResponse banResponse1 : lstMaBan) {
-//            if (lstMaBan.size() > 1) {
-//                lbBanMoi.setText(maBan + ", " + banResponse1.getMaBan());
-//            } else {
-//                lbBanMoi.setText(banResponse1.getMaBan().toString());
-//            }
-//        }
+        //        lstMaBan.add(banResponse);
+        //        for (BanResponse banResponse1 : lstMaBan) {
+        //            if (lstMaBan.size() > 1) {
+        //                lbBanMoi.setText(maBan + ", " + banResponse1.getMaBan());
+        //            } else {
+        //                lbBanMoi.setText(banResponse1.getMaBan().toString());
+        //            }
+        //        }
     }//GEN-LAST:event_tbBanMoiMouseClicked
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
@@ -219,7 +250,7 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         // TODO add your handling code here:
         String xoaChiTIetBan = (String) chiTietBanHoaDonService.remove(hoaDon);
-//        for (BanResponse banResponse : lstMaBan) {
+        //        for (BanResponse banResponse : lstMaBan) {
         Ban ban2 = (Ban) banService.getOne(lbBanMoi.getText());
         ChiTietBanHoaDon chiTietBanHoaDon = new ChiTietBanHoaDon(null, hoaDon, ban2);
         String addChiTietBanHoaDon = (String) chiTietBanHoaDonService.add(chiTietBanHoaDon);
@@ -232,18 +263,18 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
             ban2.setTrangThai(1);
             String setTrangThaiBan = (String) banService.update(ban2, ban2.getMaBan().toString());
         }
-//        }
+        //        }
         for (ChiTietBanHoaDon lstChiTietBanHoaDon : lstChiTietBanHoaDons) {
             Ban ban = (Ban) banService.getOne(lstChiTietBanHoaDon.getBan().getMaBan().toString());
             List<ChiTietBanHoaDon> chiTietBanHoaDons = chiTietBanHoaDonService.getByBan(ban);
             if (chiTietBanHoaDons.size() <= 0) {
                 ban.setTrangThai(0);
                 String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
-//                JOptionPane.showMessageDialog(this, "OK");
+                //                JOptionPane.showMessageDialog(this, "OK");
             } else {
                 ban.setTrangThai(1);
                 String setTrangThaiBan = (String) banService.update(ban, ban.getMaBan().toString());
-//                JOptionPane.showMessageDialog(this, "KO");
+                //                JOptionPane.showMessageDialog(this, "KO");
             }
         }
         JOptionPane.showMessageDialog(this, "Chuyển thành công");
@@ -267,20 +298,20 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
 //                }
 //            }
 //        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(JDialogChuyenBan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(JDialogChuyenB.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(JDialogChuyenBan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(JDialogChuyenB.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(JDialogChuyenBan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(JDialogChuyenB.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(JDialogChuyenBan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(JDialogChuyenB.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
 //        //</editor-fold>
 //
 //        /* Create and display the dialog */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                JDialogChuyenBan dialog = new JDialogChuyenBan(new javax.swing.JFrame(), true);
+//                JDialogChuyenB dialog = new JDialogChuyenB(new javax.swing.JFrame(), true);
 //                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 //                    @Override
 //                    public void windowClosing(java.awt.event.WindowEvent e) {
@@ -297,6 +328,7 @@ public class JDialogChuyenBan extends javax.swing.JDialog {
     private javax.swing.JButton btnXacNhan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JLabel lbBanCu;
     private javax.swing.JLabel lbBanMoi;

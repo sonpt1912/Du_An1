@@ -19,16 +19,19 @@ import com.mycompany.service.impl.HoaDonChiTietService;
 import com.mycompany.service.impl.HoaDonService;
 import com.mycompany.service.impl.MonAnService;
 import com.mycompany.util.HoaDonUtil;
+import java.awt.Color;
+import java.awt.Font;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
- * @author Admin
+ * @author Duongntt
  */
 public class JDialogTachHoaDon extends javax.swing.JDialog {
 
@@ -51,6 +54,9 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
     // thực thể cả class
     private HoaDon hoaDon;
 
+    /**
+     * Creates new form JDailogTachHD
+     */
     public JDialogTachHoaDon(java.awt.Frame parent, boolean modal, HoaDon hd) {
         super(parent, modal);
         initComponents();
@@ -62,6 +68,16 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         dtmHDMoi.setColumnIdentifiers(headerHoaDonCT);
         lstDonChiTietResponsesCu = hdctrs.getAll(hoaDon);
         showDataHDCu(lstDonChiTietResponsesCu);
+        //
+        JTableHeader hd2 = tbHDCTCu.getTableHeader();
+        hd2.setBackground(Color.red);
+        hd2.setForeground(Color.red);
+        hd2.setFont(new Font("Segoe", Font.BOLD, 13));
+        //
+        JTableHeader hd1 = tbHDCTMoi.getTableHeader();
+        hd1.setBackground(Color.red);
+        hd1.setForeground(Color.red);
+        hd1.setFont(new Font("Segoe", Font.BOLD, 13));
     }
 
     private void showDataHDCu(List<HoaDonChiTietResponse> hoaDonChiTietResponses) {
@@ -118,17 +134,36 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        btnXacNhan = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbHDCTCu = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbHDCTMoi = new javax.swing.JTable();
-        btnXacNhan = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("TÁCH HOÁ ĐƠN");
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+
+        btnXacNhan.setBackground(new java.awt.Color(0, 255, 51));
+        btnXacNhan.setText("Confirm");
+        btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXacNhanActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setText("Hoá đơn cũ");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setText("Hoá đơn mới");
+
+        btnExit.setBackground(new java.awt.Color(255, 255, 255));
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,6 +171,8 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
             }
         });
 
+        tbHDCTCu.setBackground(new java.awt.Color(178, 205, 255));
+        tbHDCTCu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tbHDCTCu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -154,6 +191,8 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tbHDCTCu);
 
+        tbHDCTMoi.setBackground(new java.awt.Color(178, 205, 255));
+        tbHDCTMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tbHDCTMoi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -167,46 +206,35 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         ));
         jScrollPane2.setViewportView(tbHDCTMoi);
 
-        btnXacNhan.setText("Confirm");
-        btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXacNhanActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Hoá đơn cũ");
-
-        jLabel2.setText("Hoá đơn mới");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(203, 203, 203))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(jLabel2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
@@ -216,113 +244,30 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnXacNhan)
                     .addComponent(btnExit))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 13, Short.MAX_VALUE))
+        );
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_btnExitActionPerformed
-
-    private void tbHDCTCuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHDCTCuMouseClicked
-
-        // lấy thằng cần tách
-        int index = tbHDCTCu.getSelectedRow();
-        HoaDonChiTietResponse hdctrCu = lstDonChiTietResponsesCu.get(index);
-//        // con vớt thằng cần tách vào thằng mới
-//        
-//        HoaDonChiTietResponse hdctrMoi = hdctrCu;
-        // lấy số lượng của thằng cũ
-        Integer soLuongMonAnCu = hdctrCu.getSoLuongMonAn();
-        Integer soLuongComboCu = hdctrCu.getSoLuongCombo();
-
-        String soLuong = JOptionPane.showInputDialog("Mời nhập số lượng");
-
-        if (soLuong == null) {
-            return;
-        } else if (soLuong.equals("")) {
-            return;
-        } else if (!soLuong.matches("[0-9]+") || Integer.valueOf(soLuong) <= 0) {
-            JOptionPane.showMessageDialog(this, "Số lượng phải là số nguyên dương");
-            return;
-        } else {
-            if (hdctrCu.getMaMonAn() == null) {
-                HoaDonChiTietResponse hdctrMoi = new HoaDonChiTietResponse();
-                //tính số lượng còn lại của thằng cũ
-                Integer soLuongConLai = soLuongComboCu - Integer.valueOf(soLuong);
-                if (soLuongConLai < 0) {
-                    JOptionPane.showMessageDialog(this, "Số lượng còn lại không được âm");
-                    return;
-                }
-                // set  số lượng cho thằng mới
-                hdctrMoi.setDonGiaCombo(hdctrCu.getDonGiaCombo());
-                hdctrMoi.setGhiChu(hdctrCu.getGhiChu());
-                hdctrMoi.setMaCombo(hdctrCu.getMaCombo());
-                hdctrMoi.setSoLuongCombo(Integer.valueOf(soLuong));
-                hdctrMoi.setTenCombo(hdctrCu.getTenCombo());
-                System.out.println(hdctrMoi);
-                hdctrCu.setGhiChu("Da tach " + soLuong + " sp sang HD moi");
-
-                lstDonChiTietResponsesMoi.add(hdctrMoi);
-                showDataHDMoi(lstDonChiTietResponsesMoi);
-                //sét số lượng còn lại cho thằng cũ
-                hdctrCu.setSoLuongCombo(soLuongConLai);
-                showDataHDCu(lstDonChiTietResponsesCu);
-//                if (soLuongConLai == 0) {
-//                    dtmHDCu.removeRow(index);
-//                }
-//                for (int i = 0; i < lstDonChiTietResponsesCu.size(); i++) {
-//                    if (lstDonChiTietResponsesCu.get(i).getSoLuongCombo() == 0 && lstDonChiTietResponsesCu.get(i).getSoLuongMonAn() > 0) {
-//                        dtmHDCu.removeRow(i);
-//                    }
-//                }
-                for (HoaDonChiTietResponse hoaDonChiTietResponse : lstDonChiTietResponsesMoi) {
-                    System.out.println(hoaDonChiTietResponse);
-                }
-                return;
-            } else {
-                //tạo hdct mới (tạm thời)
-                HoaDonChiTietResponse hdctrMoi = new HoaDonChiTietResponse();
-                hdctrMoi.setDonGiaMonAn(hdctrCu.getDonGiaMonAn());
-                hdctrMoi.setGhiChu(hdctrCu.getGhiChu());
-                hdctrMoi.setMaMonAn(hdctrCu.getMaMonAn());
-                hdctrMoi.setTenMonAn(hdctrCu.getTenMonAn());
-                Integer soLuongConLai = soLuongMonAnCu - Integer.valueOf(soLuong);
-                if (soLuongConLai < 0) {
-                    JOptionPane.showMessageDialog(this, "Số lượng còn lại không được âm");
-                    return;
-                }
-                // sét  số lượng cho thằng mới
-                hdctrMoi.setSoLuongMonAn(Integer.valueOf(soLuong));
-                hdctrCu.setGhiChu("Da tach " + soLuong + " sp sang HD moi");
-                //add vào list tạm thời
-                lstDonChiTietResponsesMoi.add(hdctrMoi);
-                showDataHDMoi(lstDonChiTietResponsesMoi);
-                //sét số lượng còn lại cho thằng cũ
-                hdctrCu.setSoLuongMonAn(soLuongConLai);
-                showDataHDCu(lstDonChiTietResponsesCu);
-//                if (soLuongConLai == 0) {
-//                    dtmHDCu.removeRow(index);
-//                }
-//                for (int i = 0; i < lstDonChiTietResponsesCu.size(); i++) {
-//                    if (lstDonChiTietResponsesCu.get(i).getSoLuongMonAn() == 0 && lstDonChiTietResponsesCu.get(i).getSoLuongCombo() > 0) {
-//                        dtmHDCu.removeRow(i);
-//                    }
-//                }
-                for (HoaDonChiTietResponse hoaDonChiTietResponse : lstDonChiTietResponsesMoi) {
-                    System.out.println(hoaDonChiTietResponse);
-                }
-                return;
-            }
-        }
-    }//GEN-LAST:event_tbHDCTCuMouseClicked
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         listHD = hoaDonService.getAll();
@@ -354,7 +299,7 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
             ///add vào db
             String themCTBan_HD = chiTietBanHoaDonService.add(chiTietBanHoaDonNew);
         }
-//        list ctbanf mới thêm:
+        //        list ctbanf mới thêm:
         List<ChiTietBanHoaDon> listMoi = chiTietBanHoaDonService.getByHoaDon(HDNew);
         for (ChiTietBanHoaDon chiTietBanHoaDon : listMoi) {
             System.out.println(chiTietBanHoaDon.toString());
@@ -414,53 +359,114 @@ public class JDialogTachHoaDon extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void tbHDCTCuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHDCTCuMouseClicked
+
+        // lấy thằng cần tách
+        int index = tbHDCTCu.getSelectedRow();
+        HoaDonChiTietResponse hdctrCu = lstDonChiTietResponsesCu.get(index);
+        //        // con vớt thằng cần tách vào thằng mới
+        //
+        //        HoaDonChiTietResponse hdctrMoi = hdctrCu;
+        // lấy số lượng của thằng cũ
+        Integer soLuongMonAnCu = hdctrCu.getSoLuongMonAn();
+        Integer soLuongComboCu = hdctrCu.getSoLuongCombo();
+
+        String soLuong = JOptionPane.showInputDialog("Mời nhập số lượng");
+
+        if (soLuong == null) {
+            return;
+        } else if (soLuong.equals("")) {
+            return;
+        } else if (!soLuong.matches("[0-9]+") || Integer.valueOf(soLuong) <= 0) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải là số nguyên dương");
+            return;
+        } else {
+            if (hdctrCu.getMaMonAn() == null) {
+                HoaDonChiTietResponse hdctrMoi = new HoaDonChiTietResponse();
+                //tính số lượng còn lại của thằng cũ
+                Integer soLuongConLai = soLuongComboCu - Integer.valueOf(soLuong);
+                if (soLuongConLai < 0) {
+                    JOptionPane.showMessageDialog(this, "Số lượng còn lại không được âm");
+                    return;
+                }
+                // set  số lượng cho thằng mới
+                hdctrMoi.setDonGiaCombo(hdctrCu.getDonGiaCombo());
+                hdctrMoi.setGhiChu(hdctrCu.getGhiChu());
+                hdctrMoi.setMaCombo(hdctrCu.getMaCombo());
+                hdctrMoi.setSoLuongCombo(Integer.valueOf(soLuong));
+                hdctrMoi.setTenCombo(hdctrCu.getTenCombo());
+                System.out.println(hdctrMoi);
+                hdctrCu.setGhiChu("Da tach " + soLuong + " sp sang HD moi");
+
+                lstDonChiTietResponsesMoi.add(hdctrMoi);
+                showDataHDMoi(lstDonChiTietResponsesMoi);
+                //sét số lượng còn lại cho thằng cũ
+                hdctrCu.setSoLuongCombo(soLuongConLai);
+                showDataHDCu(lstDonChiTietResponsesCu);
+                //                if (soLuongConLai == 0) {
+                //                    dtmHDCu.removeRow(index);
+                //                }
+                //                for (int i = 0; i < lstDonChiTietResponsesCu.size(); i++) {
+                //                    if (lstDonChiTietResponsesCu.get(i).getSoLuongCombo() == 0 && lstDonChiTietResponsesCu.get(i).getSoLuongMonAn() > 0) {
+                //                        dtmHDCu.removeRow(i);
+                //                    }
+                //                }
+                for (HoaDonChiTietResponse hoaDonChiTietResponse : lstDonChiTietResponsesMoi) {
+                    System.out.println(hoaDonChiTietResponse);
+                }
+                return;
+            } else {
+                //tạo hdct mới (tạm thời)
+                HoaDonChiTietResponse hdctrMoi = new HoaDonChiTietResponse();
+                hdctrMoi.setDonGiaMonAn(hdctrCu.getDonGiaMonAn());
+                hdctrMoi.setGhiChu(hdctrCu.getGhiChu());
+                hdctrMoi.setMaMonAn(hdctrCu.getMaMonAn());
+                hdctrMoi.setTenMonAn(hdctrCu.getTenMonAn());
+                Integer soLuongConLai = soLuongMonAnCu - Integer.valueOf(soLuong);
+                if (soLuongConLai < 0) {
+                    JOptionPane.showMessageDialog(this, "Số lượng còn lại không được âm");
+                    return;
+                }
+                // sét  số lượng cho thằng mới
+                hdctrMoi.setSoLuongMonAn(Integer.valueOf(soLuong));
+                hdctrCu.setGhiChu("Da tach " + soLuong + " sp sang HD moi");
+                //add vào list tạm thời
+                lstDonChiTietResponsesMoi.add(hdctrMoi);
+                showDataHDMoi(lstDonChiTietResponsesMoi);
+                //sét số lượng còn lại cho thằng cũ
+                hdctrCu.setSoLuongMonAn(soLuongConLai);
+                showDataHDCu(lstDonChiTietResponsesCu);
+                //                if (soLuongConLai == 0) {
+                //                    dtmHDCu.removeRow(index);
+                //                }
+                //                for (int i = 0; i < lstDonChiTietResponsesCu.size(); i++) {
+                //                    if (lstDonChiTietResponsesCu.get(i).getSoLuongMonAn() == 0 && lstDonChiTietResponsesCu.get(i).getSoLuongCombo() > 0) {
+                //                        dtmHDCu.removeRow(i);
+                //                    }
+                //                }
+                for (HoaDonChiTietResponse hoaDonChiTietResponse : lstDonChiTietResponsesMoi) {
+                    System.out.println(hoaDonChiTietResponse);
+                }
+                return;
+            }
+        }
+    }//GEN-LAST:event_tbHDCTCuMouseClicked
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JDialogTachHoaDon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JDialogTachHoaDon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JDialogTachHoaDon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDialogTachHoaDon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                JDialogTachHoaDon dialog = new JDialogTachHoaDon(new javax.swing.JFrame(), true);
-//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//                    @Override
-//                    public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
-//                    }
-//                });
-//                dialog.setVisible(true);
-//            }
-//        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnXacNhan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tbHDCTCu;

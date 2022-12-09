@@ -9,11 +9,14 @@ import com.mycompany.domainModel.KhuVuc;
 import com.mycompany.domainModel.NhanVien;
 import com.mycompany.service.impl.BanService;
 import com.mycompany.service.impl.KhuVucService;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -45,6 +48,11 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
         loadCbb(listKV);
         rdoDaXoa4.setEnabled(false);
         radioControng4.setSelected(true);
+        //
+        JTableHeader hd1 = tbBan.getTableHeader();
+        hd1.setBackground(Color.red);
+        hd1.setForeground(Color.red);
+        hd1.setFont(new Font("Segoe", Font.BOLD, 13));
     }
 
     private void showData(List<Ban> listBan) {
@@ -106,7 +114,6 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
         panelBorder5 = new com.raven.swing.PanelBorder();
         txtSearch4 = new com.raven.swing.SearchText();
         jLabel25 = new javax.swing.JLabel();
-        jButton13 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
@@ -133,6 +140,7 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("THÊM NHANH BÀN");
 
         panelBorder5.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -142,12 +150,8 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
             }
         });
 
-        jButton13.setBackground(new java.awt.Color(204, 204, 204));
-        jButton13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton13.setText("Search");
-
         jPanel5.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel26.setText("Mã Bàn                  :");
@@ -171,6 +175,7 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
             }
         });
 
+        btnAddKhuVuc4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddKhuVuc4.setText("+");
         btnAddKhuVuc4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,6 +183,7 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
             }
         });
 
+        btnLamMoiKhuVuc4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLamMoiKhuVuc4.setText("@");
         btnLamMoiKhuVuc4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,6 +273,8 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
                 .addGap(86, 86, 86))
         );
 
+        tbBan.setBackground(new java.awt.Color(178, 205, 255));
+        tbBan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tbBan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -346,9 +354,7 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
                             .addGroup(panelBorder5Layout.createSequentialGroup()
                                 .addComponent(jLabel25)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtSearch4, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27)
-                                .addComponent(jButton13)))
+                                .addComponent(txtSearch4, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panelBorder5Layout.createSequentialGroup()
                         .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,12 +377,10 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
         panelBorder5Layout.setVerticalGroup(
             panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel25)
-                    .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtSearch4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton13)))
+                    .addComponent(txtSearch4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addComponent(jLabel31)
                 .addGap(8, 8, 8)
@@ -391,24 +395,22 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
                         .addComponent(btnClear)
                         .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelBorder5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(panelBorder5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelBorder5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtSearch4CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearch4CaretUpdate
@@ -660,7 +662,6 @@ public class JDialogThemNhanhBan extends javax.swing.JDialog {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbMaKhuVuc4;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton13;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
