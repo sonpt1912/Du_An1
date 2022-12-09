@@ -105,13 +105,13 @@ public class Main extends javax.swing.JFrame {
                     } else if (index == 4) {
                         setForm(form4);
                     } else if (index == 5) {
-                        JOptionPane.showMessageDialog(rootPane, "vui lòng sử dụng quyền khách hàng");
+                        JOptionPane.showMessageDialog(rootPane, "vui lòng sử dụng quyền quản lý");
                     } else if (index == 6) {
-                        JOptionPane.showMessageDialog(rootPane, "vui lòng sử dụng quyền khách hàng");
+                        JOptionPane.showMessageDialog(rootPane, "vui lòng sử dụng quyền quản lý");
                     } else if (index == 7) {
-                        JOptionPane.showMessageDialog(rootPane, "vui lòng sử dụng quyền khách hàng");
+                        JOptionPane.showMessageDialog(rootPane, "vui lòng sử dụng quyền quản lý");
                     } else if (index == 8) {
-                        JOptionPane.showMessageDialog(rootPane, "vui lòng sử dụng quyền khách hàng");
+                        JOptionPane.showMessageDialog(rootPane, "vui lòng sử dụng quyền quản lý");
                     } else if (index == 9) {
                         setForm(form9);
                     } else if (index == 10) {
