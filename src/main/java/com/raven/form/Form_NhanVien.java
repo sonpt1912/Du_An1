@@ -274,7 +274,6 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
             }
             LocalDate ngaySinh = LocalDate.of(year, monh, day);
             LocalDate ngayHienTai = LocalDate.now();
-            JOptionPane.showConfirmDialog(this, Period.between(ngaySinh, ngayHienTai).getYears());
             if (txtDiaChi.getText().isEmpty()) {
                 return "địa chỉ không được để trống";
             } else if (txtEmail.getText().isEmpty()) {
@@ -336,7 +335,6 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
             }
             LocalDate ngaySinh = LocalDate.of(year, monh, day);
             LocalDate ngayHienTai = LocalDate.now();
-            JOptionPane.showConfirmDialog(this, Period.between(ngaySinh, ngayHienTai).getYears());
             if (txtDiaChi.getText().isEmpty()) {
                 return "địa chỉ không được để trống";
             } else if (txtEmail.getText().isEmpty()) {
