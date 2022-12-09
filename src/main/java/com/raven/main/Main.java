@@ -60,36 +60,61 @@ public class Main extends javax.swing.JFrame {
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
             public void selected(int index) {
-                if (index == 0) {
-                    setForm(home);
-                } else if (index == 1) {
-                    setForm(form1);
-                } else if (index == 2) {
-                    setForm(form2);
-                } else if (index == 3) {
-                    setForm(form3);
-                } else if (index == 4) {
-                    setForm(form4);
-                } else if (index == 5) {
-                    setForm(form5);
-                } else if (index == 6) {
-                    setForm(form6);
-                } else if (index == 7) {
-                    setForm(form7);
-                } else if (index == 8) {
-                    setForm(form8);
-                } else if (index == 9) {
-                    setForm(form9);
-                } else if (index == 10) {
-                    int checkOut = JOptionPane.showConfirmDialog(null, "Bạn có muốn đăng xuất không");
-                    if (checkOut == JOptionPane.NO_OPTION) {
-                        return;
-                    } else if (checkOut == JOptionPane.CLOSED_OPTION) {
-                        return;
-                    } else if (checkOut == JOptionPane.CANCEL_OPTION) {
-                        return;
-                    } else {
-                        System.exit(0);
+                if (nv.getChucVu().getMa().equalsIgnoreCase("CV2")) {
+                    if (index == 0) {
+                        setForm(home);
+                    } else if (index == 1) {
+                        setForm(form1);
+                    } else if (index == 2) {
+                        setForm(form2);
+                    } else if (index == 3) {
+                        setForm(form3);
+                    } else if (index == 4) {
+                        setForm(form4);
+                    } else if (index == 5) {
+                        setForm(form5);
+                    } else if (index == 6) {
+                        setForm(form6);
+                    } else if (index == 7) {
+                        setForm(form7);
+                    } else if (index == 8) {
+                        setForm(form8);
+                    } else if (index == 9) {
+                        setForm(form9);
+                    } else if (index == 10) {
+                        int checkOut = JOptionPane.showConfirmDialog(null, "Bạn có muốn đăng xuất không");
+                        if (checkOut == JOptionPane.NO_OPTION) {
+                            return;
+                        } else if (checkOut == JOptionPane.CLOSED_OPTION) {
+                            return;
+                        } else if (checkOut == JOptionPane.CANCEL_OPTION) {
+                            return;
+                        } else {
+                            System.exit(0);
+                        }
+                    }
+                } else {
+                    if (index == 0) {
+                        setForm(home);
+                    } else if (index == 1) {
+                        setForm(form1);
+                    } else if (index == 3) {
+                        setForm(form3);
+                    } else if (index == 4) {
+                        setForm(form4);
+                    } else if (index == 9) {
+                        setForm(form9);
+                    } else if (index == 10) {
+                        int checkOut = JOptionPane.showConfirmDialog(null, "Bạn có muốn đăng xuất không");
+                        if (checkOut == JOptionPane.NO_OPTION) {
+                            return;
+                        } else if (checkOut == JOptionPane.CLOSED_OPTION) {
+                            return;
+                        } else if (checkOut == JOptionPane.CANCEL_OPTION) {
+                            return;
+                        } else {
+                            System.exit(0);
+                        }
                     }
                 }
             }
