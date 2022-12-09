@@ -301,7 +301,7 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
                 return "sdt không đúng định dạng";
             } else if (!txtEmail.getText().matches("[a-zA-Z0-9]+(@fpt|@gmail)((.com)|(.edu.vn))")) {
                 return "email không đúng định dạng";
-            } else if (!txtDiaChi.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+            } else if (!txtDiaChi.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ, ]+$")) {
                 return "địa chỉ không đúng định dạng";
             } else if (!txtMatKhau.getText().matches("[a-zA-Z0-9]{8}")) {
                 return "mật khẩu không đúng định dạng";
@@ -363,7 +363,7 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
                 return "sdt không đúng định dạng";
             } else if (!txtEmail.getText().matches("[a-zA-Z0-9]+(@fpt|@gmail)((.com)|(.edu.vn))")) {
                 return "email không đúng định dạng";
-            } else if (!txtDiaChi.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ ]+$")) {
+            } else if (!txtDiaChi.getText().matches("^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ, ]+$")) {
                 return "địa chỉ không đúng định dạng";
             } else if (!txtMatKhau.getText().matches("[a-zA-Z0-9]{8}")) {
                 return "mật khẩu không đúng định dạng";
