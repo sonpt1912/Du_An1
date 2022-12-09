@@ -87,7 +87,6 @@ public class JDialogDoiMatKhau extends javax.swing.JDialog {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Xác Nhận Mật Khẩu mới:");
 
-        txtMatKhauCu.setText("jPasswordField1");
         txtMatKhauCu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtMatKhauCuMouseClicked(evt);
@@ -179,9 +178,7 @@ public class JDialogDoiMatKhau extends javax.swing.JDialog {
 
     private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuayLaiActionPerformed
         // TODO add your handling code here:
-        ViewLogin viewLogin = new ViewLogin();
         this.dispose();
-        viewLogin.setVisible(true);
     }//GEN-LAST:event_btnQuayLaiActionPerformed
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed

@@ -311,6 +311,7 @@ public class Form_NhanVien extends javax.swing.JPanel implements Runnable, Threa
                     NhanVien nhanVien = newNV();
                     nhanVien.setMa(nhanVienUtil.maTuDong(listNhanVien = nhanVienService.getAll()));
                     String add = nhanVienService.add(nhanVien);
+                    nhanVienUtil.guiEmail(txtEmail.getText(), txtMa.getText(), txtMatKhau.getText());
                     return add;
                 } else {
                     return "hủy thêm";

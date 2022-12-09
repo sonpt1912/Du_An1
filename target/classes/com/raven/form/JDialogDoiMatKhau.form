@@ -189,9 +189,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtMatKhauCu">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jPasswordField1"/>
-          </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtMatKhauCuMouseClicked"/>
           </Events>
