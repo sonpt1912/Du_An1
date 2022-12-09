@@ -5,6 +5,8 @@
  */
 package com.raven.form;
 
+import com.mycompany.customModel.ExcelDayWeekMonthYear;
+import com.mycompany.customModel.ExcelReponse;
 import com.mycompany.customModel.SanPhamRepose;
 import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.NhanVien;
@@ -14,14 +16,33 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import static org.apache.poi.ss.usermodel.CellStyle.SOLID_FOREGROUND;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -126,6 +147,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         jPanel13 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
+        ExportExcel = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 204, 255));
@@ -297,7 +319,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                     .addComponent(lbHoaDonHuyWEEK)
                     .addComponent(jLabel2)
                     .addComponent(lbDoanhThuWEEK))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,7 +379,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                                 .addGap(21, 21, 21)
                                 .addComponent(jLabel3)))
                         .addGap(65, 65, 65)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,7 +432,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                             .addComponent(lbSoLuongKhachHangYEAR)
                             .addComponent(lbHoaDonHuyYEAR)
                             .addComponent(lbDoanhThuYEAR))))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -460,7 +482,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
                     .addComponent(lbDoangThuDAY)
                     .addComponent(lbHoaDonDaThanhToanDAY)
                     .addComponent(lbHoaDonHuyDAY))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,6 +533,14 @@ public class Form_ThongKe extends javax.swing.JPanel {
         chartHoaDon.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         panelBorder2.add(chartHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 780, 400));
+
+        ExportExcel.setText("ExportExcel");
+        ExportExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExportExcelActionPerformed(evt);
+            }
+        });
+        panelBorder2.add(ExportExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 10, 110, 30));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(102, 102, 102));
@@ -620,6 +650,18 @@ public class Form_ThongKe extends javax.swing.JPanel {
             jLabel7.setText(thongKeService.soLuongTheoKhoangNgay(Date.valueOf(ngayBatDau), Date.valueOf(ngayKetThuc)) + "đ");
         }
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void ExportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExportExcelActionPerformed
+        // TODO add your handling code here:
+        try {
+            writeExcelbieuDo();
+//            writeExcelDWMY();
+            JOptionPane.showMessageDialog(this, "Export thành công rùi nhé heheee");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Âu nâu export thất bại rùi", "", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_ExportExcelActionPerformed
 
     private void setTKSP(List<SanPhamRepose> list) {
         if (list.size() > 0) {
@@ -769,7 +811,176 @@ public class Form_ThongKe extends javax.swing.JPanel {
         lbSoLuongKhachHangMONTH.setText("Số lượng khách hàng :" + thongKeService.soLuongKhachHangMONTH());
         lbSoLuongKhachHangYEAR.setText("Số lượng khách hàng :" + thongKeService.soLuongKhachHangYEAR());
     }
+
+    private void writeExcelbieuDo() {
+        try {
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("ThongKe");
+            String columnHeader[] = {"Tháng", "Doanh thu", "Tháng", "Doanh thu"};
+            String columnDayWeekMonthYear[] = {"Thời Gian", "Doanh thu", "Số lượng khách", "Hóa đơn đã thanh toán", "Hóa đơn đã hủy"};
+            XSSFFont headerFont = (XSSFFont) workbook.createFont();
+            headerFont.setFontName("Times New Roman");
+            headerFont.setBoldweight((short) 14);
+            headerFont.setColor(IndexedColors.BLACK.index);
+            headerFont.setBold(true);
+
+            CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
+            cellStyle.setFont(headerFont);
+            cellStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+            cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            cellStyle.setBorderTop(XSSFCellStyle.BORDER_MEDIUM);
+            cellStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
+            cellStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
+            cellStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
+//            cellStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
+            CellStyle cellStyleRow = sheet.getWorkbook().createCellStyle();
+            cellStyleRow.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+            cellStyleRow.setFillPattern(CellStyle.ALIGN_CENTER);
+            cellStyleRow.setBorderTop(XSSFCellStyle.BORDER_THIN);
+            cellStyleRow.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+            cellStyleRow.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+            cellStyleRow.setBorderRight(XSSFCellStyle.BORDER_THIN);
+
+//             ThongKe Theo tung tháng
+            Row headerRow = sheet.createRow(9);
+            for (int i = 0; i < columnHeader.length; i++) {
+                Cell cell = headerRow.createCell(i + 2);
+                cell.setCellValue(columnHeader[i]);
+                cell.setCellStyle(cellStyle);
+            }
+//            ThongKe theo ngay tuan thang nam
+            Row headerDayWeekMonthYear = sheet.createRow(2);
+            for (int i = 0; i < columnDayWeekMonthYear.length; i++) {
+                Cell cell = headerDayWeekMonthYear.createCell(i + 2);
+                cell.setCellValue(columnDayWeekMonthYear[i]);
+                cell.setCellStyle(cellStyle);
+            }
+//              Add thong ke tung thang
+            int rownum = 3;
+            int rownum1 = 10;
+            List<ExcelReponse> a = createData();
+            for (ExcelReponse i : a) {
+                Row row = sheet.createRow(rownum1++);
+                BigDecimal bd = new BigDecimal(0);
+                BigDecimal bd2 = new BigDecimal(0);
+                row.createCell(2).setCellValue(i.getThang());
+                row.createCell(3).setCellValue(bd.add(i.getDoanhthu()).toPlainString());
+                row.createCell(4).setCellValue(i.getThang2());
+                row.createCell(5).setCellValue(bd2.add(i.getDoanhthu2()).toPlainString());
+                row.getCell(2).setCellStyle(cellStyleRow);
+                row.getCell(3).setCellStyle(cellStyleRow);
+                row.getCell(4).setCellStyle(cellStyleRow);
+                row.getCell(5).setCellStyle(cellStyleRow);
+            }
+            //        Add thông kê ngay tuan thang nam
+
+            List<ExcelDayWeekMonthYear> b = createDayWeekMonthYears();
+            for (ExcelDayWeekMonthYear excelDayWeekMonthYear : b) {
+                Row row = sheet.createRow(rownum++);
+                BigDecimal bd = new BigDecimal(0);
+                row.createCell(2).setCellValue(excelDayWeekMonthYear.getThoiGian());
+                row.createCell(3).setCellValue(bd.add(excelDayWeekMonthYear.getDoanhThu()).toPlainString());
+                row.createCell(4).setCellValue(excelDayWeekMonthYear.getSoLuongKhach());
+                row.createCell(5).setCellValue(excelDayWeekMonthYear.getDaThanhToan());
+                row.createCell(6).setCellValue(excelDayWeekMonthYear.getDaHuy());
+                row.getCell(3).setCellStyle(cellStyleRow);
+                row.getCell(2).setCellStyle(cellStyleRow);
+                row.getCell(4).setCellStyle(cellStyleRow);
+                row.getCell(5).setCellStyle(cellStyleRow);
+                row.getCell(6).setCellStyle(cellStyleRow);
+
+//                sheet.addMergedRegion(new CellRangeAddress(1, 3, 3, 2));
+            }
+            try (FileOutputStream fileOutputStream = new FileOutputStream("src\\ThongKeNhaHangERROR.xlsx")) {
+                autoSizeColumns(workbook);
+                workbook.write(fileOutputStream);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void autoSizeColumns(Workbook workbook) {
+        int numberOfSheets = workbook.getNumberOfSheets();
+        for (int i = 0; i < numberOfSheets; i++) {
+            Sheet sheet = workbook.getSheetAt(i);
+            if (sheet.getPhysicalNumberOfRows() > 0) {
+                Row row = sheet.getRow(sheet.getFirstRowNum());
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    int columnIndex = cell.getColumnIndex();
+                    sheet.autoSizeColumn(columnIndex);
+                    int currentColumnWidth = sheet.getColumnWidth(columnIndex);
+                    sheet.setColumnWidth(columnIndex, (currentColumnWidth + 2500));
+                }
+            }
+        }
+    }
+
+    private ArrayList<ExcelDayWeekMonthYear> createDayWeekMonthYears() {
+        ArrayList<ExcelDayWeekMonthYear> b = new ArrayList<>();
+        if (thongKeService.getDoanhThuDAY() == null) {
+            b.add(new ExcelDayWeekMonthYear("HÔM NAY", new BigDecimal(0), (int) thongKeService.soLuongKhachHangDAY(), thongKeService.getHoaDonDaTTDAY(), thongKeService.getHoaDonHuyDAY()));
+        } else {
+            b.add(new ExcelDayWeekMonthYear("HÔM NAY", thongKeService.getDoanhThuDAY(), (int) thongKeService.soLuongKhachHangDAY(), thongKeService.getHoaDonDaTTDAY(), thongKeService.getHoaDonHuyDAY()));
+        }
+        if (thongKeService.getDoanhThuWEEK() == null) {
+            b.add(new ExcelDayWeekMonthYear("TUẦN", new BigDecimal(0), (int) thongKeService.soLuongKhachHangWEEK(), thongKeService.getHoaDonDaTTWEEK(), thongKeService.getHoaDonHuyWEEK()));
+        } else {
+            b.add(new ExcelDayWeekMonthYear("TUẦN", thongKeService.getDoanhThuWEEK(), (int) thongKeService.soLuongKhachHangWEEK(), thongKeService.getHoaDonDaTTWEEK(), thongKeService.getHoaDonHuyWEEK()));
+        }
+        if (thongKeService.getDoanhThuMONTH() == null) {
+            b.add(new ExcelDayWeekMonthYear("THÁNG", new BigDecimal(0), (int) thongKeService.soLuongKhachHangMONTH(), thongKeService.getHoaDonDaTTMONTH(), thongKeService.getHoaDonHuyMONTH()));
+        } else {
+            b.add(new ExcelDayWeekMonthYear("THÁNG", thongKeService.getDoanhThuMONTH(), (int) thongKeService.soLuongKhachHangMONTH(), thongKeService.getHoaDonDaTTMONTH(), thongKeService.getHoaDonHuyMONTH()));
+        }
+        if (thongKeService.getDoanhThuYEAR() == null) {
+            b.add(new ExcelDayWeekMonthYear("NĂM", new BigDecimal(0), (int) thongKeService.soLuongKhachHangYEAR(), thongKeService.getHoaDonDaTTYEAR(), thongKeService.getHoaDonHuyYEAR()));
+        } else {
+            b.add(new ExcelDayWeekMonthYear("NĂM", thongKeService.getDoanhThuYEAR(), (int) thongKeService.soLuongKhachHangYEAR(), thongKeService.getHoaDonDaTTYEAR(), thongKeService.getHoaDonHuyYEAR()));
+        }
+        return b;
+    }
+
+    private ArrayList<ExcelReponse> createData() {
+        ArrayList<ExcelReponse> a = new ArrayList<>();
+        if (thongKeService.getDoanhThuThang1() == null || thongKeService.getDoanhThuThang7() == null) {
+            a.add(new ExcelReponse("Tháng 1", new BigDecimal(0), "Tháng 7", new BigDecimal(0)));
+        } else {
+            a.add(new ExcelReponse("Tháng 1", thongKeService.getDoanhThuThang1(), "Tháng 7", thongKeService.getDoanhThuThang7()));
+        }
+        if (thongKeService.getDoanhThuThang2() == null || thongKeService.getDoanhThuThang8() == null) {
+            a.add(new ExcelReponse("Tháng 2", new BigDecimal(0), "Tháng 8", new BigDecimal(0)));
+        } else {
+            a.add(new ExcelReponse("Tháng 2", thongKeService.getDoanhThuThang2(), "Tháng 8", thongKeService.getDoanhThuThang8()));
+        }
+        if (thongKeService.getDoanhThuThang3() == null || thongKeService.getDoanhThuThang9() == null) {
+            a.add(new ExcelReponse("Tháng 3", new BigDecimal(0), "Tháng 9", new BigDecimal(0)));
+        } else {
+            a.add(new ExcelReponse("Tháng 3", thongKeService.getDoanhThuThang3(), "Tháng 9", thongKeService.getDoanhThuThang9()));
+        }
+        if (thongKeService.getDoanhThuThang4() == null || thongKeService.getDoanhThuThang10() == null) {
+            a.add(new ExcelReponse("Tháng 4", new BigDecimal(0), "Tháng 10", new BigDecimal(0)));
+        } else {
+            a.add(new ExcelReponse("Tháng 4", thongKeService.getDoanhThuThang4(), "Tháng 10", thongKeService.getDoanhThuThang10()));
+        }
+        if (thongKeService.getDoanhThuThang5() == null || thongKeService.getDoanhThuThang11() == null) {
+            a.add(new ExcelReponse("Tháng 5", new BigDecimal(0), "Tháng 11", new BigDecimal(0)));
+        } else {
+            a.add(new ExcelReponse("Tháng 5", thongKeService.getDoanhThuThang5(), "Tháng 11", thongKeService.getDoanhThuThang11()));
+        }
+        if (thongKeService.getDoanhThuThang6() == null || thongKeService.getDoanhThuThang12() == null) {
+            a.add(new ExcelReponse("Tháng 6", new BigDecimal(0), "Tháng 12", new BigDecimal(0)));
+        } else {
+            a.add(new ExcelReponse("Tháng 6", thongKeService.getDoanhThuThang6(), "Tháng 12", thongKeService.getDoanhThuThang12()));
+        }
+        return a;
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ExportExcel;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
