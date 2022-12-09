@@ -8,10 +8,13 @@ import com.mycompany.domainModel.Ban;
 import com.mycompany.domainModel.KhuVuc;
 import com.mycompany.service.impl.BanService;
 import com.mycompany.service.impl.KhuVucService;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -45,6 +48,11 @@ public class JDialogTachBan extends javax.swing.JDialog {
         txtMaKhuVuc.setEditable(false);
         txtTenKhuVuc.setEditable(false);
         txtSoLuongChoCoTheTach.setEditable(false);
+        //
+        JTableHeader hd1 = tbBanMoi.getTableHeader();
+        hd1.setBackground(Color.red);
+        hd1.setForeground(Color.red);
+        hd1.setFont(new Font("Segoe", Font.BOLD, 13));
     }
 
     private void showDataBanMoi(List<Ban> listBan) {
@@ -97,6 +105,7 @@ public class JDialogTachBan extends javax.swing.JDialog {
         txtSoLuongChoCoTheTach = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("TÁCH BÀN");
 
         jPanel1.setBackground(new java.awt.Color(255, 239, 239));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 3));
@@ -110,6 +119,8 @@ public class JDialogTachBan extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Mã Bàn Mới:");
 
+        tbBanMoi.setBackground(new java.awt.Color(178, 205, 255));
+        tbBanMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tbBanMoi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -187,7 +198,7 @@ public class JDialogTachBan extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 16, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -236,7 +247,7 @@ public class JDialogTachBan extends javax.swing.JDialog {
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtSoLuongChoCoTheTach, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,9 +295,7 @@ public class JDialogTachBan extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();

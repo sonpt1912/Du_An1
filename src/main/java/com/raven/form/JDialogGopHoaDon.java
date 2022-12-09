@@ -23,11 +23,14 @@ import com.mycompany.service.impl.HoaDonChiTietResponseService;
 import com.mycompany.service.impl.HoaDonChiTietService;
 import com.mycompany.service.impl.HoaDonService;
 import com.mycompany.service.impl.MonAnService;
+import java.awt.Color;
+import java.awt.Font;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -73,6 +76,16 @@ public class JDialogGopHoaDon extends javax.swing.JDialog {
         HoaDon hdMoi = (HoaDon) hds1.getOne(cbbMaHoaDonMoi.getSelectedItem().toString());
         lstDonChiTietResponsesMoi = hdctResponseService.getAll(hdMoi);
         showDataHDCTMoi(lstDonChiTietResponsesMoi);
+        //
+        JTableHeader hd1 = tbHDCTCu.getTableHeader();
+        hd1.setBackground(Color.red);
+        hd1.setForeground(Color.red);
+        hd1.setFont(new Font("Segoe", Font.BOLD, 13));
+        //
+        JTableHeader hd2 = tbHDCTMoi.getTableHeader();
+        hd2.setBackground(Color.red);
+        hd2.setForeground(Color.red);
+        hd2.setFont(new Font("Segoe", Font.BOLD, 13));
     }
 
     private void loadCBB() {
