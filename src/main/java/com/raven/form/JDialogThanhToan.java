@@ -39,7 +39,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class JDialogThanhToan extends javax.swing.JDialog {
-    
+
     private List<HoaDonChiTiet> listHdCt = new ArrayList<>();
     private HoaDonThanhToanCustom hdCustom;
     private DefaultTableModel dtmHoaDonCT = new DefaultTableModel();
@@ -66,6 +66,8 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     private BigDecimal tienTraLai = new BigDecimal(0);
     private BigDecimal tienMat = new BigDecimal(0);
     private BigDecimal tienCK = new BigDecimal(0);
+    private BigDecimal tienGiamGia = new BigDecimal(0);
+    private double thue = 0;
 
     /**
      * Creates new form JDialogThanhToan
@@ -73,6 +75,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     public JDialogThanhToan(java.awt.Frame parent, boolean modal, HoaDonThanhToanCustom hoaDonCustom) {
         super(parent, modal);
         initComponents();
+
         hdCustom = hoaDonCustom;
         hoaDon = hoaDonService.getOne(hdCustom.getMaHD());
         tbHDCT.setModel(dtmHoaDonCT);
@@ -91,7 +94,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         if (hdCustom.getTienDuocGiam() != null) {
             txtTienDuocGiam.setText(String.valueOf(hdCustom.getTienDuocGiam()));
         } else {
-            txtTienDuocGiam.setText("0");
+            txtTienDuocGiam.setText(hdCustom.getTienDuocGiam().toString());
         }
         tienMat = hdCustom.getTienMat();
         txtTiennMat.setText(tienMat.toString());
@@ -115,7 +118,6 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtTenKhachHang.setEditable(false);
         // BigDecimal thue = BigDecimal.valueOf(0);
         //đổi double 
-        Double thue = Double.valueOf("0");
         thue = Double.valueOf(String.valueOf(hdCustom.getTongTien())) * 0.1;
         BigDecimal tongTienHang = new BigDecimal(txtTongTien.getText());
         //thue = tongTienHang.multiply(new BigDecimal(0.1));
@@ -126,7 +128,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtTienThanhToan.setText(String.valueOf(df.format(tongTienThanhToan)));
         //txtTienThanhToan.setText(tongTienThanhToan.toString());
     }
-    
+
     private void showDataHDCT(List<HoaDonChiTietResponse> hoaDonChiTietResponses) {
         dtmHoaDonCT.setRowCount(0);
         int stt = 0;
@@ -135,7 +137,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             dtmHoaDonCT.addRow(hoaDonChiTietResponse.toDataRow(stt));
         }
     }
-    
+
     private void thanhToan() {
         HoaDon hd = hoaDonService.getOne(hoaDon.getMaHoaDon());
         //Th1: thanh toán bằng tiền mặt:
@@ -157,11 +159,15 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 hd.setGhiChu(txtGhiChu.getText());
                 NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
                 hd.setNhanVien(nhanVien);
-                System.out.println("====" + txtTienThanhToan.getText());
+                //System.out.println("====" + txtTienThanhToan.getText());
                 //hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
                 hd.setTongTien(tongTienTT);
-                System.out.println(txtTienThanhToan.getText());
-                hd.setTienDuocGiam(new BigDecimal(0));
+                if (hoaDon.getTienDuocGiam() == null || hoaDon.getTienDuocGiam().compareTo(new BigDecimal(0)) < 0) {
+                    String tienGiam = txtTienDuocGiam.getText();
+                    hd.setTienDuocGiam(new BigDecimal(tienGiam));
+                }
+                String tienGiam = txtTienDuocGiam.getText();
+                hd.setTienDuocGiam(new BigDecimal(tienGiam));
                 hd.setNgayThanhToan(today);
                 hd.setTrangThai(1);
                 //set KH cho HD:
@@ -204,7 +210,12 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 hd.setNhanVien(nhanVien);
                 // hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
                 hd.setTongTien(tongTienTT);
-                hd.setTienDuocGiam(new BigDecimal(0));
+                if (hoaDon.getTienDuocGiam() == null || hoaDon.getTienDuocGiam().compareTo(new BigDecimal(0)) < 0) {
+                    String tienGiam = txtTienDuocGiam.getText();
+                    hd.setTienDuocGiam(new BigDecimal(tienGiam));
+                }
+                String tienGiam = txtTienDuocGiam.getText();
+                hd.setTienDuocGiam(new BigDecimal(tienGiam));
                 hd.setNgayThanhToan(today);
                 hd.setTrangThai(1);
                 //set KH cho HD:
@@ -254,8 +265,12 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 hd.setNhanVien(nhanVien);
                 // hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
                 hd.setTongTien(tongTienTT);
-                hd.setTienDuocGiam(new BigDecimal(0));
-                hd.setNgayThanhToan(today);
+                if (hoaDon.getTienDuocGiam() == null || hoaDon.getTienDuocGiam().compareTo(new BigDecimal(0)) < 0) {
+                    String tienGiam = txtTienDuocGiam.getText();
+                    hd.setTienDuocGiam(new BigDecimal(tienGiam));
+                }
+                String tienGiam = txtTienDuocGiam.getText();
+                hd.setTienDuocGiam(new BigDecimal(tienGiam));
                 hd.setTrangThai(1);
                 //set KH cho HD:
                 khachHang = khachHangService.getOneBySdt(txtSdtKH.getText());;
@@ -537,6 +552,12 @@ public class JDialogThanhToan extends javax.swing.JDialog {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("TIỀN ĐƯỢC GIẢM:");
+
+        txtTienDuocGiam.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTienDuocGiamCaretUpdate(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setText("TIỀN MẶT:");
@@ -1057,6 +1078,24 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             txtChuyenKhoan.setText("0");
         }
     }//GEN-LAST:event_txtChuyenKhoanActionPerformed
+
+    private void txtTienDuocGiamCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienDuocGiamCaretUpdate
+        try {
+            if (txtTienDuocGiam.getText().isEmpty()) {
+                tienGiamGia = new BigDecimal(0);
+                tongTienTT = hdCustom.getTongTien().add(new BigDecimal(thue));
+                txtTienThanhToan.setText(df.format(tongTienTT));
+            } else {
+                if (thanhToanUtil.checkBigDecimal(txtTienDuocGiam.getText())) {
+                    tienGiamGia = new BigDecimal(txtTienDuocGiam.getText());
+                    tongTienTT = hdCustom.getTongTien().add(new BigDecimal(thue)).subtract(tienGiamGia);
+                    txtTienThanhToan.setText(df.format(tongTienTT));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_txtTienDuocGiamCaretUpdate
     private boolean checkValidatesdt(String sdt) {
         boolean isCheckSdt = false;
         if (!sdt.matches("(0)((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))[0-9]{7}")) {

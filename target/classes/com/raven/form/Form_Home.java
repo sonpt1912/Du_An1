@@ -67,7 +67,7 @@ import net.bytebuddy.jar.asm.Opcodes;
 //import javax.swing.JTable;
 
 public class Form_Home extends javax.swing.JPanel {
-
+    
     private DefaultTableModel dtmHoaDon = new DefaultTableModel();
     private DefaultTableModel dtmHoaDonCT = new DefaultTableModel();
     private DefaultTableModel dtmBan = new DefaultTableModel();
@@ -127,7 +127,7 @@ public class Form_Home extends javax.swing.JPanel {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private Main main;
     private KhuVucService kvs = new KhuVucService();
-
+    
     public Form_Home(NhanVien nv) {
         initComponents();
         nhanV = nv;
@@ -163,7 +163,7 @@ public class Form_Home extends javax.swing.JPanel {
         hd3.setBackground(Color.red);
         hd3.setForeground(Color.red);
         hd3.setFont(new Font("Segoe", Font.BOLD, 13));
-
+        
         dtmHoaDonCT.setColumnIdentifiers(headerHoaDonCT);
         dtmBan.setColumnIdentifiers(headerBan);
         cbbSanPham.setModel(dcbmLoaiSP);
@@ -208,7 +208,7 @@ public class Form_Home extends javax.swing.JPanel {
         }
         return listMA;
     }
-
+    
     private void clearFrom() {
         txtTongTien.setText("0");
         txtTienMat.setText("0");
@@ -222,7 +222,7 @@ public class Form_Home extends javax.swing.JPanel {
         txtChuyenKhoan.setEnabled(false);
         txtTienMat.setEnabled(false);
     }
-
+    
     private void loadCBBKhuVuc() {
         dcbmKhuVuc.addElement("Tất cả");
         List<KhuVuc> khuVucs = kvs.getAllTrangThai();
@@ -230,7 +230,7 @@ public class Form_Home extends javax.swing.JPanel {
             dcbmKhuVuc.addElement(khuVuc.getTenKV());
         }
     }
-
+    
     private void loadCbbLoaiSP() {
         listDanhMuc = danhMucService.getAll();
         for (DanhMuc danhMuc : listDanhMuc) {
@@ -238,7 +238,7 @@ public class Form_Home extends javax.swing.JPanel {
         }
         dcbmLoaiSP.addElement("Combo");
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -910,7 +910,7 @@ public class Form_Home extends javax.swing.JPanel {
                 tachHD.setEnabled(true);
                 gopHD.setEnabled(true);
                 chuyenBan.setEnabled(true);
-
+                
             }
             popMenu.show(this, evt.getX() + 521, evt.getY() + 85);
         } else {
@@ -980,7 +980,7 @@ public class Form_Home extends javax.swing.JPanel {
                 fillTongTien();
                 fillTienThuaChuyenKhoan();
                 fillTienThuaTienMat();
-
+                
             }
             // gọi lại hàm để dữ liệu được cập nhập
             // để fill hình thức thanh toán và số tiền
@@ -1071,6 +1071,7 @@ public class Form_Home extends javax.swing.JPanel {
             hd.setNhanVien(nhanVien);
             hd.setNgayTao(ngayTao);
             hd.setTrangThai(0);
+            hd.setTienDuocGiam(new BigDecimal(0));
             if (kh != null) {
                 hd.setKhachHang(kh);
             }
@@ -1588,7 +1589,7 @@ public class Form_Home extends javax.swing.JPanel {
                     hoaDonThanhToanCustom.setNgayTao(hoaDon.getNgayTao());
                     hoaDonThanhToanCustom.setNgayThanhToan(null);
                     // hoaDonThanhToanCustom.setTienDuocGiam(new BigDecimal(txt));
-                    //tiền được gianmr chưa có
+                    hoaDonThanhToanCustom.setTienDuocGiam(new BigDecimal(0));
                     hoaDonThanhToanCustom.setTienThua(new BigDecimal(0));
                     hoaDonThanhToanCustom.setTongTien(new BigDecimal(txtTongTien.getText()));
                     hoaDonThanhToanCustom.setTienChuyenKhoan(new BigDecimal(0));
@@ -1759,7 +1760,7 @@ public class Form_Home extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_cbbKhuVucActionPerformed
-
+    
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
 //        String tienMat = txtTienMat.getText();
@@ -1794,14 +1795,14 @@ public class Form_Home extends javax.swing.JPanel {
             //BigDecimal tienThua = new BigDecimal(txtTienThua.getText());
             BigDecimal tienThua = null;
             BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
-
+            
             tienThua = tienKhachTra.subtract(tongTien);
             txtTienThua.setText(tienThua.toString());
         } catch (Exception e) {
         }
-
+        
     }
-
+    
     private void fillTienThuaTienMat() {
 //        txtChuyenKhoan.setText("0");
 //        String chuyenKhoan = txtChuyenKhoan.getText();
@@ -1841,9 +1842,9 @@ public class Form_Home extends javax.swing.JPanel {
         } catch (Exception e) {
         }
     }
-
+    
     private void fillTongTien() {
-
+        
         BigDecimal tongTien = BigDecimal.valueOf(0);
         BigDecimal tienMA = BigDecimal.valueOf(0);
         BigDecimal tienCB = BigDecimal.valueOf(0);
@@ -1855,33 +1856,33 @@ public class Form_Home extends javax.swing.JPanel {
         }
         txtTongTien.setText(String.valueOf(tienCB.add(tienMA)));
     }
-
+    
     private void fillTongTienDaThanhToan() {
         HoaDon hd = (HoaDon) hds.getOne(lbMaHD.getText());
         txtTongTien.setText(hd.getTongTien().toString());
-
+        
     }
-
+    
     private void loadTableCombo() {
         String header[] = {"STT", "Mã Combo", "Tên Combo", "Đơn giá"};
         tbMonAn.setModel(dtmCombo);
         dtmCombo.setColumnIdentifiers(header);
     }
-
+    
     private void loadTableMonAn() {
         String headerMonAn[] = {"STT", "Loại món ăn", "Mã món ăn", "Tên món ăn", "Đơn giá", "Sau KM", "Đơn vị tính"};
         tbMonAn.setModel(dtmMonAn);
         dtmMonAn.setColumnIdentifiers(headerMonAn);
     }
-
+    
     private void loadTableDoUong() {
         String headersDoUong[] = {"STT", "Loại đồ uống", "Mã đồ uống", "Tên đồ uống", "Đơn giá", "Đơn giá sau KM", "Đơn vị tính"};
         tbMonAn.setModel(dtmDoUong);
         dtmDoUong.setColumnIdentifiers(headersDoUong);
     }
-
+    
     private void showDataMonAn(List<MonAnResponse> monAnResponses) {
-
+        
         dtmMonAn.setRowCount(0);
         int stt = 0;
         for (MonAnResponse monAnResponse : monAnResponses) {
@@ -1891,7 +1892,7 @@ public class Form_Home extends javax.swing.JPanel {
             //dtmMonAn.addRow(monAnResponse.toDataRow(stt));
         }
     }
-
+    
     private void showDataHDCT(List<HoaDonChiTietResponse> hoaDonChiTietResponses) {
         dtmHoaDonCT.setRowCount(0);
         int stt = 0;
@@ -1900,7 +1901,7 @@ public class Form_Home extends javax.swing.JPanel {
             dtmHoaDonCT.addRow(hoaDonChiTietResponse.toDataRow2(stt));
         }
     }
-
+    
     private void showDataHoaDon(List<HoaDonResponse> hoaDonResponses) {
         dtmHoaDon.setRowCount(0);
         int stt = 0;
@@ -1909,7 +1910,7 @@ public class Form_Home extends javax.swing.JPanel {
             dtmHoaDon.addRow(hoaDonResponse.toDataRow(stt));
         }
     }
-
+    
     private void showDataBan(List<BanResponse> banResponses) {
         dtmBan.setRowCount(0);
         int stt = 0;
@@ -1918,7 +1919,7 @@ public class Form_Home extends javax.swing.JPanel {
             dtmBan.addRow(banResponse.toDataRow(stt));
         }
     }
-
+    
     private void loadDataCombo(List<ComboResponse> comboResponses) {
         String headerCombo[] = {"Stt", "Mã combo", "Tên combo", "Đơn giá combo"};
         tbMonAn.setModel(dtmCombo);
@@ -1930,7 +1931,7 @@ public class Form_Home extends javax.swing.JPanel {
             dtmCombo.addRow(comboResponse.toDataRow(stt));
         }
     }
-
+    
     private boolean nhapSoLuong(String soLuong) {
         if (!soLuong.matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Số lượng phải là số");
@@ -1939,7 +1940,7 @@ public class Form_Home extends javax.swing.JPanel {
             return true;
         }
     }
-
+    
     private boolean checkSoLuong(String soLuong) {
 //        if (soLuong < 0) {
 //            JOptionPane.showMessageDialog(this, "Số lượng phải > 0");
