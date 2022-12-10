@@ -10,7 +10,6 @@ import com.mycompany.repository.IHoaDonRepository;
 import com.mycompany.repository.impl.HoaDonRepository;
 import com.mycompany.service.ICommonService;
 import com.mycompany.service.IHoaDonService;
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -103,6 +102,11 @@ public class HoaDonService implements ICommonService<HoaDon, String>, IHoaDonSer
     @Override
     public List<HoaDon> getHoaDonsKhoangNgay(java.util.Date today1, java.util.Date today2) {
         return hoaDonrepo.getHoaDonsKhoangNgay(today1, today2);
+    }
+
+    @Override
+    public List<HoaDon> getHoaDonsCoGiamGia() {
+        return hoaDonrepo.getHoaDonsCoGiamGia();
     }
 
 }

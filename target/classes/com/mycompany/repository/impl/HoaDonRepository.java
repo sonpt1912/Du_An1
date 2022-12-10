@@ -8,8 +8,6 @@ import com.mycompany.domainModel.HoaDon;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.ICommonRepository;
 import com.mycompany.repository.IHoaDonRepository;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
@@ -173,4 +171,11 @@ public class HoaDonRepository implements ICommonRepository<HoaDon, Boolean, Stri
 //            System.out.println(hoaDon.toString());
 //        }
 //    }
+    @Override
+    public List<HoaDon> getHoaDonsCoGiamGia() {
+        String hql = fromTable + " WHERE tienDuocGiam > 0 ORDER BY ngayThanhToan";
+        Query query = session.createQuery(hql);
+        List<HoaDon> hoaDons = query.getResultList();
+        return hoaDons;
+    }
 }

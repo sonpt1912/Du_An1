@@ -21,4 +21,6 @@ public interface IHoaDonRepository {
     List<HoaDon> getHoaDonsHomNay(java.util.Date today);
 
     List<HoaDon> getHoaDonsKhoangNgay(java.util.Date today1, java.util.Date today2);
+
+    List<HoaDon> getHoaDonsCoGiamGia();
 }
