@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class JDialogThemKH extends javax.swing.JDialog {
-
+    
     private DefaultTableModel dtmKhachHang = new DefaultTableModel();
     private List<KhachHang> listKH = new ArrayList<>();
     private KhachHangService khachHangService = new KhachHangService();
@@ -34,10 +34,12 @@ public class JDialogThemKH extends javax.swing.JDialog {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private NhanVien nhanV;
     private java.util.Date today = new java.util.Date();
-
-    public JDialogThemKH(java.awt.Frame parent, boolean modal) {
+    private KhachHang kh;
+    
+    public JDialogThemKH(java.awt.Frame parent, boolean modal, KhachHang khachHang) {
         super(parent, modal);
         initComponents();
+        kh = khachHang;
         this.nhanV = nhanV;
         tbKhachHang.setModel(dtmKhachHang);
         String header[] = {"STT", "MÃ", "HỌ VÀ TÊN", "GIỚI TÍNH", "NGÀY SINH", "SDT", "ĐỊA CHỈ", "Loại Khách hàng"};
@@ -51,8 +53,9 @@ public class JDialogThemKH extends javax.swing.JDialog {
         txtMa.setEditable(false);
         JTextFieldDateEditor ngaySinh = (JTextFieldDateEditor) dateNgaySinh.getDateEditor();
         ngaySinh.setEnabled(false);
+        txtSdt.setText(kh.getSdt());
     }
-
+    
     private void showData(List<KhachHang> listKH, int stt) {
         dtmKhachHang.setRowCount(0);
         for (KhachHang khachHang : listKH) {
@@ -60,7 +63,7 @@ public class JDialogThemKH extends javax.swing.JDialog {
             stt++;
         }
     }
-
+    
     private void fill(int index, List<KhachHang> listKH) {
         KhachHang khachHang = listKH.get(index);
         txtMa.setText(khachHang.getMa());
@@ -88,7 +91,7 @@ public class JDialogThemKH extends javax.swing.JDialog {
             }
         }
     }
-
+    
     private KhachHang newKH() {
         KhachHang khachHang = new KhachHang();
         khachHang.setDiaChi(txtDiaChi.getText());
@@ -117,7 +120,7 @@ public class JDialogThemKH extends javax.swing.JDialog {
         }
         return khachHang;
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -551,48 +554,48 @@ public class JDialogThemKH extends javax.swing.JDialog {
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JDialogThemKH.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JDialogThemKH.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JDialogThemKH.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDialogThemKH.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JDialogThemKH dialog = new JDialogThemKH(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+//
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(JDialogThemKH.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(JDialogThemKH.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(JDialogThemKH.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(JDialogThemKH.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                JDialogThemKH dialog = new JDialogThemKH(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;

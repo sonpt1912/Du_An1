@@ -463,7 +463,7 @@
                           <Group type="102" attributes="0">
                               <Component id="txtTenKhachHang" min="-2" pref="181" max="-2" attributes="0"/>
                               <EmptySpace pref="65" max="32767" attributes="0"/>
-                              <Component id="cbbThemKH" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnThemKH" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -485,7 +485,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txtSdtKH" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbbThemKH" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnThemKH" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtTenKhachHang" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -517,12 +517,12 @@
                 <Property name="text" type="java.lang.String" value="SDT KH:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="cbbThemKH">
+            <Component class="javax.swing.JButton" name="btnThemKH">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbbThemKHActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemKHActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

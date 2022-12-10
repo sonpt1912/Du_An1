@@ -488,7 +488,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtTenKhachHang = new javax.swing.JTextField();
         txtSdtKH = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        cbbThemKH = new javax.swing.JButton();
+        btnThemKH = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtPrint = new javax.swing.JTextArea();
@@ -636,10 +636,10 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("SDT KH:");
 
-        cbbThemKH.setText("Thêm");
-        cbbThemKH.addActionListener(new java.awt.event.ActionListener() {
+        btnThemKH.setText("Thêm");
+        btnThemKH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbThemKHActionPerformed(evt);
+                btnThemKHActionPerformed(evt);
             }
         });
 
@@ -657,7 +657,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                        .addComponent(cbbThemKH)
+                        .addComponent(btnThemKH)
                         .addGap(28, 28, 28))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel5)
@@ -673,7 +673,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSdtKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbbThemKH)
+                    .addComponent(btnThemKH)
                     .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -1052,18 +1052,25 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 txtTenKhachHang.setText("");
                 int check = JOptionPane.showConfirmDialog(this, "Thêm Khách hàng vào hệ thống");
                 if (check == 0) {
+                    KhachHang khachHang = new KhachHang();
+                    khachHang.setSdt(txtSdtKH.getText());
+                    khachHang.setTen("");
                     NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
-                    JDialogThemKH jDialogThemKH = new JDialogThemKH(null, rootPaneCheckingEnabled);
+                    JDialogThemKH jDialogThemKH = new JDialogThemKH(null, rootPaneCheckingEnabled, khachHang);
                     jDialogThemKH.setVisible(true);
                 }
             }
         }
     }//GEN-LAST:event_txtSdtKHActionPerformed
 
-    private void cbbThemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbThemKHActionPerformed
-        JDialogThemKH jDialogThemKH = new JDialogThemKH(null, rootPaneCheckingEnabled);
+    private void btnThemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKHActionPerformed
+        KhachHang khachHang = new KhachHang();
+        khachHang.setSdt(txtSdtKH.getText());
+        khachHang.setTen("");
+        NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
+        JDialogThemKH jDialogThemKH = new JDialogThemKH(null, rootPaneCheckingEnabled, khachHang);
         jDialogThemKH.setVisible(true);
-    }//GEN-LAST:event_cbbThemKHActionPerformed
+    }//GEN-LAST:event_btnThemKHActionPerformed
 
     private void txtTiennMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiennMatActionPerformed
         if (!cbTienMat.isSelected()) {
@@ -1114,9 +1121,9 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnInHoaDonMau;
     private javax.swing.JButton btnThanhToan;
+    private javax.swing.JButton btnThemKH;
     private javax.swing.JCheckBox cbChuyenKhoan;
     private javax.swing.JCheckBox cbTienMat;
-    private javax.swing.JButton cbbThemKH;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
