@@ -926,7 +926,6 @@ public class Form_Home extends javax.swing.JPanel {
             hdTong = hd;
             //fill so khách có ở trong hd
             lbSoLuongKhach.setText(hd.getSoLuongKhach().toString());
-            txtSdtKH.setText(hd.getKhachHang().getSdt());
             // lấy ra những giao dịch có trong hoá đơn đã được chọn
             List<GiaoDich> giaoDichs = gds2.getTheoHoaDon(hd);
 //            for (GiaoDich giaoDich : giaoDichs) {
@@ -951,7 +950,9 @@ public class Form_Home extends javax.swing.JPanel {
             //fill khách hàng
             if (hd.getKhachHang() != null) {
                 txtTenKH.setText(hd.getKhachHang().getTen());
+                txtSdtKH.setText(hd.getKhachHang().getSdt());
             } else {
+                txtSdtKH.setText("");
                 txtTenKH.setText("");
             }
             // nếu hoá đơn đang chọn có trạng thái là dang chờ thanh toán thì set check trangthaiHD = 0
