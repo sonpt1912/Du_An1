@@ -30,6 +30,7 @@ public class BanRepository implements IBanRepository, ICommonRepository<Ban, Boo
         List<Ban> bans = query.getResultList();
         return bans;
     }
+
     @Override
     public Ban getOne(String ma) {
         try {
@@ -103,6 +104,14 @@ public class BanRepository implements IBanRepository, ICommonRepository<Ban, Boo
 
     public List<Ban> getFull() {
         String hql = fromTable;
+        Query query = session.createQuery(hql);
+        List<Ban> bans = query.getResultList();
+        return bans;
+    }
+
+    //
+    public List<Ban> getAllTrangThai2() {
+        String hql = fromTable + "where trangThai = 2";
         Query query = session.createQuery(hql);
         List<Ban> bans = query.getResultList();
         return bans;
