@@ -101,6 +101,10 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         tgianKT.setEnabled(false);
         radioTatcaMonAn.setSelected(true);
         cbChonTatCa.setEnabled(false);
+        JTextFieldDateEditor ngayBD = (JTextFieldDateEditor) txtThoiGianBatDau.getDateEditor();
+        ngayBD.setEnabled(false);
+        JTextFieldDateEditor ngayKT = (JTextFieldDateEditor) txtThoiGianKetThuc.getDateEditor();
+        ngayKT.setEnabled(false);
         //
         JTableHeader hd = tbKMCT.getTableHeader();
         hd.setBackground(Color.red);
@@ -204,6 +208,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
                 txtGhiChu.setText(khuyenMai.getGhiChu());
             }
             cbBoChonTatCa.setEnabled(true);
+            btnApDungKM.setEnabled(true);
         } else {
             btnUpdate.setEnabled(false);
             txtTenKhuyenMai.setText(khuyenMai.getTenKhuyenMai());
@@ -222,6 +227,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
             tbMonAn.setEnabled(false);
             cbChonTatCa.setEnabled(false);
             cbBoChonTatCa.setEnabled(false);
+            btnApDungKM.setEnabled(false);
         }
     }
 
@@ -943,13 +949,19 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
                     //nếu rồi bỏ qua, nếu chưa insert kmct
                     if (monAnKMResponse.isApDungKM()) {
                         //--lấy listKMct banegf món ăn đnag duyệt for, nếu chưa kmct nào có món này thì add luôn
+                        //nếu đang ko áp dụng KM nào thì add
                         List<KhuyenMaiChiTiet> kmct = khuyenMaiChiTiettService.getKMCTsByMA(monAn);
                         if (kmct.size() <= 0) {
                             KhuyenMaiChiTiet khuyenMaiChiTiet = new KhuyenMaiChiTiet();
                             khuyenMaiChiTiet.setKhuyenMai(khuyenMai);
                             khuyenMaiChiTiet.setMonAn(monAn);
                             BigDecimal donGiaSauKM = khuyenMaiUtil.tinhTienMonAnSauKM(khuyenMai, monAn);
-                            khuyenMaiChiTiet.setDonGiaSauKM(donGiaSauKM);
+                            //set đơn giá: nếu gtri KM > giá của món ăn => đơn giá = 0
+                            if (donGiaSauKM.compareTo(new BigDecimal(0)) < 0) {
+                                khuyenMaiChiTiet.setDonGiaSauKM(new BigDecimal(0));
+                            } else {
+                                khuyenMaiChiTiet.setDonGiaSauKM(donGiaSauKM);
+                            }
                             String addKMCT = khuyenMaiChiTiettService.add(khuyenMaiChiTiet);
                             //nếu kmct lấy theo món ăn khác null nhưng trạng thái đều đã ngừng áp dụng cho món ăn đó
                             //thì cũng add
@@ -1062,6 +1074,7 @@ public class Form_KhuyenMai extends javax.swing.JPanel {
         //get All = trạng thái = 0
         listMonAn = monAnService.getAll();
         showDataMonAn(listMonAn);
+        cbChonTatCa.setEnabled(false);
     }//GEN-LAST:event_radioTatcaMonAnActionPerformed
 
     private void radioChuaApDungKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioChuaApDungKMActionPerformed
