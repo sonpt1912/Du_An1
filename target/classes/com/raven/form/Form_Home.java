@@ -926,6 +926,7 @@ public class Form_Home extends javax.swing.JPanel {
             hdTong = hd;
             //fill so khách có ở trong hd
             lbSoLuongKhach.setText(hd.getSoLuongKhach().toString());
+            txtSdtKH.setText(hd.getKhachHang().getSdt());
             // lấy ra những giao dịch có trong hoá đơn đã được chọn
             List<GiaoDich> giaoDichs = gds2.getTheoHoaDon(hd);
 //            for (GiaoDich giaoDich : giaoDichs) {
