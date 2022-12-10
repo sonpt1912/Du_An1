@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -31,11 +32,13 @@ public class JDialogTachBan extends javax.swing.JDialog {
     private KhuVucService khuVucService = new KhuVucService();
     private DefaultTableModel dtmBanMoi = new DefaultTableModel();
     private List<String> listBanAo = new ArrayList<>();
+    private DefaultComboBoxModel dfcb = new DefaultComboBoxModel();
 
     public JDialogTachBan(java.awt.Frame parent, boolean modal, Ban bans) {
         super(parent, modal);
         initComponents();
         ban = bans;
+        cbbMaBanDangKhongSuDung.setModel(dfcb);
         lbMaBan.setText(bans.getMaBan().toString());
         txtSoLuong.setText(bans.getSoLuongChoNgoi().toString());
         txtMaKhuVuc.setText(bans.getKv().getMaKV());
@@ -53,6 +56,8 @@ public class JDialogTachBan extends javax.swing.JDialog {
         hd1.setBackground(Color.red);
         hd1.setForeground(Color.red);
         hd1.setFont(new Font("Segoe", Font.BOLD, 13));
+        //
+        setCbb();
     }
 
     private void showDataBanMoi(List<Ban> listBan) {
@@ -72,6 +77,13 @@ public class JDialogTachBan extends javax.swing.JDialog {
             }
         }
         return check;
+    }
+
+    private void setCbb() {
+        listBan = banService.getAllTrangThai2();
+        for (Ban ban1 : listBan) {
+            dfcb.addElement(ban1.getMaBan().toString());
+        }
     }
 
     /**
@@ -103,6 +115,7 @@ public class JDialogTachBan extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         txtSoLuongChoCoTheTach = new javax.swing.JTextField();
+        cbbMaBanDangKhongSuDung = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("TÁCH BÀN");
@@ -117,7 +130,7 @@ public class JDialogTachBan extends javax.swing.JDialog {
         lbMaBan.setText("......");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel3.setText("Mã Bàn Mới:");
+        jLabel3.setText("Mã Bàn Đang Không Sử Dụng:");
 
         tbBanMoi.setBackground(new java.awt.Color(178, 205, 255));
         tbBanMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -162,7 +175,7 @@ public class JDialogTachBan extends javax.swing.JDialog {
         });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel5.setText("Mã Bàn Mới: ");
+        jLabel5.setText("Mã Bàn Mới                              : ");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -193,6 +206,8 @@ public class JDialogTachBan extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Số Lượng Chồ Ngồi Có Thể Tách:");
 
+        cbbMaBanDangKhongSuDung.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -222,12 +237,7 @@ public class JDialogTachBan extends javax.swing.JDialog {
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addComponent(jLabel6)
                                             .addGap(18, 18, 18)
-                                            .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jLabel3)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel5)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(txtMaBanMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGap(66, 66, 66)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -237,7 +247,16 @@ public class JDialogTachBan extends javax.swing.JDialog {
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addComponent(jLabel2)
                                             .addGap(18, 18, 18)
-                                            .addComponent(txtMaKhuVuc, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addComponent(txtMaKhuVuc, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cbbMaBanDangKhongSuDung, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtMaBanMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGap(0, 0, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
@@ -273,8 +292,10 @@ public class JDialogTachBan extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cbbMaBanDangKhongSuDung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtMaBanMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -304,17 +325,13 @@ public class JDialogTachBan extends javax.swing.JDialog {
 
     private void btnTachBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTachBanActionPerformed
         // TODO add your handling code here:
-        Ban bans = new Ban();
-        String ma = lbMaBan.getText();
-        String maKhuVuc = txtMaKhuVuc.getText();
-        KhuVuc khuVuc = (KhuVuc) khuVucService.getOne(maKhuVuc);
-        Ban ban = (Ban) banService.getOne(ma);
-        String maBanMoi = txtMaBanMoi.getText();
-        if (maBanMoi.equalsIgnoreCase("") || maBanMoi.matches("\\s+")) {
-            JOptionPane.showMessageDialog(this, "Không được để trống");
-        } else if (checkMaTrung() == 1 || maBanMoi.equalsIgnoreCase(ma)) {
-            JOptionPane.showMessageDialog(this, "Mã Trùng");
-        } else {
+        //tach so ghe vào ban khong su dung
+        if (txtMaBanMoi.getText().isEmpty()) {
+            cbbMaBanDangKhongSuDung.setEnabled(true);
+            String ma = cbbMaBanDangKhongSuDung.getSelectedItem().toString();
+            Ban bans = banService.getOne(ma);
+            String maKhuVuc = txtMaKhuVuc.getText();
+            KhuVuc khuVuc = (KhuVuc) khuVucService.getOne(maKhuVuc);
             String soLuongCho = JOptionPane.showInputDialog("Mời bạn nhập số lượng chỗ: ");
             if (soLuongCho != null) {
                 if (!soLuongCho.matches("[0-9]+")) {
@@ -327,7 +344,6 @@ public class JDialogTachBan extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi không được là 0");
                 } else {
                     bans.setKv(khuVuc);
-                    bans.setMaBan(Integer.valueOf(maBanMoi));
                     bans.setTrangThai(ban.getTrangThai());
                     bans.setSoLuongChoNgoi(Integer.valueOf(soLuongCho));
                     //add bàn vào list
@@ -346,11 +362,63 @@ public class JDialogTachBan extends javax.swing.JDialog {
                     } else if (tachBan == JOptionPane.CANCEL_OPTION) {
                         return;
                     } else {
-                        String hi = banService.add(bans);
+                        banService.update(bans, ma);
                         ban.setSoLuongChoNgoi(Integer.valueOf(txtSoLuong.getText()));
-                        banService.update(ban, ma);
                         JOptionPane.showMessageDialog(this, "Tách Thành Công");
                         this.dispose();
+                    }
+                }
+            }
+        } else {
+            cbbMaBanDangKhongSuDung.setEnabled(false);
+            Ban bans = new Ban();
+            String ma = lbMaBan.getText();
+            String maKhuVuc = txtMaKhuVuc.getText();
+            KhuVuc khuVuc = (KhuVuc) khuVucService.getOne(maKhuVuc);
+            Ban ban = (Ban) banService.getOne(ma);
+            String maBanMoi = txtMaBanMoi.getText();
+            if (maBanMoi.equalsIgnoreCase("") || maBanMoi.matches("\\s+")) {
+                JOptionPane.showMessageDialog(this, "Không được để trống");
+            } else if (checkMaTrung() == 1 || maBanMoi.equalsIgnoreCase(ma)) {
+                JOptionPane.showMessageDialog(this, "Mã Trùng");
+            } else {
+                String soLuongCho = JOptionPane.showInputDialog("Mời bạn nhập số lượng chỗ: ");
+                if (soLuongCho != null) {
+                    if (!soLuongCho.matches("[0-9]+")) {
+                        JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng");
+                    } else if (Integer.valueOf(soLuongCho) > ban.getSoLuongChoNgoi()) {
+                        JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi vượt quá -.-");
+                    } else if (Integer.valueOf(soLuongCho) > Integer.valueOf(txtSoLuongChoCoTheTach.getText())) {
+                        JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi bàn cũ tối thiểu là 1");
+                    } else if (Integer.valueOf(soLuongCho) == 0) {
+                        JOptionPane.showMessageDialog(this, "Số lượng chỗ ngồi không được là 0");
+                    } else {
+                        bans.setKv(khuVuc);
+                        bans.setMaBan(Integer.valueOf(maBanMoi));
+                        bans.setTrangThai(ban.getTrangThai());
+                        bans.setSoLuongChoNgoi(Integer.valueOf(soLuongCho));
+                        //add bàn vào list
+                        listBan = new ArrayList<>();
+                        listBan.add(bans);
+                        // set txtSoLuong
+                        txtSoLuong.setText(String.valueOf(Integer.valueOf(txtSoLuong.getText()) - Integer.valueOf(soLuongCho)));
+                        txtSoLuongChoCoTheTach.setText(String.valueOf(Integer.valueOf(txtSoLuongChoCoTheTach.getText()) - Integer.valueOf(soLuongCho)));
+                        showDataBanMoi(listBan);
+                        // show confirm
+                        int tachBan = JOptionPane.showConfirmDialog(null, "Xác nhận tách bàn");
+                        if (tachBan == JOptionPane.NO_OPTION) {
+                            return;
+                        } else if (tachBan == JOptionPane.CLOSED_OPTION) {
+                            return;
+                        } else if (tachBan == JOptionPane.CANCEL_OPTION) {
+                            return;
+                        } else {
+                            String hi = banService.add(bans);
+                            ban.setSoLuongChoNgoi(Integer.valueOf(txtSoLuong.getText()));
+                            banService.update(ban, ma);
+                            JOptionPane.showMessageDialog(this, "Tách Thành Công");
+                            this.dispose();
+                        }
                     }
                 }
             }
@@ -369,6 +437,7 @@ public class JDialogTachBan extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnTachBan;
+    private javax.swing.JComboBox<String> cbbMaBanDangKhongSuDung;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -69,6 +69,10 @@ public class BanService implements IBanService, com.mycompany.service.ICommonSer
         }
     }
 
+    public List<Ban> getAllTrangThai2() {
+        return banRep.getAllTrangThai2();
+    }
+
     public static void main(String[] args) {
         KhuVuc kv = new KhuVuc();
         kv.setIdKV("8E04689D-D3BD-42D9-82F6-71C99A4AF932");

@@ -22,4 +22,6 @@ public interface IHoaDonService {
 
     List<HoaDon> getHoaDonsKhoangNgay(java.util.Date today1, java.util.Date today2);
 
+    List<HoaDon> getHoaDonsCoGiamGia();
+
 }
