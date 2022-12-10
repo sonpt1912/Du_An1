@@ -67,7 +67,7 @@ import net.bytebuddy.jar.asm.Opcodes;
 //import javax.swing.JTable;
 
 public class Form_Home extends javax.swing.JPanel {
-    
+
     private DefaultTableModel dtmHoaDon = new DefaultTableModel();
     private DefaultTableModel dtmHoaDonCT = new DefaultTableModel();
     private DefaultTableModel dtmBan = new DefaultTableModel();
@@ -127,7 +127,7 @@ public class Form_Home extends javax.swing.JPanel {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private Main main;
     private KhuVucService kvs = new KhuVucService();
-    
+
     public Form_Home(NhanVien nv) {
         initComponents();
         nhanV = nv;
@@ -163,7 +163,7 @@ public class Form_Home extends javax.swing.JPanel {
         hd3.setBackground(Color.red);
         hd3.setForeground(Color.red);
         hd3.setFont(new Font("Segoe", Font.BOLD, 13));
-        
+
         dtmHoaDonCT.setColumnIdentifiers(headerHoaDonCT);
         dtmBan.setColumnIdentifiers(headerBan);
         cbbSanPham.setModel(dcbmLoaiSP);
@@ -187,6 +187,7 @@ public class Form_Home extends javax.swing.JPanel {
         // lbNhanVien.setText(nv.getMa());
         cbbKhuVuc.setModel(dcbmKhuVuc);
         loadCBBKhuVuc();
+        txtTienDuocGiam.setEditable(false);
     }
 //đố biết =)))
 
@@ -208,7 +209,7 @@ public class Form_Home extends javax.swing.JPanel {
         }
         return listMA;
     }
-    
+
     private void clearFrom() {
         txtTongTien.setText("0");
         txtTienMat.setText("0");
@@ -222,7 +223,7 @@ public class Form_Home extends javax.swing.JPanel {
         txtChuyenKhoan.setEnabled(false);
         txtTienMat.setEnabled(false);
     }
-    
+
     private void loadCBBKhuVuc() {
         dcbmKhuVuc.addElement("Tất cả");
         List<KhuVuc> khuVucs = kvs.getAllTrangThai();
@@ -230,7 +231,7 @@ public class Form_Home extends javax.swing.JPanel {
             dcbmKhuVuc.addElement(khuVuc.getTenKV());
         }
     }
-    
+
     private void loadCbbLoaiSP() {
         listDanhMuc = danhMucService.getAll();
         for (DanhMuc danhMuc : listDanhMuc) {
@@ -238,7 +239,7 @@ public class Form_Home extends javax.swing.JPanel {
         }
         dcbmLoaiSP.addElement("Combo");
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -303,6 +304,8 @@ public class Form_Home extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         lbSoLuongKhach = new javax.swing.JLabel();
         cbbKhuVuc = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
+        txtTienDuocGiam = new javax.swing.JTextField();
 
         gopHD.setText("Gộp hoá đơn");
         gopHD.addActionListener(new java.awt.event.ActionListener() {
@@ -386,7 +389,6 @@ public class Form_Home extends javax.swing.JPanel {
 
         tbMonAn.setBackground(new java.awt.Color(178, 205, 255));
         tbMonAn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        tbMonAn.setForeground(new java.awt.Color(51, 51, 51));
         tbMonAn.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -639,8 +641,6 @@ public class Form_Home extends javax.swing.JPanel {
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setText("Số lượng khách:");
 
-        lbSoLuongKhach.setText("                             ");
-
         cbbKhuVuc.setBackground(new java.awt.Color(255, 255, 0));
         cbbKhuVuc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         cbbKhuVuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tầng 1", "Tầng 2" }));
@@ -649,6 +649,9 @@ public class Form_Home extends javax.swing.JPanel {
                 cbbKhuVucActionPerformed(evt);
             }
         });
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel18.setText("Tiền được giảm:");
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -679,7 +682,7 @@ public class Form_Home extends javax.swing.JPanel {
                                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)))
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -704,37 +707,37 @@ public class Form_Home extends javax.swing.JPanel {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(panelBorder1Layout.createSequentialGroup()
+                                            .addComponent(jLabel10)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(panelBorder1Layout.createSequentialGroup()
+                                            .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(panelBorder1Layout.createSequentialGroup()
+                                                    .addGap(15, 15, 15)
+                                                    .addComponent(lbMaHDThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addGroup(panelBorder1Layout.createSequentialGroup()
+                                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel16)
+                                            .addComponent(jLabel17))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtSdtKH, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                                            .addComponent(txtTenKH)))
                                     .addGroup(panelBorder1Layout.createSequentialGroup()
                                         .addComponent(jLabel11)
                                         .addGap(30, 30, 30)
-                                        .addComponent(lbSoLuongKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(lbSoLuongKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(11, 11, 11)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panelBorder1Layout.createSequentialGroup()
-                                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addGroup(panelBorder1Layout.createSequentialGroup()
-                                                    .addComponent(jLabel10)
-                                                    .addGap(18, 18, 18)
-                                                    .addComponent(txtTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(panelBorder1Layout.createSequentialGroup()
-                                                    .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(panelBorder1Layout.createSequentialGroup()
-                                                            .addGap(15, 15, 15)
-                                                            .addComponent(lbMaHDThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
-                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                            .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                            .addGroup(panelBorder1Layout.createSequentialGroup()
-                                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(jLabel16)
-                                                    .addComponent(jLabel17))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(txtSdtKH, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                                                    .addComponent(txtTenKH))))
-                                        .addGap(11, 11, 11)
                                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                                 .addComponent(btnThemKH)
@@ -754,18 +757,23 @@ public class Form_Home extends javax.swing.JPanel {
                                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                                 .addComponent(jLabel14)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(txtChuyenKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
-                                        .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap())
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
+                                                .addComponent(txtChuyenKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
                                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cbTienMat)
-                                            .addComponent(jLabel15)
-                                            .addComponent(cbChuyenKhoan))
-                                        .addGap(78, 78, 78))))))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
+                                                .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap())
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
+                                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(cbTienMat)
+                                                    .addComponent(jLabel15)
+                                                    .addComponent(cbChuyenKhoan))
+                                                .addGap(78, 78, 78))))
+                                    .addGroup(panelBorder1Layout.createSequentialGroup()
+                                        .addComponent(jLabel18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtTienDuocGiam, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -831,10 +839,12 @@ public class Form_Home extends javax.swing.JPanel {
                                     .addComponent(txtChuyenKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(panelBorder1Layout.createSequentialGroup()
-                                        .addGap(21, 21, 21)
+                                        .addGap(18, 18, 18)
                                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jLabel11)
-                                            .addComponent(lbSoLuongKhach))
+                                            .addComponent(lbSoLuongKhach)
+                                            .addComponent(jLabel18)
+                                            .addComponent(txtTienDuocGiam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(txtSdtKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -910,7 +920,7 @@ public class Form_Home extends javax.swing.JPanel {
                 tachHD.setEnabled(true);
                 gopHD.setEnabled(true);
                 chuyenBan.setEnabled(true);
-                
+
             }
             popMenu.show(this, evt.getX() + 521, evt.getY() + 85);
         } else {
@@ -976,11 +986,18 @@ public class Form_Home extends javax.swing.JPanel {
                 fillTongTienDaThanhToan();
                 fillTienThuaChuyenKhoan();
                 fillTienThuaTienMat();
+                //fill tiền giảm giá_duongntt
+                HoaDon hoaDon = hoaDonService.getOne(hdr.getMaHoaDon());
+                if (hoaDon.getTienDuocGiam() == null || hoaDon.getTienDuocGiam().compareTo(new BigDecimal(0)) < 0) {
+                    txtTienDuocGiam.setText("0");
+                } else {
+                    txtTienDuocGiam.setText(hoaDon.getTienDuocGiam().toString());
+                }
             } else {
                 fillTongTien();
                 fillTienThuaChuyenKhoan();
                 fillTienThuaTienMat();
-                
+
             }
             // gọi lại hàm để dữ liệu được cập nhập
             // để fill hình thức thanh toán và số tiền
@@ -1760,7 +1777,7 @@ public class Form_Home extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_cbbKhuVucActionPerformed
-    
+
     private void fillTienThuaChuyenKhoan() {
 //        txtTienMat.setText("0");
 //        String tienMat = txtTienMat.getText();
@@ -1795,14 +1812,14 @@ public class Form_Home extends javax.swing.JPanel {
             //BigDecimal tienThua = new BigDecimal(txtTienThua.getText());
             BigDecimal tienThua = null;
             BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
-            
+
             tienThua = tienKhachTra.subtract(tongTien);
             txtTienThua.setText(tienThua.toString());
         } catch (Exception e) {
         }
-        
+
     }
-    
+
     private void fillTienThuaTienMat() {
 //        txtChuyenKhoan.setText("0");
 //        String chuyenKhoan = txtChuyenKhoan.getText();
@@ -1842,9 +1859,9 @@ public class Form_Home extends javax.swing.JPanel {
         } catch (Exception e) {
         }
     }
-    
+
     private void fillTongTien() {
-        
+
         BigDecimal tongTien = BigDecimal.valueOf(0);
         BigDecimal tienMA = BigDecimal.valueOf(0);
         BigDecimal tienCB = BigDecimal.valueOf(0);
@@ -1856,33 +1873,33 @@ public class Form_Home extends javax.swing.JPanel {
         }
         txtTongTien.setText(String.valueOf(tienCB.add(tienMA)));
     }
-    
+
     private void fillTongTienDaThanhToan() {
         HoaDon hd = (HoaDon) hds.getOne(lbMaHD.getText());
         txtTongTien.setText(hd.getTongTien().toString());
-        
+
     }
-    
+
     private void loadTableCombo() {
         String header[] = {"STT", "Mã Combo", "Tên Combo", "Đơn giá"};
         tbMonAn.setModel(dtmCombo);
         dtmCombo.setColumnIdentifiers(header);
     }
-    
+
     private void loadTableMonAn() {
         String headerMonAn[] = {"STT", "Loại món ăn", "Mã món ăn", "Tên món ăn", "Đơn giá", "Sau KM", "Đơn vị tính"};
         tbMonAn.setModel(dtmMonAn);
         dtmMonAn.setColumnIdentifiers(headerMonAn);
     }
-    
+
     private void loadTableDoUong() {
         String headersDoUong[] = {"STT", "Loại đồ uống", "Mã đồ uống", "Tên đồ uống", "Đơn giá", "Đơn giá sau KM", "Đơn vị tính"};
         tbMonAn.setModel(dtmDoUong);
         dtmDoUong.setColumnIdentifiers(headersDoUong);
     }
-    
+
     private void showDataMonAn(List<MonAnResponse> monAnResponses) {
-        
+
         dtmMonAn.setRowCount(0);
         int stt = 0;
         for (MonAnResponse monAnResponse : monAnResponses) {
@@ -1892,7 +1909,7 @@ public class Form_Home extends javax.swing.JPanel {
             //dtmMonAn.addRow(monAnResponse.toDataRow(stt));
         }
     }
-    
+
     private void showDataHDCT(List<HoaDonChiTietResponse> hoaDonChiTietResponses) {
         dtmHoaDonCT.setRowCount(0);
         int stt = 0;
@@ -1901,7 +1918,7 @@ public class Form_Home extends javax.swing.JPanel {
             dtmHoaDonCT.addRow(hoaDonChiTietResponse.toDataRow2(stt));
         }
     }
-    
+
     private void showDataHoaDon(List<HoaDonResponse> hoaDonResponses) {
         dtmHoaDon.setRowCount(0);
         int stt = 0;
@@ -1910,7 +1927,7 @@ public class Form_Home extends javax.swing.JPanel {
             dtmHoaDon.addRow(hoaDonResponse.toDataRow(stt));
         }
     }
-    
+
     private void showDataBan(List<BanResponse> banResponses) {
         dtmBan.setRowCount(0);
         int stt = 0;
@@ -1919,7 +1936,7 @@ public class Form_Home extends javax.swing.JPanel {
             dtmBan.addRow(banResponse.toDataRow(stt));
         }
     }
-    
+
     private void loadDataCombo(List<ComboResponse> comboResponses) {
         String headerCombo[] = {"Stt", "Mã combo", "Tên combo", "Đơn giá combo"};
         tbMonAn.setModel(dtmCombo);
@@ -1931,7 +1948,7 @@ public class Form_Home extends javax.swing.JPanel {
             dtmCombo.addRow(comboResponse.toDataRow(stt));
         }
     }
-    
+
     private boolean nhapSoLuong(String soLuong) {
         if (!soLuong.matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Số lượng phải là số");
@@ -1940,7 +1957,7 @@ public class Form_Home extends javax.swing.JPanel {
             return true;
         }
     }
-    
+
     private boolean checkSoLuong(String soLuong) {
 //        if (soLuong < 0) {
 //            JOptionPane.showMessageDialog(this, "Số lượng phải > 0");
@@ -1987,6 +2004,7 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2018,6 +2036,7 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JTextField txtSdtKH;
     private com.raven.swing.SearchText txtSearch;
     private javax.swing.JTextField txtTenKH;
+    private javax.swing.JTextField txtTienDuocGiam;
     private javax.swing.JTextField txtTienMat;
     private javax.swing.JTextField txtTienThua;
     private javax.swing.JTextField txtTongTien;
