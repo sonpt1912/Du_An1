@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -64,6 +66,10 @@ public class KhachHang {
 
     @Column(name = "Loai")
     private Integer trangThai;
+
+    @ManyToOne
+    @JoinColumn(name = "IdRank", nullable = false)
+    private RankKhachHang rankKH;
 
     public String hoTenKH(String ho, String tenDem, String ten) {
         if (ho == null && tenDem == null) {

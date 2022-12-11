@@ -71,6 +71,12 @@ public class HoaDon {
     @Column(name = "GiamGia")
     private BigDecimal tienDuocGiam;
 
+    @Column(name = "ThueVAT")
+    private int thueVAT;
+
+    @Column(name = "PhanTramGiamTheoRank")
+    private int phanTramGiamGia;
+
     @Column(name = "GhiChu")
     private String ghiChu;
 
