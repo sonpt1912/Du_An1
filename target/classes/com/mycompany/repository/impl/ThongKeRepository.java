@@ -165,9 +165,7 @@ public class ThongKeRepository implements IThongKeRepository {
     @Override
     public BigDecimal getDoanhThuDAY() {
         try {
-            String hql = " select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and DAY(ngayThanhToan) = DAY(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE DAY(hd.ngayThanhToan) = DAY(sysdatetime()) AND hd.trangThai = 1";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
@@ -179,9 +177,7 @@ public class ThongKeRepository implements IThongKeRepository {
     @Override
     public BigDecimal getDoanhThuWEEK() {
         try {
-            String hql = " select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)"
-                    + "	from HoaDon where trangThai = 1 and (day(datediff(d,0,ngayThanhToan)/7*7)-1)/7+1 = (day(datediff(d,0,sysdatetime())/7*7)-1)/7+1 "
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+            String hql = " SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE (day(datediff(d,0,hd.ngayThanhToan)/7*7)-1)/7+1 = (day(datediff(d,0,sysdatetime())/7*7)-1)/7+1 AND hd.trangThai = 1";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
@@ -193,9 +189,7 @@ public class ThongKeRepository implements IThongKeRepository {
     @Override
     public BigDecimal getDoanhThuMONTH() {
         try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and MONTH(ngayThanhToan) = MONTH(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = MONTH(sysdatetime()) AND hd.trangThai = 1";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
@@ -207,9 +201,7 @@ public class ThongKeRepository implements IThongKeRepository {
     @Override
     public BigDecimal getDoanhThuYEAR() {
         try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and YEAR(ngayThanhToan) = YEAR(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE YEAR(hd.ngayThanhToan) = YEAR(sysdatetime()) AND hd.trangThai = 1";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
@@ -220,130 +212,96 @@ public class ThongKeRepository implements IThongKeRepository {
 
     @Override
     public BigDecimal getDoanhThuThang1() {
-        try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and MONTH(ngayThanhToan) = 1 AND YEAR(ngayThanhToan) = YEAR(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+     
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 1 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
-        } catch (Exception e) {
-            return null;
-        }
+    
 
     }
 
     @Override
     public BigDecimal getDoanhThuThang2() {
-        try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and MONTH(ngayThanhToan) = 2 AND YEAR(ngayThanhToan) = YEAR(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+  
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 2 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
-        } catch (Exception e) {
-            return null;
-        }
+       
 
     }
 
     @Override
     public BigDecimal getDoanhThuThang3() {
-        try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and MONTH(ngayThanhToan) = 3 AND YEAR(ngayThanhToan) = YEAR(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+        
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 3 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
-        } catch (Exception e) {
-            return null;
-        }
+        
 
     }
 
     @Override
     public BigDecimal getDoanhThuThang4() {
-        try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and MONTH(ngayThanhToan) = 4 AND YEAR(ngayThanhToan) = YEAR(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+    
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 4 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
-        } catch (Exception e) {
-            return null;
-        }
+      
 
     }
 
     @Override
     public BigDecimal getDoanhThuThang5() {
-        try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and MONTH(ngayThanhToan) = 5 AND YEAR(ngayThanhToan) = YEAR(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+      
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 5 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
-        } catch (Exception e) {
-            return null;
-        }
+    
 
     }
 
     @Override
     public BigDecimal getDoanhThuThang6() {
-        try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and MONTH(ngayThanhToan) = 6 AND YEAR(ngayThanhToan) = YEAR(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+     
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 6 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
-        } catch (Exception e) {
-            return null;
-        }
+  
 
     }
 
     @Override
     public BigDecimal getDoanhThuThang7() {
-        try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and MONTH(ngayThanhToan) = 7 AND YEAR(ngayThanhToan) = YEAR(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+       
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 7 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
-        } catch (Exception e) {
-            return null;
-        }
+     
 
     }
 
     @Override
     public BigDecimal getDoanhThuThang8() {
-        try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and MONTH(ngayThanhToan) = 8 AND YEAR(ngayThanhToan) = YEAR(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+     
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 8 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
-        } catch (Exception e) {
-            return null;
-        }
+       
 
     }
 
     @Override
     public BigDecimal getDoanhThuThang9() {
         try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and MONTH(ngayThanhToan) = 9 AND YEAR(ngayThanhToan) = YEAR(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 9 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
@@ -355,46 +313,34 @@ public class ThongKeRepository implements IThongKeRepository {
 
     @Override
     public BigDecimal getDoanhThuThang10() {
-        try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and MONTH(ngayThanhToan) = 10 AND YEAR(ngayThanhToan) = YEAR(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+  
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 10 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
-        } catch (Exception e) {
-            return null;
-        }
+      
 
     }
 
     @Override
     public BigDecimal getDoanhThuThang11() {
-        try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and MONTH(ngayThanhToan) = 11 AND YEAR(ngayThanhToan) = YEAR(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+      
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 11 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
-        } catch (Exception e) {
-            return null;
-        }
+       
 
     }
 
     @Override
     public BigDecimal getDoanhThuThang12() {
-        try {
-            String hql = "select (sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) + ((sum(tongTien) - (sum(tongTien) * phanTramGiamTheoRank) - giamGia ) * thueVAT)\n"
-                    + "	from HoaDon where trangThai = 1 and MONTH(ngayThanhToan) = 12 AND YEAR(ngayThanhToan) = YEAR(sysdatetime())\n"
-                    + "	GROUP BY tongTien, thueVAT, phanTramGiamTheoRank, giamGia";
+   
+            String hql = "SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE MONTH(hd.ngayThanhToan) = 12 AND YEAR(hd.ngayThanhToan) = YEAR(SYSDATETIME())";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
-        } catch (Exception e) {
-            return null;
-        }
+     
 
     }
 

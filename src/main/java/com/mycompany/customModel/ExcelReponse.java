@@ -26,4 +26,10 @@ public class ExcelReponse {
     private BigDecimal doanhthu;
     private String thang2;
     private BigDecimal doanhthu2;
+//
+//    public ExcelReponse(String thang, BigDecimal doanhthu) {
+//        this.thang = thang;
+//        this.doanhthu = doanhthu;
+//    }
+    
 }
