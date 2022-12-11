@@ -115,7 +115,7 @@ public class Form_KhachHang extends javax.swing.JPanel {
 
     private KhachHang newKH() {
         KhachHang khachHang = new KhachHang();
-        RankKhachHang rankKhachHang = rankRepositoryImpl.getOne(cbbRank.getItemAt(1));
+        RankKhachHang rankKhachHang = rankRepositoryImpl.getOne(cbbRank.getSelectedItem().toString());
         khachHang.setRankKH(rankKhachHang);
         khachHang.setDiaChi(txtDiaChi.getText());
         if (radioNam.isSelected()) {
