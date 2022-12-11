@@ -35,8 +35,9 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="178" max="-2" attributes="0"/>
                       <Component id="btnUpdate" min="-2" pref="89" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="panelBorder2" max="32767" attributes="0"/>
@@ -246,7 +247,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="s&#x1ea3;n ph&#x1ea9;m b&#xe1;n ch&#x1ea1;y nh&#x1ea5;t: "/>
+                <Property name="text" type="java.lang.String" value="s&#x1ea3;n ph&#x1ea9;m b&#xe1;n &#x1ebf; nh&#x1ea5;t: "/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="soLuongMin">

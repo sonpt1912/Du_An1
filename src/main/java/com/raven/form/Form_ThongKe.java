@@ -173,7 +173,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         soLuongofmax.setText("jLabel8");
 
         nameofmax1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        nameofmax1.setText("sản phẩm bán chạy nhất: ");
+        nameofmax1.setText("sản phẩm bán ế nhất: ");
 
         soLuongMin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         soLuongMin.setText("jLabel7");
@@ -555,8 +555,9 @@ public class Form_ThongKe extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(178, 178, 178)
+                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelBorder2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(49, 49, 49)
@@ -689,7 +690,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 20, 20));
         chartPanel.setBackground(Color.white);
 
-        chartHoaDon.add(chartPanel, new AbsoluteConstraints(0, 0, 590, 300));
+        chartHoaDon.add(chartPanel, new AbsoluteConstraints(0, 0, 790, 500));
     }
 
     private void initUIHoaDon6ThangDau(List<HoaDon> list) {
@@ -699,7 +700,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 20, 20));
         chartPanel.setBackground(Color.white);
-        chartHoaDon.add(chartPanel, new AbsoluteConstraints(0, 0, 590, 300));
+        chartHoaDon.add(chartPanel, new AbsoluteConstraints(0, 0, 790, 500));
     }
 
     private void initUIHoaDon6ThangCuoi() {
@@ -709,7 +710,7 @@ public class Form_ThongKe extends javax.swing.JPanel {
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 20, 20));
         chartPanel.setBackground(Color.white);
-        chartHoaDon.add(chartPanel, new AbsoluteConstraints(0, 0, 590, 300));
+        chartHoaDon.add(chartPanel, new AbsoluteConstraints(0, 0, 790, 500));
     }
 
     private CategoryDataset createDatasetHoaDon6ThangDau() {
@@ -946,33 +947,57 @@ public class Form_ThongKe extends javax.swing.JPanel {
 
     private ArrayList<ExcelReponse> createData() {
         ArrayList<ExcelReponse> a = new ArrayList<>();
-        if (thongKeService.getDoanhThuThang1() == null || thongKeService.getDoanhThuThang7() == null) {
-            a.add(new ExcelReponse("Tháng 1", new BigDecimal(0), "Tháng 7", new BigDecimal(0)));
+//        Tháng 1 và Tháng 7
+        if (thongKeService.getDoanhThuThang1() == null) {
+            a.add(new ExcelReponse("Tháng 1", new BigDecimal(0), "Tháng 7", thongKeService.getDoanhThuThang7()));
+        }
+        if (thongKeService.getDoanhThuThang7() == null) {
+            a.add(new ExcelReponse("Tháng 1", thongKeService.getDoanhThuThang1(), "Tháng 7", new BigDecimal(0)));
         } else {
             a.add(new ExcelReponse("Tháng 1", thongKeService.getDoanhThuThang1(), "Tháng 7", thongKeService.getDoanhThuThang7()));
         }
-        if (thongKeService.getDoanhThuThang2() == null || thongKeService.getDoanhThuThang8() == null) {
-            a.add(new ExcelReponse("Tháng 2", new BigDecimal(0), "Tháng 8", new BigDecimal(0)));
+//        Tháng 2 và tháng 8
+        if (thongKeService.getDoanhThuThang2() == null) {
+            a.add(new ExcelReponse("Tháng 2", new BigDecimal(0), "Tháng 8", thongKeService.getDoanhThuThang8()));
+        }
+        if (thongKeService.getDoanhThuThang8() == null) {
+            a.add(new ExcelReponse("Tháng 2", thongKeService.getDoanhThuThang2(), "Tháng 8", new BigDecimal(0)));
         } else {
             a.add(new ExcelReponse("Tháng 2", thongKeService.getDoanhThuThang2(), "Tháng 8", thongKeService.getDoanhThuThang8()));
         }
-        if (thongKeService.getDoanhThuThang3() == null || thongKeService.getDoanhThuThang9() == null) {
-            a.add(new ExcelReponse("Tháng 3", new BigDecimal(0), "Tháng 9", new BigDecimal(0)));
+//        Tháng 3 và tháng 9
+        if (thongKeService.getDoanhThuThang3() == null) {
+            a.add(new ExcelReponse("Tháng 3", new BigDecimal(0), "Tháng 9", thongKeService.getDoanhThuThang9()));
+        }
+        if (thongKeService.getDoanhThuThang9() == null) {
+            a.add(new ExcelReponse("Tháng 3", thongKeService.getDoanhThuThang3(), "Tháng 9", new BigDecimal(0)));
         } else {
             a.add(new ExcelReponse("Tháng 3", thongKeService.getDoanhThuThang3(), "Tháng 9", thongKeService.getDoanhThuThang9()));
         }
-        if (thongKeService.getDoanhThuThang4() == null || thongKeService.getDoanhThuThang10() == null) {
-            a.add(new ExcelReponse("Tháng 4", new BigDecimal(0), "Tháng 10", new BigDecimal(0)));
+//        Tháng 4 và tháng 10
+        if (thongKeService.getDoanhThuThang4() == null) {
+            a.add(new ExcelReponse("Tháng 4", new BigDecimal(0), "Tháng 10", thongKeService.getDoanhThuThang10()));
+        }
+        if (thongKeService.getDoanhThuThang10() == null) {
+            a.add(new ExcelReponse("Tháng 4", thongKeService.getDoanhThuThang4(), "Tháng 10", new BigDecimal(0)));
         } else {
             a.add(new ExcelReponse("Tháng 4", thongKeService.getDoanhThuThang4(), "Tháng 10", thongKeService.getDoanhThuThang10()));
         }
-        if (thongKeService.getDoanhThuThang5() == null || thongKeService.getDoanhThuThang11() == null) {
-            a.add(new ExcelReponse("Tháng 5", new BigDecimal(0), "Tháng 11", new BigDecimal(0)));
+//        Tháng 5 và tháng 11
+        if (thongKeService.getDoanhThuThang5() == null) {
+            a.add(new ExcelReponse("Tháng 5", new BigDecimal(0), "Tháng 11", thongKeService.getDoanhThuThang11()));
+        }
+        if (thongKeService.getDoanhThuThang11() == null) {
+            a.add(new ExcelReponse("Tháng 5", thongKeService.getDoanhThuThang5(), "Tháng 11", new BigDecimal(0)));
         } else {
             a.add(new ExcelReponse("Tháng 5", thongKeService.getDoanhThuThang5(), "Tháng 11", thongKeService.getDoanhThuThang11()));
         }
-        if (thongKeService.getDoanhThuThang6() == null || thongKeService.getDoanhThuThang12() == null) {
-            a.add(new ExcelReponse("Tháng 6", new BigDecimal(0), "Tháng 12", new BigDecimal(0)));
+//        Tháng 6 và tháng 12
+        if (thongKeService.getDoanhThuThang6() == null) {
+            a.add(new ExcelReponse("Tháng 6", new BigDecimal(0), "Tháng 12", thongKeService.getDoanhThuThang12()));
+        }
+        if (thongKeService.getDoanhThuThang12() == null) {
+            a.add(new ExcelReponse("Tháng 6", thongKeService.getDoanhThuThang6(), "Tháng 12", new BigDecimal(0)));
         } else {
             a.add(new ExcelReponse("Tháng 6", thongKeService.getDoanhThuThang6(), "Tháng 12", thongKeService.getDoanhThuThang12()));
         }
