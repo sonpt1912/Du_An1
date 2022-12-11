@@ -134,7 +134,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             tienGiamTheoRank = Double.valueOf(txtPhanTramTheoRank.getText()) * Double.valueOf(String.valueOf(hdCustom.getTongTien()));
         }
         tongTienTT = tongTienThanhToan.subtract(new BigDecimal(tienGiamTheoRank));
-        txtTienThanhToan.setText(String.valueOf(df.format(tongTienThanhToan)));
+        txtTienThanhToan.setText(String.valueOf(df.format(tongTienTT)));
         //txtTienThanhToan.setText(tongTienThanhToan.toString());
     }
 
@@ -1141,31 +1141,55 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     }//GEN-LAST:event_txtTienThanhToanActionPerformed
 
     private void txtSdtKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSdtKHActionPerformed
-        if (checkValidatesdt(txtSdtKH.getText())) {
-            if (khachHangService.getOneBySdt(txtSdtKH.getText()) != null) {
-                khachHang = khachHangService.getOneBySdt(txtSdtKH.getText());
-                txtTenKhachHang.setText(khachHang.getTen());
-
-                txtPhanTramTheoRank.setText(String.valueOf(khachHang.getRankKH().getKhuyenMaiRank()));
-                lbRank.setText(khachHang.getRankKH().getTenRank());
-                if (txtPhanTramTheoRank.getText().isEmpty() || txtPhanTramTheoRank.getText().equals("0")) {
-                    tienGiamTheoRank = 0;
-                } else {
-                    tienGiamTheoRank = (Double.valueOf(txtPhanTramTheoRank.getText()) / 100) * Double.valueOf(String.valueOf(hdCustom.getTongTien()));
-                }
-                BigDecimal tongTienThanhToanVaThue = hdCustom.getTongTien().add(new BigDecimal(thue));
-                tongTienTT = tongTienThanhToanVaThue.subtract(new BigDecimal(tienGiamTheoRank));
-                txtTienThanhToan.setText(String.valueOf(df.format(tongTienTT)));
+        if (txtSdtKH.getText().isEmpty()) {
+            txtTenKhachHang.setText("");
+            lbRank.setText("");
+            txtPhanTramTheoRank.setText("0");
+            if (txtPhanTramTheoRank.getText().isEmpty() || txtPhanTramTheoRank.getText().equals("0")) {
+                tienGiamTheoRank = 0;
             } else {
-                txtTenKhachHang.setText("");
-                int check = JOptionPane.showConfirmDialog(this, "Thêm Khách hàng vào hệ thống");
-                if (check == 0) {
-                    KhachHang khachHang = new KhachHang();
-                    khachHang.setSdt(txtSdtKH.getText());
-                    khachHang.setTen("");
-                    NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
-                    JDialogThemKH jDialogThemKH = new JDialogThemKH(null, rootPaneCheckingEnabled, khachHang);
-                    jDialogThemKH.setVisible(true);
+                tienGiamTheoRank = (Double.valueOf(txtPhanTramTheoRank.getText()) / 100) * (Double.valueOf(String.valueOf(hdCustom.getTongTien())));
+            }
+
+            BigDecimal tienTruGiamTheoRank = hdCustom.getTongTien().subtract(new BigDecimal(tienGiamTheoRank));
+            //thue =(Double.valueOf(String.valueOf(hdCustom.getTongTien())) - tienGiamTheoRank) * 0.1;
+            thue = (Double.valueOf(String.valueOf(tienTruGiamTheoRank))) * 0.1;
+            tongTienTT = (tienTruGiamTheoRank.add(new BigDecimal(thue)).subtract(new BigDecimal(txtTienDuocGiam.getText())));
+            txtTienThanhToan.setText(String.valueOf(df.format(tongTienTT)));
+        } else {
+            if (checkValidatesdt(txtSdtKH.getText())) {
+                if (khachHangService.getOneBySdt(txtSdtKH.getText()) != null) {
+                    khachHang = khachHangService.getOneBySdt(txtSdtKH.getText());
+                    txtTenKhachHang.setText(khachHang.getTen());
+
+                    txtPhanTramTheoRank.setText(String.valueOf(khachHang.getRankKH().getKhuyenMaiRank()));
+                    lbRank.setText(khachHang.getRankKH().getTenRank());
+                    if (txtPhanTramTheoRank.getText().isEmpty() || txtPhanTramTheoRank.getText().equals("0")) {
+                        tienGiamTheoRank = 0;
+                    } else {
+                        tienGiamTheoRank = (Double.valueOf(txtPhanTramTheoRank.getText()) / 100) * (Double.valueOf(String.valueOf(hdCustom.getTongTien())));
+                    }
+
+                    BigDecimal tienTruGiamTheoRank = hdCustom.getTongTien().subtract(new BigDecimal(tienGiamTheoRank));
+                    //thue =(Double.valueOf(String.valueOf(hdCustom.getTongTien())) - tienGiamTheoRank) * 0.1;
+                    thue = (Double.valueOf(String.valueOf(tienTruGiamTheoRank))) * 0.1;
+                    tongTienTT = tienTruGiamTheoRank.add(new BigDecimal(thue));
+                    txtTienThanhToan.setText(String.valueOf(df.format(tongTienTT)));
+                } else if (txtSdtKH.getText().isEmpty()) {
+                    txtTenKhachHang.setText("");
+                    lbRank.setText("");
+                    txtPhanTramTheoRank.setText("0");
+                } else {
+                    txtTenKhachHang.setText("");
+                    int check = JOptionPane.showConfirmDialog(this, "Thêm Khách hàng vào hệ thống");
+                    if (check == 0) {
+                        KhachHang khachHang = new KhachHang();
+                        khachHang.setSdt(txtSdtKH.getText());
+                        khachHang.setTen("");
+                        NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
+                        JDialogThemKH jDialogThemKH = new JDialogThemKH(null, rootPaneCheckingEnabled, khachHang);
+                        jDialogThemKH.setVisible(true);
+                    }
                 }
             }
         }
