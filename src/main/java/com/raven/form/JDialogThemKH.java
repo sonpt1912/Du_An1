@@ -15,13 +15,16 @@ package com.raven.form;
 //import java.awt.RenderingHints;
 import com.mycompany.domainModel.KhachHang;
 import com.mycompany.domainModel.NhanVien;
+import com.mycompany.domainModel.RankKhachHang;
 import com.mycompany.service.impl.KhachHangService;
+import com.mycompany.service.impl.RankServiceImpl;
 import com.mycompany.util.KhachHangUtil;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -35,6 +38,9 @@ public class JDialogThemKH extends javax.swing.JDialog {
     private NhanVien nhanV;
     private java.util.Date today = new java.util.Date();
     private KhachHang kh;
+     private DefaultComboBoxModel dcbmRank = new DefaultComboBoxModel();
+    private RankServiceImpl rankRepositoryImpl = new RankServiceImpl();
+    private List<RankKhachHang> listRankKhachHangs = rankRepositoryImpl.getAll();
     
     public JDialogThemKH(java.awt.Frame parent, boolean modal, KhachHang khachHang) {
         super(parent, modal);
@@ -54,8 +60,15 @@ public class JDialogThemKH extends javax.swing.JDialog {
         JTextFieldDateEditor ngaySinh = (JTextFieldDateEditor) dateNgaySinh.getDateEditor();
         ngaySinh.setEnabled(false);
         txtSdt.setText(kh.getSdt());
+           cbbRank();
     }
-    
+      private void cbbRank() {
+        cbbRank.setModel(dcbmRank);
+        for (RankKhachHang listRankKhachHang : listRankKhachHangs) {
+            dcbmRank.addElement(listRankKhachHang.getTenRank());
+        }
+    }
+
     private void showData(List<KhachHang> listKH, int stt) {
         dtmKhachHang.setRowCount(0);
         for (KhachHang khachHang : listKH) {
@@ -90,10 +103,14 @@ public class JDialogThemKH extends javax.swing.JDialog {
                 radioKhongXacDinh.setSelected(true);
             }
         }
+                cbbRank.setSelectedItem(khachHang.getRankKH().getTenRank());
+
     }
     
     private KhachHang newKH() {
         KhachHang khachHang = new KhachHang();
+          RankKhachHang rankKhachHang = rankRepositoryImpl.getOne(cbbRank.getItemAt(1));
+        khachHang.setRankKH(rankKhachHang);
         khachHang.setDiaChi(txtDiaChi.getText());
         if (radioNam.isSelected()) {
             khachHang.setGioiTinh("Nam");
@@ -154,6 +171,9 @@ public class JDialogThemKH extends javax.swing.JDialog {
         radioKhongXacDinh = new javax.swing.JRadioButton();
         radioKhachThuong = new javax.swing.JRadioButton();
         radioKhachVip = new javax.swing.JRadioButton();
+        btnAddRank = new javax.swing.JButton();
+        cbbRank = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbKhachHang = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -220,6 +240,18 @@ public class JDialogThemKH extends javax.swing.JDialog {
 
         radioKhachVip.setText("Khách VIP");
 
+        btnAddRank.setText("+");
+        btnAddRank.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddRankActionPerformed(evt);
+            }
+        });
+
+        cbbRank.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel16.setText("Rank  :");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -261,30 +293,39 @@ public class JDialogThemKH extends javax.swing.JDialog {
                             .addComponent(txtMa)
                             .addComponent(txtHo, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))))
                 .addGap(209, 209, 209)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDiaChi))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtThanhPho))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtQuocGia))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addGap(18, 18, 18)
-                        .addComponent(radioKhachThuong)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(radioKhachVip)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtDiaChi))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtThanhPho))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtQuocGia))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addGap(18, 18, 18)
+                                .addComponent(radioKhachThuong)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(radioKhachVip)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbbRank, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(btnAddRank)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,10 +368,15 @@ public class JDialogThemKH extends javax.swing.JDialog {
                         .addComponent(radioKhachThuong)
                         .addComponent(radioKhachVip)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel9)
-                    .addComponent(dateNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel9)
+                        .addComponent(dateNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel16)
+                        .addComponent(btnAddRank)
+                        .addComponent(cbbRank, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29))
         );
 
         tbKhachHang.setModel(new javax.swing.table.DefaultTableModel(
@@ -493,12 +539,16 @@ public class JDialogThemKH extends javax.swing.JDialog {
         if (checkConfirm == 0) {
             KhachHang khachHang = newKH();
             if (khachHangUtil.checkValidate(khachHang)) {
-                listKH = khachHangService.getAll();
-                khachHang.setMa(khachHangUtil.zenMaKH(listKH));
-                JOptionPane.showMessageDialog(this, khachHangService.add(khachHang));
-                listKH = khachHangService.getAll();
-                showData(listKH, 1);
-                btnClearActionPerformed(evt);
+                if (new KhachHangService().getOneBySdt(khachHang.getSdt()) != null) {
+                    JOptionPane.showMessageDialog(null, "Sdt này đã trùng với sdt của KH có trong hệ thống!");
+                } else {
+                    listKH = khachHangService.getAll();
+                    khachHang.setMa(khachHangUtil.zenMaKH(listKH));
+                    JOptionPane.showMessageDialog(this, khachHangService.add(khachHang));
+                    listKH = khachHangService.getAll();
+                    showData(listKH, 1);
+                    btnClearActionPerformed(evt);
+                }
             }
         }
     }//GEN-LAST:event_btnAddActionPerformed
@@ -554,6 +604,11 @@ public class JDialogThemKH extends javax.swing.JDialog {
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnAddRankActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRankActionPerformed
+        JDialogRankKhachHang viewKhuVuc = new JDialogRankKhachHang(null, true);
+        viewKhuVuc.setVisible(true);
+    }//GEN-LAST:event_btnAddRankActionPerformed
 //
 //    /**
 //     * @param args the command line arguments
@@ -599,10 +654,12 @@ public class JDialogThemKH extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnAddRank;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cbbRank;
     private com.toedter.calendar.JDateChooser dateNgaySinh;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -610,6 +667,7 @@ public class JDialogThemKH extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

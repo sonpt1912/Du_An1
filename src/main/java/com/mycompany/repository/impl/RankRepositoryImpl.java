@@ -34,7 +34,7 @@ public class RankRepositoryImpl implements IRankKhachHang {
     public RankKhachHang getOne(String ma) {
         RankKhachHang loai = new RankKhachHang();
         try (Session session = HibernateUtil.getFactory().openSession()) {
-            Query query = session.createQuery("FROM RankKhachHang WHERE maRank = :maRank");
+            Query query = session.createQuery("FROM RankKhachHang WHERE tenRank = :maRank");
             query.setParameter("maRank", ma);
             loai = (RankKhachHang) query.getSingleResult();
         } finally {
@@ -81,12 +81,13 @@ public class RankRepositoryImpl implements IRankKhachHang {
             transaction.begin();
             try {
                 Query query = session.createQuery("UPDATE RankKhachHang SET tenRank = :tenRank , soTienBatDau = :soTienBatDau,"
-                        + "soTienKetThuc =:soTienKetThuc,khuyenMaiRank = :khuyenMaiRank"
+                        + "soTienKetThuc =:soTienKetThuc,khuyenMaiRank = :khuyenMaiRank,trangThai =:trangThai"
                         + " WHERE maRank = :maRank");
                 query.setParameter("tenRank", loai.getTenRank());
                 query.setParameter("soTienBatDau", loai.getSoTienBatDau());
                 query.setParameter("soTienKetThuc", loai.getSoTienKetThuc());
                 query.setParameter("khuyenMaiRank", loai.getKhuyenMaiRank());
+                query.setParameter("trangThai", loai.getTrangThai());
                 query.setParameter("maRank", ma);
                 check = query.executeUpdate();
                 transaction.commit();
