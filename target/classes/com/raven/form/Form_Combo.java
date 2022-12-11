@@ -998,7 +998,7 @@ public class Form_Combo extends javax.swing.JPanel {
 
             //tạo chi tiết combo để update
             String soLuongGiam = JOptionPane.showInputDialog("chọn số lượng muốn giảm");
-            if (soLuongGiam.isEmpty()) {
+            if (!soLuongGiam.isEmpty()) {
                 if (soLuongGiam.matches("[0-9]+")) {
                     int soLuongMonAn = chiTietComBo.getSoLuongMonAn() - Integer.valueOf(soLuongGiam);
                     if (soLuongMonAn <= 0) {
