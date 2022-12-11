@@ -121,7 +121,7 @@ public class ComBoRepository implements ICommonRepository<ComBo, Boolean, String
 
     @Override
     public List<ComBo> getAllByTrangThai(int trangThai) {
-        String hql = fromTable + "WHERE trangThai = :TrangThai";
+        String hql = fromTable + "WHERE trangThai = :TrangThai ORDER BY maCB DESC";
         Query query = session.createQuery(hql);
         query.setParameter("TrangThai", trangThai);
         List<ComBo> comBos = query.getResultList();
