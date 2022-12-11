@@ -86,6 +86,9 @@ public class HoaDon {
     @Column(name = "TrangThai")
     private Integer trangThai;
 
+    @Column(name = "TongTienTT")
+    private BigDecimal tongTienCanTT;
+
 //    @OneToMany(mappedBy = "hoaDon", fetch = FetchType.LAZY)
 //    private List<HoaDonChiTiet> listHDCT;
     public Object[] toDataRow() {
