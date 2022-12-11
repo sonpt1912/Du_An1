@@ -388,12 +388,13 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             trangThai = "Đã Thanh Toán";
         }
         lstHDCTResponses = hdctResponseService.getAll(hoaDon);
-        txtPrint.setText(txtPrint.getText() + "     ====================CỬA HÀNG.....===============================\n\n");
+        txtPrint.setText(txtPrint.getText() + "     ====================NHÀ HÀNG ERROR_102===============================\n\n");
         txtPrint.setText(txtPrint.getText() + "     ======================HÓA ĐƠN THANH TOÁN=====================\n\n\n");
         txtPrint.setText(txtPrint.getText() + "     Mã NV                :    " + txtMaNV.getText() + "                          " + "Ngày Tạo              : " + txtNgayTao.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Mã HĐ                :    " + txtMaHD.getText() + "                         " + "Ngày Thanh Toán: " + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Thu Ngân           :    " + txtMaNV.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Tên Khách Hàng:    " + txtTenKhachHang.getText() + "                                       " + "Bàn:    " + txtBan.getText() + "\t\n\n");
+        txtPrint.setText(txtPrint.getText() + "     Rank Khách Hàng:    " + lbRank.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Ghi Chú              :    " + txtGhiChu.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Trạng Thái          :    " + trangThai + "\t\n\n\n");
         txtPrint.setText(txtPrint.getText() + "     Tên Món" + "\t" + "Số Lượng" + "\t" + "Đơn Giá" + "\t" + "Tổng Tiền" + "\n");
@@ -416,7 +417,8 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtPrint.setText(txtPrint.getText() + "     --------------------------------------------------------------------------------------------------------------\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN HÀNG     :    " + txtTongTien.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            THUẾ VAT      :    " + "10%" + "\t\n\n");
-        txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN ĐƯỢC GIẢM:    " + txtTienDuocGiam.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN ĐƯỢC GIẢM:    " + txtTienDuocGiam.getText() + "\t\n\n");
+        txtPrint.setText(txtPrint.getText() + "     \t\t\t            % GIẢM THEO RANK:    " + txtPhanTramTheoRank.getText() + "%" + "\t\n");
         txtPrint.setText(txtPrint.getText() + "    __________________________________________________________________\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TỔNG TIỀN     :    " + txtTienThanhToan.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN KHÁCH ĐƯA:    " + String.valueOf(tong) + "\t\n\n");
@@ -461,12 +463,13 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         //        }
 
         lstHDCTResponses = hdctResponseService.getAll(hoaDon);
-        txtPrint.setText(txtPrint.getText() + "     ====================CỬA HÀNG.....===============================\n\n");
+        txtPrint.setText(txtPrint.getText() + "     ====================NHÀ HÀNG ERROR_102===============================\n\n");
         txtPrint.setText(txtPrint.getText() + "     ======================HÓA ĐƠN THANH TOÁN=====================\n\n\n");
         txtPrint.setText(txtPrint.getText() + "     Mã NV                :    " + txtMaNV.getText() + "                          " + "Ngày Tạo              : " + txtNgayTao.getText() + "\t\n\n");
-        txtPrint.setText(txtPrint.getText() + "     Mã HĐ                :    " + txtMaHD.getText() + "                         " + "Ngày Thanh Toán: " + "\t\n\n");
+        txtPrint.setText(txtPrint.getText() + "     Mã HĐ                :    " + txtMaHD.getText() + "                         " + "Ngày Thanh Toán              : " + dateFormat.format(today) + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Thu Ngân           :    " + txtMaNV.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Tên Khách Hàng:    " + txtTenKhachHang.getText() + "                                      " + "Bàn:    " + txtBan.getText() + "\t\n\n");
+        txtPrint.setText(txtPrint.getText() + "     Rank Khách Hàng:    " + lbRank.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Ghi Chú              :    " + txtGhiChu.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     Trạng Thái         :    " + "Đã Thanh Toán" + "\t\n\n\n");
         txtPrint.setText(txtPrint.getText() + "     Tên Món" + "\t" + "Số Lượng" + "\t" + "Đơn Giá" + "\t" + "Tổng Tiền" + "\n");
@@ -489,7 +492,8 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtPrint.setText(txtPrint.getText() + "     --------------------------------------------------------------------------------------------------------------\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN HÀNG     :    " + txtTongTien.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            THUẾ VAT      :    " + "10%" + "\t\n\n");
-        txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN ĐƯỢC GIẢM:    " + txtTienDuocGiam.getText() + "\t\n");
+        txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN ĐƯỢC GIẢM:    " + txtTienDuocGiam.getText() + "\t\n\n");
+        txtPrint.setText(txtPrint.getText() + "     \t\t\t            % GIẢM THEO RANK:    " + txtPhanTramTheoRank.getText() + "%" + "\t\n");
         txtPrint.setText(txtPrint.getText() + "    __________________________________________________________________\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TỔNG TIỀN     :    " + txtTienThanhToan.getText() + "\t\n\n");
         txtPrint.setText(txtPrint.getText() + "     \t\t\t            TIỀN KHÁCH ĐƯA:    " + String.valueOf(tong) + "\t\n\n");
@@ -558,16 +562,16 @@ public class JDialogThanhToan extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 153, 255));
-        jLabel1.setText("NHÀ HÀNG 'HÀU'");
+        jLabel1.setText("NHÀ HÀNG ERROR_102");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(340, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(334, 334, 334))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(345, 345, 345))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -577,7 +581,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -592,7 +596,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setText("TỔNG TIỀN:");
 
-        tbHDCT.setBackground(new java.awt.Color(255, 204, 204));
+        tbHDCT.setBackground(new java.awt.Color(102, 153, 255));
         tbHDCT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -896,7 +900,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -933,20 +937,21 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(74, 74, 74)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnInHoaDonMau, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(27, 27, 27)
+                                .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -954,14 +959,14 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnInHoaDonMau, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnExit)
-                            .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnInHoaDonMau, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnExit, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnThanhToan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
