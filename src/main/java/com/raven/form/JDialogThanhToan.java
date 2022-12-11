@@ -996,18 +996,26 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void cbChuyenKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbChuyenKhoanActionPerformed
-        if (!cbTienMat.isSelected()) {
-            txtTiennMat.setText("0");
-            txtTiennMat.setEditable(false);
+        if (tongTienTT.compareTo(new BigDecimal(0)) < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng kiểm tra lại tiền được giảm!");
+        } else {
+            if (!cbTienMat.isSelected()) {
+                txtTiennMat.setText("0");
+                txtTiennMat.setEditable(false);
+            }
+            txtChuyenKhoan.setEditable(true);
         }
-        txtChuyenKhoan.setEditable(true);
     }//GEN-LAST:event_cbChuyenKhoanActionPerformed
 
     private void cbTienMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTienMatActionPerformed
-        txtTiennMat.setEditable(true);
-        if (!cbChuyenKhoan.isSelected()) {
-            txtChuyenKhoan.setText("0");
-            txtChuyenKhoan.setEditable(false);
+        if (tongTienTT.compareTo(new BigDecimal(0)) < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng kiểm tra lại tiền được giảm!");
+        } else {
+            txtTiennMat.setEditable(true);
+            if (!cbChuyenKhoan.isSelected()) {
+                txtChuyenKhoan.setText("0");
+                txtChuyenKhoan.setEditable(false);
+            }
         }
     }//GEN-LAST:event_cbTienMatActionPerformed
 
