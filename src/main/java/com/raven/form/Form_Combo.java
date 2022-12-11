@@ -74,7 +74,7 @@ public class Form_Combo extends javax.swing.JPanel {
     private ChiTietComBo chiTietComBo;
     //đường dẫn
     private String selectedImagePath = "";
-
+    
     public Form_Combo(NhanVien nv) {
         initComponents();
         tbComBo.setModel(dtComBo);
@@ -122,9 +122,9 @@ public class Form_Combo extends javax.swing.JPanel {
         hd2.setForeground(Color.red);
         hd2.setFont(new Font("Segoe", Font.BOLD, 13));
     }
-
+    
     class CellRenderer implements TableCellRenderer {
-
+        
         @Override
         public Component getTableCellRendererComponent(JTable table,
                 Object value,
@@ -137,15 +137,15 @@ public class Form_Combo extends javax.swing.JPanel {
             tb.setMaxWidth(100);
             tb.setMinWidth(100);
             tbChonMon.setRowHeight(60);
-
+            
             return (Component) value;
         }
-
+        
     }
 
     //
     class CellRenderers implements TableCellRenderer {
-
+        
         @Override
         public Component getTableCellRendererComponent(JTable table,
                 Object value,
@@ -157,12 +157,12 @@ public class Form_Combo extends javax.swing.JPanel {
             tbComBos.setMaxWidth(100);
             tbComBos.setMinWidth(100);
             tbComBo.setRowHeight(60);
-
+            
             return (Component) value;
         }
-
+        
     }
-
+    
     private void showDataComBo(List<ComBo> listComBo) {
         dtComBo.setRowCount(0);
         for (int i = 0; i < listComBo.size(); i++) {
@@ -178,7 +178,7 @@ public class Form_Combo extends javax.swing.JPanel {
             }
         }
     }
-
+    
     private void showDataCTComBo(List<ChiTietComBo> list) {
         dtCTComBo.setRowCount(0);
         int i = 1;
@@ -186,7 +186,7 @@ public class Form_Combo extends javax.swing.JPanel {
             dtCTComBo.addRow(cb.toShowData(i++));
         }
     }
-
+    
     private void showDataSanPham(List<MonAn> listMonAn) {
         dtSanPham.setRowCount(0);
         for (int i = 0; i < listMonAn.size(); i++) {
@@ -202,19 +202,19 @@ public class Form_Combo extends javax.swing.JPanel {
             }
         }
     }
-
+    
     private void setCbb() {
         List<NhanVien> listNhanVien = nhanVienService.getAll();
         for (NhanVien nv : listNhanVien) {
             dcbNhanVien.addElement(nv.getMa());
         }
-
+        
         List<DanhMuc> listDanhMuc = danhMucService.getAll();
         for (DanhMuc dv : listDanhMuc) {
             dcbLoai.addElement(dv.getMaDanhMuc());
         }
     }
-
+    
     private void clear() {
         txtDonGia.setText("");
         txtMa.setText("");
@@ -223,7 +223,7 @@ public class Form_Combo extends javax.swing.JPanel {
         cbbLoaiMonAn.setSelectedIndex(0);
         jLabelImage1.setIcon(null);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -743,10 +743,14 @@ public class Form_Combo extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "chọn combo cần xóa");
         }
+        comBo = null;
+        dtCTComBo.setRowCount(0);
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         clear();
+        comBo = null;
+        dtCTComBo.setRowCount(0);
     }//GEN-LAST:event_btnClearActionPerformed
     private void fill() {
         txtMa.setText(comBo.getMaCB());
@@ -944,7 +948,7 @@ public class Form_Combo extends javax.swing.JPanel {
         FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpg", "jpeg");
         browseImageFile.addChoosableFileFilter(fnef);
         int showOpenDialogue = browseImageFile.showOpenDialog(null);
-
+        
         if (showOpenDialogue == JFileChooser.APPROVE_OPTION) {
             File selectedImageFile = browseImageFile.getSelectedFile();
             selectedImagePath = selectedImageFile.getAbsolutePath();
