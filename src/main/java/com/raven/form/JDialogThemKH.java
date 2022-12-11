@@ -29,7 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class JDialogThemKH extends javax.swing.JDialog {
-    
+
     private DefaultTableModel dtmKhachHang = new DefaultTableModel();
     private List<KhachHang> listKH = new ArrayList<>();
     private KhachHangService khachHangService = new KhachHangService();
@@ -38,10 +38,10 @@ public class JDialogThemKH extends javax.swing.JDialog {
     private NhanVien nhanV;
     private java.util.Date today = new java.util.Date();
     private KhachHang kh;
-     private DefaultComboBoxModel dcbmRank = new DefaultComboBoxModel();
+    private DefaultComboBoxModel dcbmRank = new DefaultComboBoxModel();
     private RankServiceImpl rankRepositoryImpl = new RankServiceImpl();
     private List<RankKhachHang> listRankKhachHangs = rankRepositoryImpl.getAll();
-    
+
     public JDialogThemKH(java.awt.Frame parent, boolean modal, KhachHang khachHang) {
         super(parent, modal);
         initComponents();
@@ -60,9 +60,10 @@ public class JDialogThemKH extends javax.swing.JDialog {
         JTextFieldDateEditor ngaySinh = (JTextFieldDateEditor) dateNgaySinh.getDateEditor();
         ngaySinh.setEnabled(false);
         txtSdt.setText(kh.getSdt());
-           cbbRank();
+        cbbRank();
     }
-      private void cbbRank() {
+
+    private void cbbRank() {
         cbbRank.setModel(dcbmRank);
         for (RankKhachHang listRankKhachHang : listRankKhachHangs) {
             dcbmRank.addElement(listRankKhachHang.getTenRank());
@@ -76,7 +77,7 @@ public class JDialogThemKH extends javax.swing.JDialog {
             stt++;
         }
     }
-    
+
     private void fill(int index, List<KhachHang> listKH) {
         KhachHang khachHang = listKH.get(index);
         txtMa.setText(khachHang.getMa());
@@ -103,13 +104,13 @@ public class JDialogThemKH extends javax.swing.JDialog {
                 radioKhongXacDinh.setSelected(true);
             }
         }
-                cbbRank.setSelectedItem(khachHang.getRankKH().getTenRank());
+        cbbRank.setSelectedItem(khachHang.getRankKH().getTenRank());
 
     }
-    
+
     private KhachHang newKH() {
         KhachHang khachHang = new KhachHang();
-          RankKhachHang rankKhachHang = rankRepositoryImpl.getOne(cbbRank.getItemAt(1));
+        RankKhachHang rankKhachHang = rankRepositoryImpl.getOne(cbbRank.getSelectedItem().toString());
         khachHang.setRankKH(rankKhachHang);
         khachHang.setDiaChi(txtDiaChi.getText());
         if (radioNam.isSelected()) {
@@ -137,7 +138,7 @@ public class JDialogThemKH extends javax.swing.JDialog {
         }
         return khachHang;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
