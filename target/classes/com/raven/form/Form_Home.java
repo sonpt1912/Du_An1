@@ -1006,7 +1006,7 @@ public class Form_Home extends javax.swing.JPanel {
                     txtTienDuocGiam.setText("0");
                     lbThue.setText("0");
                 } else {
-                    lbThue.setText(String.valueOf(hoaDon.getThueVAT()));
+                    lbThue.setText(String.valueOf(hoaDon.getThueVAT())+"%");
                     txtTienDuocGiam.setText(hoaDon.getTienDuocGiam().toString());
                 }
             } else {
@@ -1829,7 +1829,7 @@ public class Form_Home extends javax.swing.JPanel {
             BigDecimal tienKhachTra = tienMatB.add(tienCK);
             //BigDecimal tienThua = new BigDecimal(txtTienThua.getText());
             BigDecimal tienThua = null;
-            BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
+            BigDecimal tongTien = hdTong.getTongTienCanTT();
 
             tienThua = tienKhachTra.subtract(tongTien);
             txtTienThua.setText(tienThua.toString());
@@ -1868,7 +1868,7 @@ public class Form_Home extends javax.swing.JPanel {
             BigDecimal tienMatB = new BigDecimal(tienMat);
             BigDecimal tienCK = new BigDecimal(chuyenKhoan);
             BigDecimal tienThua = new BigDecimal(txtTienThua.getText());
-            BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
+            BigDecimal tongTien = hdTong.getTongTienCanTT();
             tienMatB.add(tienCK);
             tienThua = tienMatB.subtract(tongTien);
 //            System.out.println("Tiền mặt-" + tienMatB);
