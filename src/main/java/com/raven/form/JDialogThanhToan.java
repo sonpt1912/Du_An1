@@ -71,6 +71,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     private BigDecimal tienCK = new BigDecimal(0);
     private BigDecimal tienGiamGia = new BigDecimal(0);
     private double thue = 0;
+    private double tienGiamTheoRank = 0;
 
     /**
      * Creates new form JDialogThanhToan
@@ -127,7 +128,12 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         BigDecimal tongTienThanhToan = new BigDecimal(0);
         // tongTienThanhToan = hdCustom.getTongTien().add(thue);
         tongTienThanhToan = hdCustom.getTongTien().add(new BigDecimal(thue));
-        tongTienTT = tongTienThanhToan;
+        if (txtPhanTramTheoRank.getText().isEmpty() || txtPhanTramTheoRank.getText().equals("0")) {
+            tienGiamTheoRank = 0;
+        } else {
+            tienGiamTheoRank = Double.valueOf(txtPhanTramTheoRank.getText()) * Double.valueOf(String.valueOf(hdCustom.getTongTien()));
+        }
+        tongTienTT = tongTienThanhToan.subtract(new BigDecimal(tienGiamTheoRank));
         txtTienThanhToan.setText(String.valueOf(df.format(tongTienThanhToan)));
         //txtTienThanhToan.setText(tongTienThanhToan.toString());
     }
@@ -164,7 +170,15 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 hd.setNhanVien(nhanVien);
                 //System.out.println("====" + txtTienThanhToan.getText());
                 //hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
-                hd.setTongTien(tongTienTT);
+                //tổng tiền set tổng tiền sp
+                hd.setTongTien((hdCustom.getTongTien()));
+                //set phần trăm giảm theo rank:
+                if (txtPhanTramTheoRank.getText().isEmpty()) {
+                    hd.setPhanTramGiamGia(0);
+                } else {
+                    hd.setPhanTramGiamGia(Integer.valueOf(txtPhanTramTheoRank.getText()));
+                }
+                //hd.setTongTien(tongTienTT);
                 if (hoaDon.getTienDuocGiam() == null || hoaDon.getTienDuocGiam().compareTo(new BigDecimal(0)) < 0) {
                     String tienGiam = txtTienDuocGiam.getText();
                     hd.setTienDuocGiam(new BigDecimal(tienGiam));
@@ -172,6 +186,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 String tienGiam = txtTienDuocGiam.getText();
                 hd.setTienDuocGiam(new BigDecimal(tienGiam));
                 hd.setNgayThanhToan(today);
+                hd.setThueVAT(10);
                 hd.setTrangThai(1);
                 //set KH cho HD:
                 khachHang = khachHangService.getOneBySdt(txtSdtKH.getText());;
@@ -217,7 +232,15 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
                 hd.setNhanVien(nhanVien);
                 // hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
-                hd.setTongTien(tongTienTT);
+                // hd.setTongTien(tongTienTT);
+                //tổng tiền set tổng tiền sp
+                hd.setTongTien((hdCustom.getTongTien()));
+                //set phần trăm giảm theo rank:
+                if (txtPhanTramTheoRank.getText().isEmpty()) {
+                    hd.setPhanTramGiamGia(0);
+                } else {
+                    hd.setPhanTramGiamGia(Integer.valueOf(txtPhanTramTheoRank.getText()));
+                }
                 if (hoaDon.getTienDuocGiam() == null || hoaDon.getTienDuocGiam().compareTo(new BigDecimal(0)) < 0) {
                     String tienGiam = txtTienDuocGiam.getText();
                     hd.setTienDuocGiam(new BigDecimal(tienGiam));
@@ -225,6 +248,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 String tienGiam = txtTienDuocGiam.getText();
                 hd.setTienDuocGiam(new BigDecimal(tienGiam));
                 hd.setNgayThanhToan(today);
+                hd.setThueVAT(10);
                 hd.setTrangThai(1);
                 //set KH cho HD:
                 khachHang = khachHangService.getOneBySdt(txtSdtKH.getText());;
@@ -277,11 +301,20 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                 NhanVien nhanVien = new NhanVienService().getOne(hoaDon.getNhanVien().getMa());
                 hd.setNhanVien(nhanVien);
                 // hd.setTongTien(new BigDecimal(txtTienThanhToan.getText()));
-                hd.setTongTien(tongTienTT);
+                //hd.setTongTien(tongTienTT);
+                //tổng tiền set tổng tiền sp
+                hd.setTongTien((hdCustom.getTongTien()));
+                //set phần trăm giảm theo rank:
+                if (txtPhanTramTheoRank.getText().isEmpty()) {
+                    hd.setPhanTramGiamGia(0);
+                } else {
+                    hd.setPhanTramGiamGia(Integer.valueOf(txtPhanTramTheoRank.getText()));
+                }
                 if (hoaDon.getTienDuocGiam() == null || hoaDon.getTienDuocGiam().compareTo(new BigDecimal(0)) < 0) {
                     String tienGiam = txtTienDuocGiam.getText();
                     hd.setTienDuocGiam(new BigDecimal(tienGiam));
                 }
+                hd.setThueVAT(10);
                 String tienGiam = txtTienDuocGiam.getText();
                 hd.setTienDuocGiam(new BigDecimal(tienGiam));
                 hd.setTrangThai(1);
@@ -1115,6 +1148,14 @@ public class JDialogThanhToan extends javax.swing.JDialog {
 
                 txtPhanTramTheoRank.setText(String.valueOf(khachHang.getRankKH().getKhuyenMaiRank()));
                 lbRank.setText(khachHang.getRankKH().getTenRank());
+                if (txtPhanTramTheoRank.getText().isEmpty() || txtPhanTramTheoRank.getText().equals("0")) {
+                    tienGiamTheoRank = 0;
+                } else {
+                    tienGiamTheoRank = (Double.valueOf(txtPhanTramTheoRank.getText()) / 100) * Double.valueOf(String.valueOf(hdCustom.getTongTien()));
+                }
+                BigDecimal tongTienThanhToanVaThue = hdCustom.getTongTien().add(new BigDecimal(thue));
+                tongTienTT = tongTienThanhToanVaThue.subtract(new BigDecimal(tienGiamTheoRank));
+                txtTienThanhToan.setText(String.valueOf(df.format(tongTienTT)));
             } else {
                 txtTenKhachHang.setText("");
                 int check = JOptionPane.showConfirmDialog(this, "Thêm Khách hàng vào hệ thống");
@@ -1157,12 +1198,12 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         try {
             if (txtTienDuocGiam.getText().isEmpty()) {
                 tienGiamGia = new BigDecimal(0);
-                tongTienTT = hdCustom.getTongTien().add(new BigDecimal(thue));
+                tongTienTT = hdCustom.getTongTien().add(new BigDecimal(thue)).subtract(new BigDecimal(tienGiamTheoRank));
                 txtTienThanhToan.setText(df.format(tongTienTT));
             } else {
                 if (thanhToanUtil.checkBigDecimal(txtTienDuocGiam.getText())) {
                     tienGiamGia = new BigDecimal(txtTienDuocGiam.getText());
-                    tongTienTT = hdCustom.getTongTien().add(new BigDecimal(thue)).subtract(tienGiamGia);
+                    tongTienTT = hdCustom.getTongTien().add(new BigDecimal(thue)).subtract(tienGiamGia).subtract(new BigDecimal(tienGiamTheoRank));
                     txtTienThanhToan.setText(df.format(tongTienTT));
                 }
             }
