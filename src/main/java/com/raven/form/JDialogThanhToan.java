@@ -27,6 +27,7 @@ import com.mycompany.service.impl.RankServiceImpl;
 import com.mycompany.util.ThanhToanUtil;
 import java.awt.print.PrinterException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -617,11 +618,6 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setText("TIỀN MẶT:");
 
-        txtTiennMat.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                txtTiennMatCaretUpdate(evt);
-            }
-        });
         txtTiennMat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTiennMatActionPerformed(evt);
@@ -640,11 +636,6 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel14.setText("CHUYỂN KHOẢN:");
 
-        txtChuyenKhoan.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                txtChuyenKhoanCaretUpdate(evt);
-            }
-        });
         txtChuyenKhoan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtChuyenKhoanMouseClicked(evt);
@@ -1108,28 +1099,6 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_cbTienMatActionPerformed
 
-    private void txtTiennMatCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTiennMatCaretUpdate
-        try {
-            tienMat = new BigDecimal(txtTiennMat.getText());
-            tienCK = new BigDecimal(txtChuyenKhoan.getText());
-            tienTraLai = thanhToanUtil.fillTienThua(tienMat, tienCK, tongTienTT);
-            txtTienThua.setText(df.format(tienTraLai));
-        } catch (Exception e) {
-            //  e.printStackTrace();
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTiennMatCaretUpdate
-
-    private void txtChuyenKhoanCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtChuyenKhoanCaretUpdate
-        try {
-            tienMat = new BigDecimal(txtTiennMat.getText());
-            tienCK = new BigDecimal(txtChuyenKhoan.getText());
-            tienTraLai = thanhToanUtil.fillTienThua(tienMat, tienCK, tongTienTT);
-            txtTienThua.setText(df.format(tienTraLai));
-        } catch (Exception e) {
-            //e.printStackTrace();
-        }      // TODO add your handling code here:
-    }//GEN-LAST:event_txtChuyenKhoanCaretUpdate
-
     private void txtChuyenKhoanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtChuyenKhoanMouseClicked
         if (!cbChuyenKhoan.isSelected()) {
             txtChuyenKhoan.setEditable(false);
@@ -1209,12 +1178,52 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             txtTiennMat.setEditable(false);
             txtTiennMat.setText("0");
         }
+        try {
+            if (txtTiennMat.getText().isEmpty() && !txtChuyenKhoan.getText().isEmpty()) {
+                tienMat = new BigDecimal(0);
+                tienCK = new BigDecimal(new BigInteger(txtChuyenKhoan.getText()));
+                tienTraLai = thanhToanUtil.fillTienThua(tienMat, tienCK, tongTienTT);
+                txtTienThua.setText(df.format(tienTraLai));
+            } else if (txtChuyenKhoan.getText().isEmpty() && txtTiennMat.getText().isEmpty()) {
+                tienMat = new BigDecimal(0);
+                tienCK = new BigDecimal(0);
+                tienTraLai = thanhToanUtil.fillTienThua(tienMat, tienCK, tongTienTT);
+                txtTienThua.setText(df.format(tienTraLai));
+            } else {
+                tienMat = new BigDecimal(txtTiennMat.getText());
+                tienCK = new BigDecimal(txtChuyenKhoan.getText());
+                tienTraLai = thanhToanUtil.fillTienThua(tienMat, tienCK, tongTienTT);
+                txtTienThua.setText(df.format(tienTraLai));
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
     }//GEN-LAST:event_txtTiennMatActionPerformed
 
     private void txtChuyenKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtChuyenKhoanActionPerformed
         if (!cbChuyenKhoan.isSelected()) {
             txtChuyenKhoan.setEditable(false);
             txtChuyenKhoan.setText("0");
+        }
+        try {
+            if (txtChuyenKhoan.getText().isEmpty() && !txtTiennMat.getText().isEmpty()) {
+                tienMat = new BigDecimal(txtTiennMat.getText());
+                tienCK = new BigDecimal(0);
+                tienTraLai = thanhToanUtil.fillTienThua(tienMat, tienCK, tongTienTT);
+                txtTienThua.setText(df.format(tienTraLai));
+            } else if (txtChuyenKhoan.getText().isEmpty() && txtTiennMat.getText().isEmpty()) {
+                tienMat = new BigDecimal(0);
+                tienCK = new BigDecimal(0);
+                tienTraLai = thanhToanUtil.fillTienThua(tienMat, tienCK, tongTienTT);
+                txtTienThua.setText(df.format(tienTraLai));
+            } else {
+                tienMat = new BigDecimal(txtTiennMat.getText());
+                tienCK = new BigDecimal(txtChuyenKhoan.getText());
+                tienTraLai = thanhToanUtil.fillTienThua(tienMat, tienCK, tongTienTT);
+                txtTienThua.setText(df.format(tienTraLai));
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
         }
     }//GEN-LAST:event_txtChuyenKhoanActionPerformed
 
