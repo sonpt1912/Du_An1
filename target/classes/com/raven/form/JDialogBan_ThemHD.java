@@ -242,7 +242,7 @@ public class JDialogBan_ThemHD extends javax.swing.JDialog {
                     int checkConfirm = JOptionPane.showConfirmDialog(null, "Xác nhận thêm!");
                     if (checkConfirm == 0) {
                         JOptionPane.showMessageDialog(this, themHD);
-                        JOptionPane.showMessageDialog(new Form_HoaDon(nhanVien), "Vui lòng refresh để kiểm tra thay đổi!");
+                        JOptionPane.showMessageDialog(new FormHoaDon(nhanVien), "Vui lòng refresh để kiểm tra thay đổi!");
                         //thoát form
                         this.dispose();
                     }

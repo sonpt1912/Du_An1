@@ -8,16 +8,16 @@ package com.raven.main;
 import com.mycompany.domainModel.NhanVien;
 import com.raven.component.ClockThread;
 import com.raven.event.EventMenuSelected;
-import com.raven.form.Form_Ban;
-import com.raven.form.Form_Combo;
-import com.raven.form.Form_HoaDon;
-import com.raven.form.Form_NhanVien;
-import com.raven.form.Form_KhachHang;
-import com.raven.form.Form_Home;
-import com.raven.form.Form_KhuyenMai;
-import com.raven.form.Form_SanPham;
-import com.raven.form.Form_TaiKhoan;
-import com.raven.form.Form_ThongKe;
+import com.raven.form.FormBan;
+import com.raven.form.FormCombo;
+import com.raven.form.FormHoaDon;
+import com.raven.form.FormNhanVien;
+import com.raven.form.FormKhachHang;
+import com.raven.form.FormHome;
+import com.raven.form.FormKhuyenMai;
+import com.raven.form.FormSanPham;
+import com.raven.form.FormTaiKhoan;
+import com.raven.form.FormThongKe;
 import java.awt.Color;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -31,31 +31,31 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    private Form_Home home;
-    private Form_HoaDon form1;
-    private Form_NhanVien form2;
-    private Form_KhachHang form3;
-    private Form_Ban form4;
-    private Form_KhuyenMai form5;
-    private Form_SanPham form6;
-    private Form_Combo form7;
-    private Form_ThongKe form8;
-    private Form_TaiKhoan form9;
+    private FormHome home;
+    private FormHoaDon form1;
+    private FormNhanVien form2;
+    private FormKhachHang form3;
+    private FormBan form4;
+    private FormKhuyenMai form5;
+    private FormSanPham form6;
+    private FormCombo form7;
+    private FormThongKe form8;
+    private FormTaiKhoan form9;
 
     public Main(NhanVien nv) {
         initComponents();
         lbTenMaNhanVien.setText(nv.getMa() + " - " + nv.getChucVu().getTen() + " - " + nv.getHo() + " " + nv.getTenDem() + " " + nv.getTen());
         setBackground(new Color(0, 0, 0, 0));
-        home = new Form_Home(nv);
-        form1 = new Form_HoaDon(nv);
-        form2 = new Form_NhanVien(nv);
-        form3 = new Form_KhachHang(nv);
-        form4 = new Form_Ban(nv);
-        form5 = new Form_KhuyenMai(nv);
-        form6 = new Form_SanPham(nv);
-        form7 = new Form_Combo(nv);
-        form8 = new Form_ThongKe(nv);
-        form9 = new Form_TaiKhoan(nv);
+        home = new FormHome(nv);
+        form1 = new FormHoaDon(nv);
+        form2 = new FormNhanVien(nv);
+        form3 = new FormKhachHang(nv);
+        form4 = new FormBan(nv);
+        form5 = new FormKhuyenMai(nv);
+        form6 = new FormSanPham(nv);
+        form7 = new FormCombo(nv);
+        form8 = new FormThongKe(nv);
+        form9 = new FormTaiKhoan(nv);
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
@@ -130,7 +130,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         //  set when system open start with home form
-        setForm(new Form_Home(nv));
+        setForm(new FormHome(nv));
     }
 
     private void setForm(JComponent com) {
