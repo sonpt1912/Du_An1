@@ -975,11 +975,15 @@ public class Form_Combo extends javax.swing.JPanel {
 
     private void xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xoaActionPerformed
         // TODO add your handling code here:
-        int index = tbCTCombo.getSelectedRow();
-        chiTietComBo = listCTComBo.get(index);
-        String xoa = chiTietComBoService.deleteCTCombo(chiTietComBo.getId());
-        JOptionPane.showMessageDialog(this, xoa);
-        showDataCTComBo(listCTComBo = chiTietComBoService.getAllByComBo(comBo));
+        if (rdoChoApDung.isSelected()) {
+            int index = tbCTCombo.getSelectedRow();
+            chiTietComBo = listCTComBo.get(index);
+            String xoa = chiTietComBoService.deleteCTCombo(chiTietComBo.getId());
+            JOptionPane.showMessageDialog(this, xoa);
+            showDataCTComBo(listCTComBo = chiTietComBoService.getAllByComBo(comBo));
+        } else {
+            JOptionPane.showMessageDialog(this, "không thể sửa hoặc xóa");
+        }
     }//GEN-LAST:event_xoaActionPerformed
 
     private void tbCTComboMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCTComboMouseReleased
