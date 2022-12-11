@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.mycompany.service.impl;
+package com.mycompany.service;
+
 
 import com.mycompany.domainModel.RankKhachHang;
 import java.util.List;
@@ -21,9 +22,9 @@ public interface IRankService {
 
     String add(RankKhachHang kh);
 
-    String update(RankKhachHang kh, int ma);
+    String update(RankKhachHang kh, String ma);
 
-    String remove(int ma);
+    String remove(String ma);
 
     String rank(String idKH);
 

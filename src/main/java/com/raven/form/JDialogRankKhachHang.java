@@ -254,7 +254,7 @@ public class JDialogRankKhachHang extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Tên không đúng định dạng");
                 return;
             } else {
-                int ma = Integer.valueOf(txtMaRank.getText());
+                String ma = txtMaRank.getText();
                 RankKhachHang rankKhachHang = newRank();
 
                 JOptionPane.showMessageDialog(this, rankServiceImpl.update(rankKhachHang, ma));
@@ -325,7 +325,7 @@ public class JDialogRankKhachHang extends javax.swing.JDialog {
         if (index < 0) {
             JOptionPane.showMessageDialog(this, "?");
         } else {
-            int ma = Integer.valueOf(txtMaRank.getText());
+            String ma = txtMaRank.getText();
             JOptionPane.showMessageDialog(this, rankServiceImpl.remove(ma));
             listRank = rankServiceImpl.getAll();
             showDataTable(listRank);

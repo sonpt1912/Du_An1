@@ -21,12 +21,12 @@ public interface IRankKhachHang {
 
     Boolean add(RankKhachHang kh);
 
-    Boolean update(RankKhachHang kh, int ma);
+    Boolean update(RankKhachHang kh, String ma);
 
-    Boolean remove(int ma);
+    Boolean remove(String ma);
 
     String Rank(String idKH);
 
     Boolean updateRank(int ma);
-    
+
 }

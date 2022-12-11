@@ -4,8 +4,10 @@
  */
 package com.mycompany.service.impl;
 
+
 import com.mycompany.domainModel.RankKhachHang;
 import com.mycompany.repository.impl.RankRepositoryImpl;
+import com.mycompany.service.IRankService;
 import com.mycompany.util.ThongBao;
 import java.util.List;
 
@@ -39,12 +41,12 @@ public class RankServiceImpl implements IRankService {
     }
 
     @Override
-    public String update(RankKhachHang kh, int ma) {
+    public String update(RankKhachHang kh, String ma) {
         return thongBao.thongBaoUPDATE(rankRepository.update(kh, ma));
     }
 
     @Override
-    public String remove(int ma) {
+    public String remove(String ma) {
         return thongBao.thongBaoDELETE(rankRepository.remove(ma));
     }
 
