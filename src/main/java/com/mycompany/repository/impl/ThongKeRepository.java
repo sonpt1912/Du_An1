@@ -108,7 +108,7 @@ public class ThongKeRepository implements IThongKeRepository {
 
     @Override
     public long getHoaDonDaTTWEEK() {
-        String hql = "select COUNT(*) FROM HoaDon hd WHERE (day(datediff(d,0,hdngayThanhToan)/7*7)-1)/7+1 = (day(datediff(d,0,sysdatetime())/7*7)-1)/7+1 AND hd.trangThai = 1";
+        String hql = "select COUNT(*) FROM HoaDon hd WHERE (day(datediff(d,0,hd.ngayThanhToan)/7*7)-1)/7+1 = (day(datediff(d,0,sysdatetime())/7*7)-1)/7+1 AND hd.trangThai = 1";
         Query query = SESSION.createQuery(hql);
         long hoaDons = (long) query.getSingleResult();
         return hoaDons;
