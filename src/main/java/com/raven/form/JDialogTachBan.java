@@ -95,6 +95,7 @@ public class JDialogTachBan extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lbMaBan = new javax.swing.JLabel();
@@ -116,6 +117,9 @@ public class JDialogTachBan extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         txtSoLuongChoCoTheTach = new javax.swing.JTextField();
         cbbMaBanDangKhongSuDung = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        radioBanKhongSD = new javax.swing.JRadioButton();
+        radioBanMoi = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("TÁCH BÀN");
@@ -208,14 +212,32 @@ public class JDialogTachBan extends javax.swing.JDialog {
 
         cbbMaBanDangKhongSuDung.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel8.setText("Chọn Bàn:");
+
+        buttonGroup1.add(radioBanKhongSD);
+        radioBanKhongSD.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        radioBanKhongSD.setSelected(true);
+        radioBanKhongSD.setText("Bàn Đang Không Sử Dụng");
+        radioBanKhongSD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBanKhongSDActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(radioBanMoi);
+        radioBanMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        radioBanMoi.setText("Bàn Mới");
+        radioBanMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBanMoiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -248,15 +270,21 @@ public class JDialogTachBan extends javax.swing.JDialog {
                                             .addComponent(jLabel2)
                                             .addGap(18, 18, 18)
                                             .addComponent(txtMaKhuVuc, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cbbMaBanDangKhongSuDung, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtMaBanMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(cbbMaBanDangKhongSuDung, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel5)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtMaBanMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel8)
+                                        .addComponent(radioBanKhongSD)
+                                        .addComponent(radioBanMoi))))
                             .addGap(0, 0, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
@@ -267,6 +295,10 @@ public class JDialogTachBan extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(txtSoLuongChoCoTheTach, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(25, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,16 +321,20 @@ public class JDialogTachBan extends javax.swing.JDialog {
                     .addComponent(txtSoLuongChoCoTheTach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(30, 30, 30)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(cbbMaBanDangKhongSuDung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                    .addComponent(cbbMaBanDangKhongSuDung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radioBanKhongSD))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtMaBanMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaBanMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radioBanMoi))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -326,12 +362,15 @@ public class JDialogTachBan extends javax.swing.JDialog {
     private void btnTachBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTachBanActionPerformed
         // TODO add your handling code here:
         //tach so ghe vào ban khong su dung
-        if (txtMaBanMoi.getText().isEmpty()) {
-            cbbMaBanDangKhongSuDung.setEnabled(true);
+        if (radioBanKhongSD.isSelected() == true) {
+
+//            cbbMaBanDangKhongSuDung.setEnabled(true);
             String ma = cbbMaBanDangKhongSuDung.getSelectedItem().toString();
             Ban bans = banService.getOne(ma);
             String maKhuVuc = txtMaKhuVuc.getText();
             KhuVuc khuVuc = (KhuVuc) khuVucService.getOne(maKhuVuc);
+            String maBanCu = lbMaBan.getText();
+            Ban ban = (Ban) banService.getOne(maBanCu);
             String soLuongCho = JOptionPane.showInputDialog("Mời bạn nhập số lượng chỗ: ");
             if (soLuongCho != null) {
                 if (!soLuongCho.matches("[0-9]+")) {
@@ -364,13 +403,15 @@ public class JDialogTachBan extends javax.swing.JDialog {
                     } else {
                         banService.update(bans, ma);
                         ban.setSoLuongChoNgoi(Integer.valueOf(txtSoLuong.getText()));
+                        banService.update(ban, maBanCu);
                         JOptionPane.showMessageDialog(this, "Tách Thành Công");
                         this.dispose();
                     }
                 }
             }
-        } else {
-            cbbMaBanDangKhongSuDung.setEnabled(false);
+        } else if (radioBanMoi.isSelected() == true) {
+            txtMaBanMoi.setEnabled(true);
+//            cbbMaBanDangKhongSuDung.setEnabled(false);
             Ban bans = new Ban();
             String ma = lbMaBan.getText();
             String maKhuVuc = txtMaKhuVuc.getText();
@@ -430,6 +471,16 @@ public class JDialogTachBan extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void radioBanKhongSDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBanKhongSDActionPerformed
+        // TODO add your handling code here:
+        txtMaBanMoi.setEnabled(false);
+    }//GEN-LAST:event_radioBanKhongSDActionPerformed
+
+    private void radioBanMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBanMoiActionPerformed
+        // TODO add your handling code here:
+        txtMaBanMoi.setEnabled(true);
+    }//GEN-LAST:event_radioBanMoiActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -437,6 +488,7 @@ public class JDialogTachBan extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnTachBan;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbMaBanDangKhongSuDung;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -445,11 +497,14 @@ public class JDialogTachBan extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbMaBan;
+    private javax.swing.JRadioButton radioBanKhongSD;
+    private javax.swing.JRadioButton radioBanMoi;
     private javax.swing.JTable tbBanMoi;
     private javax.swing.JTextField txtMaBanMoi;
     private javax.swing.JTextField txtMaKhuVuc;
