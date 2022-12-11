@@ -68,7 +68,13 @@ public class BanService implements IBanService, com.mycompany.service.ICommonSer
             return "Xoá thất bại";
         }
     }
+//
 
+    public List<Ban> getAllTrangThai1() {
+        return banRep.getFullTrangThai1();
+    }
+
+    //
     public List<Ban> getAllTrangThai2() {
         return banRep.getAllTrangThai2();
     }

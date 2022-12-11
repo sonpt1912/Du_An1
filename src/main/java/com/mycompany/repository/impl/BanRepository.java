@@ -108,7 +108,13 @@ public class BanRepository implements IBanRepository, ICommonRepository<Ban, Boo
         List<Ban> bans = query.getResultList();
         return bans;
     }
-
+   //
+    public List<Ban> getFullTrangThai1() {
+        String hql = fromTable + "where trangThai =0";
+        Query query = session.createQuery(hql);
+        List<Ban> bans = query.getResultList();
+        return bans;
+    }
     //
     public List<Ban> getAllTrangThai2() {
         String hql = fromTable + "where trangThai = 2";

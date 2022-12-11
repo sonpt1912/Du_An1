@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class JDialogGopBan extends javax.swing.JDialog {
-    
+
     private List<Ban> listBan = new ArrayList<>();
     private BanService banService = new BanService();
     private DefaultComboBoxModel dcbm = new DefaultComboBoxModel();
@@ -33,9 +33,9 @@ public class JDialogGopBan extends javax.swing.JDialog {
         lbMaBan.setText(bans.getMaBan().toString());
         loadCbb();
     }
-    
+
     private void loadCbb() {
-        listBan = banService.getAll();
+        listBan = banService.getAllTrangThai1();
         for (int i = 0; i < listBan.size(); i++) {
             if (listBan.get(i).getMaBan().toString().equals(lbMaBan.getText())) {
                 listBan.remove(i);
