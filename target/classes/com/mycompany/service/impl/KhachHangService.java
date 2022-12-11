@@ -5,10 +5,12 @@
 package com.mycompany.service.impl;
 
 import com.mycompany.domainModel.KhachHang;
+import com.mycompany.domainModel.RankKhachHang;
 import com.mycompany.repository.impl.KhachHangRepository;
 import java.util.List;
 import com.mycompany.repository.ICommonRepository;
 import com.mycompany.service.IKhachHangService;
+import com.mycompany.util.ThongBao;
 
 /**
  *
@@ -17,6 +19,7 @@ import com.mycompany.service.IKhachHangService;
 public class KhachHangService implements com.mycompany.service.ICommonService<KhachHang, String>, IKhachHangService {
 
     private final KhachHangRepository khr = new KhachHangRepository();
+    private ThongBao thongBao = new ThongBao();
 
     @Override
     public List<KhachHang> getAll() {
@@ -64,5 +67,15 @@ public class KhachHangService implements com.mycompany.service.ICommonService<Kh
     @Override
     public KhachHang getOneBySdt(String sdt) {
         return khr.getOneBySdt(sdt);
+    }
+
+    @Override
+    public int xepHangKhachHang(String idKH) {
+        return khr.xepHangKhachHang(idKH);
+    }
+
+    @Override
+    public String updateIdRank(String idKH, RankKhachHang idRank) {
+        return thongBao.thongBaoUPDATE(khr.updateIdRank(idKH, idRank));
     }
 }

@@ -5,6 +5,7 @@
 package com.mycompany.service;
 
 import com.mycompany.domainModel.KhachHang;
+import com.mycompany.domainModel.RankKhachHang;
 import java.util.List;
 
 /**
@@ -16,5 +17,8 @@ public interface IKhachHangService {
     List<KhachHang> searchBySDTOrTen(String txtTimKiem);
 
     KhachHang getOneBySdt(String sdt);
-    
+     
+       int xepHangKhachHang(String idKH);
+
+     String updateIdRank(String idKH, RankKhachHang idRank);
 }

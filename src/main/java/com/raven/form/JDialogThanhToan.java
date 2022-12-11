@@ -13,6 +13,7 @@ import com.mycompany.domainModel.HoaDon;
 import com.mycompany.domainModel.HoaDonChiTiet;
 import com.mycompany.domainModel.KhachHang;
 import com.mycompany.domainModel.NhanVien;
+import com.mycompany.domainModel.RankKhachHang;
 import com.mycompany.service.ICommonService;
 import com.mycompany.service.IHoaDonChiTietResponseService;
 import com.mycompany.service.impl.BanService;
@@ -22,6 +23,7 @@ import com.mycompany.service.impl.HoaDonChiTietResponseService;
 import com.mycompany.service.impl.HoaDonService;
 import com.mycompany.service.impl.KhachHangService;
 import com.mycompany.service.impl.NhanVienService;
+import com.mycompany.service.impl.RankServiceImpl;
 import com.mycompany.util.ThanhToanUtil;
 import java.awt.print.PrinterException;
 import java.math.BigDecimal;
@@ -56,6 +58,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     private ChiTietBanHoaDonService chiTietBanHoaDonService = new ChiTietBanHoaDonService();
     private java.util.Date today = new java.util.Date();
     private HoaDon hoaDon;
+    private RankServiceImpl rankServiceImpl = new RankServiceImpl();
 //    private String tenMon;
 //    private String giaMonAn;
 //    private String soLuong;
@@ -184,6 +187,11 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                     String updateBan = banService.update(ban, ban.getMaBan().toString());
                 }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
+                if (khachHang != null) {
+                    String rank = rankServiceImpl.rank(khachHang.getId());
+                    RankKhachHang r = rankServiceImpl.getOneById(rank);
+                    String updateRank = khachHangService.updateIdRank(khachHang.getId(), r);
+                }
                 this.dispose();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
@@ -232,6 +240,11 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                     String updateBan = banService.update(ban, ban.getMaBan().toString());
                 }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
+                if (khachHang != null) {
+                    String rank = rankServiceImpl.rank(khachHang.getId());
+                    RankKhachHang r = rankServiceImpl.getOneById(rank);
+                    String updateRank = khachHangService.updateIdRank(khachHang.getId(), r);
+                }
                 this.dispose();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
@@ -286,6 +299,11 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                     String updateBan = banService.update(ban, ban.getMaBan().toString());
                 }
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
+                if (khachHang != null) {
+                    String rank = rankServiceImpl.rank(khachHang.getId());
+                    RankKhachHang r = rankServiceImpl.getOneById(rank);
+                    String updateRank = khachHangService.updateIdRank(khachHang.getId(), r);
+                }
                 this.dispose();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
@@ -489,6 +507,9 @@ public class JDialogThanhToan extends javax.swing.JDialog {
         txtSdtKH = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btnThemKH = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        lbRank = new javax.swing.JLabel();
+        txtRankKhachHang = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtPrint = new javax.swing.JTextArea();
@@ -643,6 +664,11 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             }
         });
 
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel15.setText("RANK :");
+
+        lbRank.setText("jLabel16");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -654,27 +680,45 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                     .addComponent(txtSdtKH, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel15)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                        .addComponent(btnThemKH)
-                        .addGap(28, 28, 28))
+                        .addGap(3, 3, 3)
+                        .addComponent(txtRankKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(20, 20, 20)
+                        .addComponent(lbRank, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnThemKH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(96, 96, 96))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSdtKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnThemKH)
-                    .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(lbRank))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtRankKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnThemKH, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 6, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSdtKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -1056,6 +1100,9 @@ public class JDialogThanhToan extends javax.swing.JDialog {
             if (khachHangService.getOneBySdt(txtSdtKH.getText()) != null) {
                 khachHang = khachHangService.getOneBySdt(txtSdtKH.getText());
                 txtTenKhachHang.setText(khachHang.getTen());
+
+                txtRankKhachHang.setText(String.valueOf(khachHang.getRankKH().getKhuyenMaiRank()));
+                lbRank.setText(khachHang.getRankKH().getTenRank());
             } else {
                 txtTenKhachHang.setText("");
                 int check = JOptionPane.showConfirmDialog(this, "Thêm Khách hàng vào hệ thống");
@@ -1138,6 +1185,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1152,6 +1200,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lbRank;
     private javax.swing.JTable tbHDCT;
     private javax.swing.JTextField txtBan;
     private javax.swing.JTextField txtChuyenKhoan;
@@ -1160,6 +1209,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
     private javax.swing.JTextField txtMaNV;
     private javax.swing.JTextField txtNgayTao;
     private javax.swing.JTextArea txtPrint;
+    private javax.swing.JTextField txtRankKhachHang;
     private javax.swing.JTextField txtSdtKH;
     private javax.swing.JTextField txtTenKhachHang;
     private javax.swing.JTextField txtTienDuocGiam;

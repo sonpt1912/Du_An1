@@ -5,6 +5,7 @@
 package com.mycompany.repository;
 
 import com.mycompany.domainModel.KhachHang;
+import com.mycompany.domainModel.RankKhachHang;
 import java.util.List;
 
 /**
@@ -16,4 +17,8 @@ public interface IKhachHangRepository {
     List<KhachHang> searchBySDTOrTen(String txtTimKiem);
 
     KhachHang getOneBySdt(String sdt);
+
+    int xepHangKhachHang(String idKH);
+
+     Boolean updateIdRank(String idKH, RankKhachHang idRank);
 }

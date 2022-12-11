@@ -5,6 +5,7 @@
 package com.mycompany.repository.impl;
 
 import com.mycompany.domainModel.KhachHang;
+import com.mycompany.domainModel.RankKhachHang;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import java.util.List;
 import javax.persistence.Query;
@@ -48,7 +49,7 @@ public class KhachHangRepository implements ICommonRepository<KhachHang, Boolean
     @Override
     public Boolean add(KhachHang kh) {
         Transaction transaction = null;
-        try ( Session session = HibernateUtil.getFactory().openSession()) {
+        try (Session session = HibernateUtil.getFactory().openSession()) {
             transaction = session.beginTransaction();
             session.save(kh);
             transaction.commit();
@@ -137,6 +138,40 @@ public class KhachHangRepository implements ICommonRepository<KhachHang, Boolean
     public static void main(String[] args) {
         KhachHang kh = new KhachHangRepository().getOneBySdt("0339927993");
         System.out.println(kh);
+    }
+
+    @Override
+    public int xepHangKhachHang(String idKH) {
+        try (Session session = HibernateUtil.getFactory().openSession()) {
+            try {
+                Query query = session.createSQLQuery("Select dbo.Rank(:@idKH)");
+                query.setParameter("@idKH", idKH);
+                return (int) query.getSingleResult();
+            } catch (Exception e) {
+                return 0;
+            }
+        }
+    }
+
+    @Override
+    public Boolean updateIdRank(String idKH, RankKhachHang idRank) {
+        int check = 0;
+        try (Session session = HibernateUtil.getFactory().openSession()) {
+            Transaction transaction = session.getTransaction();
+            transaction.begin();
+            try {
+                Query query = session.createQuery("Update KhachHang SET idRank = :IDdRank WHERE idKH =:IDKH");
+                query.setParameter("IDdRank", idRank);
+                query.setParameter("IDKH", idKH);
+                check = query.executeUpdate();
+                transaction.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+                transaction.rollback();
+            }
+        } finally {
+            return check > 0;
+        }
     }
 
 }
