@@ -306,6 +306,8 @@ public class Form_Home extends javax.swing.JPanel {
         cbbKhuVuc = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         txtTienDuocGiam = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        lbThue = new javax.swing.JLabel();
 
         gopHD.setText("Gộp hoá đơn");
         gopHD.addActionListener(new java.awt.event.ActionListener() {
@@ -653,6 +655,10 @@ public class Form_Home extends javax.swing.JPanel {
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel18.setText("Tiền được giảm:");
 
+        jLabel6.setText("Thuế VAT: ");
+
+        lbThue.setText("              ");
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -682,7 +688,7 @@ public class Form_Home extends javax.swing.JPanel {
                                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -765,10 +771,14 @@ public class Form_Home extends javax.swing.JPanel {
                                                 .addContainerGap())
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
                                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(panelBorder1Layout.createSequentialGroup()
+                                                        .addComponent(jLabel6)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(lbThue))
                                                     .addComponent(cbTienMat)
                                                     .addComponent(jLabel15)
                                                     .addComponent(cbChuyenKhoan))
-                                                .addGap(78, 78, 78))))
+                                                .addGap(71, 71, 71))))
                                     .addGroup(panelBorder1Layout.createSequentialGroup()
                                         .addComponent(jLabel18)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -868,6 +878,10 @@ public class Form_Home extends javax.swing.JPanel {
                                 .addComponent(cbTienMat)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cbChuyenKhoan)
+                                .addGap(18, 18, 18)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(lbThue))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(212, 212, 212))))))
@@ -990,10 +1004,14 @@ public class Form_Home extends javax.swing.JPanel {
                 HoaDon hoaDon = hoaDonService.getOne(hdr.getMaHoaDon());
                 if (hoaDon.getTienDuocGiam() == null || hoaDon.getTienDuocGiam().compareTo(new BigDecimal(0)) < 0) {
                     txtTienDuocGiam.setText("0");
+                    lbThue.setText("0");
                 } else {
+                    lbThue.setText(String.valueOf(hoaDon.getThueVAT())+"%");
                     txtTienDuocGiam.setText(hoaDon.getTienDuocGiam().toString());
                 }
             } else {
+                txtTienDuocGiam.setText("0");
+                lbThue.setText("0");
                 fillTongTien();
                 fillTienThuaChuyenKhoan();
                 fillTienThuaTienMat();
@@ -1811,7 +1829,7 @@ public class Form_Home extends javax.swing.JPanel {
             BigDecimal tienKhachTra = tienMatB.add(tienCK);
             //BigDecimal tienThua = new BigDecimal(txtTienThua.getText());
             BigDecimal tienThua = null;
-            BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
+            BigDecimal tongTien = hdTong.getTongTienCanTT();
 
             tienThua = tienKhachTra.subtract(tongTien);
             txtTienThua.setText(tienThua.toString());
@@ -1850,7 +1868,7 @@ public class Form_Home extends javax.swing.JPanel {
             BigDecimal tienMatB = new BigDecimal(tienMat);
             BigDecimal tienCK = new BigDecimal(chuyenKhoan);
             BigDecimal tienThua = new BigDecimal(txtTienThua.getText());
-            BigDecimal tongTien = new BigDecimal(txtTongTien.getText());
+            BigDecimal tongTien = hdTong.getTongTienCanTT();
             tienMatB.add(tienCK);
             tienThua = tienMatB.subtract(tongTien);
 //            System.out.println("Tiền mặt-" + tienMatB);
@@ -2009,6 +2027,7 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane3;
@@ -2019,6 +2038,7 @@ public class Form_Home extends javax.swing.JPanel {
     private javax.swing.JLabel lbMaHDThanhToan;
     private javax.swing.JLabel lbSoBan;
     private javax.swing.JLabel lbSoLuongKhach;
+    private javax.swing.JLabel lbThue;
     private javax.swing.JLayeredPane panel;
     private com.raven.swing.PanelBorder panelBorder1;
     private javax.swing.JPopupMenu popMenu;

@@ -160,7 +160,7 @@
                                       <Component id="jScrollPane4" alignment="0" min="-2" pref="496" max="-2" attributes="0"/>
                                       <Component id="jScrollPane7" alignment="0" min="-2" pref="496" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="8" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -268,11 +268,16 @@
                                               </Group>
                                               <Group type="102" alignment="1" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Group type="102" attributes="0">
+                                                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                          <Component id="lbThue" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
                                                       <Component id="cbTienMat" min="-2" max="-2" attributes="0"/>
                                                       <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                                                       <Component id="cbChuyenKhoan" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -400,6 +405,11 @@
                                   <Component id="cbTienMat" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="cbChuyenKhoan" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lbThue" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="btnThanhToan" min="-2" pref="58" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="212" max="-2" attributes="0"/>
@@ -907,6 +917,16 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtTienDuocGiam">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel6">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Thu&#x1ebf; VAT: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lbThue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="              "/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
