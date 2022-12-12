@@ -18,22 +18,22 @@ import org.hibernate.Transaction;
  * @author PTS
  */
 public class RankRepositoryImpl implements IRankKhachHang {
-    
+
     @Override
     public List<RankKhachHang> getAll() {
         List<RankKhachHang> listLoai = new ArrayList<>();
-        try (Session session = HibernateUtil.getFactory().openSession()) {
+        try ( Session session = HibernateUtil.getFactory().openSession()) {
             Query query = session.createQuery("FROM RankKhachHang");
             listLoai = query.getResultList();
         } finally {
             return listLoai;
         }
     }
-    
+
     @Override
     public RankKhachHang getOne(String ma) {
         RankKhachHang loai = new RankKhachHang();
-        try (Session session = HibernateUtil.getFactory().openSession()) {
+        try ( Session session = HibernateUtil.getFactory().openSession()) {
             Query query = session.createQuery("FROM RankKhachHang WHERE tenRank = :maRank");
             query.setParameter("maRank", ma);
             loai = (RankKhachHang) query.getSingleResult();
@@ -41,23 +41,26 @@ public class RankRepositoryImpl implements IRankKhachHang {
             return loai;
         }
     }
-    
+
     @Override
     public RankKhachHang getOneById(String id) {
         RankKhachHang loai = new RankKhachHang();
-        try (Session session = HibernateUtil.getFactory().openSession()) {
-            Query query = session.createQuery("FROM RankKhachHang WHERE idRank = :maRank");
+        try ( Session session = HibernateUtil.getFactory().openSession()) {
+            Query query = session.createQuery("FROM RankKhachHang WHERE id = :maRank");
             query.setParameter("maRank", id);
-            loai = (RankKhachHang) query.getSingleResult();
-        } finally {
-            return loai;
+            return loai = (RankKhachHang) query.getSingleResult();
         }
     }
     
+    public static void main(String[] args) {
+        RankKhachHang r = new RankRepositoryImpl().getOneById("A89AB387-08F4-48C4-962B-6076B7C1332D");
+        System.out.println(r.getTenRank());
+    }
+
     @Override
     public Boolean add(RankKhachHang kh) {
         boolean isAdd = false;
-        try (Session session = HibernateUtil.getFactory().openSession()) {
+        try ( Session session = HibernateUtil.getFactory().openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();
             try {
@@ -72,11 +75,11 @@ public class RankRepositoryImpl implements IRankKhachHang {
             return isAdd;
         }
     }
-    
+
     @Override
     public Boolean update(RankKhachHang loai, String ma) {
         int check = 0;
-        try (Session session = HibernateUtil.getFactory().openSession()) {
+        try ( Session session = HibernateUtil.getFactory().openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();
             try {
@@ -99,11 +102,11 @@ public class RankRepositoryImpl implements IRankKhachHang {
             return check > 0;
         }
     }
-    
+
     @Override
     public Boolean remove(String ma) {
         int check = 0;
-        try (Session session = HibernateUtil.getFactory().openSession()) {
+        try ( Session session = HibernateUtil.getFactory().openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();
             try {
@@ -121,10 +124,10 @@ public class RankRepositoryImpl implements IRankKhachHang {
             return check > 0;
         }
     }
-    
+
     @Override
     public String Rank(String idKH) {
-        try (Session session = HibernateUtil.getFactory().openSession()) {
+        try ( Session session = HibernateUtil.getFactory().openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();
             try {
@@ -136,14 +139,14 @@ public class RankRepositoryImpl implements IRankKhachHang {
                 e.printStackTrace();
                 return "";
             }
-            
+
         }
     }
-    
+
     @Override
     public Boolean updateRank(int ma) {
         int check = 0;
-        try (Session session = HibernateUtil.getFactory().openSession()) {
+        try ( Session session = HibernateUtil.getFactory().openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();
             try {
@@ -161,12 +164,5 @@ public class RankRepositoryImpl implements IRankKhachHang {
             return check > 0;
         }
     }
-    
-    public static void main(String[] args) {
-        RankKhachHang rankKhachHang = new RankKhachHang();
-        rankKhachHang.setKhuyenMaiRank(6);
-        boolean list = new RankRepositoryImpl().update(rankKhachHang, "0");
-        System.out.println(list);
-        
-    }
+
 }

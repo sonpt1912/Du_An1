@@ -135,11 +135,6 @@ public class KhachHangRepository implements ICommonRepository<KhachHang, Boolean
         }
     }
 
-    public static void main(String[] args) {
-        KhachHang kh = new KhachHangRepository().getOneBySdt("0339927993");
-        System.out.println(kh);
-    }
-
     @Override
     public int xepHangKhachHang(String idKH) {
         try (Session session = HibernateUtil.getFactory().openSession()) {
@@ -160,8 +155,8 @@ public class KhachHangRepository implements ICommonRepository<KhachHang, Boolean
             Transaction transaction = session.getTransaction();
             transaction.begin();
             try {
-                Query query = session.createQuery("Update KhachHang SET idRank = :IDdRank WHERE idKH =:IDKH");
-                query.setParameter("IDdRank", idRank);
+                Query query = session.createQuery("Update KhachHang KH SET KH.RankKH.id = :IDdRank WHERE KH.id =:IDKH");
+                query.setParameter("IDdRank", idRank.getId());
                 query.setParameter("IDKH", idKH);
                 check = query.executeUpdate();
                 transaction.commit();
@@ -172,6 +167,16 @@ public class KhachHangRepository implements ICommonRepository<KhachHang, Boolean
         } finally {
             return check > 0;
         }
+    }
+    
+    public static void main(String[] args) {
+        String r = new RankRepositoryImpl().Rank("239ED5A6-21E0-4852-8A11-D6B472AC8178");
+        System.out.println(r);
+        RankKhachHang rank = new RankRepositoryImpl().getOneById(r);
+        System.out.println(rank.getTenRank());
+        boolean updateRank = new KhachHangRepository().updateIdRank("239ED5A6-21E0-4852-8A11-D6B472AC8178",  rank);
+       
+        System.out.println(updateRank);
     }
 
 }

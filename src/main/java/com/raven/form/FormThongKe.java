@@ -696,7 +696,7 @@ public class FormThongKe extends javax.swing.JPanel {
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 20, 20));
         chartPanel.setBackground(Color.white);
 
-        chartHoaDon.add(chartPanel, new AbsoluteConstraints(0, 0, 790, 450));
+        chartHoaDon.add(chartPanel, new AbsoluteConstraints(0, 0, 790, 400));
     }
 
     private void initUIHoaDon6ThangDau(List<HoaDon> list) {
@@ -706,7 +706,7 @@ public class FormThongKe extends javax.swing.JPanel {
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 20, 20));
         chartPanel.setBackground(Color.white);
-        chartHoaDon.add(chartPanel, new AbsoluteConstraints(0, 0, 790, 450));
+        chartHoaDon.add(chartPanel, new AbsoluteConstraints(0, 0, 790, 400));
     }
 
     private void initUIHoaDon6ThangCuoi() {
@@ -716,7 +716,7 @@ public class FormThongKe extends javax.swing.JPanel {
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 20, 20));
         chartPanel.setBackground(Color.white);
-        chartHoaDon.add(chartPanel, new AbsoluteConstraints(0, 0, 790, 450));
+        chartHoaDon.add(chartPanel, new AbsoluteConstraints(0, 0, 790, 400));
     }
 
     private CategoryDataset createDatasetHoaDon6ThangDau() {

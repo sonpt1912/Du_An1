@@ -17,6 +17,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -67,9 +68,9 @@ public class KhachHang {
     @Column(name = "Loai")
     private Integer trangThai;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "IdRank", nullable = false)
-    private RankKhachHang rankKH;
+    private RankKhachHang RankKH;
 
     public String hoTenKH(String ho, String tenDem, String ten) {
         if (ho == null && tenDem == null) {
