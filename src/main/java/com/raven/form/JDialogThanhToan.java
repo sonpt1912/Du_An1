@@ -185,6 +185,7 @@ public class JDialogThanhToan extends javax.swing.JDialog {
                     hd.setTienDuocGiam(new BigDecimal(tienGiam));
                 }
                 String tienGiam = txtTienDuocGiam.getText();
+                System.out.println(new BigDecimal(tienGiam) + "");                
                 hd.setTienDuocGiam(new BigDecimal(tienGiam));
                 hd.setNgayThanhToan(today);
                 hd.setThueVAT(10);

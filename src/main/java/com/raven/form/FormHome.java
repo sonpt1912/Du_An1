@@ -1006,7 +1006,7 @@ public class FormHome extends javax.swing.JPanel {
                     txtTienDuocGiam.setText("0");
                     lbThue.setText("0");
                 } else {
-                    lbThue.setText(String.valueOf(hoaDon.getThueVAT())+"%");
+                    lbThue.setText(String.valueOf(hoaDon.getThueVAT()) + "%");
                     txtTienDuocGiam.setText(hoaDon.getTienDuocGiam().toString());
                 }
             } else {

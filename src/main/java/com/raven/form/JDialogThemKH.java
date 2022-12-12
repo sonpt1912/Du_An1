@@ -110,7 +110,7 @@ public class JDialogThemKH extends javax.swing.JDialog {
 
     private KhachHang newKH() {
         KhachHang khachHang = new KhachHang();
-        RankKhachHang rankKhachHang = rankRepositoryImpl.getOne(cbbRank.getSelectedItem().toString());
+        RankKhachHang rankKhachHang = rankRepositoryImpl.getOne("Khách lẻ");
         khachHang.setRankKH(rankKhachHang);
         khachHang.setDiaChi(txtDiaChi.getText());
         if (radioNam.isSelected()) {

@@ -7,6 +7,8 @@ package com.mycompany.repository.impl;
 import com.mycompany.domainModel.RankKhachHang;
 import com.mycompany.hibernateUtil.HibernateUtil;
 import com.mycompany.repository.IRankKhachHang;
+import com.mycompany.service.impl.RankServiceImpl;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
@@ -164,5 +166,6 @@ public class RankRepositoryImpl implements IRankKhachHang {
             return check > 0;
         }
     }
+
 
 }

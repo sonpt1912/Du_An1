@@ -9,6 +9,7 @@ import com.mycompany.domainModel.RankKhachHang;
 import com.mycompany.repository.impl.RankRepositoryImpl;
 import com.mycompany.service.IRankService;
 import com.mycompany.util.ThongBao;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -54,5 +55,23 @@ public class RankServiceImpl implements IRankService {
     public String rank(String idKH) {
         return rankRepository.Rank(idKH);
     }
-
+    
+    public boolean checkRank(BigDecimal soTienBatDau, BigDecimal soTienKetThuc) {
+        List<RankKhachHang> list = new RankServiceImpl().getAll();
+        boolean check = false;
+        for (RankKhachHang r : list) {
+            if (soTienBatDau.compareTo(r.getSoTienBatDau()) >= 0 && soTienKetThuc.compareTo(r.getSoTienKetThuc()) <= 0) {
+                check = false;
+            } else if (soTienBatDau.compareTo(r.getSoTienBatDau()) == 1 && soTienKetThuc.compareTo(r.getSoTienKetThuc()) == 1) {
+                check = false;
+            } else if (soTienBatDau.compareTo(r.getSoTienBatDau()) <= 0 && soTienKetThuc.compareTo(r.getSoTienBatDau()) <= 0) {
+                check = false;
+            } else if (soTienBatDau.compareTo(r.getSoTienBatDau()) >= 0 && soTienKetThuc.compareTo(r.getSoTienKetThuc()) >= 0) {
+                check = false;
+            } else {
+                check = true;
+            }
+        }
+        return check;
+    }
 }

@@ -290,8 +290,10 @@ public class JDialogRankKhachHang extends javax.swing.JDialog {
     }
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
+        RankKhachHang loai = newRank();
+
         if (!txtMaRank.getText().isEmpty()) {
-            RankKhachHang loai = newRank();
+
             if (!(kiemTraTrungMaLoai())) {
                 JOptionPane.showMessageDialog(this, "Mã đã tồn tại");
                 return;
@@ -316,6 +318,7 @@ public class JDialogRankKhachHang extends javax.swing.JDialog {
             }
         } else {
             JOptionPane.showMessageDialog(this, "clear trước khi add");
+
         }
     }//GEN-LAST:event_btnAddActionPerformed
 

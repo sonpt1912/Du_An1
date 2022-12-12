@@ -44,7 +44,7 @@ public class ThongKeRepository implements IThongKeRepository {
 //        for (HoaDon hoaDon : listHoaDon) {
 //            System.out.println(hoaDon.toString());
 //        }
-        BigDecimal hoaDon = new ThongKeRepository().getDoanhThuThang12();
+        BigDecimal hoaDon = new ThongKeRepository().getDoanhThuWEEK();
         System.out.println(hoaDon);
     }
 
@@ -177,7 +177,7 @@ public class ThongKeRepository implements IThongKeRepository {
     @Override
     public BigDecimal getDoanhThuWEEK() {
         try {
-            String hql = " SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE (day(datediff(d,0,hd.ngayThanhToan)/7*7)-1)/7+1 = (day(datediff(d,0,sysdatetime())/7*7)-1)/7+1 AND hd.trangThai = 1";
+            String hql = " SELECT SUM(hd.tongTienCanTT) FROM HoaDon hd WHERE (day(datediff(d,0,hd.ngayThanhToan)/7*7)-1)/7+1 = (day(datediff(d,0,sysdatetime())/7*7)-1)/7+1 ";
             Query query = SESSION.createQuery(hql);
             BigDecimal hoaDons = (BigDecimal) query.getSingleResult();
             return hoaDons;
@@ -373,7 +373,7 @@ public class ThongKeRepository implements IThongKeRepository {
     @Override
     public long soLuongKhachHangMONTH() {
         try {
-            String hql = "select SUM(hd.soLuongKhach) FROM HoaDon hd WHERE hd.trangThai =1 AND month(hd.ngayThanhToan) = month(sysdatetime())";
+            String hql = "select SUM(hd.soLuongKhach) FROM HoaDon hd WHERE hd.trangThai =1 AND MONTH(hd.ngayThanhToan) = MONTH(sysdatetime())";
             Query query = SESSION.createQuery(hql);
             long hoaDons = (long) query.getSingleResult();
             return hoaDons;

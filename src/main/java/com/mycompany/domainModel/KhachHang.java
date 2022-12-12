@@ -86,6 +86,6 @@ public class KhachHang {
 
     public Object[] toDataRow(int stt) {
         // return new Object[]{stt, ma, ho + " " + tenDem + " " + ten, gioiTinh, ngaySinh, sdt, diaChi, (trangThai == 0 ? "Khách thường" : "Khách VIP")};
-        return new Object[]{stt, ma, hoTenKH(ho, tenDem, ten), gioiTinh, ngaySinh, sdt, diaChi, (trangThai == 0 ? "Khách thường" : "Khách VIP")};
+        return new Object[]{stt, ma, hoTenKH(ho, tenDem, ten), gioiTinh, ngaySinh, sdt, diaChi,RankKH.getTenRank()};
     }
 }

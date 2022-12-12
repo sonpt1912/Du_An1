@@ -155,7 +155,7 @@ public class NhanVienRepository implements ICommonRepository<NhanVien, Boolean, 
     public NhanVien getUserAndPass(String user, String pass) {
         NhanVien nv = new NhanVien();
         try ( Session session = HibernateUtil.getFactory().openSession()) {
-            Query query = session.createQuery("FROM NhanVien WHERE ma = :maNV and matKhau = :MatKhau");
+            Query query = session.createQuery("FROM NhanVien WHERE ma = :maNV and matKhau = :MatKhau AND trangThai = 0");
             query.setParameter("maNV", user);
             query.setParameter("MatKhau", pass);
             nv = (NhanVien) query.getSingleResult();

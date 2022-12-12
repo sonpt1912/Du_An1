@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -65,6 +66,7 @@ public class FormThongKe extends javax.swing.JPanel {
     private List<String> listTenNgayThang = new ArrayList<>();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private java.util.Date today = new java.util.Date();
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     public FormThongKe(NhanVien nv) {
         initComponents();
@@ -321,12 +323,12 @@ public class FormThongKe extends javax.swing.JPanel {
                     .addComponent(lbHoaDonHuyWEEK)
                     .addComponent(jLabel2)
                     .addComponent(lbDoanhThuWEEK))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(lbDoanhThuWEEK)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -381,7 +383,7 @@ public class FormThongKe extends javax.swing.JPanel {
                                 .addGap(21, 21, 21)
                                 .addComponent(jLabel3)))
                         .addGap(65, 65, 65)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -390,7 +392,7 @@ public class FormThongKe extends javax.swing.JPanel {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(lbDoanhThuMONTH)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(lbSoLuongKhachHangMONTH)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbHoaDonDaThanhToanMONTH)
@@ -434,7 +436,7 @@ public class FormThongKe extends javax.swing.JPanel {
                             .addComponent(lbSoLuongKhachHangYEAR)
                             .addComponent(lbHoaDonHuyYEAR)
                             .addComponent(lbDoanhThuYEAR))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -443,7 +445,7 @@ public class FormThongKe extends javax.swing.JPanel {
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
                 .addComponent(lbDoanhThuYEAR)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(lbSoLuongKhachHangYEAR)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbHoaDonDaThanhToanYEAR)
@@ -479,20 +481,20 @@ public class FormThongKe extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbDoangThuDAY)
                     .addComponent(jLabel4)
                     .addComponent(lbSoLuongKhachDAY)
-                    .addComponent(lbDoangThuDAY)
                     .addComponent(lbHoaDonDaThanhToanDAY)
                     .addComponent(lbHoaDonHuyDAY))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addGap(13, 13, 13)
-                .addComponent(lbDoangThuDAY)
+                .addGap(18, 18, 18)
+                .addComponent(lbDoangThuDAY, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbSoLuongKhachDAY)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -793,24 +795,24 @@ public class FormThongKe extends javax.swing.JPanel {
         lbHoaDonHuyYEAR.setText("Đã húy: " + (String.valueOf(thongKeService.getHoaDonHuyYEAR())));
 //        Doanh Thu
         if (thongKeService.getDoanhThuDAY() == null) {
-            lbDoangThuDAY.setText(String.valueOf(0 + " đ"));
+            lbDoangThuDAY.setText(String.valueOf(0 + "đ"));
         } else {
-            lbDoangThuDAY.setText(String.valueOf(thongKeService.getDoanhThuDAY() + " đ"));
+            lbDoangThuDAY.setText(String.valueOf(df.format(thongKeService.getDoanhThuDAY()) + " đ"));
         }
         if (thongKeService.getDoanhThuWEEK() == null) {
             lbDoanhThuWEEK.setText(String.valueOf(0 + " đ"));
         } else {
-            lbDoanhThuWEEK.setText(String.valueOf(thongKeService.getDoanhThuWEEK() + " đ"));
+            lbDoanhThuWEEK.setText(String.valueOf(df.format(thongKeService.getDoanhThuWEEK()) + "0đ"));
         }
         if (thongKeService.getDoanhThuMONTH() == null) {
             lbDoanhThuMONTH.setText(String.valueOf(0 + " đ"));
         } else {
-            lbDoanhThuMONTH.setText(String.valueOf(thongKeService.getDoanhThuMONTH() + " đ"));
+            lbDoanhThuMONTH.setText(String.valueOf(df.format(thongKeService.getDoanhThuMONTH()) + "0đ"));
         }
         if (thongKeService.getDoanhThuYEAR() == null) {
             lbDoanhThuYEAR.setText(String.valueOf(0 + " đ"));
         } else {
-            lbDoanhThuYEAR.setText(String.valueOf(thongKeService.getDoanhThuYEAR() + " đ"));
+            lbDoanhThuYEAR.setText(String.valueOf(df.format(thongKeService.getDoanhThuYEAR()) + "0đ"));
         }
 // Số lượng khách
         lbSoLuongKhachDAY.setText("Số lượng khách hàng :" + thongKeService.soLuongKhachHangDAY());
@@ -899,7 +901,7 @@ public class FormThongKe extends javax.swing.JPanel {
 
 //                sheet.addMergedRegion(new CellRangeAddress(1, 3, 3, 2));
             }
-            try (FileOutputStream fileOutputStream = new FileOutputStream("src\\ThongKeNhaHangERROR.xlsx")) {
+            try ( FileOutputStream fileOutputStream = new FileOutputStream("src\\ThongKeNhaHangERROR.xlsx")) {
                 autoSizeColumns(workbook);
                 workbook.write(fileOutputStream);
             }

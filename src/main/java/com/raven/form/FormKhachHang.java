@@ -50,7 +50,7 @@ public class FormKhachHang extends javax.swing.JPanel {
         initComponents();
         this.nhanV = nhanV;
         tbKhachHang.setModel(dtmKhachHang);
-        String header[] = {"STT", "MÃ", "HỌ VÀ TÊN", "GIỚI TÍNH", "NGÀY SINH", "SDT", "ĐỊA CHỈ", "Loại Khách hàng"};
+        String header[] = {"STT", "MÃ", "HỌ VÀ TÊN", "GIỚI TÍNH", "NGÀY SINH", "SDT", "ĐỊA CHỈ", "Rank"};
         dtmKhachHang.setColumnIdentifiers(header);
         listKH = khachHangService.getAll();
         showData(listKH, 1);
