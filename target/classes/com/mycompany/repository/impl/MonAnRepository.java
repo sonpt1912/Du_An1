@@ -175,7 +175,7 @@ public class MonAnRepository implements ICommonRepository<MonAn, Boolean, String
     }
 
     public List<MonAn> getAllMonAnByTrangThai(int trangThai) {
-        String hql = fromTable + "WHERE trangThai = :TrangThai ORDER BY maMonAn";
+        String hql = fromTable + "WHERE trangThai = :TrangThai ORDER BY maMonAn DESC";
         Query query = session.createQuery(hql);
         query.setParameter("TrangThai", trangThai);
         List<MonAn> monAns = query.getResultList();
